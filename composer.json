@@ -1,0 +1,43 @@
+{
+    "name": "Raeting",
+    "description": "Raeting v1",
+    "authors": [
+        {
+            "name": "Kolia",
+            "email": "marius.b@estina.lt"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://github.com/Estina/GeneratorBundle"
+        }
+    ],
+    "require": {
+        "php"                                   : ">=5.3.3",
+        "symfony/symfony"                       : "2.3.*",
+        "doctrine/orm"                          : ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle"              : "1.2.*",
+        "doctrine/data-fixtures"                : "*",
+        "symfony/doctrine-bridge"               : "*",
+        "doctrine/doctrine-fixtures-bundle"     : "2.1.*@dev",
+        "symfony/framework-bundle"             : ">=2.1.0,<2.4-dev",
+        "doctrine/migrations"                   : "*",
+        "doctrine/doctrine-migrations-bundle"   : "dev-master",
+        "twig/extensions"                       : "1.0.*",
+        "symfony/assetic-bundle"                : "2.3.*",
+        "symfony/swiftmailer-bundle"            : "2.3.*",
+        "symfony/monolog-bundle"                : "2.3.*",
+        "sensio/distribution-bundle"            : "2.3.*",
+        "sensio/framework-extra-bundle"         : "2.3.*",
+        "sensio/generator-bundle"               : "2.3.*",
+        "incenteev/composer-parameter-handler"  : "~2.0",
+        "estina/generator-bundle"               : "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
