@@ -1,0 +1,5 @@
+raeting_core:
+    resource: "@RaetingCoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

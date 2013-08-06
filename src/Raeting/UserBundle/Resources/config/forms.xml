@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="user.form.type.register.class">Raeting\UserBundle\Form\RegisterType</parameter>
+        <parameter key="user.form.type.recover.class">Raeting\UserBundle\Form\RecoverType</parameter>
+        <parameter key="user.form.type.change_password.class">Raeting\UserBundle\Form\ChangePasswordType</parameter>
+        <parameter key="user.form.type.profile.class">Raeting\UserBundle\Form\ProfileType</parameter>
+        <parameter key="user.form.type.new_password.class">Raeting\UserBundle\Form\NewPasswordType</parameter>
+    </parameters>
+
+    <services>
+        <!-- Form types -->
+        <service id="user.form.type.register" class="%user.form.type.register.class%">
+            <tag name="form.type"/>
+        </service>
+        <service id="user.form.type.recover" class="%user.form.type.recover.class%">
+            <tag name="form.type"/>
+        </service>
+        <service id="user.form.type.change_password" class="%user.form.type.change_password.class%">
+            <tag name="form.type"/>
+        </service>
+        <service id="user.form.type.profile" class="%user.form.type.profile.class%">
+            <tag name="form.type"/>
+            <argument type="service" id="user.service.user"/>
+        </service>
+        <service id="user.form.type.new_password" class="%user.form.type.new_password.class%">
+            <tag name="form.type"/>
+            <argument type="service" id="user.service.user"/>
+        </service>
+
+        <!-- Forms -->
+        <service id="user.form.register" factory-method="create" factory-service="form.factory" class="%form.factory.class%">
+            <argument type="service" id="user.form.type.register"/>
+        </service>
+        <service id="user.form.recover" factory-method="create" factory-service="form.factory" class="%form.factory.class%">
+            <argument type="service" id="user.form.type.recover"/>
+        </service>
+        <service id="user.form.change_password" factory-method="create" factory-service="form.factory" class="%form.factory.class%">
+            <argument type="service" id="user.form.type.change_password"/>
+        </service>
+        <service id="user.form.profile" factory-method="create" factory-service="form.factory" class="%form.factory.class%">
+            <argument type="service" id="user.form.type.profile"/>
+        </service>
+        <service id="user.form.new_password" factory-method="create" factory-service="form.factory" class="%form.factory.class%">
+            <argument type="service" id="user.form.type.new_password"/>
+        </service>
+    </services>
+</container>

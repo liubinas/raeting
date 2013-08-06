@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="core.service.mailer.class">Raeting\CoreBundle\Service\Mailer</parameter>
+        <parameter key="core.service.meta.class">Raeting\CoreBundle\Service\Meta</parameter>
+        <parameter key="core.model.meta.class">Raeting\CoreBundle\Model\Meta</parameter>
+
+        <!-- Template helpers -->
+        <parameter key="core.helper.request.class">Raeting\CoreBundle\Templating\Helper\RequestHelper</parameter>
+        <parameter key="core.helper.pagination.class">Raeting\CoreBundle\Templating\Helper\PaginationHelper</parameter>
+        <parameter key="core.helper.router.class">Raeting\CoreBundle\Templating\Helper\RouterHelper</parameter>
+        <parameter key="core.helper.meta.class">Raeting\CoreBundle\Templating\Helper\MetaHelper</parameter>
+    </parameters>
+
+    <services>
+        <!-- Models -->
+        <service id="core.model.meta" class="%core.model.meta.class%">
+            <argument type="service" id="doctrine.dbal.default_connection" />
+        </service> 
+        
+        <!-- Services -->
+        <service id="core.service.config" class="%core.service.config.class%">
+            <argument type="service" id="core.model.config" />
+        </service>
+        <service id="core.service.mailer" class="%core.service.mailer.class%">
+            <argument type="collection">
+                <argument key="email">%mailer_email%</argument>
+                <argument key="from">%mailer_from%</argument>
+            </argument>
+            <argument type="service" id="mailer" />
+            <argument type="service" id="localization.service.emailtemplate" />
+        </service>
+        <service id="core.service.meta" class="%core.service.meta.class%">
+            <argument type="service" id="core.model.meta" />
+        </service>   
+
+       
+        <!-- Helpers -->
+        <service id="core.helper.request" class="%core.helper.request.class%">
+            <tag name="templating.helper" alias="request" />
+            <argument type="service" id="request" strict="false" />
+        </service> 
+
+        <service id="core.helper.pagination" class="%core.helper.pagination.class%">
+            <tag name="templating.helper" alias="pagination" />
+            <argument type="service" id="templating" />
+            <argument type="service" id="router" />
+        </service>  
+      
+        <service id="core.helper.router" class="%core.helper.router.class%">
+            <tag name="templating.helper" alias="router" />
+            <argument type="service" id="router" />
+            <argument type="service" id="localization.service.localization" />
+        </service>
+        <service id="core.helper.meta" class="%core.helper.meta.class%">
+            <tag name="templating.helper" alias="meta" />
+            <argument type="service" id="core.service.meta" />
+            <argument type="service" id="templating" />
+            <argument type="service" id="request" strict="false" />
+        </service>        
+    </services>
+</container>
