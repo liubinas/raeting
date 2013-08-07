@@ -9,7 +9,7 @@
     <div>
         <input type="text" id="username" name="_username" class="text" required="required" value="<?= $last_username ?>" placeholder="username"/>
         <input type="password" id="password" name="_password" class="text" required="required"  placeholder="password"/>
-        <input type="hidden" name="_target_path" class="text" value="<?= $view['router']->generate('user.home'); ?>" />
+        <input type="hidden" name="_target_path" class="text" value="<?= $view['router']->generate('user.profile'); ?>" />
         <input type="submit" value="Log in" />
         <div class="clear"></div>
     </div>

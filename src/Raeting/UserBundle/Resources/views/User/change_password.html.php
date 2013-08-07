@@ -10,7 +10,7 @@
     <section class="destination_info">
 
         <? if (true === $posted && true === $changed): ?>
-            <p><?= $view['translation']->trans('user.changepassword.changed_succesfully')?></p>
+            <p>Password changed successfully</p>
         <? else: ?>
             <form action="<?= $view['router']->generate('user.change_password') ?>" class="bind-form-changepassword" method="post" <?= $view['form']->enctype($form) ?> >
                 <div class="bind-form-changepassword-response"></div>

@@ -15,6 +15,7 @@
             <?= $view['form']->row($form['state'], array('label' => 'State', 'attr' => array('class' => 'span12'))) ?>
             <?= $view['form']->row($form['street'], array('label' => 'Street', 'attr' => array('class' => 'span12'))) ?>
             <?= $view['form']->row($form['postal_code'], array('label' => 'Postal code', 'attr' => array('class' => 'span12'))) ?>
+            <?= $view['form']->rest($form) ?>
         </fieldset>
     </div>
     <div class="clear"></div>

@@ -5,17 +5,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="core.core_listener.class">Raeting\CoreBundle\EventListener\CoreListener</parameter>
         <parameter key="core.exception_listener.class">Symfony\Component\HttpKernel\EventListener\ExceptionListener</parameter>
     </parameters>
 
     <services>
         <!-- Listeners -->
-        <service id="core.core_listener" class="%core.core_listener.class%">
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="-1" />
-            <argument type="service" id="service_container" />
-        </service>
-
         <service id="core.exception_listener" class="%core.exception_listener.class%">
             <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
             <tag name="monolog.logger" channel="request" />

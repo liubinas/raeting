@@ -16,6 +16,7 @@
             <div class="recover-response"></div>
             <div>
                 <?= $view['form']->widget($form['email'], array('attr' => array('class' => 'text newsletter_input', 'placeholder' => 'E-mail'))); ?>
+                <?= $view['form']->rest($form) ?>
                 <input class="newsletter_submit" type="submit" value="Submit" />
             </div>
         </form>

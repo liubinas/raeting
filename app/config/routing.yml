@@ -1,5 +1,2 @@
-raeting_core:
-    resource: "@RaetingCoreBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
+_user:
+    resource: "@RaetingUserBundle/Resources/config/routing.php"

@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use Swift_Mailer;
 use Swift_Attachment;
 use Swift_Message;
-use Raeting\LocalizationBundle\Service\EmailTemplate;
+use Raeting\CoreBundle\Service\EmailTemplate;
 
 /**
  * Mailer service

@@ -63,3 +63,11 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+
+raeting_core:
+    web_directory_path: '/uploads/'
+    upload_directory_path: '%kernel.root_dir%/../web/uploads/'
+    js_path: '%kernel.root_dir%/../web/uploads/languages/'
+
+    exception_listener:
+        controller: 'Raeting\CoreBundle\Controller\ExceptionController::exceptionAction'

@@ -20,12 +20,8 @@ class RaetingCoreExtension extends Extension
         $container->setParameter('core.web_directory_path', $config['web_directory_path']);
         $container->setParameter('core.js_path', $config['js_path']);
         $container->setParameter('core.upload_directory_path', $config['upload_directory_path']);
-        $container->setParameter('core.exception_listener.controller', $config['exception_listener']['controller']);
+        $container->setParameter('core.exception_listener.controller', $config['exception_listener']['controller']);   
 
-        $container->setParameter('raeting_mail_chimp.apiKey', $config['raeting_mail_chimp']['apiKey']);
-        $container->setParameter('raeting_mail_chimp.listId', $config['raeting_mail_chimp']['listId']);        
-
-        $loader->load('routing.xml');
         $loader->load('core.xml');
         $loader->load('services.xml');
     }

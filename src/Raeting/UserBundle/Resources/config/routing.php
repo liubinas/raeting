@@ -14,7 +14,7 @@ $collection->add('login',
 $collection->add('login_check', new Route('/login_check', array()));
 $collection->add('logout', new Route('/logout', array()));
 
-$collection->add('user.register', new Route('/register', array(
+$collection->add('user.register', new Route('/', array(
     '_controller' => 'RaetingUserBundle:User:register',
 )));
 
@@ -30,11 +30,11 @@ $collection->add('user.change_password', new Route('/change-password', array(
     '_controller' => 'RaetingUserBundle:User:changePassword',
 )));
 
-$collection->add('user.profile_edit', new Route('/{lang}/user/edit', array(
+$collection->add('user.profile_edit', new Route('/user/edit', array(
     '_controller' => 'RaetingUserBundle:User:edit',
 )));
 
-$collection->add('user.profile', new Route('/{lang}/user', array(
+$collection->add('user.profile', new Route('/user', array(
     '_controller' => 'RaetingUserBundle:User:index',
 )));
 
@@ -45,5 +45,6 @@ $collection->add('user.new_password', new Route('/new-password', array(
 $collection->add('user.home', new Route('/user-home', array(
     '_controller' => 'RaetingUserBundle:User:home',
 )));
+
 
 return $collection;

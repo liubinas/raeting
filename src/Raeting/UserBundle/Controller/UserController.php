@@ -96,7 +96,7 @@ class UserController extends Controller
         $isValid = false;
 
         if ('POST' === $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $isValid = true;
@@ -132,7 +132,6 @@ class UserController extends Controller
             ->newMessage('Password recovery')
             ->setTo(array($email))
             ->setBody($body, 'text/html');
-
         $result = $this->get('mailer')->send($message);  //TODO: log if failed
 
         return $result;
@@ -155,7 +154,7 @@ class UserController extends Controller
         $request = $this->get('request');
 
         if ('POST' === $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $userService = $this->get('user.service.user');
@@ -194,15 +193,15 @@ class UserController extends Controller
         $form->setData($user);
         
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $return = $userService->updatePassword($form->getData());
 
                 if ($return === false) {
-                    $this->get('session')->setFlash('error', 'core.failure');
+                    $this->get('session')->getFlashBag()->set('error', 'core.failure');
 
                 } else {
-                    $this->get('session')->setFlash('success', 'core.success');
+                    $this->get('session')->getFlashBag()->set('success', 'core.success');
 
                     return new RedirectResponse($this->get('router')->generate('user.profile'));
                 }
@@ -238,23 +237,21 @@ class UserController extends Controller
         $user['firstname'] = $userArray['firstname'];
         $user['lastname'] = $userArray['lastname'];
         $user['street'] = $userArray['street'];
-        $user['city'] = $userArray['city'];
         $user['state'] = $userArray['state'];
         $user['postal_code'] = $userArray['postal_code'];
-        $user['country'] = $userArray['country'];
 
         $form->setData($user);
         
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $return = $userService->updateProfile($form->getData());
 
                 if ($return === false) {
-                    $this->get('session')->setFlash('error', 'merchant.core.failure');
+                    $this->get('session')->getFlashBag()->set('error', 'merchant.core.failure');
 
                 } else {
-                    $this->get('session')->setFlash('success', 'merchant.core.success');
+                    $this->get('session')->getFlashBag()->set('success', 'merchant.core.success');
 
                     return new RedirectResponse($this->get('router')->generate('user.profile'));
                 }
