@@ -1,0 +1,19 @@
+parameters:
+    raetingraeting.service.signals.class: Raeting\RaetingBundle\Service\Signals
+    raetingraeting.form.type.signals.class: Raeting\RaetingBundle\Form\SignalsType
+
+services:
+    raetingraeting.service.signals:
+        class: %raetingraeting.service.signals.class%
+        arguments: [@doctrine.orm.entity_manager]
+
+    raetingraeting.form.type.signals:
+        class: %raetingraeting.form.type.signals.class%
+        tags:
+            - { name: form.type }
+
+    raetingraeting.form.signals:
+        class: %form.factory.class%
+        factory_method: create
+        factory_service: form.factory
+        arguments: [ @raetingraeting.form.type.signals  ]

@@ -1,0 +1,4 @@
+raeting_raeting_signals:
+    resource: "@RaetingRaetingBundle/Resources/config/routing/signals.yml"
+    prefix:   /signals
+
