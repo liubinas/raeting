@@ -1,0 +1,19 @@
+parameters:
+    raetinguser.service.user.class: Raeting\UserBundle\Service\User
+    raetinguser.form.type.user.class: Raeting\UserBundle\Form\UserType
+
+services:
+    raetinguser.service.user:
+        class: %raetinguser.service.user.class%
+        arguments: [@doctrine.orm.entity_manager]
+
+    raetinguser.form.type.user:
+        class: %raetinguser.form.type.user.class%
+        tags:
+            - { name: form.type }
+
+    raetinguser.form.user:
+        class: %form.factory.class%
+        factory_method: create
+        factory_service: form.factory
+        arguments: [ @raetinguser.form.type.user  ]

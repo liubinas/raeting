@@ -1,0 +1,30 @@
+user:
+    pattern:  /
+    defaults: { _controller: "RaetingUserBundle:User:index" }
+
+user_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "RaetingUserBundle:User:show" }
+
+user_new:
+    pattern:  /new
+    defaults: { _controller: "RaetingUserBundle:User:new" }
+
+user_create:
+    pattern:  /create
+    defaults: { _controller: "RaetingUserBundle:User:create" }
+    requirements: { _method: post }
+
+user_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "RaetingUserBundle:User:edit" }
+
+user_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "RaetingUserBundle:User:update" }
+    requirements: { _method: post }
+
+user_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "RaetingUserBundle:User:delete" }
+    requirements: { _method: get }

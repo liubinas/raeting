@@ -1,0 +1,31 @@
+parameters:
+        user.security.user_provider.class: Raeting\UserBundle\Security\UserProvider
+        user.model.user.class: Raeting\UserBundle\Model\User
+        user.service.user.class: Raeting\UserBundle\Service\User
+        user.helper.user.class: Raeting\UserBundle\Templating\Helper\UserHelper
+
+services:
+        user.security.user_provider:
+            class: %user.security.user_provider.class%
+            arguments: 
+                - @user.service.user
+
+        user.model.user:
+            class: %user.model.user.class%
+            arguments: 
+                - @doctrine.dbal.default_connection
+
+        user.service.user:
+            class: %user.service.user.class%
+            arguments:
+                - @user.model.user
+                - @security.encoder_factory
+
+        user.helper.user:
+            class: %user.helper.user.class%
+            tags:
+                - {name: "templating.helper", alias: "user"}
+            arguments:
+                - @security.context
+
+    - { resource: services/user.yml }
