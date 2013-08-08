@@ -1,4 +1,0 @@
-raeting_user_user:
-    resource: "@RaetingUserBundle/Resources/config/routing/user.yml"
-    prefix:   /user
-

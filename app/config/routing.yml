@@ -1,4 +1,2 @@
 _user:
     resource: "@RaetingUserBundle/Resources/config/routing.php"
-_user_crud:
-    resource: "@RaetingUserBundle/Resources/config/routing.yml"
