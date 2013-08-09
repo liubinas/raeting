@@ -12,19 +12,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Signals
 {
+    protected $buyEnum = array(
+        '0'    => 'Buy',
+        '1'    => 'Sell',
+    );
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
     /**
      * @var string
      *
      * @ORM\Column(name="uuid", type="string", length=13, nullable=false)
      */
     private $uuid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="quote_id", type="integer", nullable=false)
-     */
-    private $quoteId;
 
     /**
      * @var boolean
@@ -118,22 +125,36 @@ class Signals
     private $closeExpire;
 
     /**
-     * @var integer
+     * @var \Raeting\RaetingBundle\Entity\Quote
      *
-     * @ORM\Column(name="user", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Quote")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="quote_id", referencedColumnName="id")
+     * })
+     */
+    private $quote;
+
+    /**
+     * @var \Raeting\UserBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="Raeting\UserBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
     private $user;
 
+
+
     /**
-     * @var integer
+     * Get id
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @return integer 
      */
-    private $id;
-
-
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set uuid
@@ -156,29 +177,6 @@ class Signals
     public function getUuid()
     {
         return $this->uuid;
-    }
-
-    /**
-     * Set quoteId
-     *
-     * @param integer $quoteId
-     * @return Signals
-     */
-    public function setQuoteId($quoteId)
-    {
-        $this->quoteId = $quoteId;
-    
-        return $this;
-    }
-
-    /**
-     * Get quoteId
-     *
-     * @return integer 
-     */
-    public function getQuoteId()
-    {
-        return $this->quoteId;
     }
 
     /**
@@ -481,12 +479,35 @@ class Signals
     }
 
     /**
-     * Set user
+     * Set quote
      *
-     * @param integer $user
+     * @param \Raeting\RaetingBundle\Entity\Quote $quote
      * @return Signals
      */
-    public function setUser($user)
+    public function setQuote(\Raeting\RaetingBundle\Entity\Quote $quote = null)
+    {
+        $this->quote = $quote;
+    
+        return $this;
+    }
+
+    /**
+     * Get quote
+     *
+     * @return \Raeting\RaetingBundle\Entity\Quote 
+     */
+    public function getQuote()
+    {
+        return $this->quote;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Raeting\UserBundle\Entity\User $user
+     * @return Signals
+     */
+    public function setUser(\Raeting\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
     
@@ -496,20 +517,15 @@ class Signals
     /**
      * Get user
      *
-     * @return integer 
+     * @return \Raeting\UserBundle\Entity\User 
      */
     public function getUser()
     {
         return $this->user;
     }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
+    
+    public function getBuyValue()
     {
-        return $this->id;
+        return $this->buyEnum[$this->buy];
     }
 }

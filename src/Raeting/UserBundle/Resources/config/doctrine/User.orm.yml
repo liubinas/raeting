@@ -1,0 +1,81 @@
+Raeting\UserBundle\Entity\User:
+    type: entity
+    table: user
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        email:
+            type: string
+            length: 50
+            fixed: false
+            nullable: false
+        usergroup:
+            type: string
+            length: null
+            fixed: false
+            nullable: false
+        password:
+            type: string
+            length: 128
+            fixed: true
+            nullable: false
+        firstname:
+            type: string
+            length: 50
+            fixed: false
+            nullable: false
+        lastname:
+            type: string
+            length: 50
+            fixed: false
+            nullable: false
+        street:
+            type: string
+            length: 45
+            fixed: false
+            nullable: false
+        state:
+            type: string
+            length: 45
+            fixed: false
+            nullable: false
+        postalCode:
+            type: string
+            length: 45
+            fixed: false
+            nullable: false
+            column: postal_code
+        createdOn:
+            type: datetime
+            nullable: false
+            column: created_on
+        recoveryHash:
+            type: string
+            length: 16
+            fixed: true
+            nullable: true
+            column: recovery_hash
+        recoveryDate:
+            type: datetime
+            nullable: true
+            column: recovery_date
+        lastLogin:
+            type: datetime
+            nullable: true
+            column: last_login
+        facebook:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+        linkedin:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }

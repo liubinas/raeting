@@ -3,7 +3,8 @@
 $securityConfig = array(
     'firewalls' => array(),
     'access_control' => array(
-        array('path' => '^/admin', 'role' => 'ROLE_ADMIN')
+        array('path' => '^/signals', 'role' => 'ROLE_CUSTOMER'),
+        array('path' => '^/traders', 'role' => 'ROLE_CUSTOMER'),
     ),
     'providers' => array(
         'webservice' => array('id' => 'user.security.user_provider')

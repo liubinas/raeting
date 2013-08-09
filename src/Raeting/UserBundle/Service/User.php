@@ -15,7 +15,7 @@ class User
     protected $encoderFactory;
 
     /**
-     * @param Pombia\UserBundle\Model\User $userModel
+     * @param Raeting\UserBundle\Model\User $userModel
      * @param object                       $encoderFactory
      */
     public function __construct(
@@ -240,5 +240,10 @@ class User
     public function delete($identifier) 
     {
         return $this->userModel->delete($identifier);
+    }
+    
+    public function getAll()
+    {
+        return $this->userModel->getAll();
     }
 }

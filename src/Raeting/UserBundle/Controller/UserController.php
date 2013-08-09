@@ -282,4 +282,17 @@ class UserController extends Controller
     {
         return $this->render('RaetingUserBundle:User:simple_login.html.php', array('noLoginButton' => true));
     }
+    
+    /**
+     * Lists all User entities.
+     *
+     */
+    public function listAction()
+    {
+        $entities = $this->get('user.service.user')->getAll();
+
+        return $this->render('RaetingUserBundle:Trader:index.html.php', array(
+            'entities' => $entities,
+        ));
+    }
 }

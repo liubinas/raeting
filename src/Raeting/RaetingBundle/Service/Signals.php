@@ -5,6 +5,7 @@ namespace Raeting\RaetingBundle\Service;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
+use Raeting\UserBundle\Entity\User;
 
 class Signals
 {
@@ -27,6 +28,20 @@ class Signals
     public function getAll()
     {
         return $this->getRepository()->findAll();
+    }
+    
+    public function getBy($query)
+    {
+        return $result = $this->getRepository()->createQueryBuilder('a')
+                ->select('s', 'u')
+                ->from('Raeting\RaetingBundle\Entity\Signals', 's')
+                ->leftJoin('s.user', 'u')
+                ->where('s.description LIKE :query')
+                ->orWhere('u.firstname LIKE :query')
+                ->orWhere('u.lastname LIKE :query')
+                ->setParameter('query', '%'.$query.'%')
+                ->getQuery()
+                ->getResult();
     }
 
     public function save(Entity\Signals $entity)

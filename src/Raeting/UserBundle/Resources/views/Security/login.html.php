@@ -40,6 +40,8 @@
                     <input type="checkbox" id="remember_me" name="_remember_me" checked="checked"/>
                     <br/><br/>
                     <a href="<?= $view['router']->generate('user.recover') ?>" class="f-right">Recover password</a>
+                    <br/><br/>
+                    <a href="<?= $view['router']->generate('user.register') ?>" class="f-right">Register</a>
                 </div>    
             </div>  
         </form>
