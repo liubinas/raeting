@@ -1,23 +1,35 @@
-<? $view->extend('RaetingUserBundle::layout.html.php'); ?>
-
-<? $view['slots']->start('header') ?>
-<div class="page_info">
-    <h1>Registration </h1>
-</div>
-<? $view['slots']->stop('header') ?>
-
-<form action="<?=$view['router']->generate('user.register') ?>" class="register" method="post" <?=$view['form']->enctype($form) ?> >
-    <div class="register-response"><?= $view['form']->errors($form); ?></div>
-    <?= $view['form']->row($form['firstname'], array('label' => 'Firstname')); ?>
-    <?= $view['form']->row($form['lastname'], array('label' => 'Lastname')); ?>
-    <?= $view['form']->row($form['email'], array('label' => 'E-mail')); ?>
+<? $view->extend('RaetingUserBundle::User/menu_register.html.php'); ?>
+<? $view['slots']->start('content') ?>
+<hr>
     
-    <?= $view['form']->row($form['password'], array('first_options' => array('label' => 'Password'))); ?>
-    <?= $view['form']->row($form['password'], array('second_options' => array('label' => 'Repeat password'))); ?>
-    
-    <?= $view['form']->rest($form); ?>
-    <div>
-        <input type="submit" value="Submit"/>
-        <a href="<?= $view['router']->generate('login') ?>">back </a>
+    <div class="row-fluid page-head">
+        <div class="span12">
+            <h1>Sign Up</h1>
+        </div>
     </div>
-</form>
+
+    <hr>
+
+    <div class="row-fluid signup">
+        <div class="span6 offset3">
+            <form action="<?=$view['router']->generate('user.register') ?>" class="form-horizontal" method="post" <?=$view['form']->enctype($form) ?> >
+                <div class="register-response"><?= $view['form']->errors($form); ?></div>
+                <?= $view['form']->row($form['firstname'], array('label' => 'Firstname')); ?>
+                <?= $view['form']->row($form['lastname'], array('label' => 'Lastname')); ?>
+                <?= $view['form']->row($form['email'], array('label' => 'E-mail')); ?>
+
+                <?= $view['form']->row($form['password'], array('first_options' => array('label' => 'Password'))); ?>
+                <?= $view['form']->row($form['password'], array('second_options' => array('label' => 'Repeat password'))); ?>
+
+                <?= $view['form']->rest($form); ?>
+                <!-- Button -->
+                <div class="control-group">
+                  <label class="control-label" for="singlebutton"></label>
+                  <div class="controls">
+                    <input type="submit" id="singlebutton" class="btn btn-success" value="Sign up" />
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<? $view['slots']->stop('content') ?>

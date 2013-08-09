@@ -11,12 +11,29 @@ class SignalsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('status')
-            ->add('quote')
-            ->add('type')
-            ->add('open')
-            ->add('profit')
-            ->add('loss')
+            ->add('buy', 'choice', array(
+                'choices' => array('Buy (Long)', 'Sell (Short)'),
+                'expanded' => true,
+                'multiple' => false,
+                'label' => '&nbsp;'
+            ))
+            ->add('quote_id', 'text', array(
+                'label' => 'Quote',
+                'attr' => array('class' => 'input-small', 'placeholder' => 'ex. EUR/USD')
+            ))
+            ->add('open', 'text', array(
+                'label' => 'Open price',
+                'attr' => array('class' => 'input-small', 'placeholder' => '0.0000')
+            ))
+            ->add('take_profit', 'text', array(
+                'label' => 'Take profit',
+                'attr' => array('class' => 'input-small', 'placeholder' => '0.0000')
+            ))
+            ->add('stop_loss', 'text', array(
+                'label' => 'Stop loss',
+                'attr' => array('class' => 'input-small', 'placeholder' => '0.0000')
+            ))
+            ->add('description', 'textarea')
         ;
     }
 

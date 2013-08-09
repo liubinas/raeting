@@ -38,16 +38,26 @@ class SignalsController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
+
             $token = $this->get('security.context')->getToken();
 
             $id = $token->getUser()->getId();
             $entity->setUser($id);
+            $entity->setUuid(md5($id.$id));
+            $entity->setClose(0);
+            $entity->setProfit(0);
+            $entity->setStatus(0);
+            $now = new \DateTime('now');
+            $entity->setOpened($now);
+            $entity->setOpenExpire($now);
+            $entity->setClosed($now);
+            $entity->setCloseExpire($now);
             
             $this->get('raetingraeting.service.signals')->save($entity);
 
             $this->get('session')->getFlashBag()->add('success', 'Your changes were saved!');
 
-            return $this->redirect($this->generateUrl('signals_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('signals', array('id' => $entity->getId())));
         }
 
         return $this->render('RaetingRaetingBundle:Signals:new.html.php', array(

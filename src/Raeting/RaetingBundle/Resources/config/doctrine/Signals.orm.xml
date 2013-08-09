@@ -4,13 +4,21 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="user" type="integer" column="user" nullable="false"/>
-    <field name="status" type="string" column="status" nullable="false"/>
-    <field name="quote" type="text" column="quote" nullable="false"/>
-    <field name="type" type="string" column="type" nullable="false"/>
-    <field name="open" type="text" column="open" nullable="false"/>
-    <field name="profit" type="text" column="profit" nullable="false"/>
-    <field name="loss" type="text" column="loss" nullable="false"/>
+    <field name="uuid" type="string" column="uuid" length="13" nullable="false"/>
+    <field name="quoteId" type="integer" column="quote_id" nullable="false"/>
+    <field name="buy" type="boolean" column="buy" nullable="false"/>
+    <field name="open" type="decimal" column="open" nullable="false"/>
+    <field name="takeProfit" type="decimal" column="take_profit" nullable="false"/>
+    <field name="stopLoss" type="decimal" column="stop_loss" nullable="false"/>
+    <field name="close" type="decimal" column="close" nullable="false"/>
+    <field name="profit" type="decimal" column="profit" nullable="false"/>
+    <field name="description" type="string" column="description" length="255" nullable="false"/>
+    <field name="status" type="boolean" column="status" nullable="false"/>
     <field name="created" type="datetime" column="created" nullable="false"/>
+    <field name="opened" type="datetime" column="opened" nullable="false"/>
+    <field name="openExpire" type="datetime" column="open_expire" nullable="false"/>
+    <field name="closed" type="datetime" column="closed" nullable="false"/>
+    <field name="closeExpire" type="datetime" column="close_expire" nullable="false"/>
+    <field name="user" type="integer" column="user" nullable="false"/>
   </entity>
 </doctrine-mapping>

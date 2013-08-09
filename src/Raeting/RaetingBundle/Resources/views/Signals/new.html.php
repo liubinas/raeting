@@ -1,41 +1,19 @@
-<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
-
-<? $view['slots']->start('header_row') ?>
-    <div class="span5">
-        <h2><?=$view['translator']->trans('Signals')?> <?=$view['translator']->trans('Creation')?></h2>
-    </div>
-    <nav class="span4">
-                    <a href="<?= $view['router']->generate('signals') ?>" class="btn">
-        <i class="icon-chevron-left"></i> 
-        <?=$view['translator']->trans('Back to the list')?>
-    </a>
-    </nav>
-<? $view['slots']->stop('header_row') ?>
-
-<? $view['slots']->start('body') ?>
-    <div class="box">
-        <div class="row-fluid">
-            <div class="content form-horizontal">
-
-                <form action="<?= $view['router']->generate('signals_create', array('id' => $entity->getId())) ?>" method="post" <?= $view['form']->enctype($form) ?>>
-                    <div class="content dark">
-                        <fieldset>
-                            <legend><b>1.</b> <?=$view['translator']->trans('General information')?></legend>
-                            <?= $view['form']->widget($form) ?>
-                        </fieldset>
+<div class="box">
+    <div class="row-fluid">
+        <div class="content form-horizontal">
+            <form action="<?= $view['router']->generate('signals_create', array('id' => $entity->getId())) ?>" method="post" <?= $view['form']->enctype($form) ?> class="form-horizontal" style="padding:20px 0 10px 0;">
+                <?= $view['form']->widget($form) ?>
+                <!-- Button -->
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="submit" id="add-signal" name="add-signal" class="btn btn-primary" value="Submit">
+                        <button id="add-signal-cancel" name="add-signal-cancel" class="btn"
+                                onclick="document.getElementsByClassName('signal-form')[0].style.display='none';">
+                            Cancel
+                        </button>
                     </div>
-
-                    <div class="content">
-                        <div class="row-fluid">
-                            <button type="submit" class="btn btn-large"><?=$view['translator']->trans('Create')?></button> 
-                            <a href="<?= $view['router']->generate('signals') ?>">
-                                <?=$view['translator']->trans('Cancel')?>
-                            </a>
-                        </div>
-                    </div>
-                </form>
-
-            </div>
+                </div>
+            </form>
         </div>
     </div>
-<? $view['slots']->stop('body') ?>
+</div>

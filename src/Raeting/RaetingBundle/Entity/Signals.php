@@ -13,53 +13,74 @@ use Doctrine\ORM\Mapping as ORM;
 class Signals
 {
     /**
+     * @var string
+     *
+     * @ORM\Column(name="uuid", type="string", length=13, nullable=false)
+     */
+    private $uuid;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="user", type="integer", nullable=false)
+     * @ORM\Column(name="quote_id", type="integer", nullable=false)
      */
-    private $user;
+    private $quoteId;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="status", type="string", nullable=false)
+     * @ORM\Column(name="buy", type="boolean", nullable=false)
      */
-    private $status;
+    private $buy;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="quote", type="text", nullable=false)
-     */
-    private $quote;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", nullable=false)
-     */
-    private $type;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="open", type="text", nullable=false)
+     * @ORM\Column(name="open", type="decimal", nullable=false)
      */
     private $open;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="profit", type="text", nullable=false)
+     * @ORM\Column(name="take_profit", type="decimal", nullable=false)
+     */
+    private $takeProfit;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="stop_loss", type="decimal", nullable=false)
+     */
+    private $stopLoss;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="close", type="decimal", nullable=false)
+     */
+    private $close;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="profit", type="decimal", nullable=false)
      */
     private $profit;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="loss", type="text", nullable=false)
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
-    private $loss;
+    private $description;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=false)
+     */
+    private $status;
 
     /**
      * @var \DateTime
@@ -67,6 +88,41 @@ class Signals
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
     private $created;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="opened", type="datetime", nullable=false)
+     */
+    private $opened;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="open_expire", type="datetime", nullable=false)
+     */
+    private $openExpire;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="closed", type="datetime", nullable=false)
+     */
+    private $closed;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="close_expire", type="datetime", nullable=false)
+     */
+    private $closeExpire;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user", type="integer", nullable=false)
+     */
+    private $user;
 
     /**
      * @var integer
@@ -80,101 +136,78 @@ class Signals
 
 
     /**
-     * Set user
+     * Set uuid
      *
-     * @param integer $user
+     * @param string $uuid
      * @return Signals
      */
-    public function setUser($user)
+    public function setUuid($uuid)
     {
-        $this->user = $user;
+        $this->uuid = $uuid;
     
         return $this;
     }
 
     /**
-     * Get user
+     * Get uuid
+     *
+     * @return string 
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * Set quoteId
+     *
+     * @param integer $quoteId
+     * @return Signals
+     */
+    public function setQuoteId($quoteId)
+    {
+        $this->quoteId = $quoteId;
+    
+        return $this;
+    }
+
+    /**
+     * Get quoteId
      *
      * @return integer 
      */
-    public function getUser()
+    public function getQuoteId()
     {
-        return $this->user;
+        return $this->quoteId;
     }
 
     /**
-     * Set status
+     * Set buy
      *
-     * @param string $status
+     * @param boolean $buy
      * @return Signals
      */
-    public function setStatus($status)
+    public function setBuy($buy)
     {
-        $this->status = $status;
+        $this->buy = $buy;
     
         return $this;
     }
 
     /**
-     * Get status
+     * Get buy
      *
-     * @return string 
+     * @return boolean 
      */
-    public function getStatus()
+    public function getBuy()
     {
-        return $this->status;
-    }
-
-    /**
-     * Set quote
-     *
-     * @param string $quote
-     * @return Signals
-     */
-    public function setQuote($quote)
-    {
-        $this->quote = $quote;
-    
-        return $this;
-    }
-
-    /**
-     * Get quote
-     *
-     * @return string 
-     */
-    public function getQuote()
-    {
-        return $this->quote;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Signals
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
+        return $this->buy;
     }
 
     /**
      * Set open
      *
-     * @param string $open
+     * @param float $open
      * @return Signals
      */
     public function setOpen($open)
@@ -187,7 +220,7 @@ class Signals
     /**
      * Get open
      *
-     * @return string 
+     * @return float 
      */
     public function getOpen()
     {
@@ -195,9 +228,78 @@ class Signals
     }
 
     /**
+     * Set takeProfit
+     *
+     * @param float $takeProfit
+     * @return Signals
+     */
+    public function setTakeProfit($takeProfit)
+    {
+        $this->takeProfit = $takeProfit;
+    
+        return $this;
+    }
+
+    /**
+     * Get takeProfit
+     *
+     * @return float 
+     */
+    public function getTakeProfit()
+    {
+        return $this->takeProfit;
+    }
+
+    /**
+     * Set stopLoss
+     *
+     * @param float $stopLoss
+     * @return Signals
+     */
+    public function setStopLoss($stopLoss)
+    {
+        $this->stopLoss = $stopLoss;
+    
+        return $this;
+    }
+
+    /**
+     * Get stopLoss
+     *
+     * @return float 
+     */
+    public function getStopLoss()
+    {
+        return $this->stopLoss;
+    }
+
+    /**
+     * Set close
+     *
+     * @param float $close
+     * @return Signals
+     */
+    public function setClose($close)
+    {
+        $this->close = $close;
+    
+        return $this;
+    }
+
+    /**
+     * Get close
+     *
+     * @return float 
+     */
+    public function getClose()
+    {
+        return $this->close;
+    }
+
+    /**
      * Set profit
      *
-     * @param string $profit
+     * @param float $profit
      * @return Signals
      */
     public function setProfit($profit)
@@ -210,7 +312,7 @@ class Signals
     /**
      * Get profit
      *
-     * @return string 
+     * @return float 
      */
     public function getProfit()
     {
@@ -218,26 +320,49 @@ class Signals
     }
 
     /**
-     * Set loss
+     * Set description
      *
-     * @param string $loss
+     * @param string $description
      * @return Signals
      */
-    public function setLoss($loss)
+    public function setDescription($description)
     {
-        $this->loss = $loss;
+        $this->description = $description;
     
         return $this;
     }
 
     /**
-     * Get loss
+     * Get description
      *
      * @return string 
      */
-    public function getLoss()
+    public function getDescription()
     {
-        return $this->loss;
+        return $this->description;
+    }
+
+    /**
+     * Set status
+     *
+     * @param boolean $status
+     * @return Signals
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return boolean 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
@@ -261,6 +386,121 @@ class Signals
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * Set opened
+     *
+     * @param \DateTime $opened
+     * @return Signals
+     */
+    public function setOpened($opened)
+    {
+        $this->opened = $opened;
+    
+        return $this;
+    }
+
+    /**
+     * Get opened
+     *
+     * @return \DateTime 
+     */
+    public function getOpened()
+    {
+        return $this->opened;
+    }
+
+    /**
+     * Set openExpire
+     *
+     * @param \DateTime $openExpire
+     * @return Signals
+     */
+    public function setOpenExpire($openExpire)
+    {
+        $this->openExpire = $openExpire;
+    
+        return $this;
+    }
+
+    /**
+     * Get openExpire
+     *
+     * @return \DateTime 
+     */
+    public function getOpenExpire()
+    {
+        return $this->openExpire;
+    }
+
+    /**
+     * Set closed
+     *
+     * @param \DateTime $closed
+     * @return Signals
+     */
+    public function setClosed($closed)
+    {
+        $this->closed = $closed;
+    
+        return $this;
+    }
+
+    /**
+     * Get closed
+     *
+     * @return \DateTime 
+     */
+    public function getClosed()
+    {
+        return $this->closed;
+    }
+
+    /**
+     * Set closeExpire
+     *
+     * @param \DateTime $closeExpire
+     * @return Signals
+     */
+    public function setCloseExpire($closeExpire)
+    {
+        $this->closeExpire = $closeExpire;
+    
+        return $this;
+    }
+
+    /**
+     * Get closeExpire
+     *
+     * @return \DateTime 
+     */
+    public function getCloseExpire()
+    {
+        return $this->closeExpire;
+    }
+
+    /**
+     * Set user
+     *
+     * @param integer $user
+     * @return Signals
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return integer 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**

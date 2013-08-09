@@ -1,18 +1,22 @@
-<? $view->extend('RaetingUserBundle::layout.html.php'); ?>
+<? $view->extend('RaetingUserBundle::User/menu.html.php'); ?>
 
-
-<? $view['slots']->start('header') ?>
-<div class="page_info">
-    <h1>Change password</h1>
+<? $view['slots']->start('content') ?>
+<hr>
+    
+<div class="row-fluid page-head">
+    <div class="span12">
+        <h1>Recover Password</h1>
+    </div>
 </div>
-<? $view['slots']->stop('header') ?>
-<div class="main results merchant">
-    <section class="destination_info">
 
+<hr>
+
+<div class="row-fluid signup">
+    <div class="span6 offset3">
         <? if (true === $posted && true === $changed): ?>
-            <p>Password changed successfully</p>
+            <p>Password changed successfully <a href="<?=$view['router']->generate('login') ?>">Log in </a></p>
         <? else: ?>
-            <form action="<?= $view['router']->generate('user.change_password') ?>" class="bind-form-changepassword" method="post" <?= $view['form']->enctype($form) ?> >
+            <form action="<?= $view['router']->generate('user.change_password') ?>" class="form-horizontal" method="post" <?= $view['form']->enctype($form) ?> >
                 <div class="bind-form-changepassword-response"></div>
                 <?=$view['form']->errors($form);?>
                 <?= $view['form']->row($form['email'], array('label' => 'E-mail')); ?>
@@ -20,10 +24,15 @@
                 <?= $view['form']->row($form['password'], array('first_options' => array('label' => 'Password'))); ?>
                 <?= $view['form']->row($form['password'], array('second_options' => array('label' => 'Repeat password'))); ?>
                 <?= $view['form']->rest($form);?>
-                <div>
-                    <input type="submit" value="Submit"/>
+                <!-- Button -->
+                <div class="control-group">
+                  <label class="control-label" for="singlebutton"></label>
+                  <div class="controls">
+                    <input type="submit" id="singlebutton" class="btn btn-success" value="Submit" />
+                  </div>
                 </div>
             </form>
         <? endif; ?>
-    </section>
-</div>
+    </div>
+</div>    
+<? $view['slots']->stop('content') ?>

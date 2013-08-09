@@ -1,0 +1,137 @@
+<?php
+
+namespace Raeting\RaetingBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Signals
+ *
+ * @ORM\Table(name="signals")
+ * @ORM\Entity
+ */
+class Signals
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="uuid", type="string", length=13, nullable=false)
+     */
+    private $uuid;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="quote_id", type="integer", nullable=false)
+     */
+    private $quoteId;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="buy", type="boolean", nullable=false)
+     */
+    private $buy;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="open", type="decimal", nullable=false)
+     */
+    private $open;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="take_profit", type="decimal", nullable=false)
+     */
+    private $takeProfit;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="stop_loss", type="decimal", nullable=false)
+     */
+    private $stopLoss;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="close", type="decimal", nullable=false)
+     */
+    private $close;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="profit", type="decimal", nullable=false)
+     */
+    private $profit;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
+     */
+    private $description;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime", nullable=false)
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="opened", type="datetime", nullable=false)
+     */
+    private $opened;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="open_expire", type="datetime", nullable=false)
+     */
+    private $openExpire;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="closed", type="datetime", nullable=false)
+     */
+    private $closed;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="close_expire", type="datetime", nullable=false)
+     */
+    private $closeExpire;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user", type="integer", nullable=false)
+     */
+    private $user;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
