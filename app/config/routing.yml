@@ -2,3 +2,6 @@ _user:
     resource: "@RaetingUserBundle/Resources/config/routing.php"
 _signal:
     resource: "@RaetingRaetingBundle/Resources/config/routing.yml"
+_api:
+    prefix: /api/
+    resource: "@RaetingApiBundle/Resources/config/routing.yml"
