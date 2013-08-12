@@ -1,0 +1,73 @@
+Raeting\RaetingBundle\Entity\Signals:
+    type: entity
+    table: signals
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        uuid:
+            type: string
+            length: 13
+            fixed: true
+            nullable: false
+        buy:
+            type: boolean
+            nullable: false
+        open:
+            type: decimal
+            nullable: false
+        takeProfit:
+            type: decimal
+            nullable: false
+            column: take_profit
+        stopLoss:
+            type: decimal
+            nullable: false
+            column: stop_loss
+        close:
+            type: decimal
+            nullable: false
+        profit:
+            type: decimal
+            nullable: false
+        description:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+        status:
+            type: boolean
+            nullable: false
+        created:
+            type: datetime
+            nullable: false
+        opened:
+            type: datetime
+            nullable: false
+        openExpire:
+            type: datetime
+            nullable: false
+            column: open_expire
+        closed:
+            type: datetime
+            nullable: false
+        closeExpire:
+            type: datetime
+            nullable: false
+            column: close_expire
+    manyToOne:
+        quote:
+            targetEntity: Raeting\RaetingBundle\Entity\Quote
+            cascade: {  }
+            mappedBy: null
+            orphanRemoval: false
+        user:
+            targetEntity: Raeting\UserBundle\Entity\User
+            cascade: {  }
+            mappedBy: null
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -3,12 +3,9 @@ raeting_raeting_signals:
     prefix:   /signals
 
 home:
-    pattern:  /home
+    pattern:  /
     defaults: { _controller: "RaetingRaetingBundle:Raeting:index" }
     
-traders:
-    pattern:  /traders
-    defaults: { _controller: "RaetingRaetingBundle:Raeting:traders" }
 api:
     pattern:  /api
     defaults: { _controller: "RaetingRaetingBundle:Raeting:api" }

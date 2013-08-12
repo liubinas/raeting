@@ -5,7 +5,7 @@
 
 <div class="row-fluid" style="background-color:#F1F1F1; padding-top:20px;">
         <div class="span12" style="text-align: center">
-            <form class="form-inline" method="get" onsubmit="return false;">
+            <form class="form-inline" method="get" action="<?= $view['router']->generate('signals') ?>">
                 <div class="controls" style="margin:0 0 5px 0">
                     <input id="signal-search" name="signal-search" type="text" placeholder="search" class="input-xxlarge" style="margin-bottom: 5px">
                     <button id="signal-search-btn" name="signal-search-btn" class="btn btn-info">
@@ -38,7 +38,6 @@
                     <th>Stop loss</th>
                     <th>Trader</th>
                     <th>Created</th>
-                    <th>Action</th>
                 </thead>
                 <tbody>
                     <? foreach ($entities as $entity):?>
@@ -47,17 +46,13 @@
                             <a href="#">
                                 <span class="label label-success"><?=$entity->getstatus()?></span></a>
                         </td>
-                        <td><?=$entity->getquoteid()?></td>
-                        <td><?=$entity->getbuy()?></td>
-                        <td><?=$entity->getopen()?></td>
-                        <td><?=$entity->gettakeprofit()?></td>
-                        <td><?=$entity->getstoploss()?></td>
-                        <td><?=$entity->getuser()?></td>
-                        <td><?=$entity->getcreated()->format('Y-m-d')?></td>
-                        <td>
-                            <a href="<?= $view['router']->generate('signals_show', array('id' => $entity->getId())) ?>" class="btn">
-                                <?=$view['translator']->trans('edit')?></a>
-                        </td>
+                        <td><?=$entity->getQuote()->getTitle()?></td>
+                        <td><?=$entity->getBuyValue()?></td>
+                        <td><?=$entity->getOpen()?></td>
+                        <td><?=$entity->getTakeprofit()?></td>
+                        <td><?=$entity->getStoploss()?></td>
+                        <td><?=$entity->getUser()->getFirstname()?> <?=$entity->getUser()->getLastname()?></td>
+                        <td><?=$entity->getCreated()->format('Y-m-d')?></td>
                     </tr>
                     <? endforeach;?>
                 </tbody>

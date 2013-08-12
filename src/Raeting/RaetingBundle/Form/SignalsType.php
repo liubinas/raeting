@@ -17,7 +17,7 @@ class SignalsType extends AbstractType
                 'multiple' => false,
                 'label' => '&nbsp;'
             ))
-            ->add('quote_id', 'text', array(
+            ->add('quote', 'text', array(
                 'label' => 'Quote',
                 'attr' => array('class' => 'input-small', 'placeholder' => 'ex. EUR/USD')
             ))

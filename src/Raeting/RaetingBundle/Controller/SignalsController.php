@@ -19,8 +19,14 @@ class SignalsController extends Controller
      */
     public function indexAction()
     {
-        $entities = $this->get('raetingraeting.service.signals')->getAll();
-
+        $request = $this->get('request');
+        $query = $request->query->get('signal-search');
+        if ($request->getMethod() == 'GET' && !empty($query)) {
+            $entities = $this->get('raetingraeting.service.signals')->getBy($query);
+        }else{
+            $entities = $this->get('raetingraeting.service.signals')->getAll();
+        }
+        
         return $this->render('RaetingRaetingBundle:Signals:index.html.php', array(
             'entities' => $entities,
         ));

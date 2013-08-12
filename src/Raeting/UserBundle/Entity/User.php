@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=50, nullable=false)
@@ -97,15 +106,30 @@ class User
     private $lastLogin;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="facebook", type="string", length=255, nullable=false)
      */
-    private $id;
+    private $facebook;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="linkedin", type="string", length=255, nullable=false)
+     */
+    private $linkedin;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set email
@@ -384,12 +408,48 @@ class User
     }
 
     /**
-     * Get id
+     * Set facebook
      *
-     * @return integer 
+     * @param string $facebook
+     * @return User
      */
-    public function getId()
+    public function setFacebook($facebook)
     {
-        return $this->id;
+        $this->facebook = $facebook;
+    
+        return $this;
+    }
+
+    /**
+     * Get facebook
+     *
+     * @return string 
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * Set linkedin
+     *
+     * @param string $linkedin
+     * @return User
+     */
+    public function setLinkedin($linkedin)
+    {
+        $this->linkedin = $linkedin;
+    
+        return $this;
+    }
+
+    /**
+     * Get linkedin
+     *
+     * @return string 
+     */
+    public function getLinkedin()
+    {
+        return $this->linkedin;
     }
 }

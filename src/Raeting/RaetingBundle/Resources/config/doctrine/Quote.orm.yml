@@ -1,0 +1,28 @@
+Raeting\RaetingBundle\Entity\Quote:
+    type: entity
+    table: quote
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        symbol:
+            type: string
+            length: 20
+            fixed: false
+            nullable: false
+        title:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+    manyToOne:
+        market:
+            targetEntity: Raeting\RaetingBundle\Entity\Market
+            cascade: {  }
+            mappedBy: null
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

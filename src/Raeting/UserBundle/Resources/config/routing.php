@@ -5,11 +5,6 @@ use Symfony\Component\Routing\Route;
 
 $collection = new RouteCollection();
 
-$collection->add('login_empty', 
-    new Route('/', array(
-        '_controller' => 'RaetingUserBundle:User:simpleLogin'
-    )
-));
 $collection->add('login', 
     new Route('/login', array(
         '_controller' => 'RaetingUserBundle:User:simpleLogin'
@@ -47,8 +42,8 @@ $collection->add('user.new_password', new Route('/new-password', array(
     '_controller' => 'RaetingUserBundle:User:newPassword',
 )));
 
-$collection->add('user.home', new Route('/user-home', array(
-    '_controller' => 'RaetingUserBundle:User:home',
+$collection->add('traders', new Route('/traders', array(
+    '_controller' => 'RaetingUserBundle:User:list',
 )));
 
 
