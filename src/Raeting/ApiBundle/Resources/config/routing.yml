@@ -1,21 +1,21 @@
-signals:
+api_signals:
     pattern:  /signals.{_format}
     defaults: { _controller: "RaetingApiBundle:Signal:index" }
     requirements:
       _format: json|xml
-signals_show:
+api_signals_show:
     pattern:  /signal/{id}.{_format}
     defaults: { _controller: "RaetingApiBundle:Signal:show" }
     requirements:
       _format: json|xml
 
-traders:
+api_traders:
     pattern:  /traders.{_format}
     defaults: { _controller: "RaetingApiBundle:Trader:index" }
     requirements:
       _format: json|xml
 
-traders_show:
+api_traders_show:
     pattern:  /trader/{id}.{_format}
     defaults: { _controller: "RaetingApiBundle:Trader:show" }
     requirements:
