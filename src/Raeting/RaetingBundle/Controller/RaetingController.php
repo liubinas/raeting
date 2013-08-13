@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class RaetingController extends Controller
 {
     /**
-     * @Route("/hello/{name}")
      * @Template()
      */
     public function indexAction()
