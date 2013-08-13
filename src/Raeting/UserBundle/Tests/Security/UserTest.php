@@ -19,8 +19,6 @@ class UserTest extends \Estina\Tests\TestCase {
         $user = new User('pawka', '', 'admin');
         $this->assertEquals(array('ROLE_ADMIN'), $user->getRoles());
 
-        $user = new User('pawka', '', 'merchant');
-        $this->assertEquals(array('ROLE_MERCHANT'), $user->getRoles());
 
         $user = new User('pawka', '', 'customer');
         $this->assertEquals(array('ROLE_CUSTOMER'), $user->getRoles());
