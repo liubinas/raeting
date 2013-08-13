@@ -21,7 +21,7 @@ Change $ENV to your enviroment name.
             setenv SYMFONY_ENV $ENV
             RewriteEngine On
             RewriteCond %{REQUEST_FILENAME} !-f
-            RewriteRule ^(.*) app_$ENV.php [QSA,L]
+            RewriteRule ^(.*) app_dev.php [QSA,L]
     </Directory>
 </VirtualHost>
 3) Add your $ENV to app/AppKernel.php 
