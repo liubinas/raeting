@@ -2,13 +2,13 @@
 
 namespace Raeting\UserBundle\Tests\Service;
 
-use Raeting\CoreBundle\Tests\TestCase;
+use Estina\Tests;
 use Raeting\UserBundle\Service\User;
 
 /**
  * User service test
  */
-class UserTest extends TestCase {
+class UserTest extends \Estina\Tests\TestCase {
 
     /**
      * Create user service instance.

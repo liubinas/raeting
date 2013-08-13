@@ -11,6 +11,10 @@
         {
             "type": "vcs",
             "url": "http://github.com/Estina/GeneratorBundle"
+        },
+        {
+            "type": "vcs",
+            "url": "http://github.com/Estina/Tests"
         }
     ],
     "require": {
@@ -32,7 +36,8 @@
         "sensio/framework-extra-bundle"         : "2.3.*",
         "sensio/generator-bundle"               : "2.2.*",
         "incenteev/composer-parameter-handler"  : "~2.0",
-        "estina/generator-bundle"               : "*"
+        "estina/generator-bundle"               : "*",
+        "estina/tests"                          : "*"
     },
     "scripts": {
         "post-install-cmd": [

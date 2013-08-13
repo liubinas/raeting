@@ -2,13 +2,14 @@
 
 namespace Raeting\UserBundle\Tests\Security;
 
-use Raeting\CoreBundle\Tests\TestCase;
 use Raeting\UserBundle\Security\User;
+
+use Estina\Tests;
 
 /**
  * UserTest 
  */
-class UserTest extends TestCase {
+class UserTest extends \Estina\Tests\TestCase {
 
     /**
      * testGetRoles 
