@@ -9,7 +9,6 @@ class ApiControllerTest extends WebTestCase
     public function testIndexJson()
     {
         $client = static::createClient();
-
         $crawler = $client->request('GET', '/signals.json');
 
         //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
@@ -17,6 +16,7 @@ class ApiControllerTest extends WebTestCase
 
         $response = $client->getResponse();
         $this->assertResponse($response, 200, 'application/json');
+
     }
 
     public function testIndexXml()
@@ -42,7 +42,9 @@ class ApiControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertResponse($response, 200, 'application/json');
 
-    }    public function testShowXml()
+    }
+
+    public function testShowXml()
     {
         $client = static::createClient();
 
@@ -65,5 +67,15 @@ class ApiControllerTest extends WebTestCase
             $response->headers->contains('Content-Type', $contentType),
             $response->headers
         );
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        // workaround for https://github.com/symfony/symfony/issues/2531
+        if (ob_get_length() == 0 ) {
+            ob_start();
+        }
     }
 }

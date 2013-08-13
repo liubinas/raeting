@@ -28,7 +28,7 @@
         "symfony/framework-bundle"             : ">=2.1.0,<2.4-dev",
         "doctrine/migrations"                   : "*",
         "doctrine/doctrine-migrations-bundle"   : "dev-master",
-        "twig/extensions"                       : "1.0.*",
+        "twig/extensions"                       : "1.0.0",
         "symfony/assetic-bundle"                : "2.3.*",
         "symfony/swiftmailer-bundle"            : "2.3.*",
         "symfony/monolog-bundle"                : "2.3.*",
@@ -37,7 +37,8 @@
         "sensio/generator-bundle"               : "2.2.*",
         "incenteev/composer-parameter-handler"  : "~2.0",
         "estina/generator-bundle"               : "*",
-        "estina/tests"                          : "*"
+        "estina/tests"                          : "*",
+        "phpunit/phpunit"                       : "3.7.0"
     },
     "scripts": {
         "post-install-cmd": [
