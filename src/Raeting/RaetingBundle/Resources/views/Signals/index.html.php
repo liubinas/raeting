@@ -11,20 +11,23 @@
                     <button id="signal-search-btn" name="signal-search-btn" class="btn btn-info">
                         <i class="icon-search icon-white"></i> Signal Search
                     </button>
+                    <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
                     <button id="signal-add-btn" name="signal-add-btn" class="btn btn-success"
-                        onclick="document.getElementsByClassName('signal-form')[0].style.display='block';">
+                        onclick="document.getElementsByClassName('signal-form')[0].style.display='block'; return false;">
                         <i class="icon-plus icon-white"></i> Add Signal
                     </button>
+                    <? endif; ?>
                 </div>
             </form>
         </div>
     </div>
-    
+    <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
     <div class="row-fluid signal-form" style="background-color:#F5F5F5; display: none">
         <div class="span6 offset3">
             <?= $view['actions']->render(new \Symfony\Component\HttpKernel\Controller\ControllerReference('RaetingRaetingBundle:Signals:new', array('includeLayout'=> 'false'))); ?>
         </div>
     </div>
+    <? endif; ?>
     <? if (!empty($entities)): ?>
     <div class="row-fluid signals">
         <div class="span12">

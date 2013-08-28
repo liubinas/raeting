@@ -11,9 +11,9 @@ $securityConfig = array(
     ),
     'encoders' => array(
         'Raeting\UserBundle\Security\User' => array(
-            'algorithm' => 'sha512',
+            'algorithm' => 'sha1',
             'encode_as_base64' => false,
-            'iterations' => 1000,
+            'iterations' => 1,
         )
     ),
 );

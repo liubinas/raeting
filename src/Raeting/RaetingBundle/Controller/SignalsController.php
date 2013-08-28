@@ -44,16 +44,21 @@ class SignalsController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
-
+            $data = $form->getData();
             $token = $this->get('security.context')->getToken();
 
             $id = $token->getUser()->getId();
-            $entity->setUser($id);
+            $user = $this->get('doctrine')
+            ->getRepository('RaetingUserBundle:User')
+            ->find($id);
+
+            $entity->setUser($user);
             $entity->setUuid(md5($id.$id));
             $entity->setClose(0);
             $entity->setProfit(0);
             $entity->setStatus(0);
             $now = new \DateTime('now');
+            $entity->setCreated($now);
             $entity->setOpened($now);
             $entity->setOpenExpire($now);
             $entity->setClosed($now);
@@ -176,5 +181,23 @@ class SignalsController extends Controller
         );
 
         return $this->redirect($this->generateUrl('signals'));
+    }
+    
+    public function ajaxGetAllQuotesJsonAction()
+    {
+        $quotes = $this->get('raetingraeting.service.quote')->getAll();
+        $serializer = $this->container->get('serializer');
+        $quotes = $serializer->serialize($quotes, 'json');
+        echo $quotes;
+        die;
+    }
+    
+    public function ajaxGetAllTickersJsonAction()
+    {
+        $tickers = $this->get('raetingraeting.service.ticker')->getAll();
+        $serializer = $this->container->get('serializer');
+        $tickers = $serializer->serialize($tickers, 'json');
+        echo $tickers;
+        die;
     }
 }

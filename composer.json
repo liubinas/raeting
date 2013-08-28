@@ -40,7 +40,8 @@
         "estina/tests"                          : "*",
         "phpunit/phpunit"                       : "3.7.0",
         "facebook/php-sdk"                      : "3.2.0",
-        "friendsofsymfony/facebook-bundle"      : "dev-master"
+        "friendsofsymfony/facebook-bundle"      : "dev-master",
+        "jms/serializer-bundle"                 : "0.13.*@dev"
     },
     "scripts": {
         "post-install-cmd": [

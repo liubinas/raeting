@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Raeting\CoreBundle\RaetingCoreBundle(),
             new Raeting\RaetingBundle\RaetingRaetingBundle(),
             new Raeting\ApiBundle\RaetingApiBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'marius', 'wsuff'))) {

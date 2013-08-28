@@ -33,7 +33,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         
         $user->setEmail('estina@estina.lt');
         $user->setUsergroup('customer');
-        $user->setPassword('labadiena');
+        $user->setPassword('5fb3760172db1462dcb9d34cd1e24a226ec8a86d'); //labadiena
         $user->setFirstname('labadiena');
         $user->setLastname('labadiena');
         $user->setStreet('labadiena');
