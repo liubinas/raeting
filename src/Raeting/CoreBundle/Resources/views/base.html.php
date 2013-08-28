@@ -11,8 +11,9 @@
         </script>
         <script src="<?= $view['assets']->getUrl('js/jquery-1.10.2.js') ?>" type="text/javascript"></script>
         <script src="<?= $view['assets']->getUrl('js/bootstrap.min.js') ?>" type="text/javascript"></script>
+        <script src="<?= $view['assets']->getUrl('js/app.js') ?>" type="text/javascript"></script>
     </head>
-    <body>
+    <body data-controller="krabas" data-action="labas">
         <div class="main-wrap">
             <div class="head">
                 <ul class="nav nav-pills pull-right">
