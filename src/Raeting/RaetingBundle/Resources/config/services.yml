@@ -1,3 +1,11 @@
+services:
+    raeting_raeting.form.type.extentity:
+        class: Raeting\RaetingBundle\Form\Type\ExtEntityType
+        arguments: 
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: form.type, alias: extentity }
+            
 imports:
 - { resource: services/signals.yml }
 - { resource: services/market.yml }

@@ -6,12 +6,15 @@
         <link href="<?= $view['assets']->getUrl('css/bootstrap.css') ?>" rel="stylesheet" type="text/css" media="all" />
         <link href="<?= $view['assets']->getUrl('css/raeting.css') ?>" rel="stylesheet" type="text/css" media="all" />
         <link href="<?= $view['assets']->getUrl('css/bootstrap-responsive.css') ?>" rel="stylesheet" type="text/css" media="all" />
+        <link href="<?= $view['assets']->getUrl('css/jquery-ui-1.10.3.custom.css') ?>" rel="stylesheet" type="text/css" media="all" />
         <script type="text/javascript">
             var ROOT_URL  = '<?= $view['request']->getRootUrl(); ?>';
         </script>
         <script src="<?= $view['assets']->getUrl('js/jquery-1.10.2.js') ?>" type="text/javascript"></script>
+        <script src="<?= $view['assets']->getUrl('js/jquery-ui-1.10.3.custom.min.js') ?>" type="text/javascript"></script>
         <script src="<?= $view['assets']->getUrl('js/bootstrap.min.js') ?>" type="text/javascript"></script>
         <script src="<?= $view['assets']->getUrl('js/app.js') ?>" type="text/javascript"></script>
+        <script src="<?= $view['assets']->getUrl('js/raeting.js') ?>" type="text/javascript"></script>
     </head>
     <body data-controller="krabas" data-action="labas">
         <div class="main-wrap">
