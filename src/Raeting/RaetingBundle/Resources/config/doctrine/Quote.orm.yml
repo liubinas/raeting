@@ -25,9 +25,4 @@ Raeting\RaetingBundle\Entity\Quote:
             cascade: {  }
             mappedBy: null
             orphanRemoval: false
-        ticker:
-            targetEntity: Raeting\RaetingBundle\Entity\Ticker
-            cascade: {  }
-            mappedBy: null
-            orphanRemoval: false
     lifecycleCallbacks: {  }
