@@ -30,7 +30,7 @@ testunit:
 
 # start selenium server
 seleniumserver:
-	java -jar bin/selenium-server-standalone-2.31.0.jar
+	java -jar bin/selenium-server.jar
 
 # get latest tag
 latesttag:

@@ -51,7 +51,8 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default')));
-        $signal->setQuote($manager->merge($this->getReference('quote.apple')));
+        $signal->setQuote($manager->merge($this->getReference('quote.eurusd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
 
         $manager->persist($signal);
         $manager->flush();

@@ -1,0 +1,22 @@
+Raeting\RaetingBundle\Entity\Ticker:
+    type: entity
+    table: ticker
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        symbol:
+            type: string
+            length: 50
+            fixed: false
+            nullable: false
+        name:
+            type: string
+            length: 50
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,7 @@
+parameters:
+    raetingraeting.service.ticker.class: Raeting\RaetingBundle\Service\Ticker
+
+services:
+    raetingraeting.service.ticker:
+        class: %raetingraeting.service.ticker.class%
+        arguments: [@doctrine.orm.entity_manager]

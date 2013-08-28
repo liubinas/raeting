@@ -65,6 +65,11 @@ Raeting\RaetingBundle\Entity\Signals:
             cascade: {  }
             mappedBy: null
             orphanRemoval: false
+        ticker:
+            targetEntity: Raeting\RaetingBundle\Entity\Ticker
+            cascade: {  }
+            mappedBy: null
+            orphanRemoval: false
         user:
             targetEntity: Raeting\UserBundle\Entity\User
             cascade: {  }

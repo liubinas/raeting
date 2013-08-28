@@ -112,14 +112,14 @@ class Quote
     public function setMarket(\Raeting\RaetingBundle\Entity\Market $market = null)
     {
         $this->market = $market;
-    
+
         return $this;
     }
 
     /**
      * Get market
      *
-     * @return \Raeting\RaetingBundle\Entity\Market 
+     * @return \Raeting\RaetingBundle\Entity\Market
      */
     public function getMarket()
     {

@@ -9,9 +9,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Quote sample data fixtures.
+ * Market sample data fixtures.
  */
-class LoadQuoteData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadTickerData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     private $container;
 
@@ -27,15 +27,12 @@ class LoadQuoteData extends AbstractFixture implements OrderedFixtureInterface, 
      */
     public function load(ObjectManager $manager)
     {
-        $quoteService = $this->container->get('raetingraeting.service.quote');
+        $tickerService = $this->container->get('raetingraeting.service.ticker');
 
-        $entity = $quoteService->getNew();
-
-        $entity->setSymbol('EUR/USD');
-        $entity->setTitle('EUR/USD');
-        $entity->setMarket($manager->merge($this->getReference('market.forex')));
-
-        $this->addReference('quote.eurusd', $entity);
+        $entity = $tickerService->getNew();
+        $entity->setSymbol('APPL');
+        $entity->setName('Apple');
+        $this->addReference('ticker.apple', $entity);
 
         $manager->persist($entity);
         $manager->flush();
@@ -43,6 +40,6 @@ class LoadQuoteData extends AbstractFixture implements OrderedFixtureInterface, 
 
     public function getOrder()
     {
-        return 2;
+        return 1;
     }
 }

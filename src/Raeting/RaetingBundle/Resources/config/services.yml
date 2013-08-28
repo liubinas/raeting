@@ -2,3 +2,4 @@ imports:
 - { resource: services/signals.yml }
 - { resource: services/market.yml }
 - { resource: services/quote.yml }
+- { resource: services/ticker.yml }

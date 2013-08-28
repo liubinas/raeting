@@ -133,6 +133,15 @@ class Signals
      * })
      */
     private $quote;
+    /**
+     * @var \Raeting\RaetingBundle\Entity\Ticker
+     *
+     * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Ticker")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ticker_id", referencedColumnName="id")
+     * })
+     */
+    private $ticker;
 
     /**
      * @var \Raeting\UserBundle\Entity\User
@@ -500,6 +509,28 @@ class Signals
     {
         return $this->quote;
     }
+    /**
+     * Set ticker
+     *
+     * @param \Raeting\RaetingBundle\Entity\Ticker $ticker
+     * @return Signals
+     */
+    public function setTicker(\Raeting\RaetingBundle\Entity\Ticker $ticker= null)
+    {
+        $this->ticker = $ticker;
+
+        return $this;
+    }
+
+    /**
+     * Get ticker
+     *
+     * @return \Raeting\RaetingBundle\Entity\Ticker
+     */
+    public function getTicker()
+    {
+        return $this->ticker;
+    }
 
     /**
      * Set user
@@ -527,5 +558,61 @@ class Signals
     public function getBuyValue()
     {
         return $this->buyEnum[$this->buy];
+    }
+    /**
+     * @var integer
+     */
+    private $quoteId;
+
+    /**
+     * @var integer
+     */
+    private $userId;
+
+
+    /**
+     * Set quoteId
+     *
+     * @param integer $quoteId
+     * @return Signals
+     */
+    public function setQuoteId($quoteId)
+    {
+        $this->quoteId = $quoteId;
+    
+        return $this;
+    }
+
+    /**
+     * Get quoteId
+     *
+     * @return integer 
+     */
+    public function getQuoteId()
+    {
+        return $this->quoteId;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param integer $userId
+     * @return Signals
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return integer 
+     */
+    public function getUserId()
+    {
+        return $this->userId;
     }
 }
