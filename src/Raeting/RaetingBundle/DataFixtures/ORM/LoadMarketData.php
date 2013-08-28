@@ -31,7 +31,6 @@ class LoadMarketData extends AbstractFixture implements OrderedFixtureInterface,
 
         $entity = $marketService->getNew();
         $entity->setTitle('forex');
-        $entity->setSymbol('APPL');
         $this->addReference('market.forex', $entity);
 
         $manager->persist($entity);

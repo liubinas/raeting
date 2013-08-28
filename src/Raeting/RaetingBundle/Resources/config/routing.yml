@@ -1,7 +1,10 @@
 raeting_raeting_signals:
     resource: "@RaetingRaetingBundle/Resources/config/routing/signals.yml"
-    prefix:   /signals
+    prefix:   /signal
 
+trader:
+    resource: "@RaetingRaetingBundle/Resources/config/routing/trader.yml"
+    prefix:   /trader
 home:
     pattern:  /
     defaults: { _controller: "RaetingRaetingBundle:Raeting:index" }

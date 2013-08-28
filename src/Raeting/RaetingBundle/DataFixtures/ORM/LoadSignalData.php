@@ -31,7 +31,27 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000));
-        $signal->setQuote()
+        $signal->setBuy(1);
+        $signal->setOpen(1.23);
+        $signal->setTakeprofit(1.23);
+        $signal->setStoploss(1.23);
+        $signal->setClose(1.23);
+        $signal->setProfit(0);
+        $signal->setDescription('Tryout');
+        $signal->setStatus(1);
+
+        $date = new \DateTime('NOW');
+
+        $signal->setOpened($date);
+        $signal->setOpenExpire($date);
+
+        $dateClose = new \DateTime('NOW + 1hour');
+        $signal->setClosed($dateClose);
+        $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default')));
+        $signal->setQuote($manager->merge($this->getReference('quote.apple')));
 
         $manager->persist($signal);
         $manager->flush();

@@ -28,15 +28,15 @@
                     <tbody>
                         <tr>
                             <th>User</th>
-                            <td><?=$entity->getuser()?></td>
+                            <td><?=$entity->getUser()?></td>
                         </tr>
                         <tr>
                             <th>Status</th>
-                            <td><?=$entity->getstatus()?></td>
+                            <td><?=$entity->getStatus()?></td>
                         </tr>
                         <tr>
                             <th>Quote</th>
-                            <td><?=$entity->getquote()?></td>
+                            <td><?=$entity->getQuote()?></td>
                         </tr>
                         <tr>
                             <th>Type</th>
@@ -48,20 +48,21 @@
                         </tr>
                         <tr>
                             <th>Profit</th>
-                            <td><?=$entity->getprofit()?></td>
+                            <td><?=$entity->getProfit()?></td>
                         </tr>
                         <tr>
                             <th>Loss</th>
-                            <td><?=$entity->getloss()?></td>
+                            <td><?=$entity->getLoss()?></td>
                         </tr>
                         <tr>
                             <th>Created</th>
-                            <td><?=($entity->getcreated())?(string)$entity->getcreated()->format("Y-m-d H:i:s"):"";?></td>
+                            <td><?=($entity->getCreated())?(string)$entity->getCreated()->format("Y-m-d H:i:s"):"";?></td>
                         </tr>
                         <tr>
                             <th>Id</th>
-                            <td><?=$entity->getid()?></td>
-                        </tr>                    </tbody>
+                            <td><?=$entity->getId()?></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

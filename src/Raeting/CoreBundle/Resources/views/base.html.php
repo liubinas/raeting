@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8"/>
+        <title>Raeting.com</title>
         <link href="<?= $view['assets']->getUrl('css/bootstrap.css') ?>" rel="stylesheet" type="text/css" media="all" />
         <link href="<?= $view['assets']->getUrl('css/raeting.css') ?>" rel="stylesheet" type="text/css" media="all" />
         <link href="<?= $view['assets']->getUrl('css/bootstrap-responsive.css') ?>" rel="stylesheet" type="text/css" media="all" />
@@ -18,9 +19,11 @@
                   <? $view['slots']->output('menu') ?>
                 </ul>
                 <h3>
-                    <img src="<?= $view['assets']->getUrl('img/logo.png'); ?>" alt="raeting logo" id="logo" width="" height="" />
+                    <a href="<?=$view['router']->generate('home')?>">
+                    <img src="<?= $view['assets']->getUrl('img/logo.png'); ?>" alt="raeting logo" id="logo" width="" height="" /></a>
                 </h3>
             </div>
+        <? $view['slots']->output('header_row') ?>
         <? $view['slots']->output('content') ?>
         </div>
         <hr>

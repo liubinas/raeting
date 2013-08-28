@@ -51,7 +51,8 @@
                         <td><?=$entity->getOpen()?></td>
                         <td><?=$entity->getTakeprofit()?></td>
                         <td><?=$entity->getStoploss()?></td>
-                        <td><?=$entity->getUser()->getFirstname()?> <?=$entity->getUser()->getLastname()?></td>
+                        <td>
+                            <a href="<?=$view['router']->generate('trader_show', array('id' => $entity->getUser()->getId() )) ?>"><?=$entity->getUser()->getFirstname()?> <?=$entity->getUser()->getLastname()?></a></td>
                         <td><?=$entity->getCreated()->format('Y-m-d')?></td>
                     </tr>
                     <? endforeach;?>

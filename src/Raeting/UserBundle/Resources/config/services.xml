@@ -7,7 +7,9 @@
     <parameters>
         <parameter key="user.security.user_provider.class">Raeting\UserBundle\Security\UserProvider</parameter>
         <parameter key="user.model.user.class">Raeting\UserBundle\Model\User</parameter>
+        <parameter key="user.entity.user.class">Raeting\UserBundle\Entity\User</parameter>
         <parameter key="user.service.user.class">Raeting\UserBundle\Service\User</parameter>
+        <parameter key="user.service.userem.class">Raeting\UserBundle\Service\UserEm</parameter>
         <parameter key="user.helper.user.class">Raeting\UserBundle\Templating\Helper\UserHelper</parameter>
     </parameters>
 
@@ -25,6 +27,11 @@
             <argument type="service" id="security.encoder_factory" />
         </service>
 
+
+
+        <service id="user.service.userem" class="%user.service.userem.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
         <!-- Helpers -->
         <service id="user.helper.user" class="%user.helper.user.class%">
             <tag name="templating.helper" alias="user" />

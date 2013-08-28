@@ -90,6 +90,7 @@ class UserTest extends \Estina\Tests\TestCase {
      */
     public function testRegister()
     {
+        $this->markTestIncomplete();
         $user = $this->getService();
 
         $userModel = $this->getUserModelMock();

@@ -38,7 +38,9 @@
         "incenteev/composer-parameter-handler"  : "~2.0",
         "estina/generator-bundle"               : "*",
         "estina/tests"                          : "*",
-        "phpunit/phpunit"                       : "3.7.0"
+        "phpunit/phpunit"                       : "3.7.0",
+        "facebook/php-sdk"                      : "3.2.0",
+        "friendsofsymfony/facebook-bundle"      : "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

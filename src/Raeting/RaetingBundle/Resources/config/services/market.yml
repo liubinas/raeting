@@ -1,0 +1,7 @@
+parameters:
+    raetingraeting.service.market.class: Raeting\RaetingBundle\Service\Market
+
+services:
+    raetingraeting.service.market:
+        class: %raetingraeting.service.market.class%
+        arguments: [@doctrine.orm.entity_manager]
