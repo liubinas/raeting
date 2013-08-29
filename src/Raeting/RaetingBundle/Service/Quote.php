@@ -50,4 +50,15 @@ class Quote
     {
         return $this->em->getRepository('RaetingRaetingBundle:Quote');
     }
+    
+    public function findByKeyword($keyword, $limit)
+    {
+        $query = $this->getRepository()->createQueryBuilder('p')
+            ->where('p.title LIKE :keyword')
+            ->setParameter('keyword', '%'.$keyword.'%')
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

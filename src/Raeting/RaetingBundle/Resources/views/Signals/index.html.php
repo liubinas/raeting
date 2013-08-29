@@ -22,7 +22,7 @@
         </div>
     </div>
     <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
-    <div class="row-fluid signal-form" style="background-color:#F5F5F5; display: none">
+    <div class="row-fluid signal-form" style="background-color:#F5F5F5;">
         <div class="span6 offset3">
             <?= $view['actions']->render(new \Symfony\Component\HttpKernel\Controller\ControllerReference('RaetingRaetingBundle:Signals:new', array('includeLayout'=> 'false'))); ?>
         </div>

@@ -70,7 +70,7 @@ class SignalsController extends Controller
 
             return $this->redirect($this->generateUrl('signals', array('id' => $entity->getId())));
         }
-
+        
         return $this->render('RaetingRaetingBundle:Signals:new.html.php', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -183,18 +183,18 @@ class SignalsController extends Controller
         return $this->redirect($this->generateUrl('signals'));
     }
     
-    public function ajaxGetAllQuotesJsonAction()
+    public function ajaxGetAllQuotesJsonAction(Request $request)
     {
-        $quotes = $this->get('raetingraeting.service.quote')->getAll();
+        $quotes = $this->get('raetingraeting.service.quote')->findByKeyword($request->query->get('search'), $request->query->get('maxRows'));
         $serializer = $this->container->get('serializer');
         $quotes = $serializer->serialize($quotes, 'json');
         echo $quotes;
         die;
     }
     
-    public function ajaxGetAllTickersJsonAction()
+    public function ajaxGetAllTickersJsonAction(Request $request)
     {
-        $tickers = $this->get('raetingraeting.service.ticker')->getAll();
+        $tickers = $this->get('raetingraeting.service.ticker')->findByKeyword($request->query->get('search'), $request->query->get('maxRows'));
         $serializer = $this->container->get('serializer');
         $tickers = $serializer->serialize($tickers, 'json');
         echo $tickers;
