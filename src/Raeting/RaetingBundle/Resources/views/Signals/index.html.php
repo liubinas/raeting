@@ -7,7 +7,7 @@
         <div class="span12" style="text-align: center">
             <form class="form-inline" method="get" action="<?= $view['router']->generate('signals') ?>">
                 <div class="controls" style="margin:0 0 5px 0">
-                    <input id="signal-search" name="signal-search" type="text" placeholder="search" class="input-xxlarge" style="margin-bottom: 5px">
+                    <input id="signal-search" name="signal-search" type="text" placeholder="search" class="input-xxlarge" style="margin-bottom: 5px" value="<?= $query ?>" />
                     <button id="signal-search-btn" name="signal-search-btn" class="btn btn-info">
                         <i class="icon-search icon-white"></i> Signal Search
                     </button>

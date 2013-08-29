@@ -29,6 +29,7 @@ class SignalsController extends Controller
         
         return $this->render('RaetingRaetingBundle:Signals:index.html.php', array(
             'entities' => $entities,
+            'query' => $query
         ));
     }
 
