@@ -19,6 +19,7 @@
                 <?= $view['form']->row($form['take_profit']) ?>
                 <?= $view['form']->row($form['stop_loss']) ?>
                 <?= $view['form']->row($form['description']) ?>
+                <?= $view['form']->widget($form) ?>
                 <!-- Button -->
                 <div class="control-group">
                     <div class="controls">

@@ -17,13 +17,13 @@ class SignalsType extends AbstractType
                 'multiple' => false,
                 'label' => '&nbsp;'
             ))
-            ->add('quote', 'entity', array(
+            ->add('quote', 'extentity', array(
                 'class' => 'RaetingRaetingBundle:Quote',
                 'property' => 'id',
                 'label' => 'Quote',
                 'attr' => array('class' => 'input-small', 'placeholder' => 'ex. EUR/USD')
             ))
-            ->add('ticker', 'entity', array(
+            ->add('ticker', 'extentity', array(
                 'class' => 'RaetingRaetingBundle:Ticker',
                 'property' => 'id',
                 'label' => 'Ticker',
