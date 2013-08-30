@@ -31,8 +31,11 @@ class TraderController extends Controller
             throw $this->createNotFoundException('Unable to find trader .');
         }
 
+        $signals = $this->get('raetingraeting.service.signals')->getByTrader($id);
+        
         return $this->render('RaetingRaetingBundle:Trader:show.html.php', array(
             'entity'      => $entity,
+            'signals'     => $signals
         ));
     }
 }

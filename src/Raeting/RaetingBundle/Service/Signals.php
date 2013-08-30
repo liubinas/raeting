@@ -44,6 +44,17 @@ class Signals
                 ->getQuery()
                 ->getResult();
     }
+    
+    public function getByTrader($user)
+    {
+        return $result = $this->getRepository()->createQueryBuilder('a')
+                ->select('s')
+                ->from('Raeting\RaetingBundle\Entity\Signals', 's')
+                ->where('s.user = :user')
+                 ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult();
+    }
 
     public function save(Entity\Signals $entity)
     {
