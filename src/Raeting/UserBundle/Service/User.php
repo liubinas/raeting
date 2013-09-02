@@ -13,7 +13,6 @@ class User
     protected $userModel;
 
     protected $encoderFactory;
-
     /**
      * @param Raeting\UserBundle\Model\User $userModel
      * @param object                       $encoderFactory
@@ -246,4 +245,5 @@ class User
     {
         return $this->userModel->getAll();
     }
+    
 }

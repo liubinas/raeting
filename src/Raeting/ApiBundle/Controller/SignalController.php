@@ -10,28 +10,45 @@ class SignalController extends Controller
     public function showAction($id)
     {
         $signalService = $this->get('raetingraeting.service.signals');
-        $signal = $signalService->get($id);
-
+        $signal = $signalService->getByUuid($id);
+        
+        $query = '';
+        if($this->getRequest()->getQueryString()){
+            $query = '?'.$this->getRequest()->getQueryString();
+        }
+        
         if ('json' === $this->getRequest()->get('_format')){
 
-            return new Response(json_encode(array('uuid'=>$signal->getUuid(),
-                'buy'=>$signal->getBuy(),
-                'quote'=>$signal->getQuote()->getTitle(),
-                'take_profit'=>$signal->getTakeprofit(),
-                'stop_loss'=>$signal->getStoploss(),
-                'close'=>$signal->getClose(),
-                'profit'=>$signal->getProfit(),
-                'description'=>$signal->getDescription(),
-                'created'=>$signal->getCreated(),
-                'opened'=>$signal->getOpened(),
-                'open_expire'=>$signal->getOpenExpire(),
-                'close'=>$signal->getClosed(),
-                'close_expire'=>$signal->getCloseExpire(),
-                'user'=>    array('id' => $signal->getUser()->getId(),
-                    'firstname' => $signal->getUser()->getFirstname(),
-                    'lastname' => $signal->getUser()->getLastname(),
+            $response = array(
+                'signal' => array(
+                    'uuid'=>$signal->getUuid(),
+                    'type'=>$signal->getBuyValue(),
+                    'symbol'=>$signal->getQuote()->getTitle(),
+                    'open'=>$signal->getOpen(),
+                    'takeProfit'=>$signal->getTakeprofit(),
+                    'stopLoss'=>$signal->getStoploss(),
+                    'closed'=>$signal->getClose(),
+                    'profit'=>$signal->getProfit(),
+                    'description'=>$signal->getDescription(),
+                    'status'=>$signal->getStatus(),
+                    'dateCreated'=>$signal->getCreated(),
+                    'dateOpened'=>$signal->getOpened(),
+                    'dateClosed'=>$signal->getClosed(),
+                    'trader'=>    array(
+                        'slug'=>$signal->getUser()->getSlug(),
+                        'firstName'=>$signal->getUser()->getFirstname(),
+                        'lastName'=>$signal->getUser()->getLastname(),
+                        //'company'=>$signal->getUser()->getCompany(),
+                        //'about'=>$signal->getUser()->getAbout(),
+                        //'profit'=>$signal->getUser()->getProfit(),
                     )
-            )));
+                ),
+                'meta' => array(
+                    'link' => $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals_show', array('id' => $signal->getUuid())).$query
+                )
+            );
+            
+            return new Response(json_encode($response));
         } else {
 
             return new Response($this->getRequest()->get('_format').' signal item:here+'.$id);
@@ -40,31 +57,56 @@ class SignalController extends Controller
     public function indexAction()
     {
         $signalService = $this->get('raetingraeting.service.signals');
-        $signals = $signalService->getAll();
+        $signals = $signalService->getSignalsByRequest($this->getRequest());
+        
+        $query = '';
+        if($this->getRequest()->getQueryString()){
+            $query = '?'.$this->getRequest()->getQueryString();
+        }
+        
         if ('json' === $this->getRequest()->get('_format')){
-            $signalList = array();
+            $signalList = array('signals' => array(), 'meta' => array());
             foreach($signals as $signal) {
-                $signalList[] = array('uuid'=>$signal->getUuid(),
-                    'buy'=>$signal->getBuy(),
-                    'quote'=>$signal->getQuote()->getTitle(),
-                    'take_profit'=>$signal->getTakeprofit(),
-                    'stop_loss'=>$signal->getStoploss(),
-                    'close'=>$signal->getClose(),
+                $signalList['signals'][] = array(
+                    'uuid'=>$signal->getUuid(),
+                    'type'=>$signal->getBuyValue(),
+                    'symbol'=>$signal->getQuote()->getTitle(),
+                    'open'=>$signal->getOpen(),
+                    'takeProfit'=>$signal->getTakeprofit(),
+                    'stopLoss'=>$signal->getStoploss(),
+                    'closed'=>$signal->getClose(),
                     'profit'=>$signal->getProfit(),
                     'description'=>$signal->getDescription(),
-                    'created'=>$signal->getCreated(),
-                    'opened'=>$signal->getOpened(),
-                    'open_expire'=>$signal->getOpenExpire(),
-                    'close'=>$signal->getClosed(),
-                    'close_expire'=>$signal->getCloseExpire(),
-                    'user'=>    array('id' => $signal->getUser()->getId(),
-                        'firstname' => $signal->getUser()->getFirstname(),
-                        'lastname' => $signal->getUser()->getLastname(),
+                    'status'=>$signal->getStatus(),
+                    'dateCreated'=>$signal->getCreated(),
+                    'dateOpened'=>$signal->getOpened(),
+                    'dateClosed'=>$signal->getClosed(),
+                    'trader'=>    array(
+                        'slug'=>$signal->getUser()->getSlug(),
+                        'firstName'=>$signal->getUser()->getFirstname(),
+                        'lastName'=>$signal->getUser()->getLastname(),
+                        //'company'=>$signal->getUser()->getCompany(),
+                        //'about'=>$signal->getUser()->getAbout(),
+                        //'profit'=>$signal->getUser()->getProfit(),
                     )
                 );
-
             }
+            
+            $totalResults = $signalService->getSignalsCountByRequest($this->getRequest());
 
+            $signalList['meta']['total'] = $totalResults;
+            if($this->getRequest()->get('limit')){
+                $signalList['meta']['limit'] = $this->getRequest()->get('limit');
+            }else{
+                $signalList['meta']['limit'] = $signalService->defaultLimit;
+            }
+            if($this->getRequest()->get('offset')){
+                $signalList['meta']['offset'] = $this->getRequest()->get('offset');
+            }else{
+                $signalList['meta']['offset'] = $signalService->defaultOffset;
+            }
+            
+            $signalList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals').$query;
             return new Response(json_encode($signalList));
         } else {
 

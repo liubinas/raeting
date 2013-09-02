@@ -3,6 +3,7 @@ api_signals:
     defaults: { _controller: "RaetingApiBundle:Signal:index" }
     requirements:
       _format: json|xml
+      
 api_signals_show:
     pattern:  /signal/{id}.{_format}
     defaults: { _controller: "RaetingApiBundle:Signal:show" }
@@ -16,8 +17,14 @@ api_traders:
       _format: json|xml
 
 api_traders_show:
-    pattern:  /trader/{id}.{_format}
+    pattern:  /trader/{slug}.{_format}
     defaults: { _controller: "RaetingApiBundle:Trader:show" }
+    requirements:
+      _format: json|xml
+      
+api_trader_signals:
+    pattern:  /trader/{slug}/signals.{_format}
+    defaults: { _controller: "RaetingApiBundle:Trader:signals" }
     requirements:
       _format: json|xml
 

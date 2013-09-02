@@ -40,8 +40,9 @@ Raeting\RaetingBundle\Entity\Signals:
             fixed: false
             nullable: false
         status:
-            type: boolean
-            nullable: false
+            type: string
+            values: [new,opened,closed,error]
+            default: new
         created:
             type: datetime
             nullable: false

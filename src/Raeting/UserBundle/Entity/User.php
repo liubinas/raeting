@@ -118,6 +118,13 @@ class User
      * @ORM\Column(name="linkedin", type="string", length=255, nullable=false)
      */
     private $linkedin;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false)
+     */
+    private $slug;
 
 
 
@@ -452,4 +459,28 @@ class User
     {
         return $this->linkedin;
     }
+    
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return User
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+    
 }

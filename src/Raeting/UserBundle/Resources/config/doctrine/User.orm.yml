@@ -78,4 +78,9 @@ Raeting\UserBundle\Entity\User:
             length: 255
             fixed: false
             nullable: false
+        slug:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
     lifecycleCallbacks: {  }
