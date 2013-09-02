@@ -9,12 +9,46 @@ class TraderController extends Controller
 {
     public function showAction($slug)
     {
+        $serializer = $this->get('jms_serializer');
         $userService = $this->get('user.service.userem');
         $trader = $userService->getBySlug($slug);
         
-        if ('json' === $this->getRequest()->get('_format')){
-            $traderList = array('trader' => array(), 'meta' => array());
-            $traderList['trader'] = array(
+        $traderList = array('trader' => array(), 'meta' => array());
+        $traderList['trader'] = array(
+            'trader' => array(
+                'slug'=>$trader->getSlug(),
+                'firstName'=>$trader->getFirstname(),
+                'lastName'=>$trader->getLastname(),
+                //'company'=>$trader->getCompany(),
+                //'about'=>$trader->getAbout(),
+                //'profit'=>$trader->getProfit(),
+            )
+        );
+
+        $traderList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('trader_show', array('id' => $trader->getId()));
+            
+        $response = $traderList;
+        
+        if ('xml' === $this->getRequest()->get('_format')){
+            return new Response($serializer->serialize($response, 'xml'));
+        } else {
+            return new Response($serializer->serialize($response, 'json'));
+        }
+    }
+    public function indexAction()
+    {
+        $serializer = $this->get('jms_serializer');
+        $userService = $this->get('user.service.userem');
+        $traders = $userService->getTradersByRequest($this->getRequest());
+
+        $query = '';
+        if($this->getRequest()->getQueryString()){
+            $query = '?'.$this->getRequest()->getQueryString();
+        }
+        
+        $traderList = array('traders' => array(), 'meta' => array());
+        foreach($traders as $trader) {
+            $traderList['traders'][] = array(
                 'trader' => array(
                     'slug'=>$trader->getSlug(),
                     'firstName'=>$trader->getFirstname(),
@@ -24,69 +58,41 @@ class TraderController extends Controller
                     //'profit'=>$trader->getProfit(),
                 )
             );
-            
-            $traderList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('trader_show', array('id' => $trader->getId()));
-            
-            return new Response(json_encode($traderList));
-        } else {
-            
-            return new Response($this->getRequest()->get('_format').' trader item:here+'.$slug);
-        }   
-    }
-    public function indexAction()
-    {
-        $userService = $this->get('user.service.userem');
-        $traders = $userService->getTradersByRequest($this->getRequest());
+        }
+
+        $totalResults = $userService->getTradersCountByRequest($this->getRequest());
+
+        $traderList['meta']['total'] = $totalResults;
+        if($this->getRequest()->get('limit')){
+            $traderList['meta']['limit'] = $this->getRequest()->get('limit');
+        }else{
+            $traderList['meta']['limit'] = $userService->defaultLimit;
+        }
+        if($this->getRequest()->get('offset')){
+            $traderList['meta']['offset'] = $this->getRequest()->get('offset');
+        }else{
+            $traderList['meta']['offset'] = $userService->defaultOffset;
+        }
 
         $query = '';
         if($this->getRequest()->getQueryString()){
             $query = '?'.$this->getRequest()->getQueryString();
         }
+
+        $traderList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('trader').$query;
+
+        $response = $traderList;
         
-        if ('json' === $this->getRequest()->get('_format')){
-            $traderList = array('traders' => array(), 'meta' => array());
-            foreach($traders as $trader) {
-                $traderList['traders'][] = array(
-                    'trader' => array(
-                        'slug'=>$trader->getSlug(),
-                        'firstName'=>$trader->getFirstname(),
-                        'lastName'=>$trader->getLastname(),
-                        //'company'=>$trader->getCompany(),
-                        //'about'=>$trader->getAbout(),
-                        //'profit'=>$trader->getProfit(),
-                    )
-                );
-            }
-            
-            $totalResults = $userService->getTradersCountByRequest($this->getRequest());
-
-            $traderList['meta']['total'] = $totalResults;
-            if($this->getRequest()->get('limit')){
-                $traderList['meta']['limit'] = $this->getRequest()->get('limit');
-            }else{
-                $traderList['meta']['limit'] = $userService->defaultLimit;
-            }
-            if($this->getRequest()->get('offset')){
-                $traderList['meta']['offset'] = $this->getRequest()->get('offset');
-            }else{
-                $traderList['meta']['offset'] = $userService->defaultOffset;
-            }
-            
-            $query = '';
-            if($this->getRequest()->getQueryString()){
-                $query = '?'.$this->getRequest()->getQueryString();
-            }
-            
-            $traderList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('trader').$query;
-            return new Response(json_encode($traderList));
+        if ('xml' === $this->getRequest()->get('_format')){
+            return new Response($serializer->serialize($response, 'xml'));
         } else {
-
-            return new Response($this->getRequest()->get('_format').' trader list:here+');
+            return new Response($serializer->serialize($response, 'json'));
         }
     }
     
     public function signalsAction($slug)
     {
+        $serializer = $this->get('jms_serializer');
         $signalService = $this->get('raetingraeting.service.signals');
         $signals = $signalService->getSignalsByRequestAndTraderSlug($this->getRequest(), $slug);
         
@@ -95,53 +101,55 @@ class TraderController extends Controller
             $query = '?'.$this->getRequest()->getQueryString();
         }
         
-        if ('json' === $this->getRequest()->get('_format')){
-            $signalList = array('signals' => array(), 'meta' => array());
-            foreach($signals as $signal) {
-                $signalList['signals'][] = array(
-                    'uuid'=>$signal->getUuid(),
-                    'type'=>$signal->getBuyValue(),
-                    'symbol'=>$signal->getQuote()->getTitle(),
-                    'open'=>$signal->getOpen(),
-                    'takeProfit'=>$signal->getTakeprofit(),
-                    'stopLoss'=>$signal->getStoploss(),
-                    'closed'=>$signal->getClose(),
-                    'profit'=>$signal->getProfit(),
-                    'description'=>$signal->getDescription(),
-                    'status'=>$signal->getStatus(),
-                    'dateCreated'=>$signal->getCreated(),
-                    'dateOpened'=>$signal->getOpened(),
-                    'dateClosed'=>$signal->getClosed(),
-                    'trader'=>    array(
-                        'slug'=>$signal->getUser()->getSlug(),
-                        'firstName'=>$signal->getUser()->getFirstname(),
-                        'lastName'=>$signal->getUser()->getLastname(),
-                        //'company'=>$signal->getUser()->getCompany(),
-                        //'about'=>$signal->getUser()->getAbout(),
-                        //'profit'=>$signal->getUser()->getProfit(),
-                    )
-                );
-            }
-            
-            $totalResults = $signalService->getSignalsCountByRequest($this->getRequest());
+        $signalList = array('signals' => array(), 'meta' => array());
+        foreach($signals as $signal) {
+            $signalList['signals'][] = array(
+                'uuid'=>$signal->getUuid(),
+                'type'=>$signal->getBuyValue(),
+                'symbol'=>$signal->getQuote()->getTitle(),
+                'open'=>$signal->getOpen(),
+                'takeProfit'=>$signal->getTakeprofit(),
+                'stopLoss'=>$signal->getStoploss(),
+                'closed'=>$signal->getClose(),
+                'profit'=>$signal->getProfit(),
+                'description'=>$signal->getDescription(),
+                'status'=>$signal->getStatus(),
+                'dateCreated'=>$signal->getCreated(),
+                'dateOpened'=>$signal->getOpened(),
+                'dateClosed'=>$signal->getClosed(),
+                'trader'=>    array(
+                    'slug'=>$signal->getUser()->getSlug(),
+                    'firstName'=>$signal->getUser()->getFirstname(),
+                    'lastName'=>$signal->getUser()->getLastname(),
+                    //'company'=>$signal->getUser()->getCompany(),
+                    //'about'=>$signal->getUser()->getAbout(),
+                    //'profit'=>$signal->getUser()->getProfit(),
+                )
+            );
+        }
 
-            $signalList['meta']['total'] = $totalResults;
-            if($this->getRequest()->get('limit')){
-                $signalList['meta']['limit'] = $this->getRequest()->get('limit');
-            }else{
-                $signalList['meta']['limit'] = $signalService->defaultLimit;
-            }
-            if($this->getRequest()->get('offset')){
-                $signalList['meta']['offset'] = $this->getRequest()->get('offset');
-            }else{
-                $signalList['meta']['offset'] = $signalService->defaultOffset;
-            }
-            
-            $signalList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals').$query;
-            return new Response(json_encode($signalList));
+        $totalResults = $signalService->getSignalsCountByRequest($this->getRequest());
+
+        $signalList['meta']['total'] = $totalResults;
+        if($this->getRequest()->get('limit')){
+            $signalList['meta']['limit'] = $this->getRequest()->get('limit');
+        }else{
+            $signalList['meta']['limit'] = $signalService->defaultLimit;
+        }
+        if($this->getRequest()->get('offset')){
+            $signalList['meta']['offset'] = $this->getRequest()->get('offset');
+        }else{
+            $signalList['meta']['offset'] = $signalService->defaultOffset;
+        }
+
+        $signalList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals').$query;
+        
+        $response = $signalList;
+        
+        if ('xml' === $this->getRequest()->get('_format')){
+            return new Response($serializer->serialize($response, 'xml'));
         } else {
-
-            return new Response($this->getRequest()->get('_format').' trader signals list:here+');
+            return new Response($serializer->serialize($response, 'json'));
         }
     }
 }

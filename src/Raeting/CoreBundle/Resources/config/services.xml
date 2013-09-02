@@ -21,13 +21,12 @@
         <!-- Models -->
         <service id="core.model.meta" class="%core.model.meta.class%">
             <argument type="service" id="doctrine.dbal.default_connection" />
-        </service> 
-        
+        </service>
         <!-- Services -->
         <service id="core.service.mailer" class="%core.service.mailer.class%">
             <argument type="collection">
-                <argument key="email">info@info.lt</argument>
-                <argument key="from">labas</argument>
+                <argument key="email">estina@estina.lt</argument>
+                <argument key="from">labadiena</argument>
             </argument>
             <argument type="service" id="mailer" />
             <argument type="service" id="core.service.emailtemplate" />

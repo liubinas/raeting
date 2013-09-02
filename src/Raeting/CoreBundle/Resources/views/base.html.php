@@ -16,7 +16,7 @@
         <script src="<?= $view['assets']->getUrl('js/app.js') ?>" type="text/javascript"></script>
         <script src="<?= $view['assets']->getUrl('js/raeting.js') ?>" type="text/javascript"></script>
     </head>
-    <body data-controller="krabas" data-action="labas">
+    <body data-controller="<?= $view['request']->getParameter('controllerName')?>" data-action="<?= $view['request']->getParameter('actionName')?>">
         <div class="main-wrap">
             <div class="head">
                 <ul class="nav nav-pills pull-right">

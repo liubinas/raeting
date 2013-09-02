@@ -18,11 +18,11 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
             new Raeting\UserBundle\RaetingUserBundle(),
             new Raeting\CoreBundle\RaetingCoreBundle(),
             new Raeting\RaetingBundle\RaetingRaetingBundle(),
             new Raeting\ApiBundle\RaetingApiBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'marius', 'wsuff'))) {
