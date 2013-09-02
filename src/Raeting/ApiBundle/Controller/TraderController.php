@@ -9,10 +9,31 @@ class TraderController extends Controller
 {
     public function showAction($id)
     {
-        return new Response($this->getRequest()->get('_format').' trader item:here+'.$id);
+        $serializer = $this->get('jms_serializer');
+
+        $traderService = $this->get('raetingraeting.service.trader');
+        $trader = $traderService->get($id);
+
+        if ('json' === $this->getRequest()->get('_format')){
+
+            return new Response($serializer->serialize($traderList, 'json'));
+        } else {
+
+            return new Response($serializer->serialize($traderList, 'xml'));
+        }
     }
     public function indexAction()
     {
-        return new Response($this->getRequest()->get('_format').' trader list:here+');
+        $serializer = $this->get('jms_serializer');
+        $traderService = $this->get('raetingraeting.service.trader');
+        $traders = $traderService->getAll();
+
+        if ('json' === $this->getRequest()->get('_format')){
+
+            return new Response($serializer->serialize($traderList, 'json'));
+        } else {
+
+            return new Response($serializer->serialize($traderList, 'xml'));
+        }
     }
 }

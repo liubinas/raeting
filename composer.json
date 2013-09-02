@@ -25,7 +25,7 @@
         "doctrine/data-fixtures"                : "*",
         "symfony/doctrine-bridge"               : "*",
         "doctrine/doctrine-fixtures-bundle"     : "2.1.*@dev",
-        "symfony/framework-bundle"             : ">=2.1.0,<2.4-dev",
+        "symfony/framework-bundle"              : ">=2.1.0,<2.4-dev",
         "doctrine/migrations"                   : "*",
         "doctrine/doctrine-migrations-bundle"   : "dev-master",
         "twig/extensions"                       : "1.0.0",
@@ -40,7 +40,8 @@
         "estina/tests"                          : "*",
         "phpunit/phpunit"                       : "3.7.0",
         "facebook/php-sdk"                      : "3.2.0",
-        "friendsofsymfony/facebook-bundle"      : "dev-master"
+        "friendsofsymfony/facebook-bundle"      : "dev-master",
+        "jms/serializer-bundle"                 : "*"
     },
     "scripts": {
         "post-install-cmd": [
