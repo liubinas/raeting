@@ -42,6 +42,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
         $date = new \DateTime('NOW');
 
+        $signal->setCreated($date);
         $signal->setOpened($date);
         $signal->setOpenExpire($date);
 

@@ -7,15 +7,13 @@
         <div class="span12">
             <table class="table table-striped table-hover">
                 <thead>
-                    <th>Name</th>
-                    <th>Surname</th>
+                    <th>Name Surname</th>
                     <th>E-mail</th>
                 </thead>
                 <tbody>
                     <? foreach ($entities as $entity):?>
                     <tr>
-                        <td><?=$entity['firstname']?></td>
-                        <td><?=$entity['lastname']?></td>
+                        <td><a href="<?=$view['router']->generate('trader_show', array('id' => $entity['id'] )) ?>"><?=$entity['firstname']?> <?=$entity['lastname']?></a></td>
                         <td><?=$entity['email']?></td>
                     </tr>
                     <? endforeach;?>

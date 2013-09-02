@@ -33,13 +33,25 @@ class Signals
     public function getBy($query)
     {
         return $result = $this->getRepository()->createQueryBuilder('a')
-                ->select('s', 'u')
+                ->select('s', 'u', 'q')
                 ->from('Raeting\RaetingBundle\Entity\Signals', 's')
                 ->leftJoin('s.user', 'u')
-                ->where('s.description LIKE :query')
+                ->leftJoin('s.quote', 'q')
+                ->where('q.title LIKE :query')
                 ->orWhere('u.firstname LIKE :query')
                 ->orWhere('u.lastname LIKE :query')
                 ->setParameter('query', '%'.$query.'%')
+                ->getQuery()
+                ->getResult();
+    }
+    
+    public function getByTrader($user)
+    {
+        return $result = $this->getRepository()->createQueryBuilder('a')
+                ->select('s')
+                ->from('Raeting\RaetingBundle\Entity\Signals', 's')
+                ->where('s.user = :user')
+                 ->setParameter('user', $user)
                 ->getQuery()
                 ->getResult();
     }
