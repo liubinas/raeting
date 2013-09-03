@@ -81,26 +81,28 @@ class SignalController extends Controller
         $signalList = array('signals' => array(), 'meta' => array());
         foreach($signals as $signal) {
             $signalList['signals'][] = array(
-                'uuid'=>$signal->getUuid(),
-                'type'=>$signal->getBuyValue(),
-                'symbol'=>$signal->getQuote()->getTitle(),
-                'open'=>$signal->getOpen(),
-                'takeProfit'=>$signal->getTakeprofit(),
-                'stopLoss'=>$signal->getStoploss(),
-                'closed'=>$signal->getClose(),
-                'profit'=>$signal->getProfit(),
-                'description'=>$signal->getDescription(),
-                'status'=>$signal->getStatus(),
-                'dateCreated'=>$signal->getCreated(),
-                'dateOpened'=>$signal->getOpened(),
-                'dateClosed'=>$signal->getClosed(),
-                'trader'=>    array(
-                    'slug'=>$signal->getUser()->getSlug(),
-                    'firstName'=>$signal->getUser()->getFirstname(),
-                    'lastName'=>$signal->getUser()->getLastname(),
-                    //'company'=>$signal->getUser()->getCompany(),
-                    //'about'=>$signal->getUser()->getAbout(),
-                    //'profit'=>$signal->getUser()->getProfit(),
+                'signal'=> array(
+                    'uuid'=>$signal->getUuid(),
+                    'type'=>$signal->getBuyValue(),
+                    'symbol'=>$signal->getQuote()->getTitle(),
+                    'open'=>$signal->getOpen(),
+                    'takeProfit'=>$signal->getTakeprofit(),
+                    'stopLoss'=>$signal->getStoploss(),
+                    'closed'=>$signal->getClose(),
+                    'profit'=>$signal->getProfit(),
+                    'description'=>$signal->getDescription(),
+                    'status'=>$signal->getStatus(),
+                    'dateCreated'=>$signal->getCreated(),
+                    'dateOpened'=>$signal->getOpened(),
+                    'dateClosed'=>$signal->getClosed(),
+                    'trader'=>    array(
+                        'slug'=>$signal->getUser()->getSlug(),
+                        'firstName'=>$signal->getUser()->getFirstname(),
+                        'lastName'=>$signal->getUser()->getLastname(),
+                        //'company'=>$signal->getUser()->getCompany(),
+                        //'about'=>$signal->getUser()->getAbout(),
+                        //'profit'=>$signal->getUser()->getProfit(),
+                    )
                 )
             );
         }

@@ -3,14 +3,14 @@
 $securityConfig = array(
     'firewalls' => array(),
     'access_control' => array(
-        array('path' => '^/signals', 'role' => 'ROLE_CUSTOMER'),
-        array('path' => '^/traders', 'role' => 'ROLE_CUSTOMER'),
+        array('path' => '^/signals', 'role' => 'ROLE_USER'),
+        array('path' => '^/traders', 'role' => 'ROLE_USER'),
     ),
     'providers' => array(
-        'webservice' => array('id' => 'user.security.user_provider')
+        'webservice' => array('id' => 'estinacmf_user.security.user_provider')
     ),
     'encoders' => array(
-        'Raeting\UserBundle\Security\User' => array(
+        'EstinaCMF\UserBundle\Security\User' => array(
             'algorithm' => 'sha1',
             'encode_as_base64' => false,
             'iterations' => 1,

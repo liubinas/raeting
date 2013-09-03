@@ -13,7 +13,7 @@ class TraderController extends Controller
      */
     public function indexAction()
     {
-        $traderService = $this->get('user.service.userem');
+        $traderService = $this->get('estinacmf_user.service.user');
         $entities = $traderService->getAll();
 
         return $this->render('RaetingRaetingBundle:Trader:index.html.php', array('entities'=>$entities));
@@ -25,7 +25,7 @@ class TraderController extends Controller
      */
     public function showAction($id)
     {
-        $entity = $this->get('user.service.userem')->get($id);
+        $entity = $this->get('estinacmf_user.service.user')->get($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find trader .');

@@ -1,5 +1,5 @@
 _user:
-    resource: "@RaetingUserBundle/Resources/config/routing.php"
+    resource: "@EstinaCMFUserBundle/Resources/config/routing.yml"
 _signal:
     resource: "@RaetingRaetingBundle/Resources/config/routing.yml"
 _api:

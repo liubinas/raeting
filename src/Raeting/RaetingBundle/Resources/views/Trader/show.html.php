@@ -17,9 +17,6 @@
                         <th>Name</th>
                         <th>Surname</th>
                         <th>Email</th>
-                        <th>Street</th>
-                        <th>State</th>
-                        <th>Postal code</th>
                         <th>Created on</th>
                     </thead>
                     <tbody>
@@ -27,10 +24,7 @@
                             <td><?=$entity->getFirstname()?></td>
                             <td><?=$entity->getLastname()?></td>
                             <td><?=$entity->getemail()?></td>
-                            <td><?=$entity->getstreet()?></td>
-                            <td><?=$entity->getstate()?></td>
-                            <td><?=$entity->getpostalCode()?></td>
-                            <td><?=($entity->getcreatedOn())?(string)$entity->getcreatedOn()->format("Y-m-d H:i:s"):"";?></td>
+                            <td><?=($entity->getcreateDate())?(string)$entity->getcreateDate()->format("Y-m-d H:i:s"):"";?></td>
                         </tr>
                     </tbody>
                 </table>

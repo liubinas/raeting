@@ -22,7 +22,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><?=$entity->getCreatedon()->format('Y-m-d')?></td>
+                        <td><?=$entity->getCreatedate()->format('Y-m-d')?></td>
                     </tr>
                 <? endforeach;?>
                 </tbody>

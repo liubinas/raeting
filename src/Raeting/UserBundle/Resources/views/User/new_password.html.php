@@ -2,7 +2,7 @@
 
 <h2>Change password</h2>
 
-<form method="post" class="bind-form-newpassword" action="<?= $view['router']->generate('user.new_password'); ?>">
+<form method="post" class="bind-form-newpassword" action="<?= $view['router']->generate('estinacmf_user.new_password'); ?>">
     <div class="bind-form-newpassword-response"></div>
     <?=$view['form']->errors($form);?>
     <div class="row-fluid">
@@ -16,7 +16,7 @@
     <div class="clear"></div>
     <div class="well">
         <div class="btn-group pull-left">
-            <a href="<?= $view['router']->generate('user.profile'); ?>" class="btn btn-danger"><i class="icon-back icon-white"></i> back</a>
+            <a href="<?= $view['router']->generate('estinacmf_user.profile'); ?>" class="btn btn-danger"><i class="icon-back icon-white"></i> back</a>
         </div>
         <div class="btn-group pull-right">
             <button type="submit" class="btn btn-success"><i class="icon-plus icon-white"></i> Submit</button>

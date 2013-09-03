@@ -16,10 +16,10 @@
         <? if (true === $posted): ?>
             <p>
                 Password sent to your e-mail
-                <a href="<?=$view['router']->generate('user.change_password') ?>">Enter code </a>
+                <a href="<?=$view['router']->generate('estinacmf_user.change_password') ?>">Enter code </a>
             </p>
         <? else: ?>
-            <form action="<?=$view['router']->generate('user.recover') ?>" class="form-horizontal" method="post" <?=$view['form']->enctype($form) ?> >
+            <form action="<?=$view['router']->generate('estinacmf_user.recover') ?>" class="form-horizontal" method="post" <?=$view['form']->enctype($form) ?> >
                 <div class="recover-response"></div>
                 <div>
                     <?= $view['form']->row($form['email']); ?>

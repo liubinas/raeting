@@ -1,4 +1,4 @@
-<? $view->extend('RaetingUserBundle::User/menu_register.html.php'); ?>
+<? $view->extend('RaetingUserBundle::Registration/menu.html.php'); ?>
 <? $view['slots']->start('content') ?>
 <hr>
     
@@ -12,7 +12,7 @@
 
     <div class="row-fluid signup">
         <div class="span6 offset3">
-            <form action="<?=$view['router']->generate('user.register') ?>" class="form-horizontal" method="post" <?=$view['form']->enctype($form) ?> >
+            <form action="<?=$view['router']->generate('estinacmf_user.registration') ?>" class="form-horizontal" method="post" <?=$view['form']->enctype($form) ?> >
                 <div class="register-response"><?= $view['form']->errors($form); ?></div>
                 <?= $view['form']->row($form['firstname'], array('label' => 'Firstname')); ?>
                 <?= $view['form']->row($form['lastname'], array('label' => 'Lastname')); ?>

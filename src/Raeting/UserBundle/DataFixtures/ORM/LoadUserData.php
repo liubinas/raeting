@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Raeti\ng\UserBundle\Entity\User;
 
 /**
  * Signal sample data fixtures.
@@ -27,25 +28,22 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
      */
     public function load(ObjectManager $manager)
     {
-        $userService = $this->container->get('user.service.userem');
+        $userService = $this->container->get('estinacmf_user.service.user');
 
-        $user = $userService->getNew();
-        
-        $user->setEmail('estina@estina.lt');
-        $user->setUsergroup('customer');
-        $user->setPassword('5fb3760172db1462dcb9d34cd1e24a226ec8a86d'); //labadiena
-        $user->setFirstname('labadiena');
-        $user->setLastname('labadiena');
-        $user->setStreet('labadiena');
-        $user->setState('labadiena');
-        $user->setPostalcode('labadiena');
+        $user = new \Raeting\UserBundle\Entity\User();//$userService->getNew();
+    //    var_dump(get_class($user));die;
+
+        $user->setEmail('marius.b@estina.lt');
+        $user->setRole(\Raeting\UserBundle\Entity\User::ROLE_ADMIN);
+        $user->setFirstname('admin');
+        $user->setLastname('admin');
+        $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+        $user->setPassword($encoder->encodePassword('labadiena', $user->getSalt()));
 
         $date = new \DateTime('NOW');
-        $user->setCreatedon($date);
-        $user->setFacebook('labadiena');
-        $user->setLinkedin('labadiena');
+        $user->setCreateDate($date);
 
-        $this->addReference('user.default', $user);
+        $this->addReference('user.default.raeting', $user);
 
         $manager->persist($user);
         $manager->flush();

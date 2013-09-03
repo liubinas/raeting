@@ -1,6 +1,6 @@
 <? $view->extend('RaetingUserBundle::layout.html.php'); ?>
 
-<h2>Profile<a href="<?= $view['router']->generate('user.profile_edit'); ?>" class="btn btn-primary pull-right"><i class="icon-pencil icon-white"></i> Edit</a></h2>
+<h2>Profile<a href="<?= $view['router']->generate('estinacmf_user.profile_edit'); ?>" class="btn btn-primary pull-right"><i class="icon-pencil icon-white"></i> Edit</a></h2>
 <div class="row-fluid">
     <div class="span6">
         <dl class="merchant-info">
