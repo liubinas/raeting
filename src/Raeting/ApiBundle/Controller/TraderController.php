@@ -4,12 +4,27 @@ namespace Raeting\ApiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+
 
 class TraderController extends Controller
 {
+    
+    private $serializer;
+    
+    public function __construct()
+    {
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+
+        $this->serializer = new Serializer($normalizers, $encoders);
+    }
+    
     public function showAction($slug)
     {
-        $serializer = $this->get('jms_serializer');
         $userService = $this->get('user.service.userem');
         $trader = $userService->getBySlug($slug);
         
@@ -30,14 +45,13 @@ class TraderController extends Controller
         $response = $traderList;
         
         if ('xml' === $this->getRequest()->get('_format')){
-            return new Response($serializer->serialize($response, 'xml'));
+            return new Response($this->serializer->serialize($response, 'xml'));
         } else {
-            return new Response($serializer->serialize($response, 'json'));
+            return new Response($this->serializer->serialize($response, 'json'));
         }
     }
     public function indexAction()
     {
-        $serializer = $this->get('jms_serializer');
         $userService = $this->get('user.service.userem');
         $traders = $userService->getTradersByRequest($this->getRequest());
 
@@ -84,15 +98,15 @@ class TraderController extends Controller
         $response = $traderList;
         
         if ('xml' === $this->getRequest()->get('_format')){
-            return new Response($serializer->serialize($response, 'xml'));
+            return new Response($this->serializer->serialize($response, 'xml'));
         } else {
-            return new Response($serializer->serialize($response, 'json'));
+            return new Response($this->serializer->serialize($response, 'json'));
         }
     }
     
     public function signalsAction($slug)
     {
-        $serializer = $this->get('jms_serializer');
+        
         $signalService = $this->get('raetingraeting.service.signals');
         $signals = $signalService->getSignalsByRequestAndTraderSlug($this->getRequest(), $slug);
         
@@ -147,9 +161,9 @@ class TraderController extends Controller
         $response = $signalList;
         
         if ('xml' === $this->getRequest()->get('_format')){
-            return new Response($serializer->serialize($response, 'xml'));
+            return new Response($this->serializer->serialize($signals, 'xml'));
         } else {
-            return new Response($serializer->serialize($response, 'json'));
+            return new Response($this->serializer->serialize($response, 'json'));
         }
     }
 }
