@@ -39,11 +39,11 @@ latesttag:
 # fix code style
 # usage: make fixcs FILE=path/to/directory/or/file
 fixcs:
-	@php-cs-fixer fix $(FILE) --fixers=indentation,linefeed,trailing_spaces,unused_use,php_closing_tag,return,visibility,braces,phpdoc_params,eof_ending,extra_empty_lines,include,psr0,controls_spaces,elseif
+	bin/php-cs-fixer fix $(FILE) --fixers=indentation,linefeed,trailing_spaces,unused_use,php_closing_tag,return,visibility,braces,phpdoc_params,eof_ending,extra_empty_lines,include,psr0,controls_spaces,elseif
 
 # show fixable files without touching them
 fixcsshow:
-	@php-cs-fixer fix $(FILE) --fixers=indentation,linefeed,trailing_spaces,unused_use,php_closing_tag,return,visibility,braces,phpdoc_params,eof_ending,extra_empty_lines,include,psr0,controls_spaces,elseif --dry-run
+	bin/php-cs-fixer fix $(FILE) --fixers=indentation,linefeed,trailing_spaces,unused_use,php_closing_tag,return,visibility,braces,phpdoc_params,eof_ending,extra_empty_lines,include,psr0,controls_spaces,elseif --dry-run
 
 # dev server tools
 deploydev:

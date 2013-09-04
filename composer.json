@@ -40,7 +40,8 @@
         "phpunit/phpunit"                       : "3.7.*",
         "sensio/generator-bundle"               : "2.2.*",
         "estina/generator-bundle"               : "*",
-        "estina/tests"                          : "*"
+        "estina/tests"                          : "*",
+        "fabpot/php-cs-fixer"                   : "*"
     },
     "scripts": {
         "post-install-cmd": [
