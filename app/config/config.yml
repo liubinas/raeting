@@ -1,6 +1,6 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: security.php }
+    - { resource: security.yml }
 
 framework:
     #esi:             ~
