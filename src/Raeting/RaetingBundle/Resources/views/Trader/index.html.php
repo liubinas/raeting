@@ -1,4 +1,4 @@
-<? $view->extend('RaetingRaetingBundle::Signals/menu.html.php'); ?>
+<? $view->extend('RaetingRaetingBundle::Trader/menu.html.php'); ?>
 
 <? $view['slots']->start('content') ?>
 
