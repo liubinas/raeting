@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml">
     <head>
         <meta charset="utf-8"/>
         <title>Raeting.com</title>

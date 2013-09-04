@@ -17,6 +17,12 @@ security:
     providers:
         default_provider:
             entity: {class: RaetingUserBundle:User}
+        chainprovider:
+            chain:
+                providers: [default_provider, fos_facebook_provider]
+        fos_facebook_provider:
+            id: fos_facebook.user.login
+
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
@@ -27,6 +33,13 @@ security:
         secured_area:
             pattern:    ^/
             anonymous: ~
+            fos_facebook:
+                  app_url: "http://apps.facebook.com/raeting"
+                  server_url: "http://dev.raeting.lt"
+                  login_path: /login
+                  check_path: /facebook/login_check
+                  provider: fos_facebook_provider
+                  default_target_path: /
             form_login:
                 login_path: estinacmf_user.security.login
                 check_path: estinacmf_user.security.login_check

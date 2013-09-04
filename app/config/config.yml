@@ -75,3 +75,10 @@ raeting_core:
 
     exception_listener:
         controller: 'Raeting\CoreBundle\Controller\ExceptionController::exceptionAction'
+
+fos_facebook:
+    alias:  facebook
+    app_id: 524041377667862
+    secret: 7c83b700b5000d0f22c56f50e7762b19
+    cookie: true
+    permissions: [email, user_birthday, user_location]

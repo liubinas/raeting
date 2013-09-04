@@ -1,0 +1,18 @@
+parameters:
+   user.security.user_provider.class: Raeting\UserBundle\Security\UserProvider
+   user.service.user.class: Raeting\UserBundle\Service\UserService
+
+services:
+    user.security.user_provider:
+        class: %user.security.user_provider.class%
+        arguments: [ @user.service.user ]
+    user.service.user:
+        class: %user.service.user.class%
+        arguments: [ @doctrine.orm.entity_manager, @security.encoder_factory]
+    fos_facebook.user.login:
+        class: Raeting\UserBundle\Security\FacebookProvider
+        arguments:
+            facebook: "@fos_facebook.api"
+            userManager: "@user.security.user_provider"
+            validator: "@validator"
+            container: "@service_container"

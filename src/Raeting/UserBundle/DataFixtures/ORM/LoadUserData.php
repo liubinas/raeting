@@ -7,7 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Raeti\ng\UserBundle\Entity\User;
+use Raeting\UserBundle\Entity\User;
 
 /**
  * Signal sample data fixtures.

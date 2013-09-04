@@ -1,5 +1,7 @@
 _user:
     resource: "@EstinaCMFUserBundle/Resources/config/routing.yml"
+_raeting_user:
+    resource: "@RaetingUserBundle/Resources/config/facebook/routing.yml"
 _signal:
     resource: "@RaetingRaetingBundle/Resources/config/routing.yml"
 _api:

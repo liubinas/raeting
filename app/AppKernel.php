@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new FOS\FacebookBundle\FOSFacebookBundle(),
             new EstinaCMF\UserBundle\EstinaCMFUserBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Raeting\CoreBundle\RaetingCoreBundle(),

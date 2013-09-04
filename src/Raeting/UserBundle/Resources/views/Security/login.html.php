@@ -2,6 +2,8 @@
 <? if (!$view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
     <? $view['slots']->start('content') ?>
 
+    <?php echo $view['facebook']->initialize(array('xfbml' => true, 'fbAsyncInit' => 'onFbInit();')) ?>
+
     <? if ($error): ?>
         <div><?= $error->getMessage() ?></div>
     <? endif; ?>
@@ -47,6 +49,22 @@
                         <a href="<?= $view['router']->generate('estinacmf_user.registration') ?>" class="f-right">Register</a>
                     </div>    
                 </div>  
+                <?php echo $view['facebook']->loginButton(array('autologoutlink' => true)) ?>
+                <script>
+                    function goLogIn(){
+                        window.location.href = "<?= $view['router']->generate('_security_check') ?>";
+                    }
+
+                    function onFbInit() {
+                        if (typeof(FB) != 'undefined' && FB != null ) {              
+                            FB.Event.subscribe('auth.statusChange', function(response) {
+                                if (response.session || response.authResponse) {
+                                    setTimeout(goLogIn, 500);
+                                }
+                            });
+                        }
+                    }
+                </script>
             </form>
         </div>
     </div>    

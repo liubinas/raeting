@@ -1,0 +1,10 @@
+_security_check:
+    pattern:   /facebook/login_check
+    defaults:  { _controller: RaetingUserBundle:User:loginFb }
+
+_security_logout:
+  pattern:  /facebook/logout
+
+user_couple_fb_with_account:
+    pattern: /user/couple/facebook
+    defaults: { _controller: RaetingUserBundle:User:connectFacebookWithAccount }
