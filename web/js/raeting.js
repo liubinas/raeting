@@ -1,5 +1,10 @@
 $(function() {
  
+    $('body').delegate('form :submit', 'click', function(e){
+        e.preventDefault();
+        return App.Util.validateForm($(this).parents('form'));
+    });
+ 
     function autocompleteSelect( event, ui ) {
         $(this).val(ui.item.label);
         if($('[name="'+$(this).attr('name')+'"]').size() == 1){
