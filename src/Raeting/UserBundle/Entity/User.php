@@ -19,6 +19,13 @@ class User extends UserBase
      * @ORM\Column(name="facebookId", type="string", length=255, nullable=true)
      */
     private $facebookId;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     */
+    private $slug;
 
     public function serialize()
     {
@@ -55,6 +62,23 @@ class User extends UserBase
     public function getFacebookId()
     {
         return $this->facebookId;
+    }
+    
+    /**
+     * @param string $slug
+     * @return void
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

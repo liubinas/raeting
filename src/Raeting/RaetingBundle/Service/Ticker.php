@@ -54,7 +54,7 @@ class Ticker
     public function findByKeyword($keyword, $limit)
     {
         $query = $this->getRepository()->createQueryBuilder('p')
-            ->where('p.name LIKE :keyword')
+            ->where('p.symbol LIKE :keyword')
             ->setParameter('keyword', '%'.$keyword.'%')
             ->setMaxResults($limit)
             ->getQuery();

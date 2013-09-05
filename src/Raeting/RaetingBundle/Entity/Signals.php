@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Signals
 {
+    
+    const STATUS_NEW = 'new';
+    const STATUS_OPENED = 'opened';
+    const STATUS_CLOSED = 'closed';
+    const STATUS_ERROR = 'error';
+    
     protected $buyEnum = array(
         '0'    => 'Buy',
         '1'    => 'Sell',
@@ -73,7 +79,7 @@ class Signals
      *
      * @ORM\Column(name="profit", type="decimal", nullable=false)
      */
-    private $profit;
+    private $profit = 0;
 
     /**
      * @var string
@@ -87,7 +93,7 @@ class Signals
      *
      * @ORM\Column(name="status", type="boolean", nullable=false)
      */
-    private $status;
+    private $status = self::STATUS_NEW;
 
     /**
      * @var \DateTime

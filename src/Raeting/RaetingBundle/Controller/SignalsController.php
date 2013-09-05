@@ -56,8 +56,6 @@ class SignalsController extends Controller
             $entity->setUser($user);
             $entity->setUuid(md5($id.$id));
             $entity->setClose(0);
-            $entity->setProfit(0);
-            $entity->setStatus(0);
             $now = new \DateTime('now');
             $entity->setCreated($now);
             $entity->setOpened($now);

@@ -44,6 +44,13 @@ class Quote
      * })
      */
     private $market;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pips_position", type="string", length=255, nullable=false)
+     */
+    private $pipsPosition;
 
 
 
@@ -78,6 +85,29 @@ class Quote
     public function getSymbol()
     {
         return $this->symbol;
+    }
+    
+    /**
+     * Set pipsPosition
+     *
+     * @param string $pipsPosition
+     * @return Quote
+     */
+    public function setPipsPosition($pipsPosition)
+    {
+        $this->pipsPosition = $pipsPosition;
+    
+        return $this;
+    }
+
+    /**
+     * Get symbol
+     *
+     * @return string 
+     */
+    public function getPipsPosition()
+    {
+        return $this->pipsPosition;
     }
 
     /**

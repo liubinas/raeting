@@ -19,6 +19,11 @@ Raeting\RaetingBundle\Entity\Quote:
             length: 255
             fixed: false
             nullable: false
+        pipsPosition:
+            type: integer
+            fixed: false
+            nullable: false
+            column: pips_position
     manyToOne:
         market:
             targetEntity: Raeting\RaetingBundle\Entity\Market

@@ -52,7 +52,7 @@ $(function() {
                 success: function( data ) {
                     response( $.map( data, function( item ) {
                         return {
-                            label: item.name,
+                            label: item.symbol,
                             value: item.id
                         }
                     }));
