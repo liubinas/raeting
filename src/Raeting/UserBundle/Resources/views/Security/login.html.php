@@ -49,7 +49,7 @@
                         <a href="<?= $view['router']->generate('estinacmf_user.registration') ?>" class="f-right">Register</a>
                     </div>    
                 </div>  
-                <?php echo $view['facebook']->loginButton(array('autologoutlink' => true)) ?>
+                <?php echo $view['facebook']->loginButton() ?>
                 <script>
                     function goLogIn(){
                         window.location.href = "<?= $view['router']->generate('_security_check') ?>";
@@ -60,6 +60,8 @@
                             FB.Event.subscribe('auth.statusChange', function(response) {
                                 if (response.session || response.authResponse) {
                                     setTimeout(goLogIn, 500);
+                                } else {
+                                    window.location.href = "<?= $view['router']->generate('_security_logout') ?>";
                                 }
                             });
                         }

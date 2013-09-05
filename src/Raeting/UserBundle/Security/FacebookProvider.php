@@ -102,9 +102,11 @@ class FacebookProvider implements UserProviderInterface
             if (empty($user)) {
                 $newUser = true;
                 $user = $this->userManager->createUser();
-                $user->setPassword('');
-                $user->setRole(\EstinaCMF\UserBundle\Entity\User::ROLE_ADMIN);
-                $user->setCreateDate(new \DateTime(date('Y-m-d')));
+                $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+                $user->setSalt(md5(time()));
+                $user->setPassword($encoder->encodePassword(time(), $user->getSalt()));
+                $user->setRole(\EstinaCMF\UserBundle\Entity\User::ROLE_USER);
+                $user->setCreateDate(new \DateTime(date('Y-m-d H:i:s')));
             }
 
             $user->setFBData($fbdata);
