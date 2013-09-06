@@ -6,12 +6,13 @@ use Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\CallbackValidator,
     Symfony\Component\Form\FormBuilderInterface,
     Symfony\Component\Form\FormBuilder,
-    Symfony\Component\Form\FormError;
+    Symfony\Component\Form\FormError,
+    Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * User registration form type.
  */
-class RegisterType extends AbstractType
+class RegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -23,21 +24,13 @@ class RegisterType extends AbstractType
             'second_name' => 'confirm',
             'type' => 'password'
         ));
-
-        $this->setValidators($builder);
     }
 
-    protected function setValidators($builder)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        // $builder->addValidator(new CallbackValidator(
-        //     function (FormInterface $form) {
-        //         if (empty($form['terms'])) {
-        //             //@todo translate
-        //             $form->addError(new FormError('Please accept the terms and conditions'));
-        //         }
-
-        //     }
-        // ));
+        $resolver->setDefaults(array(
+            'data_class' => 'Raeting\UserBundle\Entity\User'
+        ));
     }
 
     /**
@@ -47,6 +40,6 @@ class RegisterType extends AbstractType
      */
     public function getName()
     {
-        return 'register';
+        return 'registration';
     }
 }

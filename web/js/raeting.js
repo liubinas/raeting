@@ -1,7 +1,6 @@
 $(function() {
  
     $('body').delegate('form :submit', 'click', function(e){
-        e.preventDefault();
         return App.Util.validateForm($(this).parents('form'));
     });
  

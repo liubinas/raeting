@@ -1,0 +1,14 @@
+parameters:
+    user.form.type.registration.class: Raeting\UserBundle\Form\RegistrationType
+
+services:
+    user.form.type.registration:
+        class: %user.form.type.registration.class%
+        tags:
+            - { name: form.type }
+            
+    user.form.registration:
+        class: %form.factory.class%
+        factory_method: create
+        factory_service: form.factory
+        arguments: [ @user.form.type.registration  ]
