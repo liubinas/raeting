@@ -18,3 +18,7 @@ ajax_quotes:
 ajax_tickers:
     pattern:  /ajaxtickers
     defaults: { _controller: "RaetingRaetingBundle:Signals:ajaxGetAllTickersJson" }
+    
+pips:
+    pattern:  /pips_calculator
+    defaults: { _controller: "RaetingRaetingBundle:Profit:pips" }

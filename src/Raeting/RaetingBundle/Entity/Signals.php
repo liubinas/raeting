@@ -80,6 +80,13 @@ class Signals
      * @ORM\Column(name="profit", type="decimal", nullable=false)
      */
     private $profit = 0;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="pips", type="decimal", nullable=false)
+     */
+    private $pips;
 
     /**
      * @var string
@@ -330,6 +337,29 @@ class Signals
     public function getProfit()
     {
         return $this->profit;
+    }
+    
+    /**
+     * Set pips
+     *
+     * @param float $pips
+     * @return Signals
+     */
+    public function setPips($pips)
+    {
+        $this->pips = $pips;
+    
+        return $this;
+    }
+
+    /**
+     * Get pips
+     *
+     * @return float 
+     */
+    public function getPips()
+    {
+        return $this->pips;
     }
 
     /**
