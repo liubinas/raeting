@@ -32,6 +32,11 @@ class Signals
         return $this->getRepository()->findAll();
     }
     
+    public function getAllNew()
+    {
+        return $this->getRepository()->findBy(array('status' => Entity\Signals::STATUS_NEW));
+    }
+    
     public function getBy($query)
     {
         return $result = $this->getRepository()->createQueryBuilder('s')
@@ -152,5 +157,24 @@ class Signals
     public function getByUuid($id)
     {
         return $this->getRepository()->findOneByUuid($id);
+    }
+    
+    private function countPips($from, $to, $pipsPosition)
+    {
+        $result = $from - $to;
+        $integerLength = strlen(floor($result));
+        $result = round($result, 6) * pow(10, $pipsPosition);
+        return $result;
+    }
+    
+    public function countPipsAndSave($signal)
+    {
+        if($signal->getBuy() == 0){
+            $pips = $this->countPips($signal->getTakeProfit(), $signal->getOpen(), $signal->getQuote()->getPipsPosition());
+        }else{
+            $pips = $this->countPips($signal->getOpen(), $signal->getTakeProfit(), $signal->getQuote()->getPipsPosition());
+        }
+        $signal->setPips($pips);
+        $this->em->flush();
     }
 }
