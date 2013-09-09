@@ -1,6 +1,6 @@
 Raeting\RaetingBundle\Entity\Signals:
     type: entity
-    table: signals
+    table: `signal`
     fields:
         id:
             id: true

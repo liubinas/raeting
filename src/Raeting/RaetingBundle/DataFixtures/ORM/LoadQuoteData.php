@@ -33,6 +33,7 @@ class LoadQuoteData extends AbstractFixture implements OrderedFixtureInterface, 
 
         $entity->setSymbol('EUR/USD');
         $entity->setTitle('EUR/USD');
+        $entity->setPipsPosition(4);
         $entity->setMarket($manager->merge($this->getReference('market.forex')));
 
         $this->addReference('quote.eurusd', $entity);
