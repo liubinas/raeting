@@ -1,21 +1,15 @@
 <? $view->extend('RaetingRaetingBundle::Raeting/menu.html.php'); ?>
 
+<? $view['slots']->start('header_row') ?>
+        Welcome to RAETING
+<? $view['slots']->stop('header_row') ?>
+
 <? $view['slots']->start('content') ?>
-
-
-<hr>
-
-    <div class="home-marketing-head">
-        <h1>Welcome to RAETING</h1>
-        <p class="lead">
-            Follow and compare trading signals from different markets and traders. 
-            Share your ideas easily.
-        </p>
-        
-    </div>
-
     <hr>
-
+    <p class="lead">
+        Follow and compare trading signals from different markets and traders. 
+        Share your ideas easily.
+    </p>
     <div class="row-fluid marketing">
         
         <div class="span10 offset1">

@@ -1,38 +1,35 @@
 <? $view->extend('RaetingUserBundle::User/menu.html.php'); ?>
 
+<? $view['slots']->start('body_attr') ?>class="login"<? $view['slots']->stop('body_attr') ?>
 <? $view['slots']->start('content') ?>
-<hr>
+<div class="login-wrap">
+        <div class="box">
+		<div class="content">
+                    <? if (true === $posted && true === $changed): ?>
+                        <p>Password changed successfully <a href="<?=$view['router']->generate('estinacmf_user.security.login') ?>">Log in </a></p>
+                    <? else: ?>
+			<!-- Login Formular -->
+			<form class="form-vertical login-form" action="<?= $view['router']->generate('estinacmf_user.change_password') ?>" method="post">
+				<!-- Title -->
+				<h3 class="form-title">Change password</h3>
+                                <?=$view['form']->errors($form);?>
+                                <?= $view['form']->row($form['email'], array('label' => 'E-mail')); ?>
+                                <?= $view['form']->row($form['hash'], array('label' => 'Hash')); ?>
+                                <?= $view['form']->row($form['password'], array('first_options' => array('label' => 'Password'))); ?>
+                                <?= $view['form']->row($form['password'], array('second_options' => array('label' => 'Repeat password'))); ?>
+                                <?= $view['form']->rest($form);?>
+
+				<!-- Form Actions -->
+				<div class="form-actions">
+					<button type="submit" class="submit btn btn-primary pull-right">
+						Change password <i class="icon-angle-right"></i>
+					</button>
+				</div>
+			</form>
+			<? endif; ?>
+		</div> <!-- /.content -->
+	</div>
+	<!-- /Login Box -->
+    </div>
     
-<div class="row-fluid page-head">
-    <div class="span12">
-        <h1>Recover Password</h1>
-    </div>
-</div>
-
-<hr>
-
-<div class="row-fluid signup">
-    <div class="span6 offset3">
-        <? if (true === $posted && true === $changed): ?>
-            <p>Password changed successfully <a href="<?=$view['router']->generate('estinacmf_user.security.login') ?>">Log in </a></p>
-        <? else: ?>
-            <form action="<?= $view['router']->generate('estinacmf_user.change_password') ?>" class="form-horizontal" method="post" <?= $view['form']->enctype($form) ?> >
-                <div class="bind-form-changepassword-response"></div>
-                <?=$view['form']->errors($form);?>
-                <?= $view['form']->row($form['email'], array('label' => 'E-mail')); ?>
-                <?= $view['form']->row($form['hash'], array('label' => 'Hash')); ?>
-                <?= $view['form']->row($form['password'], array('first_options' => array('label' => 'Password'))); ?>
-                <?= $view['form']->row($form['password'], array('second_options' => array('label' => 'Repeat password'))); ?>
-                <?= $view['form']->rest($form);?>
-                <!-- Button -->
-                <div class="control-group">
-                  <label class="control-label" for="singlebutton"></label>
-                  <div class="controls">
-                    <input type="submit" id="singlebutton" class="btn btn-success" value="Submit" />
-                  </div>
-                </div>
-            </form>
-        <? endif; ?>
-    </div>
-</div>    
 <? $view['slots']->stop('content') ?>

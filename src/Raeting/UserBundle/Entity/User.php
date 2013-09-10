@@ -23,6 +23,13 @@ class User extends UserBase
     /**
      * @var string
      *
+     * @ORM\Column(name="fbname", type="string", length=255, nullable=true)
+     */
+    private $fbname;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="slug", type="string", length=255, nullable=true)
      */
     private $slug;
@@ -65,6 +72,23 @@ class User extends UserBase
     }
     
     /**
+     * @param string $fbname
+     * @return void
+     */
+    public function setFbname($fbname)
+    {
+        $this->fbname = $fbname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFbname()
+    {
+        return $this->fbname;
+    }
+    
+    /**
      * @param string $slug
      * @return void
      */
@@ -88,6 +112,9 @@ class User extends UserBase
     {
         if (isset($fbdata['id'])) {
             $this->setFacebookId($fbdata['id']);
+        }
+        if (isset($fbdata['username'])) {
+            $this->setFbname($fbdata['username']);
         }
         if (isset($fbdata['first_name'])) {
             $this->setFirstname($fbdata['first_name']);

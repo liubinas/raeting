@@ -1,5 +1,9 @@
 <? $view->extend('RaetingRaetingBundle::Trader/menu.html.php'); ?>
 
+<? $view['slots']->start('header_row') ?>
+    Traders
+<? $view['slots']->stop('header_row') ?>
+
 <? $view['slots']->start('content') ?>
 
 <? if (!empty($entities)): ?>
@@ -8,9 +12,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <th>Name</th>
-                <th>Facebook</th>
-                <th>Linkedin</th>
-                <th>Signals</th>
+                <th>Email</th>
                 <th>Since</th>
                 </thead>
                 <tbody>
@@ -19,9 +21,7 @@
                         <td>
                             <a href="<?=$view['router']->generate('trader_show', array('id' => $entity->getId() )) ?>"><?=$entity->getFirstname().' '.$entity->getLastname()?></a>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><?=$entity->getEmail()?></td>
                         <td><?=$entity->getCreatedate()->format('Y-m-d')?></td>
                     </tr>
                 <? endforeach;?>

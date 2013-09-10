@@ -1,7 +1,5 @@
-<div class="box">
-    <div class="row-fluid">
-        <div class="content form-horizontal">
-            <form action="<?= $view['router']->generate('signals_create', array('id' => $entity->getId())) ?>" method="post" <?= $view['form']->enctype($form) ?> class="form-horizontal" style="padding:20px 0 10px 0;">
+
+            <form action="<?= $view['router']->generate('signals_create', array('id' => $entity->getId())) ?>" method="post" <?= $view['form']->enctype($form) ?> class="form-vertical">
                 <?= $view['form']->row($form['buy']) ?>
                 <?= $view['form']->row($form['quote'], array(
                 'label' => 'quote',
@@ -21,16 +19,13 @@
                 <?= $view['form']->row($form['description']) ?>
                 <?= $view['form']->widget($form) ?>
                 <!-- Button -->
-                <div class="control-group">
-                    <div class="controls">
-                        <input type="submit" id="add-signal" name="add-signal" class="btn btn-primary" value="Submit">
-                        <button id="add-signal-cancel" name="add-signal-cancel" class="btn"
+                <div class="col-md-12">
+                        <button type="submit" id="add-signal" class="submit btn btn-primary pull-right" name="add-signal">
+                                Add signal <i class="icon-angle-right"></i>
+                        </button>
+                        <button id="add-signal-cancel" name="add-signal-cancel" class="btn btn-primary pull-right"
                                 onclick="document.getElementsByClassName('signal-form')[0].style.display='none';">
                             Cancel
                         </button>
-                    </div>
                 </div>
             </form>
-        </div>
-    </div>
-</div>

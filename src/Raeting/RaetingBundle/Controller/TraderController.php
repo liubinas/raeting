@@ -25,8 +25,7 @@ class TraderController extends Controller
      */
     public function showAction($id)
     {
-        $entity = $this->get('estinacmf_user.service.user')->get($id);
-
+        $entity = $this->get('user.service.user')->get($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find trader .');
         }

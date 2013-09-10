@@ -1,7 +1,17 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
-<? $view['slots']->start('menu') ?>
+<? $view['slots']->start('crumbs') ?>
+<div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+                <li class="current">
+                        <i class="icon-home"></i>
+                        <a href="<?= $view['router']->generate('home'); ?>">Home</a>
+                </li>
+        </ul>
+</div>
+<? $view['slots']->stop('crumbs') ?>
 
+<? $view['slots']->start('menu') ?>
     <li class="active"><a href="<?= $view['router']->generate('home'); ?>">Home</a></li>
     <li><a href="<?= $view['router']->generate('trader'); ?>">Traders</a></li>
     <li><a href="<?= $view['router']->generate('signals'); ?>">Signals</a></li>

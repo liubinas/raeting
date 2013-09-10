@@ -1,6 +1,6 @@
-<div class="control-group">
+<div class="form-group">
     <?= $view['form']->label($form) ?>
-    <div class="controls">
+    <div class="input-icon">
         <?= $view['form']->widget($form) ?>
     </div>
     <? if ('' !== $view['form']->errors($form)): ?>

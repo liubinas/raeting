@@ -1,77 +1,86 @@
 <? $view->extend('RaetingRaetingBundle::Trader/menu.html.php'); ?>
 
+<? $view['slots']->start('header_row') ?>
+Trader Profile
+<? $view['slots']->stop('header_row') ?>
 <? $view['slots']->start('content') ?>
-<hr>
-    
-<div class="row-fluid page-head">
-    <div class="span12">
-        <h1>Trader profile</h1>
-    </div>
-</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Tabs-->
+        <div class="tabbable tabbable-custom tabbable-full-width">
+            <div class="tab-content row">
+                <!--=== Overview ===-->
+                <div class="tab-pane active" id="tab_overview">
+                    
+                    <div class="col-md-3">
+                        <div class="list-group">
+                            <li class="list-group-item no-padding">
+                                <img src="https://graph.facebook.com/<?= $entity->getFbname() ?>/picture?type=large">
+                            </li>
+                        </div>
+                    </div>
 
-<hr>
-<div class="row-fluid signals">
-            <div class="span12">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Email</th>
-                        <th>Created on</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><?=$entity->getFirstname()?></td>
-                            <td><?=$entity->getLastname()?></td>
-                            <td><?=$entity->getemail()?></td>
-                            <td><?=($entity->getcreateDate())?(string)$entity->getcreateDate()->format("Y-m-d H:i:s"):"";?></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <div class="col-md-9">
+                        <div class="row profile-info">
+                            <div class="col-md-7">
+                                <h1><?= $entity->getFirstname() ?> <?= $entity->getLastname() ?></h1>
+
+                                <dl class="dl-horizontal">
+                                    <dt>Email</dt>
+                                    <dd><?= $entity->getemail() ?></dd>
+                                    <dt>Created On</dt>
+                                    <dd><?= ($entity->getcreateDate()) ? (string) $entity->getcreateDate()->format("Y-m-d H:i:s") : ""; ?></dd>
+                                </dl>
+                            </div>
+                        </div> <!-- /.row -->
+                        <? if (!empty($signals)): ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="widget">
+                                        <div class="widget-content">
+                                            <h3>Signals</h3>
+                                            <table class="table table-hover table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Status</th>
+                                                        <th>Quote</th>
+                                                        <th>Buy/Sell</th>
+                                                        <th>Open</th>
+                                                        <th>Take profit</th>
+                                                        <th>Stop loss</th>
+                                                        <th>Created</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <? foreach ($signals as $entity): ?>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="#">
+                                                                    <span class="label label-success"><?= $entity->getstatus() ?></span></a>
+                                                            </td>
+                                                            <td><?= $entity->getQuote()->getTitle() ?></td>
+                                                            <td><?= $entity->getBuyValue() ?></td>
+                                                            <td><?= $entity->getOpen() ?></td>
+                                                            <td><?= $entity->getTakeprofit() ?></td>
+                                                            <td><?= $entity->getStoploss() ?></td>
+                                                            <td><?= $entity->getCreated()->format('Y-m-d') ?></td>
+                                                        </tr>
+                                                    <? endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Striped Table -->
+                            </div> <!-- /.row -->
+                        <? endif; ?>
+                    </div> <!-- /.col-md-9 -->
+                </div>
+                <!-- /Overview -->
+
+            </div> <!-- /.tab-content -->
         </div>
-    
-    <? if (!empty($signals)): ?>
-<hr>
-<div class="row-fluid page-head">
-    <div class="span12">
-        <h1>Trader signals</h1>
+        <!--END TABS-->
     </div>
-</div>
-<hr>
-        <div class="row-fluid signals">
-            <div class="span12">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <th>Status</th>
-                        <th>Quote</th>
-                        <th>Buy/Sell</th>
-                        <th>Open</th>
-                        <th>Take profit</th>
-                        <th>Stop loss</th>
-                        <th>Trader</th>
-                        <th>Created</th>
-                    </thead>
-                    <tbody>
-                        <? foreach ($signals as $entity):?>
-                        <tr>
-                            <td>
-                                <a href="#">
-                                    <span class="label label-success"><?=$entity->getstatus()?></span></a>
-                            </td>
-                            <td><?=$entity->getQuote()->getTitle()?></td>
-                            <td><?=$entity->getBuyValue()?></td>
-                            <td><?=$entity->getOpen()?></td>
-                            <td><?=$entity->getTakeprofit()?></td>
-                            <td><?=$entity->getStoploss()?></td>
-                            <td>
-                                <a href="<?=$view['router']->generate('trader_show', array('id' => $entity->getUser()->getId() )) ?>"><?=$entity->getUser()->getFirstname()?> <?=$entity->getUser()->getLastname()?></a></td>
-                            <td><?=$entity->getCreated()->format('Y-m-d')?></td>
-                        </tr>
-                        <? endforeach;?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    <? endif;?>
+</div> <!-- /.row -->
 <? $view['slots']->stop('content') ?>
