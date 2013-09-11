@@ -16,12 +16,12 @@
 					<i class="icon-remove close" data-dismiss="alert"></i>
 					Enter any username and password.
 				</div>-->
-                                <?= $view['form']->row($form['firstname'], array('label' => 'Firstname')); ?>
-                                <?= $view['form']->row($form['lastname'], array('label' => 'Lastname')); ?>
-                                <?= $view['form']->row($form['email'], array('label' => 'E-mail')); ?>
+                                <?= $view['form']->row($form['firstname'], array('label' => 'Firstname', 'attr' => array('class' => 'form-control'))); ?>
+                                <?= $view['form']->row($form['lastname'], array('label' => 'Lastname', 'attr' => array('class' => 'form-control'))); ?>
+                                <?= $view['form']->row($form['email'], array('label' => 'Email', 'attr' => array('class' => 'form-control'))); ?>
 
-                                <?= $view['form']->row($form['password'], array('first_options' => array('label' => 'Password'))); ?>
-                                <?= $view['form']->row($form['password'], array('second_options' => array('label' => 'Repeat password'))); ?>
+                                <?= $view['form']->row($form['password']['password'], array('first_options' => array('label' => 'Password'), 'attr' => array('class' => 'form-control'))); ?>
+                                <?= $view['form']->row($form['password']['confirm'], array('second_options' => array('label' => 'Repeat password'), 'attr' => array('class' => 'form-control'))); ?>
 
                                 <?= $view['form']->rest($form); ?>
 

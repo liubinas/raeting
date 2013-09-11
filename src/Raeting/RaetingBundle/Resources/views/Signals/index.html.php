@@ -20,11 +20,10 @@ Signals
                             </div>
                     </div>
                     <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
-                        <div class="widget-content signal-form" style="display: none;">
+                        <div class="widget-content signal-form"<? if(!$showForm) echo 'style="display: none;"' ?>>
                             <div class="span6 offset3">
-                                <?= $view['actions']->render(new \Symfony\Component\HttpKernel\Controller\ControllerReference('RaetingRaetingBundle:Signals:new', array('includeLayout' => 'false'))); ?>
+                                <?= $view['actions']->render(new \Symfony\Component\HttpKernel\Controller\ControllerReference('RaetingRaetingBundle:Signals:new', array('includeLayout' => 'false', 'form' => $form, 'entity' => $entity))); ?>
                             </div>
-                            <hr>
                         </div>
                     <? endif; ?>
                     <div class="widget-content">

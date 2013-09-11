@@ -13,10 +13,10 @@
 				<!-- Title -->
 				<h3 class="form-title">Change password</h3>
                                 <?=$view['form']->errors($form);?>
-                                <?= $view['form']->row($form['email'], array('label' => 'E-mail')); ?>
-                                <?= $view['form']->row($form['hash'], array('label' => 'Hash')); ?>
-                                <?= $view['form']->row($form['password'], array('first_options' => array('label' => 'Password'))); ?>
-                                <?= $view['form']->row($form['password'], array('second_options' => array('label' => 'Repeat password'))); ?>
+                                <?= $view['form']->row($form['email'], array('label' => 'Email', 'attr' => array('class' => 'form-control'))); ?>
+                                <?= $view['form']->row($form['hash'], array('label' => 'Hash', 'attr' => array('class' => 'form-control'))); ?>
+                                <?= $view['form']->row($form['password']['password'], array('first_options' => array('label' => 'Password'), 'attr' => array('class' => 'form-control'))); ?>
+                                <?= $view['form']->row($form['password']['confirm'], array('second_options' => array('label' => 'Repeat password'), 'attr' => array('class' => 'form-control'))); ?>
                                 <?= $view['form']->rest($form);?>
 
 				<!-- Form Actions -->

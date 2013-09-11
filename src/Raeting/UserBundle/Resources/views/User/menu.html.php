@@ -6,9 +6,7 @@
     <li><a href="<?= $view['router']->generate('trader'); ?>">Traders</a></li>
     <li><a href="<?= $view['router']->generate('signals'); ?>">Signals</a></li>
     <!--<li><a href="<?= $view['router']->generate('api'); ?>">API</a></li>-->
-    <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
-        <li><a href="<?= $view['router']->generate('estinacmf_user.logout'); ?>">Log out</a></li>
-    <? else: ?>
+    <? if (!$view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
         <li><a href="<?= $view['router']->generate('estinacmf_user.registration'); ?>">Sign Up</a></li>
         <li class="active"><a tabindex="0" href="<?= $view['router']->generate('estinacmf_user.security.login'); ?>">Login</a></li>
     <? endif; ?>

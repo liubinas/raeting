@@ -15,7 +15,7 @@
 			<form class="form-vertical login-form" action="<?=$view['router']->generate('estinacmf_user.recover') ?>" method="post">
 				<!-- Title -->
 				<h3 class="form-title">Recover password</h3>
-                                <?= $view['form']->row($form['email']); ?>
+                                <?= $view['form']->row($form['email'], array('attr' => array('class' => 'form-control'))); ?>
                                 <?= $view['form']->rest($form) ?>
 
 				<!-- Form Actions -->

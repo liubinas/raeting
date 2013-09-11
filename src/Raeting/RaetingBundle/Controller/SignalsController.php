@@ -29,7 +29,10 @@ class SignalsController extends Controller
         
         return $this->render('RaetingRaetingBundle:Signals:index.html.php', array(
             'entities' => $entities,
-            'query' => $query
+            'query' => $query,
+            'showForm' => false,
+            'form' => null,
+            'entity' => null
         ));
     }
 
@@ -69,6 +72,21 @@ class SignalsController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'Your changes were saved!');
 
             return $this->redirect($this->generateUrl('signals', array('id' => $entity->getId())));
+        }else{
+            $request = $this->get('request');
+            $query = $request->query->get('signal-search');
+            if ($request->getMethod() == 'GET' && !empty($query)) {
+                $entities = $this->get('raetingraeting.service.signals')->getBy($query);
+            }else{
+                $entities = $this->get('raetingraeting.service.signals')->getAll();
+            }
+            return $this->render('RaetingRaetingBundle:Signals:index.html.php', array(
+                'entities' => $entities,
+                'query' => $query,
+                'showForm' => true,
+                'form' => $form,
+                'entity' => $entity
+            ));
         }
         
         return $this->render('RaetingRaetingBundle:Signals:new.html.php', array(
@@ -81,11 +99,13 @@ class SignalsController extends Controller
      * Displays a form to create a new Signals entity.
      *
      */
-    public function newAction()
+    public function newAction($entity = null, $form = null)
     {
-        $entity = $this->get('raetingraeting.service.signals')->getNew();
-        $form = $this->get('raetingraeting.form.signals');
-        $form->setData($entity);
+        if($entity == null && $form == null){
+            $entity = $this->get('raetingraeting.service.signals')->getNew();
+            $form = $this->get('raetingraeting.form.signals');
+            $form->setData($entity);
+        }
 
         return $this->render('RaetingRaetingBundle:Signals:new.html.php', array(
             'entity' => $entity,

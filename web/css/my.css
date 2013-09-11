@@ -1,3 +1,11 @@
 .login #content{
     background: #f9f9f9;
 }
+.clear{
+    clear: both;
+}
+.form-group .radio.inline{
+    display: inline-block;
+    margin-left:20px;
+    margin-top:10px;
+}

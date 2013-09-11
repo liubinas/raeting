@@ -524,7 +524,6 @@ var AppTemplate = function() {
 			handleSwipeEvents(); // Enables feature to swipe to the left or right on mobile phones to open the sidebar
 			handleSidebarMenu(); // Handles navigation
 			handleScrollbars(); // Adds styled scrollbars for sidebar on desktops
-			handleThemeSwitcher(); // Bright/ Dark Switcher
 			handleWidgets(); // Handle collapse and expand from widgets
 			handleCheckableTables(); // Checks all checkboxes in a table if master checkbox was toggled
 			handleTabs(); // Fixes tab height

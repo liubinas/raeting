@@ -26,6 +26,10 @@
         <script src="<?= $view['assets']->getUrl('js/jquery-1.10.2.js') ?>" type="text/javascript"></script>
         <script src="<?= $view['assets']->getUrl('js/jquery-ui-1.10.3.custom.min.js') ?>" type="text/javascript"></script>
         <script src="<?= $view['assets']->getUrl('js/bootstrap.min.js') ?>" type="text/javascript"></script>
+        <script src="<?= $view['assets']->getUrl('js/libs/underscore.min.js') ?>" type="text/javascript"></script>
+        <script src="<?= $view['assets']->getUrl('js/libs/jquery.slimscroll.min.js') ?>" type="text/javascript"></script>
+        <script src="<?= $view['assets']->getUrl('js/libs/jquery.slimscroll.horizontal.min.js') ?>" type="text/javascript"></script>
+        <script src="<?= $view['assets']->getUrl('js/libs/breakpoints.js') ?>" type="text/javascript"></script>
         <script src="<?= $view['assets']->getUrl('js/app.js') ?>" type="text/javascript"></script>
         <script src="<?= $view['assets']->getUrl('js/app_template.js') ?>" type="text/javascript"></script>
         <script src="<?= $view['assets']->getUrl('js/raeting.js') ?>" type="text/javascript"></script>
@@ -49,6 +53,24 @@
 				<img src="<?= $view['assets']->getUrl('img/logo.png'); ?>" alt="logo" />
 			</a>
 			<!-- /logo -->
+                        <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
+                                $user = $app->getUser();
+                            ?>
+                        <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+                            <li class="dropdown user">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-male"></i>
+                                            <span class="username"><?= $user->getFirstname().' '.$user->getLastname()?></span>
+                                            <i class="icon-caret-down small"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                            <li><a href="<?=$view['router']->generate('trader_show', array('id' => $user->getId() )) ?>"><i class="icon-user"></i> My Profile</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="<?=$view['router']->generate('estinacmf_user.logout') ?>"><i class="icon-key"></i> Log Out</a></li>
+                                    </ul>
+                            </li>
+                        </ul>
+                        <? endif; ?>
 		</div>
 		<!-- /top navigation bar -->
 	</header> <!-- /.header -->
