@@ -1,8 +1,26 @@
 <? $view->extend('RaetingRaetingBundle::Trader/menu.html.php'); ?>
 
+<? $view['slots']->start('crumbs') ?>
+<div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+                <li>
+                        <i class="icon-home"></i>
+                        <a href="<?= $view['router']->generate('home'); ?>">Home</a>
+                </li>
+                <li>
+                        <a href="<?= $view['router']->generate('trader'); ?>">Traders</a>
+                </li>
+                <li class="current">
+                        <a href="<?= $view['router']->generate('trader_show', array('id' => $entity->getId())); ?>"><?= $entity->getFirstname() ?> <?= $entity->getLastname() ?></a>
+                </li>
+        </ul>
+</div>
+<? $view['slots']->stop('crumbs') ?>
+
 <? $view['slots']->start('header_row') ?>
 Trader Profile
 <? $view['slots']->stop('header_row') ?>
+
 <? $view['slots']->start('content') ?>
 <div class="row">
     <div class="col-md-12">
@@ -12,7 +30,7 @@ Trader Profile
                 <!--=== Overview ===-->
                 <div class="tab-pane active" id="tab_overview">
                     
-                    <div class="col-md-3">
+                    <div class="fl padd-15">
                         <div class="list-group">
                             <li class="list-group-item no-padding">
                                 <img src="https://graph.facebook.com/<?= $entity->getFbname() ?>/picture?type=large">

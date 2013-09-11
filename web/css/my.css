@@ -9,3 +9,12 @@
     margin-left:20px;
     margin-top:10px;
 }
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.padd-15{
+    padding: 15px;
+}

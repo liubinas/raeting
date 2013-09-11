@@ -1,5 +1,19 @@
 <? $view->extend('RaetingRaetingBundle::Trader/menu.html.php'); ?>
 
+<? $view['slots']->start('crumbs') ?>
+<div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+                <li>
+                        <i class="icon-home"></i>
+                        <a href="<?= $view['router']->generate('home'); ?>">Home</a>
+                </li>
+                <li class="current">
+                        <a href="<?= $view['router']->generate('trader'); ?>">Traders</a>
+                </li>
+        </ul>
+</div>
+<? $view['slots']->stop('crumbs') ?>
+
 <? $view['slots']->start('header_row') ?>
     Traders
 <? $view['slots']->stop('header_row') ?>
