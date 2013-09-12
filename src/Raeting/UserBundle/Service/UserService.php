@@ -32,4 +32,9 @@ class UserService extends BaseService
         $this->em->persist($user);
         return $this->em->flush();;
     }
+
+    public function getBySlug($slug)
+    {
+        return $this->getRepository()->findOneBy(array('slug'=>$slug));
+    }
 }

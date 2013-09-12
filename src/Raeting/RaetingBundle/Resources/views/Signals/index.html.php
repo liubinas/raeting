@@ -64,7 +64,7 @@ Signals
                                                     <td><?= $entity->getTakeprofit() ?></td>
                                                     <td><?= $entity->getStoploss() ?></td>
                                                     <td>
-                                                        <a href="<?= $view['router']->generate('trader_show', array('id' => $entity->getUser()->getId())) ?>"><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></a></td>
+                                                        <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getUser()->getSlug())) ?>"><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></a></td>
                                                     <td><?= $entity->getCreated()->format('Y-m-d') ?></td>
                                                 </tr>
                                             <? endforeach; ?>

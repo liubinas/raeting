@@ -126,4 +126,8 @@ class User extends UserBase
             $this->setEmail($fbdata['email']);
         }
     }
+    public function __toString()
+    {
+        return $this->getSlug();
+    }
 }

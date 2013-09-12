@@ -1,17 +1,17 @@
 <? $view->extend('RaetingRaetingBundle::Trader/menu.html.php'); ?>
 
 <? $view['slots']->start('crumbs') ?>
-<div class="crumbs">
+    <div class="crumbs">
         <ul id="breadcrumbs" class="breadcrumb">
-                <li>
-                        <i class="icon-home"></i>
-                        <a href="<?= $view['router']->generate('home'); ?>">Home</a>
-                </li>
-                <li class="current">
-                        <a href="<?= $view['router']->generate('trader'); ?>">Traders</a>
-                </li>
+            <li>
+                <i class="icon-home"></i>
+                <a href="<?= $view['router']->generate('home'); ?>">Home</a>
+            </li>
+            <li class="current">
+                <a href="<?= $view['router']->generate('trader'); ?>">Traders</a>
+            </li>
         </ul>
-</div>
+    </div>
 <? $view['slots']->stop('crumbs') ?>
 
 <? $view['slots']->start('header_row') ?>
@@ -30,15 +30,18 @@
                 <th>Since</th>
                 </thead>
                 <tbody>
-                <? foreach ($entities as $entity):?>
+                <? foreach ($entities as $entity): ?>
                     <tr>
                         <td>
-                            <a href="<?=$view['router']->generate('trader_show', array('id' => $entity->getId() )) ?>"><?=$entity->getFirstname().' '.$entity->getLastname()?></a>
+                            <a href="<?= $view['router']->generate(
+                                'trader_show',
+                                array('slug' => $entity->getSlug())
+                            ) ?>"><?= $entity->getFirstname() . ' ' . $entity->getLastname() ?></a>
                         </td>
-                        <td><?=$entity->getEmail()?></td>
-                        <td><?=$entity->getCreatedate()->format('Y-m-d')?></td>
+                        <td><?= $entity->getEmail() ?></td>
+                        <td><?= $entity->getCreatedate()->format('Y-m-d') ?></td>
                     </tr>
-                <? endforeach;?>
+                <? endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -47,9 +50,9 @@
     <div class="box box-row">
         <div class="row-fluid">
             <div class="content">
-                <p><?=$view['translator']->trans('No entries')?></p>
+                <p><?= $view['translator']->trans('No entries') ?></p>
             </div>
         </div>
     </div>
-<? endif;?>
+<? endif; ?>
 <? $view['slots']->stop('content') ?>

@@ -155,4 +155,13 @@ class Quote
     {
         return $this->market;
     }
+    /*
+     * __toString
+     *
+     * @return String
+     */
+    public function __toString()
+    {
+        return $this->getSymbol();
+    }
 }

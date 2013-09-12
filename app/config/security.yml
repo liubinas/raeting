@@ -58,5 +58,7 @@ security:
         - { path: ^/recover, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/change-password  , roles: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/signal  , roles: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/, roles: ROLE_USER}
+        - { path: ^/signals  , roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/traders  , roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/user, roles: ROLE_USER}

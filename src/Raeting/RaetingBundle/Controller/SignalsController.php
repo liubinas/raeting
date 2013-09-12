@@ -117,12 +117,12 @@ class SignalsController extends Controller
      * Finds and displays a Signals entity.
      *
      */
-    public function showAction($id)
+    public function showAction($uid)
     {
-        $entity = $this->get('raetingraeting.service.signals')->get($id);
+        $entity = $this->get('raetingraeting.service.signals')->getByUuid($uid);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Signals entity.');
+            throw $this->createNotFoundException('Unable to find Signal entity.');
         }
 
         return $this->render('RaetingRaetingBundle:Signals:show.html.php', array(

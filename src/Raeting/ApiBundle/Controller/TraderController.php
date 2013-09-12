@@ -25,7 +25,7 @@ class TraderController extends Controller
     
     public function showAction($slug)
     {
-        $userService = $this->get('user.service.userem');
+        $userService = $this->get('user.service.user');
         $trader = $userService->getBySlug($slug);
         
         $traderList = array('trader' => array(), 'meta' => array());
@@ -40,7 +40,7 @@ class TraderController extends Controller
             )
         );
 
-        $traderList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('trader_show', array('id' => $trader->getId()));
+        $traderList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('trader_show', array('slug' => $trader->getSlug()));
             
         $response = $traderList;
         
@@ -52,7 +52,7 @@ class TraderController extends Controller
     }
     public function indexAction()
     {
-        $userService = $this->get('user.service.userem');
+        $userService = $this->get('user.service.user');
         $traders = $userService->getTradersByRequest($this->getRequest());
 
         $query = '';

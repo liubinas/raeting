@@ -11,7 +11,7 @@
                         <a href="<?= $view['router']->generate('trader'); ?>">Traders</a>
                 </li>
                 <li class="current">
-                        <a href="<?= $view['router']->generate('trader_show', array('id' => $entity->getId())); ?>"><?= $entity->getFirstname() ?> <?= $entity->getLastname() ?></a>
+                        <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getSlug())); ?>"><?= $entity->getFirstname() ?> <?= $entity->getLastname() ?></a>
                 </li>
         </ul>
 </div>

@@ -39,20 +39,8 @@
                             <td><?=$entity->getQuote()?></td>
                         </tr>
                         <tr>
-                            <th>Type</th>
-                            <td><?=$entity->gettype()?></td>
-                        </tr>
-                        <tr>
                             <th>Open</th>
                             <td><?=$entity->getopen()?></td>
-                        </tr>
-                        <tr>
-                            <th>Profit</th>
-                            <td><?=$entity->getProfit()?></td>
-                        </tr>
-                        <tr>
-                            <th>Loss</th>
-                            <td><?=$entity->getLoss()?></td>
                         </tr>
                         <tr>
                             <th>Created</th>

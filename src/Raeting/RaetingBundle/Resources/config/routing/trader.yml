@@ -3,7 +3,7 @@ trader:
     defaults: { _controller: "RaetingRaetingBundle:Trader:index" }
 
 trader_show:
-    pattern:  /{id}/show
+    pattern:  /{slug}/
     defaults: { _controller: "RaetingRaetingBundle:Trader:show" }
 
 trader_new:
