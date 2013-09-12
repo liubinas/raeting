@@ -12,6 +12,10 @@ use EstinaCMF\UserBundle\Service\UserService as BaseService;
 
 class UserService extends BaseService
 {
+    public $defaultLimit = 10;
+    
+    public $defaultOffset = 0;
+    
     protected function getRepository()
     {
         return $this->em->getRepository('RaetingUserBundle:User');
@@ -31,6 +35,49 @@ class UserService extends BaseService
     {
         $this->em->persist($user);
         return $this->em->flush();;
+    }
+    
+    private function getQueryByRequest($request)
+    {
+        $query = $this->getRepository()->createQueryBuilder('u')
+                ->select('u');
+        
+        if($request->get('q')){
+            $query->where('u.firstname LIKE :q')
+            ->orWhere('u.lastname LIKE :q')
+            ->setParameter('q', '%'.$request->get('q').'%');
+        }
+        
+        if($request->get('limit')){
+            $query->setMaxResults((int)$request->get('limit'));
+        }else{
+            $query->setMaxResults($this->defaultLimit);
+        }
+        
+        if($request->get('offset')){
+            $query->setFirstResult((int)$request->get('offset'));
+        }
+        return $query;
+    }
+    
+    public function getTradersByRequest($request)
+    {
+        $query = $this->getQueryByRequest($request);
+        return $query->getQuery()
+                ->getResult();
+    }
+    
+    public function getTradersCountByRequest($request)
+    {
+        $query = $this->getQueryByRequest($request);
+        $query->select('count(u.id) counter');
+        $query->setMaxResults(null);
+        $query->setFirstResult(null);
+        
+        $result = $query->getQuery()
+                ->getSingleResult();
+        
+        return $result['counter'];
     }
 
     public function getBySlug($slug)
