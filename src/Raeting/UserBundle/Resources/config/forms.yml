@@ -1,5 +1,6 @@
 parameters:
     user.form.type.registration.class: Raeting\UserBundle\Form\RegistrationType
+    user.form.type.profile.class: Raeting\UserBundle\Form\ProfileType
 
 services:
     user.form.type.registration:
@@ -12,3 +13,15 @@ services:
         factory_method: create
         factory_service: form.factory
         arguments: [ @user.form.type.registration  ]
+        
+    user.form.type.profile:
+        class: %user.form.type.profile.class%
+        tags:
+            - { name: form.type }
+        arguments: [ @user.service.user ]
+            
+    user.form.profile:
+        class: %form.factory.class%
+        factory_method: create
+        factory_service: form.factory
+        arguments: [ @user.form.type.profile  ]

@@ -1,31 +1,57 @@
+<? $view->extend('RaetingRaetingBundle::Trader/menu.html.php'); ?>
+
+<? $view['slots']->start('crumbs') ?>
+<div class="crumbs">
+    <ul id="breadcrumbs" class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="<?= $view['router']->generate('home'); ?>">Home</a>
+        </li>
+        <li class="current">
+            <a href="<?= $view['router']->generate('user.profile.edit'); ?>">Edit profile</a>
+        </li>
+    </ul>
+</div>
+<? $view['slots']->stop('crumbs') ?>
+
+<? $view['slots']->start('header_row') ?>
+Profile edit
+<? $view['slots']->stop('header_row') ?>
+
+<? $view['slots']->start('content') ?>
+
+<? foreach ($view['session']->getFlash('profile.update.success') as $message): ?>
+    <div class="alert alert-success fade in">
+        <i class="icon-remove close" data-dismiss="alert"></i>
+        <?= $message ?>
+    </div>
+<? endforeach; ?>
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget box">
+            <div class="widget-content">
+                <form method="post" class="form-" action="<?= $view['router']->generate('user.profile.edit'); ?>">
+                    <?= $view['form']->errors($form) ?>
+                    <?= $view['form']->row($form['firstname'], array('label' => 'Firstname', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
+                    <?= $view['form']->row($form['lastname'], array('label' => 'Lastname', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
+                    <?= $view['form']->rest($form) ?>
+
+                    <div class="clear"></div>
+                    <div class="col-md-12">
+                        <button type="submit" class="submit btn btn-success pull-right">
+                            Update <i class="icon-angle-right"></i>
+                        </button>
+                        <a href="<?=$view['router']->generate('trader_show', array('slug' => $entity->getSlug() )) ?>" class="btn pull-right">
+                            Cancel
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<? $view['slots']->stop('content') ?>
+
 <? $view->extend('RaetingUserBundle::layout.html.php'); ?>
-
-<h2>Profile edit</h2>
-
-<form method="post" class="bind-form-useredit" action="<?= $view['router']->generate('user.profile_edit'); ?>">
-    <div class="bind-form-useredit-response"></div>
-    <?=$view['form']->errors($form)?>
-    <div class="row-fluid">
-        <fieldset class="span6">
-            <?= $view['form']->row($form['id']) ?>
-            <?= $view['form']->row($form['firstname'], array('label' => 'Firstname', 'attr' => array('class' => 'span12'))) ?>
-            <?= $view['form']->row($form['lastname'], array('label' => 'Lastname', 'attr' => array('class' => 'span12'))) ?>
-        </fieldset>
-        <fieldset class="span6">
-            <?= $view['form']->row($form['state'], array('label' => 'State', 'attr' => array('class' => 'span12'))) ?>
-            <?= $view['form']->row($form['street'], array('label' => 'Street', 'attr' => array('class' => 'span12'))) ?>
-            <?= $view['form']->row($form['postal_code'], array('label' => 'Postal code', 'attr' => array('class' => 'span12'))) ?>
-            <?= $view['form']->rest($form) ?>
-        </fieldset>
-    </div>
-    <div class="clear"></div>
-    <div class="well">
-        <div class="btn-group pull-left">
-            <a href="<?= $view['router']->generate('user.profile'); ?>" class="btn btn-danger"><i class="icon-back icon-white"></i> back</a>
-        </div>
-        <div class="btn-group pull-right">
-            <button type="submit" class="btn btn-success"><i class="icon-plus icon-white"></i> Submit</button>
-        </div>
-        <div class="clear"></div>
-    </div>
-</form>

@@ -36,7 +36,7 @@ Raeting\RaetingBundle\Entity\Signals:
             nullable: false
         pips:
             type: decimal
-            nullable: false
+            nullable: true
         description:
             type: string
             length: 255

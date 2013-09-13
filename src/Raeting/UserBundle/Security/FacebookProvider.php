@@ -87,47 +87,6 @@ class FacebookProvider implements UserProviderInterface
         return false;
 
     }
-    
-    public function checkPhoto()
-    {
-        try {
-            $fbdata = $this->facebook->api('/me');
-        } catch (FacebookApiException $e) {
-            $fbdata = null;
-            return false;
-        }
-
-        $alreadyExistingAccount = $this->findUserByFbId($fbdata['id']);
-
-        
-        if (!empty($alreadyExistingAccount)) {
-            return false;
-        }
-
-        if (!empty($fbdata)) {
-
-            $currentUserObj = $this->container->get('security.context')->getToken()->getUser();
-
-            $user = $this->findUserByUsername($currentUserObj->getUsername());
-
-            if (empty($user)) {
-                return false;
-            }
-
-            $user->setFBData($fbdata);
-
-            if (count($this->validator->validate($user, 'Facebook'))) {
-                // TODO: the user was found obviously, but doesnt match our expectations, do something smart
-                throw new UsernameNotFoundException('The facebook user could not be stored');
-            }
-            $this->userManager->updateUser();
-
-            return true;
-        }
-
-        return false;
-
-    }
 
     public function loadUserByUsername($username)
     {
@@ -148,6 +107,7 @@ class FacebookProvider implements UserProviderInterface
                 $user->setPassword($encoder->encodePassword(time(), $user->getSalt()));
                 $user->setRole(\EstinaCMF\UserBundle\Entity\User::ROLE_USER);
                 $user->setCreateDate(new \DateTime(date('Y-m-d H:i:s')));
+                $user->setSlug($this->userManager->createSlug($fbdata['first_name'], $fbdata['last_name']));
             }
 
             $user->setFBData($fbdata);

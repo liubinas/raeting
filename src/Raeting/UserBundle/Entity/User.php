@@ -30,7 +30,7 @@ class User extends UserBase
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true, unique = true)
      */
     private $slug;
 

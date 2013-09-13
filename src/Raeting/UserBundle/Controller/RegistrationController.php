@@ -39,7 +39,7 @@ class RegistrationController extends BaseController
             if ($form->isValid()) {
                 
                 $user = $form->getData();
-                $user->setSlug(strtolower($user->getFirstname().'_'.$user->getLastname()));
+                $user->setSlug($userService->createSlug($user->getFirstname(), $user->getLastname()));
                 
                 $user = $userService->register($user);
                 $dispatcher->dispatch(UserRegisteredEvent::NAME, new UserRegisteredEvent($user));

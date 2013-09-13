@@ -65,7 +65,6 @@ class SignalsController extends Controller
             $entity->setOpenExpire($now);
             $entity->setClosed($now);
             $entity->setCloseExpire($now);
-            $entity->setPips(0);
             
             $this->get('raetingraeting.service.signals')->save($entity);
 

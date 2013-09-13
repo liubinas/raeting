@@ -37,4 +37,9 @@ class UserProvider extends BaseProvider
     {
         return $this->userService->insertUser($user);
     }
+    
+    public function createSlug($name, $surname)
+    {
+        return $this->userService->createSlug($name, $surname);
+    }
 }

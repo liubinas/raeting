@@ -65,6 +65,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                             <li><a href="<?=$view['router']->generate('trader_show', array('slug' => $user->getSlug() )) ?>"><i class="icon-user"></i> My Profile</a></li>
+                                            <li><a href="<?=$view['router']->generate('user.profile.edit') ?>"><i class="icon-user"></i> Edit Profile</a></li>
                                             <li class="divider"></li>
                                             <li><a href="<?=$view['router']->generate('estinacmf_user.logout') ?>"><i class="icon-key"></i> Log Out</a></li>
                                     </ul>

@@ -84,4 +84,23 @@ class UserService extends BaseService
     {
         return $this->getRepository()->findOneBy(array('slug'=>$slug));
     }
+    
+    public function createSlug($name, $surname)
+    {
+        $i = 0;
+        $found = false;
+        while($found == false){
+            if($i == 0){
+                $slug = strtolower($name.'_'.$surname);
+            }else{
+                $slug = strtolower($name.'_'.$surname.$i);
+            }
+            $user = $this->getBySlug($slug);
+            if(empty($user)){
+                $found = true;
+            }
+            $i++;
+        }
+        return $slug;
+    }
 }
