@@ -3,13 +3,15 @@
 namespace Raeting\ApiBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-class ApiControllerTest extends WebTestCase
+/*
+ *  Testing
+ */
+class ApiTraderControllerTest extends WebTestCase
 {
     public function testIndexJson()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/signals.json');
+        $crawler = $client->request('GET', 'api/traders.json');
 
         //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
 
@@ -23,7 +25,7 @@ class ApiControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/signals.xml');
+        $crawler = $client->request('GET', 'api/traders.xml');
 
         //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
 
@@ -35,7 +37,7 @@ class ApiControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/signal/1.json');
+        $crawler = $client->request('GET', 'api/traders/test.json');
 
         //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
 
@@ -48,7 +50,7 @@ class ApiControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/signal/1.xml');
+        $crawler = $client->request('GET', 'api/traders/test.xml');
 
         //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
 
