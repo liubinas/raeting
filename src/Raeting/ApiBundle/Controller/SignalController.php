@@ -11,9 +11,12 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 class SignalController extends Controller
 {
-    
+
     private $serializer;
-    
+
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $encoders = array(new XmlEncoder(), new JsonEncoder());
@@ -21,18 +24,23 @@ class SignalController extends Controller
 
         $this->serializer = new Serializer($normalizers, $encoders);
     }
-    
+
+    /**
+     * Show single Signal info
+     * @param $id
+     * @return Response
+     */
     public function showAction($id)
     {
         $signalService = $this->get('raetingraeting.service.signals');
 
         $signal = $signalService->getByUuid($id);
-        
+
         $query = '';
-        if($this->getRequest()->getQueryString()){
+        if ($this->getRequest()->getQueryString()) {
             $query = '?'.$this->getRequest()->getQueryString();
         }
-        
+
         $response = array(
             'signal' => array(
                 'uuid'=>$signal->getUuid(),
@@ -52,8 +60,8 @@ class SignalController extends Controller
                     'slug'=>$signal->getUser()->getSlug(),
                     'firstName'=>$signal->getUser()->getFirstname(),
                     'lastName'=>$signal->getUser()->getLastname(),
-                    //'company'=>$signal->getUser()->getCompany(),
-                    //'about'=>$signal->getUser()->getAbout(),
+                    'company'=>$signal->getUser()->getCompany(),
+                    'about'=>$signal->getUser()->getAbout(),
                     //'profit'=>$signal->getUser()->getProfit(),
                 )
             ),
@@ -61,25 +69,31 @@ class SignalController extends Controller
                 'link' => $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals_show', array('uid' => $signal->getUuid())).$query
             )
         );
-            
-        if ('xml' === $this->getRequest()->get('_format')){
+
+        if ('xml' === $this->getRequest()->get('_format')) {
             return new Response($this->serializer->serialize($response, 'xml'));
         } else {
             return new Response($this->serializer->serialize($response, 'json'));
         }
     }
+
+    /**
+     * Show  signals list
+     *
+     * @return Response
+     */
     public function indexAction()
     {
         $signalService = $this->get('raetingraeting.service.signals');
         $signals = $signalService->getSignalsByRequest($this->getRequest());
-        
+
         $query = '';
-        if($this->getRequest()->getQueryString()){
+        if ($this->getRequest()->getQueryString()) {
             $query = '?'.$this->getRequest()->getQueryString();
         }
-        
+
         $signalList = array('signals' => array(), 'meta' => array());
-        foreach($signals as $signal) {
+        foreach ($signals as $signal) {
             $signalList['signals'][] = array(
                 'signal'=> array(
                     'uuid'=>$signal->getUuid(),
@@ -99,8 +113,8 @@ class SignalController extends Controller
                         'slug'=>$signal->getUser()->getSlug(),
                         'firstName'=>$signal->getUser()->getFirstname(),
                         'lastName'=>$signal->getUser()->getLastname(),
-                        //'company'=>$signal->getUser()->getCompany(),
-                        //'about'=>$signal->getUser()->getAbout(),
+                        'company'=>$signal->getUser()->getCompany(),
+                        'about'=>$signal->getUser()->getAbout(),
                         //'profit'=>$signal->getUser()->getProfit(),
                     )
                 )
@@ -110,22 +124,22 @@ class SignalController extends Controller
         $totalResults = $signalService->getSignalsCountByRequest($this->getRequest());
 
         $signalList['meta']['total'] = $totalResults;
-        if($this->getRequest()->get('limit')){
+        if ($this->getRequest()->get('limit')) {
             $signalList['meta']['limit'] = $this->getRequest()->get('limit');
-        }else{
+        } else {
             $signalList['meta']['limit'] = $signalService->defaultLimit;
         }
-        if($this->getRequest()->get('offset')){
+        if ($this->getRequest()->get('offset')) {
             $signalList['meta']['offset'] = $this->getRequest()->get('offset');
-        }else{
+        } else {
             $signalList['meta']['offset'] = $signalService->defaultOffset;
         }
 
         $signalList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals').$query;
-            
+
         $response = $signalList;
-        
-        if ('xml' === $this->getRequest()->get('_format')){
+
+        if ('xml' === $this->getRequest()->get('_format')) {
             return new Response($this->serializer->serialize($response, 'xml'));
         } else {
             return new Response($this->serializer->serialize($response, 'json'));
