@@ -19,23 +19,25 @@ Raeting\RaetingBundle\Entity\Signals:
             nullable: false
         open:
             type: decimal
+            scale: 6
             nullable: false
         takeProfit:
             type: decimal
+            scale: 6
             nullable: false
             column: take_profit
         stopLoss:
             type: decimal
+            scale: 6
             nullable: false
             column: stop_loss
-        close:
-            type: decimal
-            nullable: false
         profit:
             type: decimal
-            nullable: false
+            scale: 6
+            nullable: true
         pips:
             type: decimal
+            scale: 6
             nullable: true
         description:
             type: string

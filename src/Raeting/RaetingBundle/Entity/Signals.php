@@ -49,42 +49,35 @@ class Signals
     /**
      * @var float
      *
-     * @ORM\Column(name="open", type="decimal", nullable=false)
+     * @ORM\Column(name="open", type="decimal", nullable=false, scale=6)
      */
     private $open;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="take_profit", type="decimal", nullable=false)
+     * @ORM\Column(name="take_profit", type="decimal", nullable=false, scale=6)
      */
     private $takeProfit;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="stop_loss", type="decimal", nullable=false)
+     * @ORM\Column(name="stop_loss", type="decimal", nullable=false, scale=6)
      */
     private $stopLoss;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="close", type="decimal", nullable=false)
-     */
-    private $close;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="profit", type="decimal", nullable=false)
+     * @ORM\Column(name="profit", type="decimal", nullable=false, scale=6)
      */
     private $profit = 0;
     
     /**
      * @var float
      *
-     * @ORM\Column(name="pips", type="decimal", nullable=false)
+     * @ORM\Column(name="pips", type="decimal", nullable=false, scale=6)
      */
     private $pips;
 
@@ -291,29 +284,6 @@ class Signals
     public function getStopLoss()
     {
         return $this->stopLoss;
-    }
-
-    /**
-     * Set close
-     *
-     * @param float $close
-     * @return Signals
-     */
-    public function setClose($close)
-    {
-        $this->close = $close;
-    
-        return $this;
-    }
-
-    /**
-     * Get close
-     *
-     * @return float 
-     */
-    public function getClose()
-    {
-        return $this->close;
     }
 
     /**

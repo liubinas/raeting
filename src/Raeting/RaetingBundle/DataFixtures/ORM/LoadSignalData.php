@@ -28,35 +28,235 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
     public function load(ObjectManager $manager)
     {
         $signalService = $this->container->get('raetingraeting.service.signals');
-
-        $signal = $signalService->getNew();
-        $signal->setUuid(rand(0,1000));
-        $signal->setBuy(1);
-        $signal->setOpen(1.23);
-        $signal->setTakeprofit(1.23);
-        $signal->setStoploss(1.23);
-        $signal->setClose(1.23);
-        $signal->setProfit(0);
-        $signal->setDescription('Tryout');
-        $signal->setStatus(1);
-
+        
         $date = new \DateTime('NOW');
+        $dateClose = new \DateTime('NOW + 1hour'); 
+        
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.3288); $signal->setTakeprofit(1.3279);
+        $signal->setStoploss(1.3788); $signal->setStatus('new'); $signal->setDescription('fixture');
 
-        $signal->setCreated($date);
-        $signal->setOpened($date);
-        $signal->setOpenExpire($date);
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
 
-        $dateClose = new \DateTime('NOW + 1hour');
-        $signal->setClosed($dateClose);
-        $signal->setCloseExpire($dateClose);
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
         $signal->setQuote($manager->merge($this->getReference('quote.eurusd')));
         $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
 
-        $manager->persist($signal);
-        $manager->flush();
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.32643); $signal->setTakeprofit(1.322);
+        $signal->setStoploss(1.37645); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.eurusd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.32432); $signal->setTakeprofit(1.322);
+        $signal->setStoploss(1.37431); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.eurusd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.32431); $signal->setTakeprofit(1.322);
+        $signal->setStoploss(1.37435); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.eurusd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.58093); $signal->setTakeprofit(1.578);
+        $signal->setStoploss(1.63097); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.57617); $signal->setTakeprofit(1.575);
+        $signal->setStoploss(1.62622); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.57465); $signal->setTakeprofit(1.572);
+        $signal->setStoploss(1.62465); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.57005); $signal->setTakeprofit(1.568);
+        $signal->setStoploss(1.62005); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(1.13581); $signal->setTakeprofit(1.18588);
+        $signal->setStoploss(1.08588); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.audnzd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.5811); $signal->setTakeprofit(1.578);
+        $signal->setStoploss(1.63112); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.56439); $signal->setTakeprofit(1.56);
+        $signal->setStoploss(1.61439); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(131.414); $signal->setTakeprofit(132.059);
+        $signal->setStoploss(130.414); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.eurjpy')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.23486); $signal->setTakeprofit(1.23473);
+        $signal->setStoploss(1.23499); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.eurchf')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(129.643); $signal->setTakeprofit(129.618);
+        $signal->setStoploss(129.675); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.eurjpy')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.66439); $signal->setTakeprofit(1.66250);
+        $signal->setStoploss(1.66653); $signal->setStatus('new'); $signal->setDescription('fixture');
+
+        $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed($dateClose); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setQuote($manager->merge($this->getReference('quote.eurnzd')));
+        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+
+        $manager->persist($signal); $manager->flush();
     }
 
     public function getOrder()
