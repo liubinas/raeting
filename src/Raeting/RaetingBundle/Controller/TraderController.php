@@ -41,8 +41,13 @@ class TraderController extends Controller
             throw $this->createNotFoundException('Unable to find trader .');
         }
 
-        $signals = $this->get('raetingraeting.service.signals')->getByTrader($entity->getId(), $this->resultsPerPage, $page);
-        $totalSignals = $this->get('raetingraeting.service.signals')->countByTrader($entity->getId());
+        if ($request->getMethod() == 'GET' && !empty($query)) {
+            $signals = $this->get('raetingraeting.service.signals')->getByQueryAndUser($query, $entity->getId(), $this->resultsPerPage, $page);
+            $totalSignals = $this->get('raetingraeting.service.signals')->countByQueryAndUser($query, $entity->getId());
+        }else{
+            $signals = $this->get('raetingraeting.service.signals')->getByTrader($entity->getId(), $this->resultsPerPage, $page);
+            $totalSignals = $this->get('raetingraeting.service.signals')->countByTrader($entity->getId());
+        }
         
         return $this->render('RaetingRaetingBundle:Trader:show.html.php', array(
             'query'      => $query,

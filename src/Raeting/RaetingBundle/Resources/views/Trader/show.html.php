@@ -56,6 +56,18 @@ Trader Profile
                         <? if (!empty($signals)): ?>
                             <div class="row">
                                 <div class="col-md-12">
+                                    <div class="dataTables_filter" id="DataTables_Table_0_filter">
+                                        <form class="form-inline" method="get" action="<?= $view['router']->generate('trader_show', array('slug' => $entity->getSlug())); ?>">
+                                            <label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="icon-search"></i></span>
+                                                    <input id="signal-search" name="signal-search" type="text" placeholder="search" class="form-control" value="<?= $query ?>" />
+                                                </div>
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
                                     <div class="widget">
                                         <div class="widget-content">
                                             <h3>Signals</h3>
