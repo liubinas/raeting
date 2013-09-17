@@ -19,7 +19,7 @@ class ExceptionController extends Controller
      *
      * @throws \InvalidArgumentException When the exception template does not exist
      */
-    public function exceptionAction(FlattenException $exception, DebugLoggerInterface $logger = null, $format = 'html', $embedded = false)
+    /*public function exceptionAction(FlattenException $exception, DebugLoggerInterface $logger = null, $format = 'html', $embedded = false)
     {
         $this->container->get('request')->setRequestFormat($format);
 
@@ -38,7 +38,7 @@ class ExceptionController extends Controller
 
         //3 types of status codes: 2xx (OK), 3xx (redirection), 4xx/5xx (errors)
         $code = $exception->getStatusCode();
-
+        
         return $this->render('RaetingCoreBundle:Exception:404.html.php', array(
             'statusCode'     => $code,
             'statusText'     => Response::$statusTexts[$code],
@@ -47,5 +47,5 @@ class ExceptionController extends Controller
             'currentContent' => $currentContent,
             'isDebug'        => $this->container->get('kernel')->isDebug(),
         ));
-    }
+    }*/
 }

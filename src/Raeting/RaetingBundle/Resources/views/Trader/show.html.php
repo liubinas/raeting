@@ -44,10 +44,12 @@ Trader Profile
                                 <h1><?= $entity->getFirstname() ?> <?= $entity->getLastname() ?></h1>
 
                                 <dl class="dl-horizontal">
-                                    <dt>Email</dt>
-                                    <dd><?= $entity->getemail() ?></dd>
-                                    <dt>Created On</dt>
-                                    <dd><?= ($entity->getcreateDate()) ? (string) $entity->getcreateDate()->format("Y-m-d H:i:s") : ""; ?></dd>
+                                    <dt>Company</dt>
+                                    <dd><?= $entity->getCompany()?></dd>
+                                    <dt>About</dt>
+                                    <dd><?= $entity->getAbout()?></dd>
+                                    <dt>Member since</dt>
+                                    <dd><?= ($entity->getcreateDate()) ? (string) $entity->getcreateDate()->format("Y-m-d") : ""; ?></dd>
                                 </dl>
                             </div>
                         </div> <!-- /.row -->
@@ -81,7 +83,7 @@ Trader Profile
                                                             <td><?= $entity->getOpen() ?></td>
                                                             <td><?= $entity->getTakeprofit() ?></td>
                                                             <td><?= $entity->getStoploss() ?></td>
-                                                            <td><?= $entity->getCreated()->format('Y-m-d') ?></td>
+                                                            <td><?= $entity->getCreated()->format('Y-m-d H:i:s') ?></td>
                                                         </tr>
                                                     <? endforeach; ?>
                                                 </tbody>

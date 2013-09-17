@@ -35,6 +35,31 @@ class SignalsController extends Controller
             'entity' => null
         ));
     }
+    
+    /**
+     * Lists all user Signals entities.
+     *
+     */
+    public function mysignalsAction()
+    {
+        $request = $this->get('request');
+        $query = $request->query->get('signal-search');
+        $token = $this->get('security.context')->getToken();
+
+        if ($request->getMethod() == 'GET' && !empty($query)) {
+            $entities = $this->get('raetingraeting.service.signals')->getByQueryAndUser($query, $token->getUser()->getId());
+        }else{
+            $entities = $this->get('raetingraeting.service.signals')->getByTrader($token->getUser()->getId());
+        }
+        
+        return $this->render('RaetingRaetingBundle:Signals:my_signals.html.php', array(
+            'entities' => $entities,
+            'query' => $query,
+            'showForm' => false,
+            'form' => null,
+            'entity' => null
+        ));
+    }
 
     /**
      * Creates a new Signals entity.
@@ -42,6 +67,12 @@ class SignalsController extends Controller
      */
     public function createAction(Request $request)
     {
+        $request = $this->get('request');
+        $createLink = $request->query->get('link');
+        if(empty($createLink)){
+            $createLink = 'signals';
+        }
+        
         $entity = $this->get('raetingraeting.service.signals')->getNew();
         $form = $this->get('raetingraeting.form.signals');
         $form->setData($entity);
@@ -58,7 +89,6 @@ class SignalsController extends Controller
 
             $entity->setUser($user);
             $entity->setUuid(md5($id.$id));
-            $entity->setClose(0);
             $now = new \DateTime('now');
             $entity->setCreated($now);
             $entity->setOpened($now);
@@ -70,16 +100,20 @@ class SignalsController extends Controller
 
             $this->get('session')->getFlashBag()->add('success', 'Your changes were saved!');
 
-            return $this->redirect($this->generateUrl('signals', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl($createLink, array('id' => $entity->getId())));
         }else{
-            $request = $this->get('request');
             $query = $request->query->get('signal-search');
             if ($request->getMethod() == 'GET' && !empty($query)) {
                 $entities = $this->get('raetingraeting.service.signals')->getBy($query);
             }else{
                 $entities = $this->get('raetingraeting.service.signals')->getAll();
             }
-            return $this->render('RaetingRaetingBundle:Signals:index.html.php', array(
+            if($createLink == 'my_signals'){
+                $template = 'RaetingRaetingBundle:Signals:my_signals.html.php';
+            }else{
+                $template = 'RaetingRaetingBundle:Signals:index.html.php';
+            }
+            return $this->render($template, array(
                 'entities' => $entities,
                 'query' => $query,
                 'showForm' => true,
@@ -98,7 +132,7 @@ class SignalsController extends Controller
      * Displays a form to create a new Signals entity.
      *
      */
-    public function newAction($entity = null, $form = null)
+    public function newAction($entity = null, $form = null, $createLink = 'signals')
     {
         if($entity == null && $form == null){
             $entity = $this->get('raetingraeting.service.signals')->getNew();
@@ -109,6 +143,7 @@ class SignalsController extends Controller
         return $this->render('RaetingRaetingBundle:Signals:new.html.php', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'createLink' => $createLink
         ));
     }
 
@@ -179,32 +214,10 @@ class SignalsController extends Controller
             'form'   => $form->createView(),
         ));
     }
-
-    /**
-     * Deletes a Signals entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $entity = $this->get('raetingraeting.service.signals')->get($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Signals entity.');
-        }
-
-        $this->get('raetingraeting.service.signals')->delete($entity);
-
-        $this->get('session')->setFlash(
-            'success',
-            'Your changes were saved!'
-        );
-
-        return $this->redirect($this->generateUrl('signals'));
-    }
     
     public function ajaxGetAllQuotesJsonAction(Request $request)
     {
-        $quotes = $this->get('raetingraeting.service.quote')->findByKeyword($request->query->get('search'), $request->query->get('maxRows'));
+        $quotes = $this->get('raetingraeting.service.symbol')->findQuotesByKeyword($request->query->get('search'), $request->query->get('maxRows'));
         $serializer = $this->container->get('serializer');
         $quotes = $serializer->serialize($quotes, 'json');
         echo $quotes;
@@ -213,7 +226,7 @@ class SignalsController extends Controller
     
     public function ajaxGetAllTickersJsonAction(Request $request)
     {
-        $tickers = $this->get('raetingraeting.service.ticker')->findByKeyword($request->query->get('search'), $request->query->get('maxRows'));
+        $tickers = $this->get('raetingraeting.service.symbol')->findTickersByKeyword($request->query->get('search'), $request->query->get('maxRows'));
         $serializer = $this->container->get('serializer');
         $tickers = $serializer->serialize($tickers, 'json');
         echo $tickers;

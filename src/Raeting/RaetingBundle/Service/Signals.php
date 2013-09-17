@@ -51,12 +51,26 @@ class Signals
                 ->getResult();
     }
     
+    public function getByQueryAndUser($query, $user)
+    {
+        return $result = $this->getRepository()->createQueryBuilder('s')
+                ->select('s', 'u', 'q')
+                ->leftJoin('s.user', 'u')
+                ->leftJoin('s.quote', 'q')
+                ->where('q.title LIKE :query')
+                ->andWhere('u.id LIKE :user')
+                ->setParameter('query', '%'.$query.'%')
+                ->setParameter('user', '%'.$user.'%')
+                ->getQuery()
+                ->getResult();
+    }
+    
     public function getByTrader($user)
     {
         return $result = $this->getRepository()->createQueryBuilder('s')
                 ->select('s')
                 ->where('s.user = :user')
-                 ->setParameter('user', $user)
+                ->setParameter('user', $user)
                 ->getQuery()
                 ->getResult();
     }

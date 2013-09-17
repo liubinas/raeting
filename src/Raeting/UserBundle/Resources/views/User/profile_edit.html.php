@@ -34,6 +34,8 @@ Profile edit
                     <?= $view['form']->errors($form) ?>
                     <?= $view['form']->row($form['firstname'], array('label' => 'Firstname', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
                     <?= $view['form']->row($form['lastname'], array('label' => 'Lastname', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
+                    <?= $view['form']->row($form['company'], array('label' => 'Company', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
+                    <?= $view['form']->row($form['about'], array('label' => 'About', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
                     <?= $view['form']->rest($form) ?>
 
                     <div class="clear"></div>

@@ -91,7 +91,7 @@ class Signals
     /**
      * @var boolean
      *
-     * @ORM\Column(name="status", type="boolean", nullable=false)
+     * @ORM\Column(name="status", type="string", nullable=false)
      */
     private $status = self::STATUS_NEW;
 
@@ -131,23 +131,24 @@ class Signals
     private $closeExpire;
 
     /**
-     * @var \Raeting\RaetingBundle\Entity\Quote
+     * @var \Raeting\RaetingBundle\Entity\Symbol
      *
-     * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Quote")
+     * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Symbol")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="quote_id", referencedColumnName="id")
      * })
      */
     protected $quote;
+    
     /**
-     * @var \Raeting\RaetingBundle\Entity\Ticker
+     * @var \Raeting\RaetingBundle\Entity\Symbol
      *
-     * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Ticker")
+     * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Symbol")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ticker_id", referencedColumnName="id")
      * })
      */
-    private $ticker;
+    protected $ticker;
 
     /**
      * @var \Raeting\UserBundle\Entity\User
@@ -496,10 +497,10 @@ class Signals
     /**
      * Set quote
      *
-     * @param \Raeting\RaetingBundle\Entity\Quote $quote
+     * @param \Raeting\RaetingBundle\Entity\Symbol $quote
      * @return Signals
      */
-    public function setQuote(\Raeting\RaetingBundle\Entity\Quote $quote = null)
+    public function setQuote(\Raeting\RaetingBundle\Entity\Symbol $quote = null)
     {
         $this->quote = $quote;
     
@@ -509,29 +510,30 @@ class Signals
     /**
      * Get quote
      *
-     * @return \Raeting\RaetingBundle\Entity\Quote 
+     * @return \Raeting\RaetingBundle\Entity\Symbol 
      */
     public function getQuote()
     {
         return $this->quote;
     }
+    
     /**
      * Set ticker
      *
-     * @param \Raeting\RaetingBundle\Entity\Ticker $ticker
+     * @param \Raeting\RaetingBundle\Entity\Symbol $ticker
      * @return Signals
      */
-    public function setTicker(\Raeting\RaetingBundle\Entity\Ticker $ticker= null)
+    public function setTicker(\Raeting\RaetingBundle\Entity\Symbol $ticker = null)
     {
         $this->ticker = $ticker;
-
+    
         return $this;
     }
 
     /**
      * Get ticker
      *
-     * @return \Raeting\RaetingBundle\Entity\Ticker
+     * @return \Raeting\RaetingBundle\Entity\Symbol 
      */
     public function getTicker()
     {

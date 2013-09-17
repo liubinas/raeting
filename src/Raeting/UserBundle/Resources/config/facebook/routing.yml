@@ -4,7 +4,10 @@ _security_check:
 
 _security_logout:
   pattern:  /facebook/logout
-
+  
+fos_facebook_channel:
+  resource: "@FOSFacebookBundle/Resources/config/routing.xml"
+  
 user_couple_fb_with_account:
     pattern: /user/couple/facebook
     defaults: { _controller: RaetingUserBundle:User:connectFacebookWithAccount }

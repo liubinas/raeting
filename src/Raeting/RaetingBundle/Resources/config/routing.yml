@@ -22,3 +22,6 @@ ajax_tickers:
 pips:
     pattern:  /pips_calculator
     defaults: { _controller: "RaetingRaetingBundle:Profit:pips" }
+my_signals:
+    pattern:  /my_signals
+    defaults: { _controller: "RaetingRaetingBundle:Signals:mysignals" }

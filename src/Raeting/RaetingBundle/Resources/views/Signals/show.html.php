@@ -1,58 +1,65 @@
-<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
+<? $view->extend('RaetingRaetingBundle::Signals/menu.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
-    <div class="span5">
-        <h2><?=$view['translator']->trans('Signals')?></h2>
-    </div>
-    <nav class="span4">
-                    <a href="<?= $view['router']->generate('signals') ?>" class="btn">
-        <i class="icon-chevron-left"></i> 
-        <?=$view['translator']->trans('Back to the list')?>
-    </a>
-    <a href="<?= $view['router']->generate('signals_edit', array('id' => $entity->getId())) ?>" class="btn">
-        <i class="icon-pencil"></i> 
-        <?=$view['translator']->trans('Edit')?>
-    </a>
-    <a href="<?= $view['router']->generate('signals_delete', array('id' => $entity->getId())) ?>" class="btn" onclick="return confirm('<?=$view['translator']->trans('Confirm delete')?>">
-        <i class="icon-trash"></i>
-        <?=$view['translator']->trans('Delete')?>
-    </a>
-    </nav>
+Signal
 <? $view['slots']->stop('header_row') ?>
 
-<? $view['slots']->start('body') ?>
-    <div class="box">
-        <div class="row-fluid">
-            <div class="content">
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>User</th>
-                            <td><?=$entity->getUser()?></td>
-                        </tr>
-                        <tr>
-                            <th>Status</th>
-                            <td><?=$entity->getStatus()?></td>
-                        </tr>
-                        <tr>
-                            <th>Quote</th>
-                            <td><?=$entity->getQuote()?></td>
-                        </tr>
-                        <tr>
-                            <th>Open</th>
-                            <td><?=$entity->getopen()?></td>
-                        </tr>
-                        <tr>
-                            <th>Created</th>
-                            <td><?=($entity->getCreated())?(string)$entity->getCreated()->format("Y-m-d H:i:s"):"";?></td>
-                        </tr>
-                        <tr>
-                            <th>Id</th>
-                            <td><?=$entity->getId()?></td>
-                        </tr>
-                    </tbody>
-                </table>
+<? $view['slots']->start('content') ?>
+
+<div class="row">
+    <div class="col-md-12">
+            <div class="widget box">
+                    <div class="widget-header">
+                            <h4>Signal information</h4>
+                    </div>
+                    <div class="widget-content">
+                            <? if (!empty($entity)): ?>
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                        <th>Status</th>
+                                        <th>Quote</th>
+                                        <th>Buy/Sell</th>
+                                        <th>Open</th>
+                                        <th>Take profit</th>
+                                        <th>Stop loss</th>
+                                        <th>Trader</th>
+                                        <th>Created</th>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <a href="#">
+                                                            <span class="label label-success"><?= $entity->getstatus() ?></span></a>
+                                                    </td>
+                                                    <td><?= $entity->getQuote()->getTitle() ?></td>
+                                                    <td><?= $entity->getBuyValue() ?></td>
+                                                    <td><?= $entity->getOpen() ?></td>
+                                                    <td><?= $entity->getTakeprofit() ?></td>
+                                                    <td><?= $entity->getStoploss() ?></td>
+                                                    <td>
+                                                        <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getUser()->getSlug())) ?>"><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></a></td>
+                                                    <td><?= $entity->getCreated()->format('Y-m-d') ?></td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="col-md-12 fb-wrapper">
+                                        <br/><br/>
+                                        <div id="fb-root"></div>
+                                        <script>(function(d, s, id) {
+                                          var js, fjs = d.getElementsByTagName(s)[0];
+                                          if (d.getElementById(id)) return;
+                                          js = d.createElement(s); js.id = id;
+                                          js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=133579296820463";
+                                          fjs.parentNode.insertBefore(js, fjs);
+                                        }(document, 'script', 'facebook-jssdk'));</script>
+                                        <div class="fb-comments" data-href="<?= $view['router']->generate('signals_show', array('uid' => $entity->getUuid()), true) ?>" data-width="600"></div>
+                                    </div>
+                        <? else: ?>
+                            <p><?= $view['translator']->trans('No info') ?></p>
+                        <? endif; ?>
+                    </div>
             </div>
-        </div>
     </div>
-<? $view['slots']->stop('body') ?>
+</div>
+
+<? $view['slots']->stop('content') ?>

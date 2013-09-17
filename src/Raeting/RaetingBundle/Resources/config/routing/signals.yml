@@ -23,8 +23,3 @@ signals_update:
     pattern:  /{id}/update
     defaults: { _controller: "RaetingRaetingBundle:Signals:update" }
     requirements: { _method: post }
-
-signals_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "RaetingRaetingBundle:Signals:delete" }
-    requirements: { _method: get }

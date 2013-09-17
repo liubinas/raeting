@@ -20,7 +20,7 @@ class PaginationHelper extends Helper
         $this->router = $router;
     }
 
-    public function render($page, $total, $perPage, $route, $routeParams = array(), $layout = 'main_layout')
+    public function render($page, $total, $perPage, $route, $routeParams = array())
     {
         $from = $this->getDisplayFrom($page, $perPage);
         $to = $this->getDisplayTo($page, $perPage, $total);
@@ -41,11 +41,9 @@ class PaginationHelper extends Helper
             $routeParams['page'] = $prevPage;
             $urlPrev = $this->router->generate($route, $routeParams);
         }
-        if($layout == 'merchant_layout'){
-            $htmlFilename = 'RaetingCoreBundle:Helper:paginationMerchant.html.php';
-        }else{
-            $htmlFilename = 'RaetingCoreBundle:Helper:pagination.html.php';
-        }
+        
+        $htmlFilename = 'RaetingCoreBundle:Helper:pagination.html.php';
+        
         return $this->templating->render($htmlFilename, array(
             'total' => $total,
             'perPage' => $perPage,

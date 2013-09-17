@@ -1,6 +1,6 @@
-Raeting\RaetingBundle\Entity\Quote:
+Raeting\RaetingBundle\Entity\Symbol:
     type: entity
-    table: quote
+    table: symbol
     fields:
         id:
             id: true
@@ -24,6 +24,10 @@ Raeting\RaetingBundle\Entity\Quote:
             fixed: false
             nullable: false
             column: pips_position
+        type:
+            type: string
+            values: [quote,ticker]
+            default: quote
     manyToOne:
         market:
             targetEntity: Raeting\RaetingBundle\Entity\Market

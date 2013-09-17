@@ -23,6 +23,20 @@ class User extends UserBase
     /**
      * @var string
      *
+     * @ORM\Column(name="about", type="text", nullable=true)
+     */
+    private $about;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="company", type="text", nullable=true)
+     */
+    private $company;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="fbname", type="string", length=255, nullable=true)
      */
     private $fbname;
@@ -72,6 +86,23 @@ class User extends UserBase
     }
     
     /**
+     * @param string $about
+     * @return void
+     */
+    public function setAbout($about)
+    {
+        $this->about = $about;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAbout()
+    {
+        return $this->about;
+    }
+    
+    /**
      * @param string $fbname
      * @return void
      */
@@ -105,7 +136,17 @@ class User extends UserBase
         return $this->slug;
     }
 
-    /**
+    public function getCompany() 
+    {
+        return $this->company;
+    }
+
+    public function setCompany($company) 
+    {
+        $this->company = $company;
+    }
+
+        /**
      * @param Array
      */
     public function setFBData($fbdata)

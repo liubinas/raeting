@@ -5,7 +5,7 @@ namespace Raeting\RaetingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
 
-class Quote
+class Symbol
 {
 
     public function __construct(EntityManager $em)
@@ -15,7 +15,7 @@ class Quote
 
     public function getNew()
     {
-        return new Entity\Quote();
+        return new Entity\Symbol();
     }
 
     public function get($id)
@@ -48,14 +48,29 @@ class Quote
 
     public function getRepository()
     {
-        return $this->em->getRepository('RaetingRaetingBundle:Quote');
+        return $this->em->getRepository('RaetingRaetingBundle:Symbol');
     }
     
-    public function findByKeyword($keyword, $limit)
+    public function findQuotesByKeyword($keyword, $limit)
     {
         $query = $this->getRepository()->createQueryBuilder('p')
-            ->where('p.title LIKE :keyword')
+            ->where('p.symbol LIKE :keyword')
+            ->andWhere('p.type = :type')
             ->setParameter('keyword', '%'.$keyword.'%')
+            ->setParameter('type', Entity\Symbol::TYPE_QUOTE)
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+    
+    public function findtickersByKeyword($keyword, $limit)
+    {
+        $query = $this->getRepository()->createQueryBuilder('p')
+            ->where('p.symbol LIKE :keyword')
+            ->andWhere('p.type = :type')
+            ->setParameter('keyword', '%'.$keyword.'%')
+            ->setParameter('type', Entity\Symbol::TYPE_TICKER)
             ->setMaxResults($limit)
             ->getQuery();
 

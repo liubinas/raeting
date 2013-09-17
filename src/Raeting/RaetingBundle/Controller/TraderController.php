@@ -16,7 +16,12 @@ class TraderController extends Controller
         $traderService = $this->get('user.service.user');
         $entities = $traderService->getAll();
 
-        return $this->render('RaetingRaetingBundle:Trader:index.html.php', array('entities'=>$entities));
+        return $this->render('RaetingRaetingBundle:Trader:index.html.php', array(
+            'entities'=>$entities,
+            'totalTraders' => $totalTraders,
+            'perPage' => $this->container->getParameter('trip.resultsPerPage'),
+            'page' => $page
+            ));
     }
 
     /**

@@ -5,13 +5,16 @@ namespace Raeting\RaetingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Quote
+ * Symbol
  *
- * @ORM\Table(name="quote")
+ * @ORM\Table(name="symbol")
  * @ORM\Entity
  */
-class Quote
+class Symbol
 {
+    const TYPE_QUOTE = 'quote';
+    const TYPE_TICKER = 'ticker';
+    
     /**
      * @var integer
      *
@@ -51,7 +54,13 @@ class Quote
      * @ORM\Column(name="pips_position", type="string", length=255, nullable=false)
      */
     private $pipsPosition;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", nullable=false)
+     */
+    private $type = self::TYPE_QUOTE;
 
 
     /**
@@ -68,7 +77,7 @@ class Quote
      * Set symbol
      *
      * @param string $symbol
-     * @return Quote
+     * @return Symbol
      */
     public function setSymbol($symbol)
     {
@@ -91,7 +100,7 @@ class Quote
      * Set pipsPosition
      *
      * @param string $pipsPosition
-     * @return Quote
+     * @return Symbol
      */
     public function setPipsPosition($pipsPosition)
     {
@@ -114,7 +123,7 @@ class Quote
      * Set title
      *
      * @param string $title
-     * @return Quote
+     * @return Symbol
      */
     public function setTitle($title)
     {
@@ -134,10 +143,33 @@ class Quote
     }
 
     /**
+     * Set type
+     *
+     * @param string $type
+     * @return Symbol
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+    
+    /**
      * Set market
      *
      * @param \Raeting\RaetingBundle\Entity\Market $market
-     * @return Quote
+     * @return Symbol
      */
     public function setMarket(\Raeting\RaetingBundle\Entity\Market $market = null)
     {

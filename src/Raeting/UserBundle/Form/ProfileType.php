@@ -12,12 +12,12 @@ class ProfileType extends AbstractType
     {
         $builder
             ->add('firstname', 'text', array(
-                'label' => 'Name',
-                'attr' => array('class' => 'input-small', 'placeholder' => 'Name')
             ))
             ->add('lastname', 'text', array(
-                'label' => 'Surname',
-                'attr' => array('class' => 'input-small', 'placeholder' => 'Surname')
+            ))
+            ->add('company', 'text', array(
+            ))
+            ->add('about', 'textarea', array(
             ))
         ;
     }

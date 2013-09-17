@@ -1,4 +1,4 @@
-<form action="<?= $view['router']->generate('signals_create', array('id' => $entity->getId())) ?>" method="post" <?= $view['form']->enctype($form) ?> class="form-horizontal row-border">
+<form action="<?= $view['router']->generate('signals_create', array('id' => $entity->getId())) ?>?link=<?= $createLink; ?>" method="post" <?= $view['form']->enctype($form) ?> class="form-horizontal row-border">
                 
                     <div class="form-group">
                         <label class="col-md-2 control-label"></label>

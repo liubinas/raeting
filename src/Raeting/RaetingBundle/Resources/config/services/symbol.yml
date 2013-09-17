@@ -1,0 +1,7 @@
+parameters:
+    raetingraeting.service.symbol.class: Raeting\RaetingBundle\Service\Symbol
+
+services:
+    raetingraeting.service.symbol:
+        class: %raetingraeting.service.symbol.class%
+        arguments: [@doctrine.orm.entity_manager]

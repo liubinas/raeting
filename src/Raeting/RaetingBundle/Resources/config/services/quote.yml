@@ -1,7 +1,0 @@
-parameters:
-    raetingraeting.service.quote.class: Raeting\RaetingBundle\Service\Quote
-
-services:
-    raetingraeting.service.quote:
-        class: %raetingraeting.service.quote.class%
-        arguments: [@doctrine.orm.entity_manager]
