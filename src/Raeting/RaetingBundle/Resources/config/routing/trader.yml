@@ -1,10 +1,10 @@
 trader:
-    pattern:  /
-    defaults: { _controller: "RaetingRaetingBundle:Trader:index" }
+    pattern:  /{page}
+    defaults: { _controller: "RaetingRaetingBundle:Trader:index", page: 1 }
 
 trader_show:
-    pattern:  /{slug}/
-    defaults: { _controller: "RaetingRaetingBundle:Trader:show" }
+    pattern:  /{slug}/page/{page}
+    defaults: { _controller: "RaetingRaetingBundle:Trader:show", page: 1 }
 
 trader_new:
     pattern:  /new

@@ -103,4 +103,33 @@ class UserService extends BaseService
         }
         return $slug;
     }
+    
+    public function countAll()
+    {
+        $result = $this->getRepository()->createQueryBuilder('u')
+                ->select('count(u.id) counter')
+                ->getQuery()
+                ->getSingleResult();
+        
+        return $result['counter'];
+    }
+    
+    private function addLimits($query, $perPage, $page)
+    {
+        $query->setMaxResults((int)$perPage);
+        $query->setFirstResult((int)($page-1)*$perPage);
+        
+        return $query;
+    }
+    
+    public function getAllWithPaging($perPage, $page)
+    {
+        $query = $this->getRepository()->createQueryBuilder('u')
+                ->select('u')
+                ->getQuery();
+        
+        $query = $this->addLimits($query, $perPage, $page);
+        
+        return $query->getResult();
+    }
 }

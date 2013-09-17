@@ -73,5 +73,6 @@
             </div>
     </div>
 </div>
+<?= $view['pagination']->render($page, $totalSignals, $perPage, $searchLink, array('signal-search' => $query));?>
 
 <? $view['slots']->stop('content') ?>

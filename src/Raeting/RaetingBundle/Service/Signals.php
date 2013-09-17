@@ -32,14 +32,33 @@ class Signals
         return $this->getRepository()->findAll();
     }
     
+    public function getAllWithPaging($perPage, $page)
+    {
+        $query = $this->getRepository()->createQueryBuilder('s')
+                ->select('s')
+                ->getQuery();
+        
+        $query = $this->addLimits($query, $perPage, $page);
+        
+        return $query->getResult();
+    }
+    
     public function getAllNew()
     {
         return $this->getRepository()->findBy(array('status' => Entity\Signals::STATUS_NEW));
     }
     
-    public function getBy($query)
+    private function addLimits($query, $perPage, $page)
     {
-        return $result = $this->getRepository()->createQueryBuilder('s')
+        $query->setMaxResults((int)$perPage);
+        $query->setFirstResult((int)($page-1)*$perPage);
+        
+        return $query;
+    }
+    
+    public function getBy($query, $perPage, $page)
+    {
+        $query = $this->getRepository()->createQueryBuilder('s')
                 ->select('s', 'u', 'q')
                 ->leftJoin('s.user', 'u')
                 ->leftJoin('s.quote', 'q')
@@ -47,13 +66,17 @@ class Signals
                 ->orWhere('u.firstname LIKE :query')
                 ->orWhere('u.lastname LIKE :query')
                 ->setParameter('query', '%'.$query.'%')
-                ->getQuery()
-                ->getResult();
+                ->getQuery();
+        
+        $query = $this->addLimits($query, $perPage, $page);
+        
+        return $query->getResult();
+        
     }
     
-    public function getByQueryAndUser($query, $user)
+    public function getByQueryAndUser($query, $user, $perPage, $page)
     {
-        return $result = $this->getRepository()->createQueryBuilder('s')
+        $query = $this->getRepository()->createQueryBuilder('s')
                 ->select('s', 'u', 'q')
                 ->leftJoin('s.user', 'u')
                 ->leftJoin('s.quote', 'q')
@@ -61,20 +84,80 @@ class Signals
                 ->andWhere('u.id LIKE :user')
                 ->setParameter('query', '%'.$query.'%')
                 ->setParameter('user', '%'.$user.'%')
-                ->getQuery()
-                ->getResult();
+                ->getQuery();
+        
+        $query = $this->addLimits($query, $perPage, $page);
+        
+        return $query->getResult();
     }
     
-    public function getByTrader($user)
+    public function countByQueryAndUser($query, $user)
     {
-        return $result = $this->getRepository()->createQueryBuilder('s')
+        $result = $this->getRepository()->createQueryBuilder('s')
+                ->select('count(s.id) counter')
+                ->leftJoin('s.user', 'u')
+                ->leftJoin('s.quote', 'q')
+                ->where('q.title LIKE :query')
+                ->andWhere('u.id LIKE :user')
+                ->setParameter('query', '%'.$query.'%')
+                ->setParameter('user', '%'.$user.'%')
+                ->getQuery()
+                ->getSingleResult();
+        
+        return $result['counter'];
+    }
+    
+    public function getByTrader($user, $perPage, $page)
+    {
+        $query = $this->getRepository()->createQueryBuilder('s')
                 ->select('s')
                 ->where('s.user = :user')
                 ->setParameter('user', $user)
+                ->getQuery();
+        
+        $query = $this->addLimits($query, $perPage, $page);
+        
+        return $query->getResult();
+    }
+    
+    public function countByTrader($user)
+    {
+        $result = $this->getRepository()->createQueryBuilder('s')
+                ->select('count(s.id) counter')
+                ->where('s.user = :user')
+                ->setParameter('user', $user)
                 ->getQuery()
-                ->getResult();
+                ->getSingleResult();
+        
+        return $result['counter'];
+    }
+    
+    public function countByQuery($query)
+    {
+        $result = $this->getRepository()->createQueryBuilder('s')
+                ->select('count(s.id) counter')
+                ->leftJoin('s.user', 'u')
+                ->leftJoin('s.quote', 'q')
+                ->where('q.title LIKE :query')
+                ->orWhere('u.firstname LIKE :query')
+                ->orWhere('u.lastname LIKE :query')
+                ->setParameter('query', '%'.$query.'%')
+                ->getQuery()
+                ->getSingleResult();
+        
+        return $result['counter'];
     }
 
+    public function countAll()
+    {
+        $result = $this->getRepository()->createQueryBuilder('s')
+                ->select('count(s.id) counter')
+                ->getQuery()
+                ->getSingleResult();
+        
+        return $result['counter'];
+    }
+    
     public function save(Entity\Signals $entity)
     {
         $this->em->persist($entity);

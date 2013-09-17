@@ -19,4 +19,4 @@ Signals
 <? $view['slots']->stop('crumbs') ?>
 
 <? $view->render('RaetingRaetingBundle::Signals/signal_list.html.php', array(
-    'entities' => $entities, 'query' => $query, 'showForm' => false, 'form' => null, 'entity' => null, 'searchLink' => 'signals')); ?>
+    'entities' => $entities, 'query' => $query, 'showForm' => false, 'form' => null, 'entity' => null, 'searchLink' => 'signals', 'totalSignals' => $totalSignals, 'page' => $page, 'perPage' => $perPage)); ?>

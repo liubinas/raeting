@@ -1,6 +1,6 @@
 signals:
-    pattern:  /
-    defaults: { _controller: "RaetingRaetingBundle:Signals:index" }
+    pattern:  /{page}
+    defaults: { _controller: "RaetingRaetingBundle:Signals:index", page: 1 }
 
 signals_show:
     pattern:  /{uid}/show

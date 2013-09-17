@@ -31,16 +31,28 @@ class PaginationHelper extends Helper
         $urlNext = '';
         if ($nextPage)
         {
-            $routeParams['page'] = $nextPage;
-            $urlNext = $this->router->generate($route, $routeParams);
+            $params = $routeParams;
+            $params['page'] = $nextPage;
+            $urlNext = $this->router->generate($route, $params);
         }
 
         $urlPrev = '';
         if ($prevPage)
         {
-            $routeParams['page'] = $prevPage;
-            $urlPrev = $this->router->generate($route, $routeParams);
+            $params = $routeParams;
+            $params['page'] = $prevPage;
+            $urlPrev = $this->router->generate($route, $params);
         }
+        
+        $totalPages = ceil($total / $perPage);
+        
+        $pages = [];
+        for($i = $page-2; $i <= $page+2; $i++){
+            if($i > 0 && $i <= $totalPages){
+                $pages[] = $i;
+            }
+        }
+        
         
         $htmlFilename = 'RaetingCoreBundle:Helper:pagination.html.php';
         
@@ -51,6 +63,11 @@ class PaginationHelper extends Helper
             'to' => $to,
             'urlNext' => $urlNext,
             'urlPrev' => $urlPrev,
+            'pages' => $pages,
+            'page' => $page,
+            'route' => $route,
+            'totalPages' => $totalPages,
+            'params' => $routeParams,
         ));
     }
 

@@ -13,18 +13,21 @@ use Raeting\RaetingBundle\Form\SignalsType;
  */
 class SignalsController extends Controller
 {
+    public $resultsPerPage = 10;
     /**
      * Lists all Signals entities.
      *
      */
-    public function indexAction()
+    public function indexAction($page = 1)
     {
         $request = $this->get('request');
         $query = $request->query->get('signal-search');
         if ($request->getMethod() == 'GET' && !empty($query)) {
-            $entities = $this->get('raetingraeting.service.signals')->getBy($query);
+            $entities = $this->get('raetingraeting.service.signals')->getBy($query, $this->resultsPerPage, $page);
+            $totalSignals = $this->get('raetingraeting.service.signals')->countByQuery($query);
         }else{
-            $entities = $this->get('raetingraeting.service.signals')->getAll();
+            $entities = $this->get('raetingraeting.service.signals')->getAllWithPaging($this->resultsPerPage, $page);
+            $totalSignals = $this->get('raetingraeting.service.signals')->countAll();
         }
         
         return $this->render('RaetingRaetingBundle:Signals:index.html.php', array(
@@ -32,7 +35,10 @@ class SignalsController extends Controller
             'query' => $query,
             'showForm' => false,
             'form' => null,
-            'entity' => null
+            'entity' => null,
+            'totalSignals' => $totalSignals,
+            'perPage' => $this->resultsPerPage,
+            'page' => $page
         ));
     }
     
@@ -40,16 +46,18 @@ class SignalsController extends Controller
      * Lists all user Signals entities.
      *
      */
-    public function mysignalsAction()
+    public function mysignalsAction($page = 1)
     {
         $request = $this->get('request');
         $query = $request->query->get('signal-search');
         $token = $this->get('security.context')->getToken();
 
         if ($request->getMethod() == 'GET' && !empty($query)) {
-            $entities = $this->get('raetingraeting.service.signals')->getByQueryAndUser($query, $token->getUser()->getId());
+            $entities = $this->get('raetingraeting.service.signals')->getByQueryAndUser($query, $token->getUser()->getId(), $this->resultsPerPage, $page);
+            $totalSignals = $this->get('raetingraeting.service.signals')->countByQueryAndUser($query, $token->getUser()->getId());
         }else{
-            $entities = $this->get('raetingraeting.service.signals')->getByTrader($token->getUser()->getId());
+            $entities = $this->get('raetingraeting.service.signals')->getByTrader($token->getUser()->getId(), $this->resultsPerPage, $page);
+            $totalSignals = $this->get('raetingraeting.service.signals')->countByTrader($token->getUser()->getId());
         }
         
         return $this->render('RaetingRaetingBundle:Signals:my_signals.html.php', array(
@@ -57,7 +65,10 @@ class SignalsController extends Controller
             'query' => $query,
             'showForm' => false,
             'form' => null,
-            'entity' => null
+            'entity' => null,
+            'totalSignals' => $totalSignals,
+            'perPage' => $this->resultsPerPage,
+            'page' => $page
         ));
     }
 

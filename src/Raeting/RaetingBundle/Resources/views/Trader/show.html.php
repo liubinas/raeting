@@ -72,18 +72,18 @@ Trader Profile
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <? foreach ($signals as $entity): ?>
+                                                    <? foreach ($signals as $signal): ?>
                                                         <tr>
                                                             <td>
                                                                 <a href="#">
-                                                                    <span class="label label-success"><?= $entity->getstatus() ?></span></a>
+                                                                    <span class="label label-success"><?= $signal->getstatus() ?></span></a>
                                                             </td>
-                                                            <td><?= $entity->getQuote()->getTitle() ?></td>
-                                                            <td><?= $entity->getBuyValue() ?></td>
-                                                            <td><?= $entity->getOpen() ?></td>
-                                                            <td><?= $entity->getTakeprofit() ?></td>
-                                                            <td><?= $entity->getStoploss() ?></td>
-                                                            <td><?= $entity->getCreated()->format('Y-m-d H:i:s') ?></td>
+                                                            <td><?= $signal->getQuote()->getTitle() ?></td>
+                                                            <td><?= $signal->getBuyValue() ?></td>
+                                                            <td><?= $signal->getOpen() ?></td>
+                                                            <td><?= $signal->getTakeprofit() ?></td>
+                                                            <td><?= $signal->getStoploss() ?></td>
+                                                            <td><?= $signal->getCreated()->format('Y-m-d H:i:s') ?></td>
                                                         </tr>
                                                     <? endforeach; ?>
                                                 </tbody>
@@ -93,6 +93,7 @@ Trader Profile
                                 </div>
                                 <!-- /Striped Table -->
                             </div> <!-- /.row -->
+                            <?= $view['pagination']->render($page, $totalSignals, $perPage, 'trader_show', array('signal-search' => $query, 'slug' => $entity->getSlug()));?>
                         <? endif; ?>
                     </div> <!-- /.col-md-9 -->
                 </div>
