@@ -20,10 +20,10 @@ $(function() {
     }
     
     
-    $( "#raeting_raetingbundle_signalstype_quote" ).autocomplete({
+    $( "#raeting_raetingbundle_signalstype_symbol" ).autocomplete({
         source: function( request, response ) {
             $.ajax({
-                url: $( "#raeting_raetingbundle_signalstype_quote" ).attr('data-url'),
+                url: $( "#raeting_raetingbundle_signalstype_symbol" ).attr('data-url'),
                 dataType: "json",
                 data: {
                     maxRows: 12,
@@ -33,30 +33,6 @@ $(function() {
                     response( $.map( data, function( item ) {
                         return {
                             label: item.title,
-                            value: item.id
-                        }
-                    }));
-                }
-            });
-        },
-        focus: autocompleteFocus,
-        select: autocompleteSelect,
-        minLength: 2
-    });
-    
-    $( "#raeting_raetingbundle_signalstype_ticker" ).autocomplete({
-        source: function( request, response ) {
-            $.ajax({
-                url: $( "#raeting_raetingbundle_signalstype_ticker" ).attr('data-url'),
-                dataType: "json",
-                data: {
-                    maxRows: 12,
-                    search: request.term
-                },
-                success: function( data ) {
-                    response( $.map( data, function( item ) {
-                        return {
-                            label: item.symbol,
                             value: item.id
                         }
                     }));

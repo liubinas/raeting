@@ -66,12 +66,7 @@ Raeting\RaetingBundle\Entity\Signals:
             nullable: false
             column: close_expire
     manyToOne:
-        quote:
-            targetEntity: Raeting\RaetingBundle\Entity\Symbol
-            cascade: {  }
-            mappedBy: null
-            orphanRemoval: false
-        ticker:
+        symbol:
             targetEntity: Raeting\RaetingBundle\Entity\Symbol
             cascade: {  }
             mappedBy: null

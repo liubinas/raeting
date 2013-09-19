@@ -226,21 +226,12 @@ class SignalsController extends Controller
         ));
     }
     
-    public function ajaxGetAllQuotesJsonAction(Request $request)
+    public function ajaxGetAllSymbolsJsonAction(Request $request)
     {
-        $quotes = $this->get('raetingraeting.service.symbol')->findQuotesByKeyword($request->query->get('search'), $request->query->get('maxRows'));
+        $symbols = $this->get('raetingraeting.service.symbol')->findSymbolsByKeyword($request->query->get('search'), $request->query->get('maxRows'));
         $serializer = $this->container->get('serializer');
-        $quotes = $serializer->serialize($quotes, 'json');
-        echo $quotes;
-        die;
-    }
-    
-    public function ajaxGetAllTickersJsonAction(Request $request)
-    {
-        $tickers = $this->get('raetingraeting.service.symbol')->findTickersByKeyword($request->query->get('search'), $request->query->get('maxRows'));
-        $serializer = $this->container->get('serializer');
-        $tickers = $serializer->serialize($tickers, 'json');
-        echo $tickers;
+        $symbols = $serializer->serialize($symbols, 'json');
+        echo $symbols;
         die;
     }
 }

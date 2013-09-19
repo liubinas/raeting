@@ -43,8 +43,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.eurusd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.eurusd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -58,8 +57,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.eurusd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.eurusd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -73,8 +71,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.eurusd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.eurusd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -88,8 +85,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.eurusd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.eurusd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -103,8 +99,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.gbpusd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -118,8 +113,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.gbpusd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -133,8 +127,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.gbpusd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -148,8 +141,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.gbpusd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -163,8 +155,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.audnzd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.audnzd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -178,8 +169,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.gbpusd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -193,8 +183,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.gbpusd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.gbpusd')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -208,8 +197,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.eurjpy')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.eurjpy')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -223,8 +211,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.eurchf')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.eurchf')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -238,8 +225,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.eurjpy')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.eurjpy')));
 
         $manager->persist($signal); $manager->flush();
         //---------------------------------
@@ -253,8 +239,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
-        $signal->setQuote($manager->merge($this->getReference('quote.eurnzd')));
-        $signal->setTicker($manager->merge($this->getReference('ticker.apple')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.eurnzd')));
 
         $manager->persist($signal); $manager->flush();
     }

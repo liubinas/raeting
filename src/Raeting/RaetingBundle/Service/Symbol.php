@@ -51,13 +51,11 @@ class Symbol
         return $this->em->getRepository('RaetingRaetingBundle:Symbol');
     }
     
-    public function findQuotesByKeyword($keyword, $limit)
+    public function findSymbolsByKeyword($keyword, $limit)
     {
         $query = $this->getRepository()->createQueryBuilder('p')
             ->where('p.symbol LIKE :keyword')
-            ->andWhere('p.type = :type')
             ->setParameter('keyword', '%'.$keyword.'%')
-            ->setParameter('type', Entity\Symbol::TYPE_QUOTE)
             ->setMaxResults($limit)
             ->getQuery();
 

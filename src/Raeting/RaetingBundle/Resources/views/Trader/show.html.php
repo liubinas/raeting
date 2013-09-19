@@ -75,7 +75,7 @@ Trader Profile
                                                 <thead>
                                                     <tr>
                                                         <th>Status</th>
-                                                        <th>Quote</th>
+                                                        <th>Symbol</th>
                                                         <th>Buy/Sell</th>
                                                         <th>Open</th>
                                                         <th>Take profit</th>
@@ -90,7 +90,7 @@ Trader Profile
                                                                 <a href="#">
                                                                     <span class="label label-success"><?= $signal->getstatus() ?></span></a>
                                                             </td>
-                                                            <td><?= $signal->getQuote()->getTitle() ?></td>
+                                                            <td><?= $signal->getSymbol()->getTitle() ?></td>
                                                             <td><?= $signal->getBuyValue() ?></td>
                                                             <td><?= $signal->getOpen() ?></td>
                                                             <td><?= $signal->getTakeprofit() ?></td>

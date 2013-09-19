@@ -61,7 +61,7 @@ class Signals
         $query = $this->getRepository()->createQueryBuilder('s')
                 ->select('s', 'u', 'q')
                 ->leftJoin('s.user', 'u')
-                ->leftJoin('s.quote', 'q')
+                ->leftJoin('s.symbol', 'q')
                 ->where('q.title LIKE :query')
                 ->orWhere('u.firstname LIKE :query')
                 ->orWhere('u.lastname LIKE :query')
@@ -79,7 +79,7 @@ class Signals
         $query = $this->getRepository()->createQueryBuilder('s')
                 ->select('s', 'u', 'q')
                 ->leftJoin('s.user', 'u')
-                ->leftJoin('s.quote', 'q')
+                ->leftJoin('s.symbol', 'q')
                 ->where('q.title LIKE :query')
                 ->andWhere('u.id LIKE :user')
                 ->setParameter('query', '%'.$query.'%')
@@ -96,7 +96,7 @@ class Signals
         $result = $this->getRepository()->createQueryBuilder('s')
                 ->select('count(s.id) counter')
                 ->leftJoin('s.user', 'u')
-                ->leftJoin('s.quote', 'q')
+                ->leftJoin('s.symbol', 'q')
                 ->where('q.title LIKE :query')
                 ->andWhere('u.id LIKE :user')
                 ->setParameter('query', '%'.$query.'%')
@@ -137,7 +137,7 @@ class Signals
         $result = $this->getRepository()->createQueryBuilder('s')
                 ->select('count(s.id) counter')
                 ->leftJoin('s.user', 'u')
-                ->leftJoin('s.quote', 'q')
+                ->leftJoin('s.symbol', 'q')
                 ->where('q.title LIKE :query')
                 ->orWhere('u.firstname LIKE :query')
                 ->orWhere('u.lastname LIKE :query')
@@ -186,7 +186,7 @@ class Signals
         $query = $this->getRepository()->createQueryBuilder('s')
                 ->select('s', 'u', 'q')
                 ->leftJoin('s.user', 'u')
-                ->leftJoin('s.quote', 'q');
+                ->leftJoin('s.symbol', 'q');
         
         if($request->get('type') == 'buy'){
             $query->andWhere('s.buy = 1');
@@ -194,9 +194,9 @@ class Signals
             $query->andWhere('s.buy = 0');
         }
         
-        if($request->get('quote')){
-            $query->andWhere('q.title LIKE :quote')
-            ->setParameter('quote', '%'.$request->get('quote').'%');
+        if($request->get('symbol')){
+            $query->andWhere('q.title LIKE :symbol')
+            ->setParameter('symbol', '%'.$request->get('symbol').'%');
         }
         
         if($request->get('trader')){
@@ -267,9 +267,9 @@ class Signals
     public function countPipsAndSave($signal)
     {
         if($signal->getBuy() == 0){
-            $pips = $this->countPips($signal->getTakeProfit(), $signal->getOpen(), $signal->getQuote()->getPipsPosition());
+            $pips = $this->countPips($signal->getTakeProfit(), $signal->getOpen(), $signal->getSymbol()->getPipsPosition());
         }else{
-            $pips = $this->countPips($signal->getOpen(), $signal->getTakeProfit(), $signal->getQuote()->getPipsPosition());
+            $pips = $this->countPips($signal->getOpen(), $signal->getTakeProfit(), $signal->getSymbol()->getPipsPosition());
         }
         $signal->setPips($pips);
         $this->em->flush();

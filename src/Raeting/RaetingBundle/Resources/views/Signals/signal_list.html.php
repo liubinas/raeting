@@ -37,7 +37,7 @@
                                     <table class="table table-striped table-hover">
                                         <thead>
                                         <th>Status</th>
-                                        <th>Quote</th>
+                                        <th>Symbol</th>
                                         <th>Buy/Sell</th>
                                         <th>Open</th>
                                         <th>Take profit</th>
@@ -53,7 +53,7 @@
                                                         <a href="#">
                                                             <span class="label label-success"><?= $entity->getstatus() ?></span></a>
                                                     </td>
-                                                    <td><?= $entity->getQuote()->getTitle() ?></td>
+                                                    <td><?= $entity->getSymbol()->getTitle() ?></td>
                                                     <td><?= $entity->getBuyValue() ?></td>
                                                     <td><?= $entity->getOpen() ?></td>
                                                     <td><?= $entity->getTakeprofit() ?></td>

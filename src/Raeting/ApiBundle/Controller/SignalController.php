@@ -45,7 +45,7 @@ class SignalController extends Controller
             'signal' => array(
                 'uuid'=>$signal->getUuid(),
                 'type'=>$signal->getBuyValue(),
-                'symbol'=>$signal->getQuote()->getTitle(),
+                'symbol'=>$signal->getSymbol()->getTitle(),
                 'open'=>$signal->getOpen(),
                 'takeProfit'=>$signal->getTakeprofit(),
                 'stopLoss'=>$signal->getStoploss(),
@@ -98,7 +98,7 @@ class SignalController extends Controller
                 'signal'=> array(
                     'uuid'=>$signal->getUuid(),
                     'type'=>$signal->getBuyValue(),
-                    'symbol'=>$signal->getQuote()->getTitle(),
+                    'symbol'=>$signal->getSymbol()->getTitle(),
                     'open'=>$signal->getOpen(),
                     'takeProfit'=>$signal->getTakeprofit(),
                     'stopLoss'=>$signal->getStoploss(),

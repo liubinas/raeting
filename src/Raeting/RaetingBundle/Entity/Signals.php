@@ -135,20 +135,10 @@ class Signals
      *
      * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Symbol")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="quote_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="symbol_id", referencedColumnName="id")
      * })
      */
-    protected $quote;
-    
-    /**
-     * @var \Raeting\RaetingBundle\Entity\Symbol
-     *
-     * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Symbol")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ticker_id", referencedColumnName="id")
-     * })
-     */
-    protected $ticker;
+    protected $symbol;
 
     /**
      * @var \Raeting\UserBundle\Entity\User
@@ -495,51 +485,28 @@ class Signals
     }
 
     /**
-     * Set quote
+     * Set symbol
      *
-     * @param \Raeting\RaetingBundle\Entity\Symbol $quote
+     * @param \Raeting\RaetingBundle\Entity\Symbol $symbol
      * @return Signals
      */
-    public function setQuote(\Raeting\RaetingBundle\Entity\Symbol $quote = null)
+    public function setSymbol(\Raeting\RaetingBundle\Entity\Symbol $symbol = null)
     {
-        $this->quote = $quote;
+        $this->symbol = $symbol;
     
         return $this;
     }
 
     /**
-     * Get quote
+     * Get symbol
      *
      * @return \Raeting\RaetingBundle\Entity\Symbol 
      */
-    public function getQuote()
+    public function getSymbol()
     {
-        return $this->quote;
+        return $this->symbol;
     }
     
-    /**
-     * Set ticker
-     *
-     * @param \Raeting\RaetingBundle\Entity\Symbol $ticker
-     * @return Signals
-     */
-    public function setTicker(\Raeting\RaetingBundle\Entity\Symbol $ticker = null)
-    {
-        $this->ticker = $ticker;
-    
-        return $this;
-    }
-
-    /**
-     * Get ticker
-     *
-     * @return \Raeting\RaetingBundle\Entity\Symbol 
-     */
-    public function getTicker()
-    {
-        return $this->ticker;
-    }
-
     /**
      * Set user
      *

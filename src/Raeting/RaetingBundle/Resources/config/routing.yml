@@ -12,12 +12,9 @@ home:
 api:
     pattern:  /api
     defaults: { _controller: "RaetingRaetingBundle:Raeting:api" }
-ajax_quotes:
-    pattern:  /ajaxquotes
-    defaults: { _controller: "RaetingRaetingBundle:Signals:ajaxGetAllQuotesJson" }
-ajax_tickers:
-    pattern:  /ajaxtickers
-    defaults: { _controller: "RaetingRaetingBundle:Signals:ajaxGetAllTickersJson" }
+ajax_symbols:
+    pattern:  /ajaxsymbols
+    defaults: { _controller: "RaetingRaetingBundle:Signals:ajaxGetAllSymbolsJson" }
     
 pips:
     pattern:  /pips_calculator
