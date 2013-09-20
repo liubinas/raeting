@@ -46,7 +46,7 @@ class PaginationHelper extends Helper
         
         $totalPages = ceil($total / $perPage);
         
-        $pages = [];
+        $pages = array();
         for($i = $page-2; $i <= $page+2; $i++){
             if($i > 0 && $i <= $totalPages){
                 $pages[] = $i;
