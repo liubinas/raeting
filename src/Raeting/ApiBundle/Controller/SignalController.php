@@ -35,7 +35,11 @@ class SignalController extends Controller
         $signalService = $this->get('raetingraeting.service.signals');
 
         $signal = $signalService->getByUuid($id);
-
+        
+        if(!$signal){
+            throw $this->createNotFoundException('Unable to find Signal.');
+        }
+        
         $query = '';
         if ($this->getRequest()->getQueryString()) {
             $query = '?'.$this->getRequest()->getQueryString();
@@ -49,7 +53,6 @@ class SignalController extends Controller
                 'open'=>$signal->getOpen(),
                 'takeProfit'=>$signal->getTakeprofit(),
                 'stopLoss'=>$signal->getStoploss(),
-                'closed'=>$signal->getClose(),
                 'profit'=>$signal->getProfit(),
                 'description'=>$signal->getDescription(),
                 'status'=>$signal->getStatus(),
@@ -86,39 +89,40 @@ class SignalController extends Controller
     {
         $signalService = $this->get('raetingraeting.service.signals');
         $signals = $signalService->getSignalsByRequest($this->getRequest());
-
+        
         $query = '';
         if ($this->getRequest()->getQueryString()) {
             $query = '?'.$this->getRequest()->getQueryString();
         }
 
         $signalList = array('signals' => array(), 'meta' => array());
-        foreach ($signals as $signal) {
-            $signalList['signals'][] = array(
-                'signal'=> array(
-                    'uuid'=>$signal->getUuid(),
-                    'type'=>$signal->getBuyValue(),
-                    'symbol'=>$signal->getSymbol()->getTitle(),
-                    'open'=>$signal->getOpen(),
-                    'takeProfit'=>$signal->getTakeprofit(),
-                    'stopLoss'=>$signal->getStoploss(),
-                    'closed'=>$signal->getClose(),
-                    'profit'=>$signal->getProfit(),
-                    'description'=>$signal->getDescription(),
-                    'status'=>$signal->getStatus(),
-                    'dateCreated'=>$signal->getCreated(),
-                    'dateOpened'=>$signal->getOpened(),
-                    'dateClosed'=>$signal->getClosed(),
-                    'trader'=>    array(
-                        'slug'=>$signal->getUser()->getSlug(),
-                        'firstName'=>$signal->getUser()->getFirstname(),
-                        'lastName'=>$signal->getUser()->getLastname(),
-                        'company'=>$signal->getUser()->getCompany(),
-                        'about'=>$signal->getUser()->getAbout(),
-                        //'profit'=>$signal->getUser()->getProfit(),
+        if(!empty($signals)){
+            foreach ($signals as $signal) {
+                $signalList['signals'][] = array(
+                    'signal'=> array(
+                        'uuid'=>$signal->getUuid(),
+                        'type'=>$signal->getBuyValue(),
+                        'symbol'=>$signal->getSymbol()->getTitle(),
+                        'open'=>$signal->getOpen(),
+                        'takeProfit'=>$signal->getTakeprofit(),
+                        'stopLoss'=>$signal->getStoploss(),
+                        'profit'=>$signal->getProfit(),
+                        'description'=>$signal->getDescription(),
+                        'status'=>$signal->getStatus(),
+                        'dateCreated'=>$signal->getCreated(),
+                        'dateOpened'=>$signal->getOpened(),
+                        'dateClosed'=>$signal->getClosed(),
+                        'trader'=>    array(
+                            'slug'=>$signal->getUser()->getSlug(),
+                            'firstName'=>$signal->getUser()->getFirstname(),
+                            'lastName'=>$signal->getUser()->getLastname(),
+                            'company'=>$signal->getUser()->getCompany(),
+                            'about'=>$signal->getUser()->getAbout(),
+                            //'profit'=>$signal->getUser()->getProfit(),
+                        )
                     )
-                )
-            );
+                );
+            }
         }
 
         $totalResults = $signalService->getSignalsCountByRequest($this->getRequest());

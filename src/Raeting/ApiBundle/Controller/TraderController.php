@@ -34,7 +34,11 @@ class TraderController extends Controller
     {
         $userService = $this->get('user.service.user');
         $trader = $userService->getBySlug($slug);
-
+        
+        if(!$trader){
+            throw $this->createNotFoundException('Unable to find trader.');
+        }
+        
         $response = array(
             'trader' => array(
                 'slug'=>$trader->getSlug(),
@@ -72,17 +76,19 @@ class TraderController extends Controller
         }
 
         $traderList = array('traders' => array(), 'meta' => array());
-        foreach ($traders as $trader) {
-            $traderList['traders'][] = array(
-                'trader' => array(
-                    'slug'=>$trader->getSlug(),
-                    'firstName'=>$trader->getFirstname(),
-                    'lastName'=>$trader->getLastname(),
-                    'company'=>$trader->getCompany(),
-                    'about'=>$trader->getAbout(),
-                    //'profit'=>$trader->getProfit(),
-                )
-            );
+        if(!empty($traders)){
+            foreach ($traders as $trader) {
+                $traderList['traders'][] = array(
+                    'trader' => array(
+                        'slug'=>$trader->getSlug(),
+                        'firstName'=>$trader->getFirstname(),
+                        'lastName'=>$trader->getLastname(),
+                        'company'=>$trader->getCompany(),
+                        'about'=>$trader->getAbout(),
+                        //'profit'=>$trader->getProfit(),
+                    )
+                );
+            }
         }
 
         $totalResults = $userService->getTradersCountByRequest($this->getRequest());
@@ -133,30 +139,31 @@ class TraderController extends Controller
         }
 
         $signalList = array('signals' => array(), 'meta' => array());
-        foreach ($signals as $signal) {
-            $signalList['signals'][] = array(
-                'uuid'=>$signal->getUuid(),
-                'type'=>$signal->getBuyValue(),
-                'symbol'=>$signal->getSymbol()->getTitle(),
-                'open'=>$signal->getOpen(),
-                'takeProfit'=>$signal->getTakeprofit(),
-                'stopLoss'=>$signal->getStoploss(),
-                'closed'=>$signal->getClose(),
-                'profit'=>$signal->getProfit(),
-                'description'=>$signal->getDescription(),
-                'status'=>$signal->getStatus(),
-                'dateCreated'=>$signal->getCreated(),
-                'dateOpened'=>$signal->getOpened(),
-                'dateClosed'=>$signal->getClosed(),
-                'trader'=>    array(
-                    'slug'=>$signal->getUser()->getSlug(),
-                    'firstName'=>$signal->getUser()->getFirstname(),
-                    'lastName'=>$signal->getUser()->getLastname(),
-                    'company'=>$signal->getUser()->getCompany(),
-                    'about'=>$signal->getUser()->getAbout(),
-                    //'profit'=>$signal->getUser()->getProfit(),
-                )
-            );
+        if(!empty($signals)){
+            foreach ($signals as $signal) {
+                $signalList['signals'][] = array(
+                    'uuid'=>$signal->getUuid(),
+                    'type'=>$signal->getBuyValue(),
+                    'symbol'=>$signal->getSymbol()->getTitle(),
+                    'open'=>$signal->getOpen(),
+                    'takeProfit'=>$signal->getTakeprofit(),
+                    'stopLoss'=>$signal->getStoploss(),
+                    'profit'=>$signal->getProfit(),
+                    'description'=>$signal->getDescription(),
+                    'status'=>$signal->getStatus(),
+                    'dateCreated'=>$signal->getCreated(),
+                    'dateOpened'=>$signal->getOpened(),
+                    'dateClosed'=>$signal->getClosed(),
+                    'trader'=>    array(
+                        'slug'=>$signal->getUser()->getSlug(),
+                        'firstName'=>$signal->getUser()->getFirstname(),
+                        'lastName'=>$signal->getUser()->getLastname(),
+                        'company'=>$signal->getUser()->getCompany(),
+                        'about'=>$signal->getUser()->getAbout(),
+                        //'profit'=>$signal->getUser()->getProfit(),
+                    )
+                );
+            }
         }
 
         $totalResults = $signalService->getSignalsCountByRequest($this->getRequest());
