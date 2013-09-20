@@ -30,12 +30,17 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
     {
         $userService = $this->container->get('user.service.user');
 
+        $user = $userService->getByEmail('estina@estina.lt');
+        $user->setSlug('estina_estina');
+        
+        $manager->flush();
+        
         $user = $userService->createUser();
-
+        
         $user->setEmail('marius.b@estina.lt');
         $user->setRole(\Raeting\UserBundle\Entity\User::ROLE_ADMIN);
-        $user->setFirstname('admin');
-        $user->setLastname('admin');
+        $user->setFirstname('Jonas');
+        $user->setLastname('Jonaitis');
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
         $user->setPassword($encoder->encodePassword('labadiena', $user->getSalt()));
         $user->setSlug('fixture');
