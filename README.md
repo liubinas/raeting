@@ -26,3 +26,10 @@ Change $ENV to your enviroment name.
 </VirtualHost>
 3) Add your $ENV to app/AppKernel.php 
   if (in_array($this->getEnvironment(), array($ENV));
+
+
+Migrations:
+
+migrate: app/console doctrine:migrations:migrate
+
+load fixtures: app/console estina:fixtures:load

@@ -1,2 +1,0 @@
-ALTER TABLE  `signals` CHANGE  `status`  `status` ENUM(  'new',  'opened',  'closed',  'error' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT  'new';
-ALTER TABLE  `signals` CHANGE  `profit`  `profit` DECIMAL( 10, 0 ) NOT NULL DEFAULT  '0';
