@@ -256,7 +256,7 @@ class Signals
         return $this->getRepository()->findOneByUuid($id);
     }
     
-    private function countPips($from, $to, $pipsPosition)
+    public function countPips($to, $from, $pipsPosition)
     {
         $result = $from - $to;
         $integerLength = strlen(floor($result));

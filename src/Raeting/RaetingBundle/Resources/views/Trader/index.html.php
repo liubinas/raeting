@@ -35,15 +35,17 @@
                 <? foreach ($entities as $entity): ?>
                     <tr>
                         <td>
-                                <img src="https://graph.facebook.com/<?= $entity->getFbname() ?>/picture?type=square">
+                                <img src="https://graph.facebook.com/<?= $entity['fbname'] ?>/picture?type=square">
                         </td>
                         <td>
                             <a href="<?= $view['router']->generate(
                                 'trader_show',
-                                array('slug' => $entity->getSlug())
-                            ) ?>"><?= $entity->getFirstname() . ' ' . $entity->getLastname() ?></a>
+                                array('slug' => $entity['slug'])
+                            ) ?>"><?= $entity['firstname'] . ' ' . $entity['lastname'] ?></a>
                         </td>
-                        <td><?= $entity->getCreatedate()->format('Y-m-d') ?></td>
+                        <td><?= $entity['pips'] ?></td>
+                        <td><?= $entity['signals'] ?></td>
+                        <td><?= $entity['createDate']->format('Y-m-d') ?></td>
                     </tr>
                 <? endforeach; ?>
                 </tbody>
