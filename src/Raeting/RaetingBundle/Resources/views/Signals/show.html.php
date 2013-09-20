@@ -42,22 +42,22 @@ Signal
                                                 </tr>
                                         </tbody>
                                     </table>
-                                    <div class="col-md-12 fb-wrapper">
-                                        <br/><br/>
-                                        <div id="fb-root"></div>
-                                        <script>(function(d, s, id) {
-                                          var js, fjs = d.getElementsByTagName(s)[0];
-                                          if (d.getElementById(id)) return;
-                                          js = d.createElement(s); js.id = id;
-                                          js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=133579296820463";
-                                          fjs.parentNode.insertBefore(js, fjs);
-                                        }(document, 'script', 'facebook-jssdk'));</script>
-                                        <div class="fb-comments" data-href="<?= $view['router']->generate('signals_show', array('uid' => $entity->getUuid()), true) ?>" data-width="600"></div>
-                                    </div>
                         <? else: ?>
                             <p><?= $view['translator']->trans('No info') ?></p>
                         <? endif; ?>
                     </div>
+            </div>
+            <div class="col-md-12 fb-wrapper">
+                <br/><br/>
+                <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=133579296820463";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
+                <div class="fb-comments" data-href="<?= $view['router']->generate('signals_show', array('uid' => $entity->getUuid()), true) ?>" data-width="600"></div>
             </div>
     </div>
 </div>

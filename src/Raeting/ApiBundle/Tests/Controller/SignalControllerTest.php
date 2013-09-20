@@ -2,12 +2,12 @@
 
 namespace Raeting\ApiBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Raeting\ApiBundle\Tests\Controller\EntityCheck;
 
 /*
  *
  */
-class ApiSignalControllerTest extends WebTestCase
+class ApiSignalControllerTest extends EntityCheck
 {
     /*
      * Test list json
@@ -17,9 +17,11 @@ class ApiSignalControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', 'api/signals.json');
 
-        //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
-
         $response = $client->getResponse();
+        $content = $response->getContent();
+        
+        $this->checkSignalJson($content);
+        
         $this->assertResponse($response, 200, 'application/json');
 
     }
@@ -32,10 +34,12 @@ class ApiSignalControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', 'api/signals.xml');
 
-        //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
-
         $response = $client->getResponse();
-        $this->assertResponse($response, 200, 'application/xml');
+        $content = $response->getContent();
+        
+        $this->checkSignalXml($content);
+        
+        $this->assertResponse($response, 200, 'text/xml; charset=UTF-8');
 
     }
     /*
@@ -45,11 +49,13 @@ class ApiSignalControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', 'api/signal/1.json');
-
-        //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $crawler = $client->request('GET', 'api/signals/1.json');
 
         $response = $client->getResponse();
+        $content = $response->getContent();
+        
+        $this->checkSignalWithTraderJson($content);
+        
         $this->assertResponse($response, 200, 'application/json');
 
     }
@@ -60,45 +66,14 @@ class ApiSignalControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', 'api/signal/1.xml');
-
-        //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $crawler = $client->request('GET', 'api/signals/1.xml');
 
         $response = $client->getResponse();
-        $this->assertResponse($response, 200, 'application/xml');
+        $content = $response->getContent();
+        
+        $this->checkSignalWithTraderXml($content);
+        
+        $this->assertResponse($response, 200, 'text/xml; charset=UTF-8');
 
-    }
-
-    /**
-     * Assert response code
-     *
-     * @param $response
-     * @param int    $statusCode
-     * @param string $contentType
-     */
-    protected function assertResponse($response, $statusCode = 200, $contentType = 'application/json')
-    {
-        $this->assertEquals(
-            $statusCode, $response->getStatusCode(),
-            $response->getContent()
-        );
-        $this->assertTrue(
-            $response->headers->contains('Content-Type', $contentType),
-            $response->headers
-        );
-    }
-
-    /**
-     * SF2/phpunit workaround bellow
-     *
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        // workaround for https://github.com/symfony/symfony/issues/2531
-        if (ob_get_length() == 0 ) {
-            ob_start();
-        }
     }
 }

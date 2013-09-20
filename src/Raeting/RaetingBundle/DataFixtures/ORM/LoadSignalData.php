@@ -34,7 +34,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         
         //---------------------------------
         $signal = $signalService->getNew();
-        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.3288); $signal->setTakeprofit(1.3279);
+        $signal->setUuid(1); $signal->setBuy(0); $signal->setOpen(1.3288); $signal->setTakeprofit(1.3279);
         $signal->setStoploss(1.3788); $signal->setStatus('new'); $signal->setDescription('fixture');
 
         $signal->setCreated($date); $signal->setOpened($date); $signal->setOpenExpire($date);

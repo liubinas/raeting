@@ -2,21 +2,22 @@
 
 namespace Raeting\ApiBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Raeting\ApiBundle\Tests\Controller\EntityCheck;
+
 /*
- *  Testing
+ *
  */
-class ApiTraderControllerTest extends WebTestCase
+class ApiTraderControllerTest extends EntityCheck
 {
     public function testIndexJson()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', 'api/traders.json');
-
-        //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
-
-
         $response = $client->getResponse();
+        $content = $response->getContent();
+        
+        $this->checkTraderJson($content);
+        
         $this->assertResponse($response, 200, 'application/json');
 
     }
@@ -26,22 +27,27 @@ class ApiTraderControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', 'api/traders.xml');
-
-        //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
-
+        
         $response = $client->getResponse();
-        $this->assertResponse($response, 200, 'application/xml');
+        $content = $response->getContent();
+        
+        $this->checkTraderXml($content);
+        
+        $this->assertResponse($response, 200, 'text/xml; charset=UTF-8');
 
     }
+    
     public function testShowJson()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', 'api/traders/test.json');
-
-        //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $crawler = $client->request('GET', 'api/traders/fixture.json');
 
         $response = $client->getResponse();
+        $content = $response->getContent();
+        
+        $this->checkTraderJson($content);
+        
         $this->assertResponse($response, 200, 'application/json');
 
     }
@@ -50,34 +56,44 @@ class ApiTraderControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', 'api/traders/test.xml');
-
-        //$this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $crawler = $client->request('GET', 'api/traders/fixture.xml');
 
         $response = $client->getResponse();
-        $this->assertResponse($response, 200, 'application/xml');
+        $content = $response->getContent();
+        
+        $this->checkTraderXml($content);
+        
+        $this->assertResponse($response, 200, 'text/xml; charset=UTF-8');
+
+    }
+    
+    public function testTraderSignalsJson()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', 'api/traders/fixture/signals.json');
+
+        $response = $client->getResponse();
+        $content = $response->getContent();
+        
+        $this->checkSignalJson($content);
+        
+        $this->assertResponse($response, 200, 'application/json');
 
     }
 
-    protected function assertResponse($response, $statusCode = 200, $contentType = 'application/json')
+    public function testTraderSignalsXml()
     {
-        $this->assertEquals(
-            $statusCode, $response->getStatusCode(),
-            $response->getContent()
-        );
-        $this->assertTrue(
-            $response->headers->contains('Content-Type', $contentType),
-            $response->headers
-        );
-    }
+        $client = static::createClient();
 
-    public function tearDown()
-    {
-        parent::tearDown();
+        $crawler = $client->request('GET', 'api/traders/fixture/signals.xml');
 
-        // workaround for https://github.com/symfony/symfony/issues/2531
-        if (ob_get_length() == 0 ) {
-            ob_start();
-        }
+        $response = $client->getResponse();
+        $content = $response->getContent();
+        
+        $this->checkSignalXml($content);
+        
+        $this->assertResponse($response, 200, 'text/xml; charset=UTF-8');
+
     }
 }

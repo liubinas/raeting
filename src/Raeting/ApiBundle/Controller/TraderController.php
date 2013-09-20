@@ -185,7 +185,7 @@ class TraderController extends Controller
         $response = $signalList;
 
         if ('xml' === $this->getRequest()->get('_format')) {
-            return new Response($this->serializer->serialize($signals, 'xml'));
+            return new Response($this->serializer->serialize($response, 'xml'));
         } else {
             return new Response($this->serializer->serialize($response, 'json'));
         }
