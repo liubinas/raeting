@@ -126,9 +126,9 @@ class UserService extends BaseService
     {
         $query = $this->em->createQuery(
             'SELECT u.id, u.firstname, u.lastname, u.fbname, u.slug, u.createDate, sum(s.pips) pips, sum(s.profit) profit, sum(s.totalSignals) signals
-            FROM RaetingUserBundle:User u,
-                 RaetingUserBundle:UserStats s
-            WHERE u.id = s.userid
+            FROM RaetingUserBundle:User u
+            LEFT JOIN RaetingUserBundle:UserStats s
+            WITH u.id = s.userid
             GROUP BY u.id'
                 
         );
