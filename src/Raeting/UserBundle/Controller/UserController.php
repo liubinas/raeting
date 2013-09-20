@@ -56,4 +56,26 @@ class UserController extends BaseController
             'form'   => $form->createView(),
         ));
     }
+    
+    /**
+     * Send password recovery email to user.
+     *
+     * @param string $email User email.
+     * @param string $hash  Recovery hash.
+     *
+     * @return bool
+     */
+    protected function sendRecoveryMail($email, $hash)
+    {   
+        
+        $url = $this->generateUrl('estinacmf_user.change_password', array(), true);
+        
+        $this->get('core.service.mailer')->sendTemplate(
+                array($email),
+                'user.remind',
+                array('email' => $email, 'hash' => $hash, 'url' => $url)
+            );
+        
+        return true;
+    }
 }
