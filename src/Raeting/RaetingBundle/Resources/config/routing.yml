@@ -20,5 +20,5 @@ pips:
     pattern:  /pips_calculator
     defaults: { _controller: "RaetingRaetingBundle:Profit:pips" }
 my_signals:
-    pattern:  /my_signals/{page}
-    defaults: { _controller: "RaetingRaetingBundle:Signals:mysignals", page: 1 }
+    pattern:  /my_signals
+    defaults: { _controller: "RaetingRaetingBundle:Signals:mysignals" }

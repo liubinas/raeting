@@ -13,8 +13,13 @@ class TraderController extends Controller
     /**
      * @Template()
      */
-    public function indexAction($page = 1)
+    public function indexAction()
     {
+        $request = $this->get('request');
+        $page = $request->query->get('page');
+        if(empty($page)){
+            $page = 1;
+        }
         $traderService = $this->get('user.service.user');
         $entities = $traderService->getAllWithPaging($this->resultsPerPage, $page);
         $totalTraders = $traderService->countAll();
@@ -31,9 +36,13 @@ class TraderController extends Controller
      * Finds and displays a Trader profile.
      *
      */
-    public function showAction($slug, $page = 1)
+    public function showAction($slug)
     {
         $request = $this->get('request');
+        $page = $request->query->get('page');
+        if(empty($page)){
+            $page = 1;
+        }
         $query = $request->query->get('signal-search');
         
         $entity = $this->get('user.service.user')->getBySlug($slug);

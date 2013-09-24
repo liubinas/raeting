@@ -4,8 +4,8 @@ signals_create:
     requirements: { _method: post }
     
 signals:
-    pattern:  /{page}
-    defaults: { _controller: "RaetingRaetingBundle:Signals:index", page: 1 }
+    pattern:  /
+    defaults: { _controller: "RaetingRaetingBundle:Signals:index" }
 
 signals_show:
     pattern:  /{uid}/show

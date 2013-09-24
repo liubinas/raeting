@@ -18,9 +18,13 @@ class SignalsController extends Controller
      * Lists all Signals entities.
      *
      */
-    public function indexAction($page = 1)
+    public function indexAction()
     {
         $request = $this->get('request');
+        $page = $request->query->get('page');
+        if(empty($page)){
+            $page = 1;
+        }
         $query = $request->query->get('signal-search');
         if ($request->getMethod() == 'GET' && !empty($query)) {
             $entities = $this->get('raetingraeting.service.signals')->getBy($query, $this->resultsPerPage, $page);
@@ -46,9 +50,13 @@ class SignalsController extends Controller
      * Lists all user Signals entities.
      *
      */
-    public function mysignalsAction($page = 1)
+    public function mysignalsAction()
     {
         $request = $this->get('request');
+        $page = $request->query->get('page');
+        if(empty($page)){
+            $page = 1;
+        }
         $query = $request->query->get('signal-search');
         $token = $this->get('security.context')->getToken();
 
