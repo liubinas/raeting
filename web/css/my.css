@@ -21,3 +21,36 @@
 .fb-wrapper{
     text-align: center;
 }
+.flot-x{
+    text-align: right;
+    color: #fff;
+    padding: 10px;
+    border-bottom: 1px solid #4c7399;
+    border-left: 1px solid #4c7399;
+    border-right: 1px solid #4c7399;
+}
+.flot-y{
+    text-align: right;
+    padding: 10px;
+    float: left;
+    width: 2%;
+    color: #fff;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+.flot-y .flot-tick-label{
+    margin-left: -20px;
+    margin-top: 15px;
+}
+.blue-box{
+    background-color: #658db3;
+}
+.widget .widget-chart{
+    border-bottom: none;
+    border-left: none;
+    float: left;
+    width: 98%;
+}

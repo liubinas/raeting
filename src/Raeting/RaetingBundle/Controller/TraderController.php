@@ -58,13 +58,16 @@ class TraderController extends Controller
             $totalSignals = $this->get('raetingraeting.service.signals')->countByTrader($entity->getId());
         }
         
+        $chartSignals = $this->get('raetingraeting.service.signals')->getByUserForChart($entity->getId());
+        
         return $this->render('RaetingRaetingBundle:Trader:show.html.php', array(
             'query'      => $query,
             'entity'      => $entity,
             'signals'     => $signals,
             'totalSignals' => $totalSignals,
             'perPage' => $this->resultsPerPage,
-            'page' => $page
+            'page' => $page,
+            'chartSignals' => $chartSignals
         ));
     }
 }

@@ -91,6 +91,17 @@ class Signals
         return $query->getResult();
     }
     
+    public function getByUserForChart($user)
+    {
+        $query = $this->getRepository()->createQueryBuilder('s')
+                ->select('s.pips')
+                ->andWhere('s.user = :user')
+                ->setParameter('user', $user)
+                ->getQuery();
+        
+        return $query->getResult();
+    }
+    
     public function countByQueryAndUser($query, $user)
     {
         $result = $this->getRepository()->createQueryBuilder('s')
