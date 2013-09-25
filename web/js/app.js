@@ -48,7 +48,7 @@ App.Util = {
 
     validateField: function(field, type) {
         var errors = 0;
-        var container = field.parents('.control-group');
+        var container = field.parents('.form-group');
 
         field.parents('.input-prepend:first').removeClass('error');
         field.removeClass('error');
@@ -77,7 +77,7 @@ App.Util = {
 
         if (errors > 0) {
             field.addClass('error');
-            container.addClass('error');
+            container.addClass('has-error');
             field.parents('.input-prepend:first').addClass('error');
         }
 
