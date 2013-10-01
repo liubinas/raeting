@@ -1,22 +1,25 @@
 <? $view->extend('RaetingRaetingBundle::Raeting/menu.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
-        Welcome to RAETING
+
+    Follow and compare trading signals from different markets and traders.
+    Share your ideas easily.
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('content') ?>
-    <hr>
-    <p class="lead">
-        Follow and compare trading signals from different markets and traders. 
-        Share your ideas easily.
-    </p>
+
+    <div class="col-md-12">
+        <div class="widget box">
+            <img src="#" />
+        </div>
+    </div>
     <div class="row-fluid marketing">
         
         <div class="span10 offset1">
             
             <div class="row-fluid">
         
-                <div class="span4">
+                <div class="col-sm-4 col-md-4">
                     <h4>Signals</h4>
                     <p>
                         Find best investing ideas and turn them into successful trading decisions.
@@ -24,14 +27,14 @@
                     </p>
                 </div>
                 
-                <div class="span4">
+                <div class="col-sm-4 col-md-4">
                     <h4>Traders</h4>
                     <p>
                         Find the best performing and the most interesting signal providers. 
                         Share your strategies and compete with others globally.
                     </p>
                 </div>
-                <div class="span4">
+                <div class="col-sm-4 col-md-4">
                     <h4>API</h4>
                     <p>
                         Our system is secure, free and open for integration with your favorite trading 
