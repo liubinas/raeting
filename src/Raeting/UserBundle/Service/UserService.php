@@ -137,4 +137,17 @@ class UserService extends BaseService
         
         return $query->getResult();
     }
+    
+    public function traderToArray($trader)
+    {
+        $traderArr = array(
+            'slug'=>$trader->getSlug(),
+            'firstName'=>$trader->getFirstname(),
+            'lastName'=>$trader->getLastname(),
+            'company'=>$trader->getCompany(),
+            'about'=>$trader->getAbout(),
+            //'profit'=>$trader->getProfit(),
+        );
+        return $traderArr;
+    }
 }

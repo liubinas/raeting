@@ -3,6 +3,7 @@
 namespace Raeting\RaetingBundle\Tests\Service;
 
 use Raeting\RaetingBundle\Service\Signals;
+use Raeting\UserBundle\Service\UserService;
 use Estina\Tests\TestCase;
 
 class SignalsTest extends TestCase
@@ -18,6 +19,7 @@ class SignalsTest extends TestCase
     public function setUp()
     {
         $this->em = $this->getPlainMock('\Doctrine\ORM\EntityManager');
+        $this->userService = $this->getPlainMock('\Raeting\UserBundle\Service\UserService');
     }
 
     /**
@@ -25,7 +27,7 @@ class SignalsTest extends TestCase
      */
     public function testAdd($from, $to, $pipsPosition, $expectation)
     {
-        $signalService = new Signals($this->em);
+        $signalService = new Signals($this->em, $this->userService, 10);
         $result = $signalService->countPips($from, $to, $pipsPosition);
 
         $this->assertEquals($expectation, $result);

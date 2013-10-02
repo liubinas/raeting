@@ -76,4 +76,5 @@ Raeting\RaetingBundle\Entity\Signals:
             cascade: {  }
             mappedBy: null
             orphanRemoval: false
+    repositoryClass: Raeting\RaetingBundle\Entity\SignalsRepository
     lifecycleCallbacks: {  }

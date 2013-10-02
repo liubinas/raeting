@@ -3,6 +3,7 @@ namespace Raeting\RaetingBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Raeting\RaetingBundle\Entity\Signals as SignalsEntity;
 use Raeting\RaetingBundle\Form\SignalsType;
@@ -27,7 +28,7 @@ class SignalsController extends Controller
         }
         $query = $request->query->get('signal-search');
         if ($request->getMethod() == 'GET' && !empty($query)) {
-            $entities = $this->get('raetingraeting.service.signals')->getBy($query, $this->resultsPerPage, $page);
+            $entities = $this->get('raetingraeting.service.signals')->getAllByQuery($query, $this->resultsPerPage, $page);
             $totalSignals = $this->get('raetingraeting.service.signals')->countByQuery($query);
         }else{
             $entities = $this->get('raetingraeting.service.signals')->getAllWithPaging($this->resultsPerPage, $page);
@@ -61,10 +62,10 @@ class SignalsController extends Controller
         $token = $this->get('security.context')->getToken();
 
         if ($request->getMethod() == 'GET' && !empty($query)) {
-            $entities = $this->get('raetingraeting.service.signals')->getByQueryAndUser($query, $token->getUser()->getId(), $this->resultsPerPage, $page);
+            $entities = $this->get('raetingraeting.service.signals')->getAllByQueryAndUser($query, $token->getUser()->getId(), $this->resultsPerPage, $page);
             $totalSignals = $this->get('raetingraeting.service.signals')->countByQueryAndUser($query, $token->getUser()->getId());
         }else{
-            $entities = $this->get('raetingraeting.service.signals')->getByTrader($token->getUser()->getId(), $this->resultsPerPage, $page);
+            $entities = $this->get('raetingraeting.service.signals')->getAllByTrader($token->getUser()->getId(), $this->resultsPerPage, $page);
             $totalSignals = $this->get('raetingraeting.service.signals')->countByTrader($token->getUser()->getId());
         }
         
@@ -106,16 +107,7 @@ class SignalsController extends Controller
             ->getRepository('RaetingUserBundle:User')
             ->find($id);
 
-            $entity->setUser($user);
-            $entity->setUuid(md5($id.$id));
-            $now = new \DateTime('now');
-            $entity->setCreated($now);
-            $entity->setOpened($now);
-            $entity->setOpenExpire($now);
-            $entity->setClosed($now);
-            $entity->setCloseExpire($now);
-            
-            $this->get('raetingraeting.service.signals')->save($entity);
+            $this->get('raetingraeting.service.signals')->createEntity($entity, $user, $id);
 
             $this->get('session')->getFlashBag()->add('success', 'Your changes were saved!');
 
@@ -123,7 +115,7 @@ class SignalsController extends Controller
         }else{
             $query = $request->query->get('signal-search');
             if ($request->getMethod() == 'GET' && !empty($query)) {
-                $entities = $this->get('raetingraeting.service.signals')->getBy($query);
+                $entities = $this->get('raetingraeting.service.signals')->getAllByQuery($query);
             }else{
                 $entities = $this->get('raetingraeting.service.signals')->getAll();
             }
@@ -239,7 +231,10 @@ class SignalsController extends Controller
         $symbols = $this->get('raetingraeting.service.symbol')->findSymbolsByKeyword($request->query->get('search'), $request->query->get('maxRows'));
         $serializer = $this->container->get('serializer');
         $symbols = $serializer->serialize($symbols, 'json');
-        echo $symbols;
-        die;
+        
+        $response = new JsonResponse();
+        $response->setContent($symbols);
+        
+        return $response;
     }
 }

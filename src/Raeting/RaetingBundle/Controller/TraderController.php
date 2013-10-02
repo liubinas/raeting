@@ -51,14 +51,14 @@ class TraderController extends Controller
         }
 
         if ($request->getMethod() == 'GET' && !empty($query)) {
-            $signals = $this->get('raetingraeting.service.signals')->getByQueryAndUser($query, $entity->getId(), $this->resultsPerPage, $page);
+            $signals = $this->get('raetingraeting.service.signals')->getAllByQueryAndUser($query, $entity->getId(), $this->resultsPerPage, $page);
             $totalSignals = $this->get('raetingraeting.service.signals')->countByQueryAndUser($query, $entity->getId());
         }else{
-            $signals = $this->get('raetingraeting.service.signals')->getByTrader($entity->getId(), $this->resultsPerPage, $page);
+            $signals = $this->get('raetingraeting.service.signals')->getAllByTrader($entity->getId(), $this->resultsPerPage, $page);
             $totalSignals = $this->get('raetingraeting.service.signals')->countByTrader($entity->getId());
         }
         
-        $chartSignals = $this->get('raetingraeting.service.signals')->getByUserForChart($entity->getId());
+        $chartSignals = $this->get('raetingraeting.service.signals')->getAllByUserForChart($entity->getId());
         
         return $this->render('RaetingRaetingBundle:Trader:show.html.php', array(
             'query'      => $query,

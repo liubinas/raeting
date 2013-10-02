@@ -4,6 +4,7 @@ namespace Raeting\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use EstinaCMF\UserBundle\Entity\User as UserBase;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -23,13 +24,15 @@ class User extends UserBase
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="about", type="text", nullable=true)
      */
     private $about;
     
     /**
      * @var string
-     *
+     * 
+     * @Assert\NotBlank()
      * @ORM\Column(name="company", type="text", nullable=true)
      */
     private $company;

@@ -40,14 +40,7 @@ class TraderController extends Controller
         }
         
         $response = array(
-            'trader' => array(
-                'slug'=>$trader->getSlug(),
-                'firstName'=>$trader->getFirstname(),
-                'lastName'=>$trader->getLastname(),
-                'company'=>$trader->getCompany(),
-                'about'=>$trader->getAbout(),
-                //'profit'=>$trader->getProfit(),
-            ),
+            'trader' => $userService->traderToArray($trader),
             'meta' => array(
                 'link' => $this->container->parameters['api.route_domain'].$this->get('router')->generate('trader_show', array('slug' => $trader->getSlug()))
     )
@@ -79,14 +72,7 @@ class TraderController extends Controller
         if(!empty($traders)){
             foreach ($traders as $trader) {
                 $traderList['traders'][] = array(
-                    'trader' => array(
-                        'slug'=>$trader->getSlug(),
-                        'firstName'=>$trader->getFirstname(),
-                        'lastName'=>$trader->getLastname(),
-                        'company'=>$trader->getCompany(),
-                        'about'=>$trader->getAbout(),
-                        //'profit'=>$trader->getProfit(),
-                    )
+                    'trader' => $userService->traderToArray($trader)
                 );
             }
         }
@@ -97,12 +83,12 @@ class TraderController extends Controller
         if ($this->getRequest()->get('limit')) {
             $traderList['meta']['limit'] = $this->getRequest()->get('limit');
         } else {
-            $traderList['meta']['limit'] = $userService->defaultLimit;
+            $traderList['meta']['limit'] = $this->container->parameters['default_page_limit'];
         }
         if ($this->getRequest()->get('offset')) {
             $traderList['meta']['offset'] = $this->getRequest()->get('offset');
         } else {
-            $traderList['meta']['offset'] = $userService->defaultOffset;
+            $traderList['meta']['offset'] = $this->container->parameters['default_page_offset'];
         }
 
         $query = '';
@@ -131,7 +117,7 @@ class TraderController extends Controller
     {
 
         $signalService = $this->get('raetingraeting.service.signals');
-        $signals = $signalService->getSignalsByRequestAndTraderSlug($this->getRequest(), $slug);
+        $signals = $signalService->getAllSignalsByRequestAndTraderSlug($this->getRequest(), $slug);
 
         $query = '';
         if ($this->getRequest()->getQueryString()) {
@@ -141,43 +127,22 @@ class TraderController extends Controller
         $signalList = array('signals' => array(), 'meta' => array());
         if(!empty($signals)){
             foreach ($signals as $signal) {
-                $signalList['signals'][] = array(
-                    'uuid'=>$signal->getUuid(),
-                    'type'=>$signal->getBuyValue(),
-                    'symbol'=>$signal->getSymbol()->getTitle(),
-                    'open'=>$signal->getOpen(),
-                    'takeProfit'=>$signal->getTakeprofit(),
-                    'stopLoss'=>$signal->getStoploss(),
-                    'profit'=>$signal->getProfit(),
-                    'description'=>$signal->getDescription(),
-                    'status'=>$signal->getStatus(),
-                    'dateCreated'=>$signal->getCreated(),
-                    'dateOpened'=>$signal->getOpened(),
-                    'dateClosed'=>$signal->getClosed(),
-                    'trader'=>    array(
-                        'slug'=>$signal->getUser()->getSlug(),
-                        'firstName'=>$signal->getUser()->getFirstname(),
-                        'lastName'=>$signal->getUser()->getLastname(),
-                        'company'=>$signal->getUser()->getCompany(),
-                        'about'=>$signal->getUser()->getAbout(),
-                        //'profit'=>$signal->getUser()->getProfit(),
-                    )
-                );
+                $signalList['signals'][] = $signalService->signalToArray($signal);
             }
         }
 
-        $totalResults = $signalService->getSignalsCountByRequest($this->getRequest());
+        $totalResults = $signalService->countSignalsByRequest($this->getRequest());
 
         $signalList['meta']['total'] = $totalResults;
         if ($this->getRequest()->get('limit')) {
             $signalList['meta']['limit'] = $this->getRequest()->get('limit');
         } else {
-            $signalList['meta']['limit'] = $signalService->defaultLimit;
+            $signalList['meta']['limit'] = $this->container->parameters['default_page_limit'];
         }
         if ($this->getRequest()->get('offset')) {
             $signalList['meta']['offset'] = $this->getRequest()->get('offset');
         } else {
-            $signalList['meta']['offset'] = $signalService->defaultOffset;
+            $signalList['meta']['offset'] = $this->container->parameters['default_page_offset'];
         }
 
         $signalList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('trader_show', array('slug'=>$slug)).$query;

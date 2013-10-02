@@ -46,28 +46,7 @@ class SignalController extends Controller
         }
 
         $response = array(
-            'signal' => array(
-                'uuid'=>$signal->getUuid(),
-                'type'=>$signal->getBuyValue(),
-                'symbol'=>$signal->getSymbol()->getTitle(),
-                'open'=>$signal->getOpen(),
-                'takeProfit'=>$signal->getTakeprofit(),
-                'stopLoss'=>$signal->getStoploss(),
-                'profit'=>$signal->getProfit(),
-                'description'=>$signal->getDescription(),
-                'status'=>$signal->getStatus(),
-                'dateCreated'=>$signal->getCreated(),
-                'dateOpened'=>$signal->getOpened(),
-                'dateClosed'=>$signal->getClosed(),
-                'trader'=>    array(
-                    'slug'=>$signal->getUser()->getSlug(),
-                    'firstName'=>$signal->getUser()->getFirstname(),
-                    'lastName'=>$signal->getUser()->getLastname(),
-                    'company'=>$signal->getUser()->getCompany(),
-                    'about'=>$signal->getUser()->getAbout(),
-                    //'profit'=>$signal->getUser()->getProfit(),
-                )
-            ),
+            'signal' => $signalService->signalToArray($signal),
             'meta' => array(
                 'link' => $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals_show', array('uid' => $signal->getUuid())).$query
             )
@@ -88,7 +67,7 @@ class SignalController extends Controller
     public function indexAction()
     {
         $signalService = $this->get('raetingraeting.service.signals');
-        $signals = $signalService->getSignalsByRequest($this->getRequest());
+        $signals = $signalService->getAllSignalsByRequest($this->getRequest());
         
         $query = '';
         if ($this->getRequest()->getQueryString()) {
@@ -99,44 +78,23 @@ class SignalController extends Controller
         if(!empty($signals)){
             foreach ($signals as $signal) {
                 $signalList['signals'][] = array(
-                    'signal'=> array(
-                        'uuid'=>$signal->getUuid(),
-                        'type'=>$signal->getBuyValue(),
-                        'symbol'=>$signal->getSymbol()->getTitle(),
-                        'open'=>$signal->getOpen(),
-                        'takeProfit'=>$signal->getTakeprofit(),
-                        'stopLoss'=>$signal->getStoploss(),
-                        'profit'=>$signal->getProfit(),
-                        'description'=>$signal->getDescription(),
-                        'status'=>$signal->getStatus(),
-                        'dateCreated'=>$signal->getCreated(),
-                        'dateOpened'=>$signal->getOpened(),
-                        'dateClosed'=>$signal->getClosed(),
-                        'trader'=>    array(
-                            'slug'=>$signal->getUser()->getSlug(),
-                            'firstName'=>$signal->getUser()->getFirstname(),
-                            'lastName'=>$signal->getUser()->getLastname(),
-                            'company'=>$signal->getUser()->getCompany(),
-                            'about'=>$signal->getUser()->getAbout(),
-                            //'profit'=>$signal->getUser()->getProfit(),
-                        )
-                    )
+                    'signal'=> $signalService->signalToArray($signal)
                 );
             }
         }
 
-        $totalResults = $signalService->getSignalsCountByRequest($this->getRequest());
+        $totalResults = $signalService->countSignalsByRequest($this->getRequest());
 
         $signalList['meta']['total'] = $totalResults;
         if ($this->getRequest()->get('limit')) {
             $signalList['meta']['limit'] = $this->getRequest()->get('limit');
         } else {
-            $signalList['meta']['limit'] = $signalService->defaultLimit;
+            $signalList['meta']['limit'] = $this->container->parameters['default_page_limit'];
         }
         if ($this->getRequest()->get('offset')) {
             $signalList['meta']['offset'] = $this->getRequest()->get('offset');
         } else {
-            $signalList['meta']['offset'] = $signalService->defaultOffset;
+            $signalList['meta']['offset'] = $this->container->parameters['default_page_offset'];
         }
 
         $signalList['meta']['link'] = $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals').$query;

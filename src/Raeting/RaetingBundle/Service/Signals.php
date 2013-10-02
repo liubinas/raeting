@@ -5,16 +5,16 @@ namespace Raeting\RaetingBundle\Service;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
-use Raeting\UserBundle\Entity\User;
+use Raeting\UserBundle\Service\UserService;
 
 class Signals
 {
-    public $defaultLimit = 10;
-    public $defaultOffset = 0;
-
-    public function __construct(EntityManager $em)
+    
+    public function __construct(EntityManager $em, UserService $userService, $defaultLimit)
     {
         $this->em = $em;
+        $this->userService = $userService;
+        $this->defaultLimit = $defaultLimit;
     }
         
     public function getNew()
@@ -34,13 +34,7 @@ class Signals
     
     public function getAllWithPaging($perPage, $page)
     {
-        $query = $this->getRepository()->createQueryBuilder('s')
-                ->select('s')
-                ->getQuery();
-        
-        $query = $this->addLimits($query, $perPage, $page);
-        
-        return $query->getResult();
+        return $this->getRepository()->getAllWithPaging($perPage, $page);
     }
     
     public function getAllNew()
@@ -48,125 +42,78 @@ class Signals
         return $this->getRepository()->findBy(array('status' => Entity\Signals::STATUS_NEW));
     }
     
-    private function addLimits($query, $perPage, $page)
+    public function createEntity($entity, $user, $id)
     {
-        $query->setMaxResults((int)$perPage);
-        $query->setFirstResult((int)($page-1)*$perPage);
-        
-        return $query;
+        $entity->setUser($user);
+        $entity->setUuid(md5($id.$id));
+        $now = new \DateTime('now');
+        $entity->setCreated($now);
+        $entity->setOpened($now);
+        $entity->setOpenExpire($now);
+        $entity->setClosed($now);
+        $entity->setCloseExpire($now);
+        $this->save($entity);
     }
     
-    public function getBy($query, $perPage, $page)
+    public function getAllByQuery($query, $perPage, $page)
     {
-        $query = $this->getRepository()->createQueryBuilder('s')
-                ->select('s', 'u', 'q')
-                ->leftJoin('s.user', 'u')
-                ->leftJoin('s.symbol', 'q')
-                ->where('q.title LIKE :query')
-                ->orWhere('u.firstname LIKE :query')
-                ->orWhere('u.lastname LIKE :query')
-                ->setParameter('query', '%'.$query.'%')
-                ->getQuery();
-        
-        $query = $this->addLimits($query, $perPage, $page);
-        
-        return $query->getResult();
-        
+        return $this->getRepository()->getAllByQuery($query, $perPage, $page);
     }
     
-    public function getByQueryAndUser($query, $user, $perPage, $page)
+    public function getAllByQueryAndUser($query, $user, $perPage, $page)
     {
-        $query = $this->getRepository()->createQueryBuilder('s')
-                ->select('s', 'u', 'q')
-                ->leftJoin('s.user', 'u')
-                ->leftJoin('s.symbol', 'q')
-                ->where('q.title LIKE :query')
-                ->andWhere('u.id LIKE :user')
-                ->setParameter('query', '%'.$query.'%')
-                ->setParameter('user', '%'.$user.'%')
-                ->getQuery();
-        
-        $query = $this->addLimits($query, $perPage, $page);
-        
-        return $query->getResult();
+        return $this->getRepository()->getAllByQueryAndUser($query, $user, $perPage, $page);
     }
     
-    public function getByUserForChart($user)
+    public function getAllByUserForChart($user)
     {
-        $query = $this->getRepository()->createQueryBuilder('s')
-                ->select('s.pips')
-                ->andWhere('s.user = :user')
-                ->setParameter('user', $user)
-                ->getQuery();
-        
-        return $query->getResult();
+        return $this->getRepository()->getAllByUserForChart($user);
+    }
+    
+    public function getAllByTrader($user, $perPage, $page)
+    {
+        return $this->getRepository()->getAllByTrader($user, $perPage, $page);
+    }
+    
+    public function getAllSignalsByRequest($request)
+    {
+        if(!$request->get('limit')){
+            $request->query->set('limit', $this->defaultLimit);
+        }
+        return $this->getRepository()->getAllSignalsByRequest($request);
+    }
+    
+    public function getAllSignalsByRequestAndTraderSlug($request, $slug)
+    {
+        if(!$request->get('limit')){
+            $request->query->set('limit', $this->defaultLimit);
+        }
+        return $this->getRepository()->getAllSignalsByRequestAndTraderSlug($request, $slug);
+    }
+    
+    public function countSignalsByRequest($request)
+    {
+        return $this->getRepository()->countSignalsByRequest($request);
     }
     
     public function countByQueryAndUser($query, $user)
     {
-        $result = $this->getRepository()->createQueryBuilder('s')
-                ->select('count(s.id) counter')
-                ->leftJoin('s.user', 'u')
-                ->leftJoin('s.symbol', 'q')
-                ->where('q.title LIKE :query')
-                ->andWhere('u.id LIKE :user')
-                ->setParameter('query', '%'.$query.'%')
-                ->setParameter('user', '%'.$user.'%')
-                ->getQuery()
-                ->getSingleResult();
-        
-        return $result['counter'];
-    }
-    
-    public function getByTrader($user, $perPage, $page)
-    {
-        $query = $this->getRepository()->createQueryBuilder('s')
-                ->select('s')
-                ->where('s.user = :user')
-                ->setParameter('user', $user)
-                ->getQuery();
-        
-        $query = $this->addLimits($query, $perPage, $page);
-        
-        return $query->getResult();
+        return $this->getRepository()->countByQueryAndUser($query, $user);
     }
     
     public function countByTrader($user)
     {
-        $result = $this->getRepository()->createQueryBuilder('s')
-                ->select('count(s.id) counter')
-                ->where('s.user = :user')
-                ->setParameter('user', $user)
-                ->getQuery()
-                ->getSingleResult();
-        
-        return $result['counter'];
+        return $this->getRepository()->countByTrader($user);
     }
     
     public function countByQuery($query)
     {
-        $result = $this->getRepository()->createQueryBuilder('s')
-                ->select('count(s.id) counter')
-                ->leftJoin('s.user', 'u')
-                ->leftJoin('s.symbol', 'q')
-                ->where('q.title LIKE :query')
-                ->orWhere('u.firstname LIKE :query')
-                ->orWhere('u.lastname LIKE :query')
-                ->setParameter('query', '%'.$query.'%')
-                ->getQuery()
-                ->getSingleResult();
-        
-        return $result['counter'];
+        return $this->getRepository()->countByQuery($query);
     }
 
     public function countAll()
     {
-        $result = $this->getRepository()->createQueryBuilder('s')
-                ->select('count(s.id) counter')
-                ->getQuery()
-                ->getSingleResult();
-        
-        return $result['counter'];
+        return $this->getRepository()->countAll();
     }
     
     public function save(Entity\Signals $entity)
@@ -192,76 +139,6 @@ class Signals
         return $this->em->getRepository('RaetingRaetingBundle:Signals');
     }
     
-    private function getQueryByRequest($request)
-    {
-        $query = $this->getRepository()->createQueryBuilder('s')
-                ->select('s', 'u', 'q')
-                ->leftJoin('s.user', 'u')
-                ->leftJoin('s.symbol', 'q');
-        
-        if($request->get('type') == 'buy'){
-            $query->andWhere('s.buy = 1');
-        }elseif($request->get('type') == 'sell'){
-            $query->andWhere('s.buy = 0');
-        }
-        
-        if($request->get('symbol')){
-            $query->andWhere('q.title LIKE :symbol')
-            ->setParameter('symbol', '%'.$request->get('symbol').'%');
-        }
-        
-        if($request->get('trader')){
-            $query->andWhere('u.slug LIKE :trader')
-            ->setParameter('trader', '%'.$request->get('trader').'%');
-        }
-        
-        if($request->get('status')){
-            $query->andWhere('s.status = :status')
-            ->setParameter('status', $request->get('status'));
-        }
-        
-        if($request->get('limit')){
-            $query->setMaxResults((int)$request->get('limit'));
-        }else{
-            $query->setMaxResults($this->defaultLimit);
-        }
-        
-        if($request->get('offset')){
-            $query->setFirstResult((int)$request->get('offset'));
-        }
-        return $query;
-    }
-    
-    public function getSignalsByRequest($request)
-    {
-        $query = $this->getQueryByRequest($request);
-        return $query->getQuery()
-                ->getResult();
-    }
-    
-    public function getSignalsByRequestAndTraderSlug($request, $slug)
-    {
-        $query = $this->getQueryByRequest($request);
-        $query->andWhere('u.slug = :slug')
-            ->setParameter('slug', $slug);
-        
-        return $query->getQuery()
-                ->getResult();
-    }
-    
-    public function getSignalsCountByRequest($request)
-    {
-        $query = $this->getQueryByRequest($request);
-        $query->select('count(s.id) counter');
-        $query->setMaxResults(null);
-        $query->setFirstResult(null);
-        
-        $result = $query->getQuery()
-                ->getSingleResult();
-        
-        return $result['counter'];
-    }
-    
     public function getByUuid($id)
     {
         return $this->getRepository()->findOneByUuid($id);
@@ -284,5 +161,25 @@ class Signals
         }
         $signal->setPips($pips);
         $this->em->flush();
+    }
+    
+    public function signalToArray($signal)
+    {
+        $signalArr = array(
+            'uuid'=>$signal->getUuid(),
+            'type'=>$signal->getBuyValue(),
+            'symbol'=>$signal->getSymbol()->getTitle(),
+            'open'=>$signal->getOpen(),
+            'takeProfit'=>$signal->getTakeprofit(),
+            'stopLoss'=>$signal->getStoploss(),
+            'profit'=>$signal->getProfit(),
+            'description'=>$signal->getDescription(),
+            'status'=>$signal->getStatus(),
+            'dateCreated'=>$signal->getCreated(),
+            'dateOpened'=>$signal->getOpened(),
+            'dateClosed'=>$signal->getClosed(),
+            'trader'=> $this->userService->traderToArray($signal->getUser())
+        );
+        return $signalArr;
     }
 }
