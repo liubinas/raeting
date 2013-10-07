@@ -51,6 +51,11 @@ class Symbol
         return $this->em->getRepository('RaetingRaetingBundle:Symbol');
     }
     
+    public function getBySymbol($symbol)
+    {
+        return $this->getRepository()->findOneBy(array('symbol' => $symbol));
+    }
+    
     public function findSymbolsByKeyword($keyword, $limit)
     {
         $query = $this->getRepository()->createQueryBuilder('p')

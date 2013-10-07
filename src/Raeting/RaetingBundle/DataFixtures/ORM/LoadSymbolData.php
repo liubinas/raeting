@@ -30,37 +30,37 @@ class LoadSymbolData extends AbstractFixture implements OrderedFixtureInterface,
         $symbolService = $this->container->get('raetingraeting.service.symbol');
 
         $entity = $symbolService->getNew(); 
-        $entity->setSymbol('EUR/USD'); $entity->setTitle('EUR/USD'); $entity->setPipsPosition(4); $entity->setMarket($manager->merge($this->getReference('market.forex')));
+        $entity->setSymbol('EURUSD'); $entity->setTitle('EUR/USD'); $entity->setPipsPosition(4); $entity->setMarket($manager->merge($this->getReference('market.forex')));
         $entity->setType($entity::TYPE_QUOTE);
         $this->addReference('quote.eurusd', $entity);
         $manager->persist($entity);$manager->flush();
         
         $entity = $symbolService->getNew(); 
-        $entity->setSymbol('GBP/USD'); $entity->setTitle('GBP/USD'); $entity->setPipsPosition(4); $entity->setMarket($manager->merge($this->getReference('market.forex')));
+        $entity->setSymbol('GBPUSD'); $entity->setTitle('GBP/USD'); $entity->setPipsPosition(4); $entity->setMarket($manager->merge($this->getReference('market.forex')));
         $entity->setType($entity::TYPE_QUOTE);
         $this->addReference('quote.gbpusd', $entity);
         $manager->persist($entity);$manager->flush();
         
         $entity = $symbolService->getNew(); 
-        $entity->setSymbol('AUD/NZD'); $entity->setTitle('AUD/NZD'); $entity->setPipsPosition(4); $entity->setMarket($manager->merge($this->getReference('market.forex')));
+        $entity->setSymbol('AUDNZD'); $entity->setTitle('AUD/NZD'); $entity->setPipsPosition(4); $entity->setMarket($manager->merge($this->getReference('market.forex')));
         $entity->setType($entity::TYPE_QUOTE);
         $this->addReference('quote.audnzd', $entity);
         $manager->persist($entity);$manager->flush();
         
         $entity = $symbolService->getNew(); 
-        $entity->setSymbol('EUR/JPY'); $entity->setTitle('EUR/JPY'); $entity->setPipsPosition(2); $entity->setMarket($manager->merge($this->getReference('market.forex')));
+        $entity->setSymbol('EURJPY'); $entity->setTitle('EUR/JPY'); $entity->setPipsPosition(2); $entity->setMarket($manager->merge($this->getReference('market.forex')));
         $entity->setType($entity::TYPE_QUOTE);
         $this->addReference('quote.eurjpy', $entity);
         $manager->persist($entity);$manager->flush();
         
         $entity = $symbolService->getNew(); 
-        $entity->setSymbol('EUR/CHF'); $entity->setTitle('EUR/CHF'); $entity->setPipsPosition(4); $entity->setMarket($manager->merge($this->getReference('market.forex')));
+        $entity->setSymbol('EURCHF'); $entity->setTitle('EUR/CHF'); $entity->setPipsPosition(4); $entity->setMarket($manager->merge($this->getReference('market.forex')));
         $entity->setType($entity::TYPE_QUOTE);
         $this->addReference('quote.eurchf', $entity);
         $manager->persist($entity);$manager->flush();
         
         $entity = $symbolService->getNew(); 
-        $entity->setSymbol('EUR/NZD'); $entity->setTitle('EUR/NZD'); $entity->setPipsPosition(4); $entity->setMarket($manager->merge($this->getReference('market.forex')));
+        $entity->setSymbol('EURNZD'); $entity->setTitle('EUR/NZD'); $entity->setPipsPosition(4); $entity->setMarket($manager->merge($this->getReference('market.forex')));
         $entity->setType($entity::TYPE_QUOTE);
         $this->addReference('quote.eurnzd', $entity);
         $manager->persist($entity);$manager->flush();

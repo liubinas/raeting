@@ -31,7 +31,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $userService = $this->container->get('user.service.user');
 
         $user = $userService->getByEmail('estina@estina.lt');
-        $user->setSlug('estina_estina');
+        if($user){
+            $user->setSlug('estina_estina');
+        }
         
         $manager->flush();
         
