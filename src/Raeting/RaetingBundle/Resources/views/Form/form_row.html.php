@@ -1,5 +1,6 @@
 <div class="form-group">
     <?= $view['form']->label($form) ?>
+    <div class="clear"></div>
     <div class="input-icon">
         <?= $view['form']->widget($form) ?>
     </div>
