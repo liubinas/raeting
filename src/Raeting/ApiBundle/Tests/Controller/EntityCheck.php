@@ -11,8 +11,8 @@ class EntityCheck extends WebTestCase
 {
     public function checkTraderJson($content)
     {
-        $this->assertContains('"firstName":"admin"', $content);
-        $this->assertContains('"lastName":"admin"', $content);
+        $this->assertContains('"firstName":"Jonas"', $content);
+        $this->assertContains('"lastName":"Jonaitis"', $content);
         $this->assertContains('"company":', $content);
         $this->assertContains('"about":', $content);
         $this->assertContains('"slug":"fixture"', $content);
@@ -32,7 +32,6 @@ class EntityCheck extends WebTestCase
         $this->assertContains('"open":"1.328800"', $content);
         $this->assertContains('"takeProfit":"1.327900"', $content);
         $this->assertContains('"stopLoss":"1.378800"', $content);
-        $this->assertContains('"profit":', $content);
         $this->assertContains('"description":"fixture"', $content);
         $this->assertContains('"status":', $content);
         $this->assertContains('"dateCreated":', $content);
@@ -54,7 +53,6 @@ class EntityCheck extends WebTestCase
         $this->assertContains('<open>1.328800</open>', $content);
         $this->assertContains('<takeProfit>1.327900</takeProfit>', $content);
         $this->assertContains('<stopLoss>1.378800</stopLoss>', $content);
-        $this->assertContains('<profit>', $content);
         $this->assertContains('<description>fixture</description>', $content);
         $this->assertContains('<status>', $content);
         $this->assertContains('<dateCreated>', $content);
@@ -64,8 +62,8 @@ class EntityCheck extends WebTestCase
     
     public function checkTraderXml($content)
     {
-        $this->assertContains('<firstName>admin</firstName>', $content);
-        $this->assertContains('<lastName>admin</lastName>', $content);
+        $this->assertContains('<firstName>Jonas</firstName>', $content);
+        $this->assertContains('<lastName>Jonaitis</lastName>', $content);
         $this->assertContains('<company/>', $content);
         $this->assertContains('<about/>', $content);
         $this->assertContains('<slug>fixture</slug>', $content);

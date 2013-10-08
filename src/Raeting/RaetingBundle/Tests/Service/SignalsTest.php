@@ -20,6 +20,7 @@ class SignalsTest extends TestCase
     {
         $this->em = $this->getPlainMock('\Doctrine\ORM\EntityManager');
         $this->userService = $this->getPlainMock('\Raeting\UserBundle\Service\UserService');
+        $this->currencyRateService = $this->getPlainMock('\Raeting\RaetingBundle\Service\CurrencyRate');
     }
 
     /**
@@ -27,7 +28,7 @@ class SignalsTest extends TestCase
      */
     public function testAdd($from, $to, $pipsPosition, $expectation)
     {
-        $signalService = new Signals($this->em, $this->userService, 10);
+        $signalService = new Signals($this->em, $this->userService, 10, $this->currencyRateService);
         $result = $signalService->countPips($from, $to, $pipsPosition);
 
         $this->assertEquals($expectation, $result);
