@@ -31,10 +31,16 @@ Raeting\RaetingBundle\Entity\Signals:
             scale: 6
             nullable: false
             column: stop_loss
-        profit:
+        openPrice:
             type: decimal
             scale: 6
             nullable: true
+            column: open_price
+        closePrice:
+            type: decimal
+            scale: 6
+            nullable: true
+            column: close_price
         pips:
             type: decimal
             scale: 6

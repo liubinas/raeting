@@ -6,15 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
 use Raeting\UserBundle\Service\UserService;
+use Raeting\RaetingBundle\Service\CurrencyRate;
 
 class Signals
 {
     
-    public function __construct(EntityManager $em, UserService $userService, $defaultLimit)
+    public function __construct(EntityManager $em, UserService $userService, $defaultLimit, CurrencyRate $currencyRateService)
     {
         $this->em = $em;
         $this->userService = $userService;
         $this->defaultLimit = $defaultLimit;
+        $this->currencyRateService = $currencyRateService;
     }
         
     public function getNew()
@@ -40,6 +42,16 @@ class Signals
     public function getAllNew()
     {
         return $this->getRepository()->findBy(array('status' => Entity\Signals::STATUS_NEW));
+    }
+    
+    public function getAllOpened()
+    {
+        return $this->getRepository()->findBy(array('status' => Entity\Signals::STATUS_OPENED));
+    }
+    
+    public function getAllNotCalculated()
+    {
+        return $this->getRepository()->findBy(array('status' => Entity\Signals::STATUS_CLOSED, 'pips' => null));
     }
     
     public function createEntity($entity, $user, $id)
@@ -152,15 +164,77 @@ class Signals
         return $result;
     }
     
+    private function inRangeForSell($signal, $rate)
+    {
+        if($signal->getTakeProfit() <= $rate && $signal->getStopLoss() >= $rate){
+            return false;
+        }
+        return true;
+    }
+    
+    private function inRangeForBuy($signal, $rate)
+    {
+        if($signal->getTakeProfit() >= $rate && $signal->getStopLoss() <= $rate){
+            return false;
+        }
+        return true;
+    }
+    
+    public function updateNewStatusesAndPrices($signal)
+    {
+        $currencyRate = $this->currencyRateService->getLastBySymbol($signal->getSymbol()->getId());
+        if(!$currencyRate){
+            return;
+        }
+        if(($signal->getBuy() == 1 && $currencyRate->getBid() <= $signal->getOpen()) ||
+                ($signal->getBuy() == 0 && $currencyRate->getAsk() >= $signal->getOpen())){
+            
+            $signal->setStatus(Entity\Signals::STATUS_OPENED);
+            
+            if($signal->getBuy() == 1){
+                $signal->setOpenPrice($currencyRate->getBid());
+            }else{
+                $signal->setOpenPrice($currencyRate->getAsk());
+            }
+            $this->em->flush();
+        }
+    }
+    
+    public function updateOpenedStatusesAndPrices($signal)
+    {
+        $currencyRate = $this->currencyRateService->getLastBySymbol($signal->getSymbol()->getId());
+        if(!$currencyRate){
+            return;
+        }
+        if(($signal->getBuy() == 0 && $this->inRangeForSell($signal, $currencyRate->getAsk())) || 
+                ($signal->getBuy() == 1 && $this->inRangeForBuy($signal, $currencyRate->getBid()))){
+            $signal->setStatus(Entity\Signals::STATUS_CLOSED);
+            
+            if($signal->getBuy() == 1){
+                $signal->setClosePrice($currencyRate->getBid());
+            }else{
+                $signal->setClosePrice($currencyRate->getAsk());
+            }
+            $this->em->flush();
+        }
+    }
+    
     public function countPipsAndSave($signal)
     {
-        if($signal->getBuy() == 0){
-            $pips = $this->countPips($signal->getTakeProfit(), $signal->getOpen(), $signal->getSymbol()->getPipsPosition());
-        }else{
-            $pips = $this->countPips($signal->getOpen(), $signal->getTakeProfit(), $signal->getSymbol()->getPipsPosition());
+        $pips = null;
+        $currencyRate = $this->currencyRateService->getLastBySymbol($signal->getSymbol()->getId());
+        if(!$currencyRate){
+            return;
         }
-        $signal->setPips($pips);
-        $this->em->flush();
+        if($signal->getBuy() == 0){
+            $pips = $this->countPips($signal->getOpenPrice(), $signal->getClosePrice(), $signal->getSymbol()->getPipsPosition());
+        }else{
+            $pips = $this->countPips($signal->getClosePrice(), $signal->getOpenPrice(), $signal->getSymbol()->getPipsPosition());
+        }
+        if($pips !== null){
+            $signal->setPips($pips);
+            $this->em->flush();
+        }
     }
     
     public function signalToArray($signal)
@@ -172,7 +246,6 @@ class Signals
             'open'=>$signal->getOpen(),
             'takeProfit'=>$signal->getTakeprofit(),
             'stopLoss'=>$signal->getStoploss(),
-            'profit'=>$signal->getProfit(),
             'description'=>$signal->getDescription(),
             'status'=>$signal->getStatus(),
             'dateCreated'=>$signal->getCreated(),

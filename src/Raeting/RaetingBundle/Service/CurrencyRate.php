@@ -59,7 +59,7 @@ class CurrencyRate
             foreach($xml as $rate){
                 if($currency = $this->symbolService->getBySymbol((string)$rate->$mappingArray['currency'])){
                     
-                    $date = new \dateTime((string)$rate->$mappingArray['created'].' '.$gmt);
+                    $date = new \DateTime((string)$rate->$mappingArray['created'].' '.$gmt);
                     $date->setTimezone( new \DateTimeZone('Europe/Vilnius') );
                     
                     $rateToInsert = $this->getNew();
@@ -67,7 +67,7 @@ class CurrencyRate
                     $rateToInsert->setAsk((string)$rate->$mappingArray['ask']);
                     $rateToInsert->setBid((string)$rate->$mappingArray['bid']);
                     $rateToInsert->setSourceTime($date);
-                    $rateToInsert->setCreated(new \dateTime());
+                    $rateToInsert->setCreated(new \DateTime());
                     $this->save($rateToInsert);
                     $inserts++;
                 }
@@ -80,6 +80,11 @@ class CurrencyRate
     {
         $xml = simplexml_load_file(rawurlencode($url));
         return $this->importxml($xml->Rate, array('currency' => 'Symbol', 'ask' => 'Ask', 'bid' => 'Bid', 'created' => 'Time'), '-4GMT');
+    }
+    
+    public function getLastBySymbol($symbol)
+    {
+        return $this->getRepository()->findOneBy(array('currency' => $symbol));
     }
     
 }

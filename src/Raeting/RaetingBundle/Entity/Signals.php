@@ -70,9 +70,16 @@ class Signals
     /**
      * @var float
      *
-     * @ORM\Column(name="profit", type="decimal", nullable=false, scale=6)
+     * @ORM\Column(name="open_price", type="decimal", nullable=false, scale=6)
      */
-    private $profit = 0;
+    private $openPrice;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="close_price", type="decimal", nullable=false, scale=6)
+     */
+    private $closePrice;
     
     /**
      * @var float
@@ -278,26 +285,49 @@ class Signals
     }
 
     /**
-     * Set profit
+     * Set openPrice
      *
-     * @param float $profit
+     * @param float $openPrice
      * @return Signals
      */
-    public function setProfit($profit)
+    public function setOpenPrice($openPrice)
     {
-        $this->profit = $profit;
+        $this->openPrice = $openPrice;
     
         return $this;
     }
 
     /**
-     * Get profit
+     * Get openPrice
      *
      * @return float 
      */
-    public function getProfit()
+    public function getOpenPrice()
     {
-        return $this->profit;
+        return $this->openPrice;
+    }
+    
+    /**
+     * Set closePrice
+     *
+     * @param float $closePrice
+     * @return Signals
+     */
+    public function setClosePrice($closePrice)
+    {
+        $this->closePrice = $closePrice;
+    
+        return $this;
+    }
+
+    /**
+     * Get closePrice
+     *
+     * @return float 
+     */
+    public function getClosePrice()
+    {
+        return $this->closePrice;
     }
     
     /**

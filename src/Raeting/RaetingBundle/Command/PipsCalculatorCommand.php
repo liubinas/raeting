@@ -21,12 +21,31 @@ class PipsCalculatorCommand extends ContainerAwareCommand
     {
         $container = $this->getContainer();
 
+        $signalService = $container->get('raetingraeting.service.signals');
+        
+        $output->writeln('<info>Updating new signals statuses...</info>');
+        
+        $newSignals = $signalService->getAllNew();
+        if(!empty($newSignals)){
+            foreach($newSignals as $signal){
+                $signalService->updateNewStatusesAndPrices($signal);
+            }
+        }
+        
+        $output->writeln('<info>Updating opened signals statuses...</info>');
+        
+        $openedSignals = $signalService->getAllOpened();
+        if(!empty($openedSignals)){
+            foreach($openedSignals as $signal){
+                $signalService->updateOpenedStatusesAndPrices($signal);
+            }
+        }
+        
         $output->writeln('<info>Updating pips...</info>');
 
-        $signalService = $container->get('raetingraeting.service.signals');
-        $signals = $signalService->getAllNew();
-        if(!empty($signals)){
-            foreach($signals as $signal){
+        $notCalculatedSignals = $signalService->getAllNotCalculated();
+        if(!empty($notCalculatedSignals)){
+            foreach($notCalculatedSignals as $signal){
                 $signalService->countPipsAndSave($signal);
             }
         }

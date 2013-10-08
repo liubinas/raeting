@@ -31,13 +31,6 @@ class UserStats
     /**
      * @var float
      *
-     * @ORM\Column(name="profit", type="decimal", nullable=false, scale=6)
-     */
-    private $profit;
-    
-    /**
-     * @var float
-     *
      * @ORM\Column(name="pips", type="decimal", nullable=false, scale=6)
      */
     private $pips;
@@ -71,14 +64,6 @@ class UserStats
 
     public function setUserid($userid) {
         $this->userid = $userid;
-    }
-
-    public function getProfit() {
-        return $this->profit;
-    }
-
-    public function setProfit($profit) {
-        $this->profit = $profit;
     }
 
     public function getPips() {

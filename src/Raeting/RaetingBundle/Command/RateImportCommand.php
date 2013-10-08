@@ -12,7 +12,7 @@ class RateImportCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('raeting:import_rates:fxcm')
+            ->setName('raeting:importrates:fxcm')
             ->setDescription('Imports currency rates from fxcm.com')
         ;
     }
