@@ -54,3 +54,6 @@ deploydev:
 	./app/console cache:clear -e dev -n
 	./app/console cache:warmup -e dev -n
 	chmod -R 777 web/uploads
+
+#commit trigger
+# lalala
