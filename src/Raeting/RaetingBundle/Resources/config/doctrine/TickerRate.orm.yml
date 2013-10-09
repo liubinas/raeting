@@ -1,0 +1,35 @@
+Raeting\RaetingBundle\Entity\TickerRate:
+    type: entity
+    table: ticker_rate
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        bid:
+            type: decimal
+            nullable: false
+        ask:
+            type: decimal
+            nullable: false
+        created:
+            type: datetime
+            nullable: false
+        sourceTime:
+            type: datetime
+            nullable: false
+            column: source_time
+    manyToOne:
+        ticker:
+            targetEntity: Symbol
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ticker_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

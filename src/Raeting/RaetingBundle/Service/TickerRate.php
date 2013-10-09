@@ -5,7 +5,7 @@ namespace Raeting\RaetingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
 
-class CurrencyRate
+class TickerRate
 {
 
     public function __construct(EntityManager $em, Symbol $symbolService)
@@ -16,7 +16,7 @@ class CurrencyRate
 
     public function getNew()
     {
-        return new Entity\CurrencyRate();
+        return new Entity\TickerRate();
     }
 
     public function get($id)
@@ -29,7 +29,7 @@ class CurrencyRate
         return $this->getRepository()->findAll();
     }
 
-    public function save(Entity\CurrencyRate $entity)
+    public function save(Entity\TickerRate $entity)
     {
         $this->em->persist($entity);
         $this->em->flush();
@@ -49,21 +49,21 @@ class CurrencyRate
 
     public function getRepository()
     {
-        return $this->em->getRepository('RaetingRaetingBundle:CurrencyRate');
+        return $this->em->getRepository('RaetingRaetingBundle:TickerRate');
     }
     
-    private function importxml($xml, $mappingArray = array('currency' => 'currency', 'ask' => 'ask', 'bid' => 'bid', 'created' => 'created'), $gmt = '')
+    private function importxml($xml, $mappingArray = array('ticker' => 'ticker', 'ask' => 'ask', 'bid' => 'bid', 'created' => 'created'), $gmt = '')
     {
         $inserts = 0;
         if(!empty($xml)){
             foreach($xml as $rate){
-                if($currency = $this->symbolService->getBySymbol((string)$rate->$mappingArray['currency'])){
+                if($ticker = $this->symbolService->getBySymbol((string)$rate->$mappingArray['ticker'])){
                     
                     $date = new \DateTime((string)$rate->$mappingArray['created'].' '.$gmt);
                     $date->setTimezone( new \DateTimeZone('Europe/Vilnius') );
                     
                     $rateToInsert = $this->getNew();
-                    $rateToInsert->setCurrency($currency);
+                    $rateToInsert->setTicker($ticker);
                     $rateToInsert->setAsk((string)$rate->$mappingArray['ask']);
                     $rateToInsert->setBid((string)$rate->$mappingArray['bid']);
                     $rateToInsert->setSourceTime($date);
@@ -111,16 +111,15 @@ class CurrencyRate
         return $inserts;
     }
     
-    
-    public function importXmlFromFXCM($url)
-    {
-        $xml = simplexml_load_file(rawurlencode($url));
-        return $this->importxml($xml->Rate, array('currency' => 'Symbol', 'ask' => 'Ask', 'bid' => 'Bid', 'created' => 'Time'), '-4GMT');
-    }
-    
     public function getLastBySymbol($symbol)
     {
-        return $this->getRepository()->findOneBy(array('currency' => $symbol));
+        return $this->getRepository()->findOneBy(array('ticker' => $symbol));
+    }
+    
+    public function importCsvFromYahoo($url)
+    {
+        $csv = file_get_contents($url);
+        return $this->importCsv($csv);
     }
     
 }

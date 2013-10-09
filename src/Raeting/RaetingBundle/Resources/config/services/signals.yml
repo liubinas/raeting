@@ -5,7 +5,7 @@ parameters:
 services:
     raetingraeting.service.signals:
         class: %raetingraeting.service.signals.class%
-        arguments: [@doctrine.orm.entity_manager, @user.service.user, '%default_page_limit%', @raetingraeting.service.currency_rate]
+        arguments: [@doctrine.orm.entity_manager, @user.service.user, '%default_page_limit%', @raetingraeting.service.currency_rate, @raetingraeting.service.ticker_rate]
 
     raetingraeting.form.type.signals:
         class: %raetingraeting.form.type.signals.class%

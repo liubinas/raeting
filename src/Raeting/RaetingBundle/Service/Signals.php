@@ -7,16 +7,29 @@ use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
 use Raeting\UserBundle\Service\UserService;
 use Raeting\RaetingBundle\Service\CurrencyRate;
+use Raeting\RaetingBundle\Service\TickerRate;
 
 class Signals
 {
+    private $rateService;
     
-    public function __construct(EntityManager $em, UserService $userService, $defaultLimit, CurrencyRate $currencyRateService)
+    
+    public function __construct(EntityManager $em, UserService $userService, $defaultLimit, CurrencyRate $currencyRateService, TickerRate $tickerRateService)
     {
         $this->em = $em;
         $this->userService = $userService;
         $this->defaultLimit = $defaultLimit;
         $this->currencyRateService = $currencyRateService;
+        $this->tickerRateService = $tickerRateService;
+    }
+    
+    public function setRateService($signal)
+    {
+        if($signal->getSymbol()->getType() == Entity\Symbol::TYPE_QUOTE){
+            $this->rateService = $this->currencyRateService;
+        }elseif($signal->getSymbol()->getType() == Entity\Symbol::TYPE_TICKER){
+            $this->rateService = $this->tickerRateService;
+        }
     }
         
     public function getNew()
@@ -182,19 +195,20 @@ class Signals
     
     public function updateNewStatusesAndPrices($signal)
     {
-        $currencyRate = $this->currencyRateService->getLastBySymbol($signal->getSymbol()->getId());
-        if(!$currencyRate){
+        $this->setRateService($signal);
+        $rate = $this->rateService->getLastBySymbol($signal->getSymbol()->getId());
+        if(!$rate){
             return;
         }
-        if(($signal->getBuy() == 1 && $currencyRate->getBid() <= $signal->getOpen()) ||
-                ($signal->getBuy() == 0 && $currencyRate->getAsk() >= $signal->getOpen())){
+        if(($signal->getBuy() == 1 && $rate->getBid() <= $signal->getOpen()) ||
+                ($signal->getBuy() == 0 && $rate->getAsk() >= $signal->getOpen())){
             
             $signal->setStatus(Entity\Signals::STATUS_OPENED);
             
             if($signal->getBuy() == 1){
-                $signal->setOpenPrice($currencyRate->getBid());
+                $signal->setOpenPrice($rate->getBid());
             }else{
-                $signal->setOpenPrice($currencyRate->getAsk());
+                $signal->setOpenPrice($rate->getAsk());
             }
             $this->em->flush();
         }
@@ -202,18 +216,19 @@ class Signals
     
     public function updateOpenedStatusesAndPrices($signal)
     {
-        $currencyRate = $this->currencyRateService->getLastBySymbol($signal->getSymbol()->getId());
-        if(!$currencyRate){
+        $this->setRateService($signal);
+        $rate = $this->rateService->getLastBySymbol($signal->getSymbol()->getId());
+        if(!$rate){
             return;
         }
-        if(($signal->getBuy() == 0 && $this->inRangeForSell($signal, $currencyRate->getAsk())) || 
-                ($signal->getBuy() == 1 && $this->inRangeForBuy($signal, $currencyRate->getBid()))){
+        if(($signal->getBuy() == 0 && $this->inRangeForSell($signal, $rate->getAsk())) || 
+                ($signal->getBuy() == 1 && $this->inRangeForBuy($signal, $rate->getBid()))){
             $signal->setStatus(Entity\Signals::STATUS_CLOSED);
             
             if($signal->getBuy() == 1){
-                $signal->setClosePrice($currencyRate->getBid());
+                $signal->setClosePrice($rate->getBid());
             }else{
-                $signal->setClosePrice($currencyRate->getAsk());
+                $signal->setClosePrice($rate->getAsk());
             }
             $this->em->flush();
         }
@@ -221,9 +236,10 @@ class Signals
     
     public function countPipsAndSave($signal)
     {
+        $this->setRateService($signal);
         $pips = null;
-        $currencyRate = $this->currencyRateService->getLastBySymbol($signal->getSymbol()->getId());
-        if(!$currencyRate){
+        $rate = $this->rateService->getLastBySymbol($signal->getSymbol()->getId());
+        if(!$rate){
             return;
         }
         if($signal->getBuy() == 0){

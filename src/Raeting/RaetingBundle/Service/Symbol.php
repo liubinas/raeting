@@ -56,27 +56,8 @@ class Symbol
         return $this->getRepository()->findOneBy(array('symbol' => $symbol));
     }
     
-    public function findSymbolsByKeyword($keyword, $limit)
+    public function getSymbolsForStockImport()
     {
-        $query = $this->getRepository()->createQueryBuilder('p')
-            ->where('p.symbol LIKE :keyword')
-            ->setParameter('keyword', '%'.$keyword.'%')
-            ->setMaxResults($limit)
-            ->getQuery();
-
-        return $query->getResult();
-    }
-    
-    public function findtickersByKeyword($keyword, $limit)
-    {
-        $query = $this->getRepository()->createQueryBuilder('p')
-            ->where('p.symbol LIKE :keyword')
-            ->andWhere('p.type = :type')
-            ->setParameter('keyword', '%'.$keyword.'%')
-            ->setParameter('type', Entity\Symbol::TYPE_TICKER)
-            ->setMaxResults($limit)
-            ->getQuery();
-
-        return $query->getResult();
+        return $this->getRepository()->getSymbolsForStockImport($this->em);
     }
 }

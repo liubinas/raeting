@@ -11,3 +11,4 @@ imports:
 - { resource: services/market.yml }
 - { resource: services/symbol.yml }
 - { resource: services/currencyRate.yml }
+- { resource: services/tickerRate.yml }

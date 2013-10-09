@@ -34,4 +34,5 @@ Raeting\RaetingBundle\Entity\Symbol:
             cascade: {  }
             mappedBy: null
             orphanRemoval: false
+    repositoryClass: Raeting\RaetingBundle\Entity\SymbolRepository
     lifecycleCallbacks: {  }
