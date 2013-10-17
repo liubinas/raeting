@@ -1,6 +1,10 @@
 raeting_signals:
     resource: "@RaetingRaetingBundle/Resources/config/routing/signals.yml"
     prefix:   /signals
+    
+raeting_analyst:
+    resource: "@RaetingRaetingBundle/Resources/config/routing/analyst.yml"
+    prefix:   /analysts
 
 trader:
     resource: "@RaetingRaetingBundle/Resources/config/routing/trader.yml"

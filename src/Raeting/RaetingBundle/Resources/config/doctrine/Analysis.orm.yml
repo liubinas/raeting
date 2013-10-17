@@ -1,0 +1,36 @@
+Raeting\RaetingBundle\Entity\Analysis:
+    type: entity
+    table: `analysis`
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        estimation:
+            type: decimal
+            scale: 6
+            nullable: false
+        date:
+            type: date
+            nullable: false
+        period:
+            type: string
+            length: 255
+            fixed: false
+            nullable: true
+    manyToOne:
+        ticker:
+            targetEntity: Raeting\RaetingBundle\Entity\Symbol
+            cascade: {  }
+            mappedBy: null
+            orphanRemoval: false
+        analyst:
+            targetEntity: Raeting\RaetingBundle\Entity\Analyst
+            cascade: {  }
+            mappedBy: null
+            orphanRemoval: false
+    repositoryClass: Raeting\RaetingBundle\Entity\AnalysisRepository
+    lifecycleCallbacks: {  }

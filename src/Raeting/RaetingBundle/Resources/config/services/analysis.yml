@@ -1,0 +1,7 @@
+parameters:
+    raetingraeting.service.analysis.class: Raeting\RaetingBundle\Service\Analysis
+
+services:
+    raetingraeting.service.analysis:
+        class: %raetingraeting.service.analysis.class%
+        arguments: [@doctrine.orm.entity_manager, @raetingraeting.service.analyst, @raetingraeting.service.symbol]

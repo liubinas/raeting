@@ -1,0 +1,7 @@
+parameters:
+    raetingraeting.service.analyst.class: Raeting\RaetingBundle\Service\Analyst
+
+services:
+    raetingraeting.service.analyst:
+        class: %raetingraeting.service.analyst.class%
+        arguments: [@doctrine.orm.entity_manager]

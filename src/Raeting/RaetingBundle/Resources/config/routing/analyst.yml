@@ -1,0 +1,7 @@
+analyst:
+    pattern:  /
+    defaults: { _controller: "RaetingRaetingBundle:Analyst:index" }
+
+analyst_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "RaetingRaetingBundle:Analyst:show" }
