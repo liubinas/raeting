@@ -10,7 +10,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "http://packagist.estina.lt/"
+            "url": "http://estina:Xod6fZvxyJnY3i@packagist.estina.lt/"
         }
     ],
     "require": {
