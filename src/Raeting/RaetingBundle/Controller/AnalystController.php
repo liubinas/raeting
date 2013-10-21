@@ -35,13 +35,31 @@ class AnalystController extends Controller
     
     public function showAction($id)
     {
+        $request = $this->get('request');
+        $page = $request->query->get('page');
+        if(empty($page)){
+            $page = 1;
+        }
         
         $analyst = $this->get('raetingraeting.service.analyst')->get($id);
-        $analysis = $this->get('raetingraeting.service.analysis')->getAllByAnalyst($id);
-
+        $analysisService = $this->get('raetingraeting.service.analysis');
+        
+        $query = $request->query->get('analysis-search');
+        if ($request->getMethod() == 'GET' && !empty($query)) {
+            $analysis = $analysisService->getAllByAnalystAndQuery($id, $query, $this->resultsPerPage, $page);
+            $totalAnalysis = $analysisService->countAllByAnalystAndQuery($id, $query);
+        }else{
+            $analysis = $analysisService->getAllByAnalyst($id, $this->resultsPerPage, $page);
+            $totalAnalysis = $analysisService->countAllByAnalyst($id);
+        }
+            
         return $this->render('RaetingRaetingBundle:Analyst:show.html.php', array(
             'analyst' => $analyst,
             'analysis' => $analysis,
+            'totalAnalysis' => $totalAnalysis,
+            'perPage' => $this->resultsPerPage,
+            'page' => $page,
+            'query' => $query,
         ));
     }
 

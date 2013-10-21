@@ -21,6 +21,10 @@ Raeting\RaetingBundle\Entity\Analysis:
             length: 255
             fixed: false
             nullable: true
+        recommendation:
+            type: string
+            length: 255
+            nullable: true
     manyToOne:
         ticker:
             targetEntity: Raeting\RaetingBundle\Entity\Symbol

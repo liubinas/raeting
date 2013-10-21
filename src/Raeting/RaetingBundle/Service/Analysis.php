@@ -56,9 +56,24 @@ class Analysis
         return $this->em->getRepository('RaetingRaetingBundle:Analysis');
     }
     
-    public function getAllByAnalyst($analyst)
+    public function getAllByAnalyst($analyst, $perPage, $page)
     {
-        return $this->getRepository()->findBy(array('analyst' => $analyst));
+        return $this->getRepository()->getAllByAnalyst($analyst, $perPage, $page);
+    }
+    
+    public function getAllByAnalystAndQuery($analyst, $query, $perPage, $page)
+    {
+        return $this->getRepository()->getAllByAnalystAndQuery($analyst, $query, $perPage, $page);
+    }
+    
+    public function countAllByAnalyst($analyst)
+    {
+        return $this->getRepository()->countAllByAnalyst($analyst);
+    }
+    
+    public function countAllByAnalystAndQuery($analyst, $query)
+    {
+        return $this->getRepository()->countAllByAnalystAndQuery($analyst, $query);
     }
     
     private function formatRecommendation($recommendation)

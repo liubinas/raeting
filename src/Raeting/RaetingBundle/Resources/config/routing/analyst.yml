@@ -5,3 +5,7 @@ analyst:
 analyst_show:
     pattern:  /{id}/show
     defaults: { _controller: "RaetingRaetingBundle:Analyst:show" }
+
+analyst_analysis:
+    pattern:  /{id}/analysis
+    defaults: { _controller: "RaetingRaetingBundle:Analyst:analysis" }
