@@ -61,6 +61,21 @@ class Analysis
         return $this->getRepository()->getAllByAnalyst($analyst, $perPage, $page);
     }
     
+    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page)
+    {
+        return $this->getRepository()->getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page);
+    }
+    
+    public function getAllByAnalystAndTickerForGraph($analyst, $ticker)
+    {
+        return $this->getRepository()->getAllByAnalystAndTickerForGraph($analyst, $ticker);
+    }
+    
+    public function getAnalystEstimationRangeByTicker($analyst, $ticker)
+    {
+        return $this->getRepository()->getAnalystEstimationRangeByTicker($analyst, $ticker);
+    }
+    
     public function getAllByAnalystAndQuery($analyst, $query, $perPage, $page)
     {
         return $this->getRepository()->getAllByAnalystAndQuery($analyst, $query, $perPage, $page);
@@ -96,15 +111,21 @@ class Analysis
         $analyst = $this->analystService->getByName($data['analyst']);
         $symbol = $this->symbolService->getBySymbol($data['ticker']);
         if(!empty($analyst) && !empty($symbol)){
-            $analysis = $this->getNew();
+            $analysis = $this->getRepository()->findOneBySymbolAndAnalystAndDate($symbol, $analyst, date('Y-m-d', strtotime($data['date'])));
+            if(empty($analysis)){
+                $analysis = $this->getNew();
+                $analysis->setTicker($symbol);
+                $analysis->setAnalyst($analyst);
+                $return = 1;
+            }else{
+                $return = 0;
+            }
             $analysis->setRecommendation($data['recommendation']);
             $analysis->setEstimation($data['estimation']);
             $analysis->setDate(new \DateTime($data['date']));
             $analysis->setPeriod($data['period']);
-            $analysis->setAnalyst($analyst);
-            $analysis->setTicker($symbol);
             $this->save($analysis);
-            return 1;
+            return $return;
         }
         return 0;
     }

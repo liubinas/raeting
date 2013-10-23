@@ -62,5 +62,40 @@ class AnalystController extends Controller
             'query' => $query,
         ));
     }
+    
+    public function showtickerAction($id, $ticker)
+    {
+        $request = $this->get('request');
+        $page = $request->query->get('page');
+        if(empty($page)){
+            $page = 1;
+        }
+        
+        $ticker = strtoupper($ticker);
+        
+        $analyst = $this->get('raetingraeting.service.analyst')->get($id);
+        
+        $analysisService = $this->get('raetingraeting.service.analysis');
+        $symbolService = $this->get('raetingraeting.service.symbol');
+        $tickerRateService = $this->get('raetingraeting.service.ticker_rate');
+        
+        
+        $analysisRange = $analysisService->getAnalystEstimationRangeByTicker($id, $ticker);
+        $analysisForGraph = $analysisService->getAllByAnalystAndTickerForGraph($id, $ticker);
+        $analysis = $analysisService->getAllByAnalystAndTicker($id, $ticker, $this->resultsPerPage, $page);
+        $totalAnalysis = $analysisService->countAllByAnalyst($id, $ticker);
+        
+        $rates = $tickerRateService->findAllBySymbolInRange($ticker, $analysisRange['min_date'], $analysisRange['max_date']);
+
+        return $this->render('RaetingRaetingBundle:Analyst:show_ticker.html.php', array(
+            'analyst' => $analyst,
+            'analysis' => $analysis,
+            'analysisForGraph' => $analysisForGraph,
+            'rates' => $rates,
+            'totalAnalysis' => $totalAnalysis,
+            'perPage' => $this->resultsPerPage,
+            'page' => $page,
+        ));
+    }
 
 }

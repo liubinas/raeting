@@ -16,18 +16,6 @@ class AnalysisImportCommand extends ContainerAwareCommand
             ->setDescription('Imports analysis')
         ;
     }
-    
-    private function scanDir($dir) 
-    { 
-        $root = scandir($dir); 
-        foreach($root as $value) 
-        { 
-            if($value === '.' || $value === '..') {continue;} 
-            if(is_file("$dir/$value")) {$result[]="$dir/$value";continue;} 
-            $result[]=$value;
-        } 
-        return $result; 
-    } 
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -37,7 +25,7 @@ class AnalysisImportCommand extends ContainerAwareCommand
 
         $objPHPExcel = new \PHPExcel();
         
-        $files = $this->scanDir($container->get('kernel')->getRootDir().'/../analysis');
+        $files = $container->get('raetingraeting.service.file_management')->scanDir($container->get('kernel')->getRootDir().'/../uploads/analysis');
         
         $analysisService = $container->get('raetingraeting.service.analysis');
         
@@ -74,7 +62,7 @@ class AnalysisImportCommand extends ContainerAwareCommand
                     }
                     $totalInsertsDone += $insertsFromFile;
                     if($insertsFromFile > 0){
-                        rename($file, $container->get('kernel')->getRootDir().'/../imported_analysis/'.$fullFileName);
+                        $container->get('raetingraeting.service.file_management')->moveFile($file, $container->get('kernel')->getRootDir().'/../uploads/imported_analysis/'.$fullFileName);
                         $filesInserted++;
                     }
                 } catch(Exception $e) {

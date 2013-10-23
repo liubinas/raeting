@@ -23,6 +23,16 @@ class TickerRate
      * @var string
      */
     private $ask;
+    
+    /**
+     * @var string
+     */
+    private $high;
+    
+    /**
+     * @var string
+     */
+    private $low;
 
     /**
      * @var \DateTime
@@ -95,6 +105,52 @@ class TickerRate
     public function getAsk()
     {
         return $this->ask;
+    }
+    
+    /**
+     * Set high
+     *
+     * @param string $high
+     * @return TickerRate
+     */
+    public function setHigh($high)
+    {
+        $this->high = $high;
+    
+        return $this;
+    }
+
+    /**
+     * Get high
+     *
+     * @return string 
+     */
+    public function getHigh()
+    {
+        return $this->high;
+    }
+    
+    /**
+     * Set low
+     *
+     * @param string $low
+     * @return TickerRate
+     */
+    public function setLow($low)
+    {
+        $this->low = $low;
+    
+        return $this;
+    }
+
+    /**
+     * Get low
+     *
+     * @return string 
+     */
+    public function getLow()
+    {
+        return $this->low;
     }
 
     /**

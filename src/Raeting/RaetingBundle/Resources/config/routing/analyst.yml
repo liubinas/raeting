@@ -9,3 +9,7 @@ analyst_show:
 analyst_analysis:
     pattern:  /{id}/analysis
     defaults: { _controller: "RaetingRaetingBundle:Analyst:analysis" }
+    
+analyst_graph:
+    pattern:  /{id}/ticker/{ticker}
+    defaults: { _controller: "RaetingRaetingBundle:Analyst:showticker" }

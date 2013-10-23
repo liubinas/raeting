@@ -1,0 +1,6 @@
+parameters:
+    raetingraeting.service.file_management.class: Raeting\RaetingBundle\Service\FileManagement
+
+services:
+    raetingraeting.service.file_management:
+        class: %raetingraeting.service.file_management.class%

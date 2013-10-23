@@ -39,6 +39,83 @@ class AnalysisRepository extends EntityRepository
         
     }
     
+    public function getAnalystEstimationRangeByTicker($analyst, $ticker)
+    {
+        $query = $this->createQueryBuilder('s')
+                ->select('MIN(s.date) as min_date, MAX(s.date) as max_date')
+                ->leftJoin('s.ticker', 't')
+                ->where('t.symbol = :ticker')
+                ->setParameter('ticker', $ticker)
+                ->getQuery();
+        
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+    
+    public function getAllByAnalystAndTickerForGraph($analyst, $ticker)
+    {
+        $query = $this->createQueryBuilder('s')
+                ->select('s, t')
+                ->leftJoin('s.ticker', 't')
+                ->where('t.symbol = :ticker')
+                ->andWhere('s.analyst = :analyst')
+                ->setParameter('ticker', $ticker)
+                ->setParameter('analyst', $analyst)
+                ->getQuery();
+        
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+    
+    public function findOneBySymbolAndAnalystAndDate($symbol, $analyst, $date)
+    {
+        $query = $this->createQueryBuilder('s')
+                ->select('s')
+                ->where('s.ticker = :symbol')
+                ->andWhere('s.analyst = :analyst')
+                ->andWhere('s.date LIKE :date')
+                ->setParameter('symbol', $symbol)
+                ->setParameter('analyst', $analyst)
+                ->setParameter('date', '%'.$date.'%')
+                ->getQuery();
+        
+        
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page)
+    {
+        $query = $this->createQueryBuilder('s')
+                ->select('s, t')
+                ->leftJoin('s.ticker', 't')
+                ->where('t.symbol = :ticker')
+                ->andWhere('s.analyst = :analyst')
+                ->setParameter('ticker', $ticker)
+                ->setParameter('analyst', $analyst)
+                ->getQuery();
+        
+        $query = $this->addLimits($query, $perPage, $page);
+        
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+    
     public function getAllByAnalyst($analyst, $perPage, $page)
     {
         $query = $this->createQueryBuilder('s')

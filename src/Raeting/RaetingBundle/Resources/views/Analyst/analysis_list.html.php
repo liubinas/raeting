@@ -5,6 +5,7 @@
                             <h4>Analysis</h4>
                     </div>
                     <div class="widget-content">
+                        <? if(isset($showSearch) && $showSearch == true): ?>
                         <div class="col-md-12">
                             <div class="dataTables_filter" id="DataTables_Table_0_filter">
                                 <form class="form-inline" method="get" action="<?= $view['router']->generate($searchLink, array('id' => $analystId)) ?>">
@@ -17,6 +18,7 @@
                                 </form>
                             </div>
                         </div>
+                        <? endif; ?>
                             <? if (!empty($analysis)): ?>
                                     <table class="table table-striped table-hover">
                                         <thead>
@@ -28,7 +30,7 @@
                                         <tbody>
                                             <? foreach ($analysis as $entity): ?>
                                                 <tr>
-                                                    <td><?= $entity->getTicker()->getTitle() ?></td>
+                                                    <td><a href="<?= $view['router']->generate('analyst_graph', array('id' => $analystId, 'ticker' => strtolower($entity->getTicker()->getSymbol()))) ?>"><?= $entity->getTicker()->getTitle() ?></a></td>
                                                     <td><?= $entity->getEstimation() ?></td>
                                                     <td><?= $entity->getDate()->format('Y-m-d') ?></td>
                                                     <td><?= $entity->getRecommendation() ?></td>
@@ -43,4 +45,10 @@
             </div>
     </div>
 </div>
-<?= $view['pagination']->render($page, $totalAnalysis, $perPage, $searchLink, array('analysis-search' => $query, 'id' => $analystId));?>
+<? if(isset($query)){
+        $params = array('analysis-search' => $query, 'id' => $analystId);
+    }else{
+        $params = array('id' => $analystId);
+    }
+?>
+<?= $view['pagination']->render($page, $totalAnalysis, $perPage, $searchLink, $params);?>

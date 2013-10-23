@@ -111,9 +111,38 @@ class TickerRate
         return $inserts;
     }
     
+    public function insertData($data)
+    {
+        $symbol = $this->symbolService->getBySymbol($data['ticker']);
+        if(!empty($symbol)){
+            $tickerRate = $this->getRepository()->findOneByTickerAndDate($symbol, $data['date']);
+            if(empty($tickerRate)){
+                $tickerRate = $this->getNew();
+                $tickerRate->setTicker($symbol);
+                $return = 1;
+            }else{
+                $return = 0;
+            }
+            $tickerRate->setBid($data['bid']);
+            $tickerRate->setAsk($data['ask']);
+            $tickerRate->setHigh($data['high']);
+            $tickerRate->setLow($data['low']);
+            $tickerRate->setCreated(new \DateTime());
+            $tickerRate->setSourceTime(new \DateTime($data['date']));
+            $this->save($tickerRate);
+            return $return;
+        }
+        return 0;
+    }
+    
     public function getLastBySymbol($symbol)
     {
         return $this->getRepository()->findOneBy(array('ticker' => $symbol));
+    }
+    
+    public function findAllBySymbolInRange($symbol, $rangeFrom, $rangeTo)
+    {
+        return $this->getRepository()->findAllBySymbolInRange($symbol, $rangeFrom, $rangeTo);
     }
     
     public function importCsvFromYahoo($url)

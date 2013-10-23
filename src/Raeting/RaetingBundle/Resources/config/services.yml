@@ -14,3 +14,4 @@ imports:
 - { resource: services/tickerRate.yml }
 - { resource: services/analyst.yml }
 - { resource: services/analysis.yml }
+- { resource: services/fileManagement.yml }
