@@ -52,7 +52,14 @@ Signal
                                                                 <tr>
                                                                     <td>
                                                                         <a href="#">
-                                                                            <span class="label label-success"><?= $entity->getstatus() ?></span></a>
+                                                                            <? switch($entity->getstatus()){
+                                                                                    case 'new': $label =  'label-success';break;
+                                                                                    case 'opened': $label =  'label-warning';break;
+                                                                                    case 'closed': $label =  'label-info';break;
+                                                                                    case 'error': $label =  'label-danger';break;
+                                                                                } 
+                                                                            ?>
+                                                                            <span class="label <?= $label ?>"><?= $entity->getstatus() ?></span></a>
                                                                     </td>
                                                                     <td><?= $entity->getSymbol()->getTitle() ?></td>
                                                                     <td><?= $entity->getBuyValue() ?></td>

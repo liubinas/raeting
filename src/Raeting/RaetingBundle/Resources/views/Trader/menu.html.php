@@ -5,6 +5,7 @@
     <li><a href="<?= $view['router']->generate('home'); ?>">Home</a></li>
     <li class="active"><a href="<?= $view['router']->generate('trader'); ?>">Traders</a></li>
     <li><a href="<?= $view['router']->generate('signals'); ?>">Signals</a></li>
+    <li><a href="<?= $view['router']->generate('analyst'); ?>">Analysts</a></li>
     <!--<li><a href="<?= $view['router']->generate('api'); ?>">API</a></li>-->
     <? if (!$view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
         <li><a href="<?= $view['router']->generate('estinacmf_user.registration'); ?>">Sign Up</a></li>
