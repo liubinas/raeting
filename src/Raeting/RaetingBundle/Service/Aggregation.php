@@ -57,7 +57,7 @@ class Aggregation
 
     private function aggregate($type, $service)
     {
-        $date = date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 DAY'));
+        $date = date('Y-m-d', strtotime(date('Y-m-d') . ' - 1 DAY'));
         $rates = $service->findAllForAggregation($date);
         $symbolsUpdated = 0;
         if(!empty($rates)){
