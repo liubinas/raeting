@@ -1,0 +1,7 @@
+parameters:
+    raetingraeting.service.aggregation.class: Raeting\RaetingBundle\Service\Aggregation
+
+services:
+    raetingraeting.service.aggregation:
+        class: %raetingraeting.service.aggregation.class%
+        arguments: [@doctrine.orm.entity_manager, @raetingraeting.service.currency_rate, @raetingraeting.service.ticker_rate]

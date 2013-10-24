@@ -115,7 +115,7 @@ class TickerRate
     {
         $symbol = $this->symbolService->getBySymbol($data['ticker']);
         if(!empty($symbol)){
-            $tickerRate = $this->getRepository()->findOneByTickerAndDate($symbol, $data['date']);
+            $tickerRate = $this->getRepository()->findOneByTickerAndDate($symbol, date('Y-m-d', strtotime($data['date'])));
             if(empty($tickerRate)){
                 $tickerRate = $this->getNew();
                 $tickerRate->setTicker($symbol);
@@ -151,4 +151,13 @@ class TickerRate
         return $this->importCsv($csv);
     }
     
+    public function findAllForAggregation($date)
+    {
+        return $this->getRepository()->findAllForAggregation($date);
+    }
+    
+    public function getRatesBySymbolAndDate($symbolId, $date)
+    {
+        return $this->getRepository()->getRatesBySymbolAndDate($symbolId, $date);
+    }
 }

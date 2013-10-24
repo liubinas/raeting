@@ -42,5 +42,5 @@ Analysts
     </div>
 </div>
 <?= $view->render('RaetingRaetingBundle::Analyst/analysis_list.html.php', array(
-    'analysis' => $analysis, 'query' => $query, 'searchLink' => 'analyst_show', 'analystId' => $analyst->getId(), 'totalAnalysis' => $totalAnalysis, 'page' => $page, 'perPage' => $perPage)); ?>
+    'analysis' => $analysis, 'query' => $query, 'searchLink' => 'analyst_show', 'analystId' => $analyst->getId(), 'totalAnalysis' => $totalAnalysis, 'page' => $page, 'perPage' => $perPage, 'showSearch' => true)); ?>
 <? $view['slots']->stop('content') ?>

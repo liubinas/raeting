@@ -45,9 +45,10 @@ class AnalysisRepository extends EntityRepository
                 ->select('MIN(s.date) as min_date, MAX(s.date) as max_date')
                 ->leftJoin('s.ticker', 't')
                 ->where('t.symbol = :ticker')
+                ->andWhere('s.analyst = :analyst')
                 ->setParameter('ticker', $ticker)
+                ->setParameter('analyst', $analyst)
                 ->getQuery();
-        
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -119,6 +120,9 @@ class AnalysisRepository extends EntityRepository
     public function getAllByAnalyst($analyst, $perPage, $page)
     {
         $query = $this->createQueryBuilder('s')
+                ->select('s')
+                ->where('s.analyst = :analyst')
+                ->setParameter('analyst', $analyst)
                 ->getQuery();
         
         $query = $this->addLimits($query, $perPage, $page);

@@ -132,7 +132,14 @@ Trader Profile
                                                         <tr>
                                                             <td>
                                                                 <a href="#">
-                                                                    <span class="label label-success"><?= $signal->getstatus() ?></span></a>
+                                                                    <? switch($signal->getstatus()){
+                                                                    case 'new': $label =  'label-success';break;
+                                                                    case 'opened': $label =  'label-warning';break;
+                                                                    case 'closed': $label =  'label-info';break;
+                                                                    case 'error': $label =  'label-danger';break;
+                                                                        } 
+                                                                    ?>
+                                                                    <span class="label <?= $label ?>"><?= $signal->getstatus() ?></span></a>
                                                             </td>
                                                             <td><?= $signal->getSymbol()->getTitle() ?></td>
                                                             <td><?= $signal->getBuyValue() ?></td>

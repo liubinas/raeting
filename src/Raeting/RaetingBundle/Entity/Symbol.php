@@ -61,6 +61,14 @@ class Symbol
      * @ORM\Column(name="type", type="string", nullable=false)
      */
     private $type = self::TYPE_QUOTE;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="currency", type="string", nullable=true)
+     */
+    private $currency;
 
 
     /**
@@ -163,6 +171,29 @@ class Symbol
     public function getType()
     {
         return $this->type;
+    }
+    
+    /**
+     * Set currency
+     *
+     * @param string $currency
+     * @return Symbol
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+    
+        return $this;
+    }
+
+    /**
+     * Get currency
+     *
+     * @return string 
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
     
     /**

@@ -15,6 +15,12 @@ Raeting\RaetingBundle\Entity\CurrencyRate:
         ask:
             type: decimal
             nullable: false
+        high:
+            type: decimal
+            nullable: false
+        low:
+            type: decimal
+            nullable: false
         created:
             type: datetime
             nullable: false
@@ -32,4 +38,5 @@ Raeting\RaetingBundle\Entity\CurrencyRate:
                 currency_id:
                     referencedColumnName: id
             orphanRemoval: false
+    repositoryClass: Raeting\RaetingBundle\Entity\CurrencyRateRepository
     lifecycleCallbacks: {  }

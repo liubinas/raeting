@@ -65,7 +65,7 @@ class HistoryTickerImportCommand extends ContainerAwareCommand
                                 $data['low'] = $row['D'];
                                 $data['date'] = $row['A'];
                                 $insertsFromFile += $tickerRateService->insertData($data);
-                                if($insertsFromFile%100 == 0){
+                                if($insertsFromFile > 0 && $insertsFromFile%100 == 0){
                                     $output->writeln('<info>Inserts done: '.$insertsFromFile.'. Please wait...</info>');
                                 }
                             }

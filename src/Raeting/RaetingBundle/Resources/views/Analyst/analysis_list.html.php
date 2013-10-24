@@ -45,10 +45,10 @@
             </div>
     </div>
 </div>
-<? if(isset($query)){
+<? if(isset($showSearch) && $showSearch == true){
         $params = array('analysis-search' => $query, 'id' => $analystId);
     }else{
-        $params = array('id' => $analystId);
+        $params = array('id' => $analystId, 'ticker' => strtolower($ticker->getSymbol()));
     }
 ?>
 <?= $view['pagination']->render($page, $totalAnalysis, $perPage, $searchLink, $params);?>

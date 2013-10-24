@@ -87,6 +87,8 @@ class AnalystController extends Controller
         
         $rates = $tickerRateService->findAllBySymbolInRange($ticker, $analysisRange['min_date'], $analysisRange['max_date']);
 
+        $symbol = $symbolService->getBySymbol($ticker);
+        
         return $this->render('RaetingRaetingBundle:Analyst:show_ticker.html.php', array(
             'analyst' => $analyst,
             'analysis' => $analysis,
@@ -95,6 +97,7 @@ class AnalystController extends Controller
             'totalAnalysis' => $totalAnalysis,
             'perPage' => $this->resultsPerPage,
             'page' => $page,
+            'ticker' => $symbol,
         ));
     }
 

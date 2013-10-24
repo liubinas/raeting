@@ -28,6 +28,9 @@ Raeting\RaetingBundle\Entity\Symbol:
             type: string
             values: [quote,ticker]
             default: quote
+        currency:
+            type: string
+            length: 255
     manyToOne:
         market:
             targetEntity: Raeting\RaetingBundle\Entity\Market

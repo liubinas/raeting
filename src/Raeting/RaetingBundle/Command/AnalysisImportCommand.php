@@ -55,7 +55,9 @@ class AnalysisImportCommand extends ContainerAwareCommand
                                     $data['period'] = $row['D'];
                                     $data['date'] = $row['B'];
                                     $data['recommendation'] = $row['A'];
-                                    $insertsFromFile += $analysisService->insertData($data);
+                                    if(!empty($data['estimation']) && !empty($data['date'])){
+                                        $insertsFromFile += $analysisService->insertData($data);
+                                    }
                                 }
                             }
                         }

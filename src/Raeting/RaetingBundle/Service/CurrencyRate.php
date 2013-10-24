@@ -66,6 +66,12 @@ class CurrencyRate
                     $rateToInsert->setCurrency($currency);
                     $rateToInsert->setAsk((string)$rate->$mappingArray['ask']);
                     $rateToInsert->setBid((string)$rate->$mappingArray['bid']);
+                    if(isset($mappingArray['high'])){
+                        $rateToInsert->setHigh((string)$rate->$mappingArray['high']);
+                    }
+                    if(isset($mappingArray['low'])){
+                        $rateToInsert->setLow((string)$rate->$mappingArray['low']);
+                    }
                     $rateToInsert->setSourceTime($date);
                     $rateToInsert->setCreated(new \DateTime());
                     $this->save($rateToInsert);
@@ -99,6 +105,12 @@ class CurrencyRate
                             $rateToInsert->setTicker($ticker);
                             $rateToInsert->setAsk($row[$mappingArray['ask']]);
                             $rateToInsert->setBid($row[$mappingArray['bid']]);
+                            if(isset($mappingArray['high'])){
+                                $rateToInsert->setHigh((string)$rate->$mappingArray['high']);
+                            }
+                            if(isset($mappingArray['low'])){
+                                $rateToInsert->setLow((string)$rate->$mappingArray['low']);
+                            }
                             $rateToInsert->setSourceTime($date);
                             $rateToInsert->setCreated(new \DateTime());
                             $this->save($rateToInsert);
@@ -115,12 +127,22 @@ class CurrencyRate
     public function importXmlFromFXCM($url)
     {
         $xml = simplexml_load_file(rawurlencode($url));
-        return $this->importxml($xml->Rate, array('currency' => 'Symbol', 'ask' => 'Ask', 'bid' => 'Bid', 'created' => 'Time'), '-4GMT');
+        return $this->importxml($xml->Rate, array('currency' => 'Symbol', 'ask' => 'Ask', 'bid' => 'Bid', 'high' => 'High', 'low' => 'Low', 'created' => 'Time'), '-4GMT');
     }
     
     public function getLastBySymbol($symbol)
     {
         return $this->getRepository()->findOneBy(array('currency' => $symbol));
+    }
+    
+    public function findAllForAggregation($date)
+    {
+        return $this->getRepository()->findAllForAggregation($date);
+    }
+    
+    public function getRatesBySymbolAndDate($symbolId, $date)
+    {
+        return $this->getRepository()->getRatesBySymbolAndDate($symbolId, $date);
     }
     
 }
