@@ -111,28 +111,28 @@ class TickerRate
         return $inserts;
     }
     
-    public function insertData($data)
+    public function getInsertDataQuery($data)
     {
         $symbol = $this->symbolService->getBySymbol($data['ticker']);
         if(!empty($symbol)){
             $tickerRate = $this->getRepository()->findOneByTickerAndDate($symbol, date('Y-m-d', strtotime($data['date'])));
             if(empty($tickerRate)){
-                $tickerRate = $this->getNew();
-                $tickerRate->setTicker($symbol);
-                $return = 1;
+                $query = 'INSERT INTO ticker_rate (bid, ask, high, low, created, source_time, ticker_id) 
+                    VALUES ('.$data['bid'].','.$data['ask'].','.$data['high'].','.$data['low'].',"'.date('Y-m-d').'","'.$data['date'].'",'.$symbol->getId().');'."\n";
             }else{
-                $return = 0;
+                $query = 'UPDATE ticker_rate 
+                    SET bid='.$data['bid'].',ask='.$data['ask'].',high='.$data['high'].',low='.$data['low'].',created="'.date('Y-m-d').'",source_time="'.$data['date'].'",ticker_id='.$symbol->getId().' 
+                    WHERE id = '.$tickerRate->getId().";\n";
             }
-            $tickerRate->setBid($data['bid']);
-            $tickerRate->setAsk($data['ask']);
-            $tickerRate->setHigh($data['high']);
-            $tickerRate->setLow($data['low']);
-            $tickerRate->setCreated(new \DateTime());
-            $tickerRate->setSourceTime(new \DateTime($data['date']));
-            $this->save($tickerRate);
-            return $return;
+            return $query;
         }
-        return 0;
+        return null;
+    }
+    
+    public function executeQuery($query)
+    {
+        $conn = $this->em->getConnection();
+        return $conn->exec($query);
     }
     
     public function getLastBySymbol($symbol)

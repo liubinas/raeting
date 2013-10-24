@@ -39,12 +39,14 @@ class HistoryTickerImportCommand extends ContainerAwareCommand
         $files = $container->get('raetingraeting.service.file_management')->scanDir($container->get('kernel')->getRootDir().'/../uploads/history_ticker_rates');
         
         $totalInsertsDone = 0;
+        $totalUpdatesDone = 0;
         $filesInserted = 0;
         
         if(!empty($files)){
             foreach($files as $file){
                 try {
                     $insertsFromFile = 0;
+                    $updatesFromFile = 0;
                     $inputFileType = \PHPExcel_IOFactory::identify($file);
                     $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
                     $objPHPExcel = $objReader->load($file);
@@ -53,6 +55,7 @@ class HistoryTickerImportCommand extends ContainerAwareCommand
                     $fileName = substr($fullFileName, 0, strpos($fullFileName, '.'));
                     
                     $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
+                    $query = '';
                     if(!empty($sheetData)){
                         foreach($sheetData as $key => $row){
                             if($key > 1 && $row['A'] >= '2003-01-01'){
@@ -64,15 +67,21 @@ class HistoryTickerImportCommand extends ContainerAwareCommand
                                 $data['high'] = $row['C'];
                                 $data['low'] = $row['D'];
                                 $data['date'] = $row['A'];
-                                $insertsFromFile += $tickerRateService->insertData($data);
-                                if($insertsFromFile > 0 && $insertsFromFile%100 == 0){
-                                    $output->writeln('<info>Inserts done: '.$insertsFromFile.'. Please wait...</info>');
+                                $query .= $tickerRateService->getInsertDataQuery($data);
+                                if($query != null && strpos($query, 'INSERT INTO') !== false){
+                                    $insertsFromFile++;
+                                }elseif($query != null && strpos($query, 'UPDATE') !== false){
+                                    $updatesFromFile++;
                                 }
                             }
                         }
                     }
+                    if(!empty($query)){
+                        $tickerRateService->executeQuery($query);
+                    }
                     $totalInsertsDone += $insertsFromFile;
-                    if($insertsFromFile > 0){
+                    $totalUpdatesDone += $updatesFromFile;
+                    if($insertsFromFile > 0 || $updatesFromFile > 0){
                         $container->get('raetingraeting.service.file_management')->moveFile($file, $container->get('kernel')->getRootDir().'/../uploads/imported_history_ticker_rates/'.$fullFileName);
                         $filesInserted++;
                     }
@@ -83,6 +92,8 @@ class HistoryTickerImportCommand extends ContainerAwareCommand
         }
         
 
-        $output->writeln('<info>Files inserted: '.$filesInserted.'.Inserts done: '.$totalInsertsDone.'</info>');
+        $output->writeln('<info>Files inserted: '.$filesInserted.'</info>');
+        $output->writeln('<info>Inserts done: '.$totalInsertsDone.'</info>');
+        $output->writeln('<info>Updates done: '.$totalUpdatesDone.'</info>');
     }
 }
