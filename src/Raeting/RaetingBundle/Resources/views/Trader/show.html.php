@@ -147,6 +147,7 @@
                                                             <td><?= $signal->getTakeprofit() ?></td>
                                                             <td><?= $signal->getStoploss() ?></td>
                                                             <td><?= $signal->getCreated()->format('Y-m-d H:i:s') ?></td>
+                                                        <td><a href="<?= $view['router']->generate('signals_show', array('id' => $signal->getId())) ?>">View</a></td>
                                                         </tr>
                                                     <? endforeach; ?>
                                                 </tbody>

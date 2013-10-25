@@ -8,7 +8,7 @@ signals:
     defaults: { _controller: "RaetingRaetingBundle:Signals:index" }
 
 signals_show:
-    pattern:  /{uid}
+    pattern:  /{id}
     defaults: { _controller: "RaetingRaetingBundle:Signals:show" }
 
 signals_new:

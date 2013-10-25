@@ -34,6 +34,7 @@
                                                     <td><?= $entity->getEstimation() ?></td>
                                                     <td><?= $entity->getDate()->format('Y-m-d') ?></td>
                                                     <td><?= $entity->getRecommendation() ?></td>
+                                                    <td><a href="<?= $view['router']->generate('analyst_graph', array('slug' => $analystSlug, 'ticker' => strtolower($entity->getTicker()->getSymbol()))) ?>">View</a></td>
                                                 </tr>
                                             <? endforeach; ?>
                                         </tbody>

@@ -15,8 +15,11 @@
                 <li>
                         <a href="<?= $view['router']->generate('analyst'); ?>">Analysts</a>
                 </li>
-                <li class="current">
+                <li>
                         <a href="<?= $view['router']->generate('analyst_show', array('slug' => $analyst->getSlug())); ?>"><?= $analyst->getName() ?></a>
+                </li>
+                <li class="current">
+                        <a href="<?= $view['router']->generate('analyst_graph', array('slug' => $analyst->getSlug(), 'ticker' => strtolower($ticker->getSymbol()))); ?>"><?= $ticker->getSymbol() ?></a>
                 </li>
         </ul>
 </div>

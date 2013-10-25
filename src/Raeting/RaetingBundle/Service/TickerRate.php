@@ -145,6 +145,11 @@ class TickerRate
         return $this->getRepository()->findAllBySymbolInRange($symbol, $rangeFrom, $rangeTo);
     }
     
+    public function findAllBySymbol($symbol)
+    {
+        return $this->getRepository()->findAllBySymbol($symbol);
+    }
+    
     public function importCsvFromYahoo($url)
     {
         $csv = file_get_contents($url);

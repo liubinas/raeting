@@ -14,17 +14,28 @@ class TickerRateRepository extends EntityRepository
     
     public function findAllBySymbolInRange($symbol, $rangeFrom, $rangeTo)
     {
+        return $this->findAllBySymbol($symbol, $rangeFrom, $rangeTo);
+    }
+    
+    public function findAllBySymbol($symbol, $rangeFrom = null, $rangeTo = null)
+    {
         $query = $this->createQueryBuilder('s')
                 ->select('s, t')
                 ->leftJoin('s.ticker', 't')
                 ->where('t.symbol = :symbol')
-                ->andWhere('s.sourceTime >= :rangeFrom')
-                ->andWhere('s.sourceTime <= :rangeTo')
-                ->setParameter('symbol', $symbol)
-                ->setParameter('rangeFrom', $rangeFrom)
-                ->setParameter('rangeTo', $rangeTo)
-                ->getQuery();
+                ->setParameter('symbol', $symbol);
         
+        if($rangeFrom != null){
+            $query = $query->andWhere('s.sourceTime >= :rangeFrom')
+                ->setParameter('rangeFrom', $rangeFrom);
+        }
+        
+        if($rangeTo != null){
+            $query = $query->andWhere('s.sourceTime <= :rangeTo')
+                ->setParameter('rangeTo', $rangeTo);
+        }
+        
+        $query = $query->getQuery();
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

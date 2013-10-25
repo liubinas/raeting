@@ -5,52 +5,32 @@
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('content') ?>
-
 <div class="row">
-    <div class="col-md-12">
-        <!-- Tabs-->
-        <div class="tabbable tabbable-custom tabbable-full-width">
-            <div class="tab-content row">
-                <!--=== Overview ===-->
-                <div class="tab-pane active" id="tab_overview">
-                    <div class="fl padd-15">
-                        <div class="list-group">
-                            <li class="list-group-item no-padding">
-                                <img src="https://graph.facebook.com/<?= $entity->getUser()->getFbname() ?>/picture?type=large">
-                            </li>
-                        </div>
+        <div class="col-md-9">
+            <div class="tabbable tabbable-full-width">
+                <div class="tab-content row">
+                <div class="widget box blue-box">
+                    <div class='flot-y'>
+                        <div class='flot-tick-label'><?= $entity->getSymbol()->getCurrency() ?></div>
                     </div>
-
-                    <div class="col-md-9">
-                        <div class="row profile-info">
-                            <div class="col-md-12">
-                                <h1><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></h1>
-                                <p><?= $entity->getUser()->getAbout() ?></p>
-                            </div>
+                        <div class="widget-chart"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
+                                <div id="chart_widget" class="chart chart-medium"></div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="widget box">
-                                    <div class="widget-header">
-                                            <h4>Signal information</h4>
-                                    </div>
-                                    <div class="widget-content">
-                                            <? if (!empty($entity)): ?>
-                                                    <table class="table table-striped table-hover">
-                                                        <thead>
-                                                        <th>Status</th>
-                                                        <th>Symbol</th>
-                                                        <th>Buy/Sell</th>
-                                                        <th>Open</th>
-                                                        <th>Take profit</th>
-                                                        <th>Stop loss</th>
-                                                        <th>Trader</th>
-                                                        <th>Created</th>
-                                                        </thead>
-                                                        <tbody>
-                                                                <tr>
-                                                                    <td>
+                    <div class='flot-x'>
+                        <div class='flot-tick-label'>Date</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    <div class="col-md-3">
+        <div class="widget box">
+							<div class="widget-header">
+								<h4><i class="icon-reorder"></i> Signal info</h4>
+							</div>
+							<div class="widget-content form-horizontal row-border signal-info">
+								<div class="form-group">
+									<label class="col-md-4 control-label">Status:</label>
                                                                         <? switch($entity->getstatus()){
                                                                                 case 'new': $label =  'label-success';break;
                                                                                 case 'opened': $label =  'label-warning';break;
@@ -58,27 +38,136 @@
                                                                                 case 'error': $label =  'label-danger';break;
                                                                             } 
                                                                         ?>
-                                                                        <span class="label <?= $label ?>"><?= $entity->getstatus() ?></span>
-                                                                    </td>
-                                                                    <td><?= $entity->getSymbol()->getTitle() ?></td>
-                                                                    <td><?= $entity->getBuyValue() ?></td>
-                                                                    <td><?= $entity->getOpen() ?></td>
-                                                                    <td><?= $entity->getTakeprofit() ?></td>
-                                                                    <td><?= $entity->getStoploss() ?></td>
-                                                                    <td>
-                                                                        <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getUser()->getSlug())) ?>"><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></a></td>
-                                                                    <td><?= $entity->getCreated()->format('Y-m-d') ?></td>
-                                                                </tr>
-                                                        </tbody>
-                                                    </table>
-                                        <? else: ?>
-                                            <p><?= $view['translator']->trans('No info') ?></p>
-                                        <? endif; ?>
-                                    </div>
+									<div class="col-md-8"><span class="label <?= $label ?>"><?= $entity->getstatus() ?></span></div>
+								</div>
+                                                                <div class="form-group">
+									<label class="col-md-4 control-label">Symbol:</label>
+									<div class="col-md-8"><?= $entity->getSymbol()->getTitle() ?></div>
+								</div>
+                                                                <div class="form-group">
+									<label class="col-md-4 control-label">Buy/Sell:</label>
+									<div class="col-md-8"><?= $entity->getBuyValue() ?></div>
+								</div>
+                                                                <div class="form-group">
+									<label class="col-md-4 control-label">Open:</label>
+									<div class="col-md-8"><?= $entity->getOpen() ?></div>
+								</div>
+                                                                <div class="form-group">
+									<label class="col-md-4 control-label">Take Profit:</label>
+									<div class="col-md-8"><?= $entity->getTakeprofit() ?></div>
+								</div>
+                                                                <div class="form-group">
+									<label class="col-md-4 control-label">Stop Loss:</label>
+									<div class="col-md-8"><?= $entity->getStoploss() ?></div>
+								</div>
+                                                                <div class="form-group">
+									<label class="col-md-4 control-label">Created:</label>
+									<div class="col-md-8"><?= $entity->getCreated()->format('Y-m-d') ?></div>
+								</div>
+							</div>
+						</div>
+    </div>
+</div>
+<script type="text/javascript" src="<?= $view['assets']->getUrl('js/flot/jquery.flot.min.js') ?>"></script>
+<script type="text/javascript" src="<?= $view['assets']->getUrl('js/flot/jquery.flot.time.min.js') ?>"></script>
+<script type="text/javascript" src="<?= $view['assets']->getUrl('js/flot/jquery.flot.selection.min.js') ?>"></script>
+<script src="<?= $view['assets']->getUrl('js/libs/plugins.js') ?>" type="text/javascript"></script>
+<script>
+    $(document).ready(function(){
+            var d1 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime($rates[$i]->getSourceTime()->format('Y-m-d'))*1000).'","'.$rates[$i]->getBid().'"]'; if($i != $total-1) echo ', '; endfor; ?>];
+
+            var data1 = [
+                    { label: "<?= $entity->getSymbol()->getTitle() ?>", data: d1}
+            ];
+
+            var plot = $.plot("#chart_widget", data1, $.extend(true, {}, Plugins.getFlotWidgetDefaults(), {
+                    xaxis: {
+                            mode: "time",
+                            timeformat: "%Y-%m-%d"
+                    },
+                    series: {
+                            lines: {
+                                    fill: false,
+                                    lineWidth: 1.5
+                            }
+                    },
+                    grid: {
+                            hoverable: true,
+                            clickable: true
+                    },
+                    legend: {
+                        show: true
+                    }
+            }));
+            function showTooltip(x, y, contents) {
+                    $("<div id='tooltip'>" + contents + "</div>").css({
+                            position: "absolute",
+                            display: "none",
+                            top: y + 5,
+                            left: x + 5,
+                            border: "1px solid #ccc",
+                            padding: "2px",
+                            "background-color": "#eee",
+                            opacity: 1,
+                            zIndex: 100
+                    }).appendTo("body").fadeIn(200);
+            }
+
+            var previousPoint = null;
+            $("#chart_widget").bind("plothover", function (event, pos, item) {
+                    if (item) {
+                            if (previousPoint != item.dataIndex) {
+
+                                    previousPoint = item.dataIndex;
+
+                                    $("#tooltip").remove();
+                                    var x = item.datapoint[0].toFixed(2),
+                                    y = item.datapoint[1].toFixed(2);
+                                    var date = new Date(parseInt(x));
+                                    var day = date.getDate().toString();
+                                    if(day.length < 2){
+                                        day = '0'+day;
+                                    }
+                                    var month = (date.getMonth()+1).toString();
+                                    if(month.length < 2){
+                                        month = '0'+month;
+                                    }
+                                    var year = date.getFullYear();
+                                    showTooltip(item.pageX, item.pageY,
+                                       year+'-'+ month +'-'+ day + "<br/>" + y + " <?= $entity->getSymbol()->getCurrency() ?>");
+                            }
+                    } else {
+                            $("#tooltip").remove();
+                            previousPoint = null;            
+                    }
+            });
+
+    });
+</script>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Tabs-->
+        <div class="tabbable tabbable-custom tabbable-full-width">
+            <div class="tab-content row">
+                <!--=== Overview ===-->
+                <div class="tab-pane active" id="tab_overview">
+                    <div class="col-md-3">
+                        <div class="fl padd-15">
+                            <div class="list-group">
+                                <li class="list-group-item no-padding">
+                                    <img src="https://graph.facebook.com/<?= $entity->getUser()->getFbname() ?>/picture?type=large">
+                                </li>
+                            </div> 
+                        </div>
+                        <div class="row profile-info">
+                            <div class="col-md-12">
+                                <h1><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></h1>
+                                <p><?= $entity->getUser()->getAbout() ?></p>
+                                 <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getUser()->getSlug())) ?>">View profile</a>
                             </div>
-                            </div>
-                            <!-- /Striped Table -->
-                        </div> <!-- /.row -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="col-md-12 fb-wrapper">
                             <div id="fb-root"></div>
                             <script>(function(d, s, id) {
@@ -88,7 +177,7 @@
                               js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=133579296820463";
                               fjs.parentNode.insertBefore(js, fjs);
                             }(document, 'script', 'facebook-jssdk'));</script>
-                            <div class="fb-comments" data-href="<?= $view['router']->generate('signals_show', array('uid' => $entity->getUuid()), true) ?>" data-width="600"></div>
+                            <div class="fb-comments" data-href="<?= $view['router']->generate('signals_show', array('id' => $entity->getId()), true) ?>" data-width="600"></div>
                         </div>
                     </div> <!-- /.col-md-9 -->
                 </div>

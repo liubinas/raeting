@@ -77,3 +77,10 @@
     bottom: -32px !important;
     top: auto !important;
 }
+.signal-info .col-md-8{
+    padding: 7px 7px 2px 20px;
+}
+.signal-info.row-border .form-group{
+    padding: 7px 7px 7px 20px;
+    margin: 0;
+}
