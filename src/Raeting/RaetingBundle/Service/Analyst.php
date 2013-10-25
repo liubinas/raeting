@@ -61,8 +61,13 @@ class Analyst
         return $this->getRepository()->countAll();
     }
     
-    public function getByName($id)
+    public function getByName($name)
     {
-        return $this->getRepository()->findOneByName($id);
+        return $this->getRepository()->findOneByName($name);
+    }
+    
+    public function getBySlug($slug)
+    {
+        return $this->getRepository()->findOneBySlug($slug);
     }
 }

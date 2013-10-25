@@ -33,7 +33,7 @@ Analysts
                                             <? foreach ($entities as $entity): ?>
                                                 <tr>
                                                     <td><?= $entity->getName() ?></td>
-                                                    <td><a href="<?= $view['router']->generate('analyst_show', array('id' => $entity->getId())) ?>">View</a></td>
+                                                    <td><a href="<?= $view['router']->generate('analyst_show', array('slug' => $entity->getSlug())) ?>">View</a></td>
                                                 </tr>
                                             <? endforeach; ?>
                                         </tbody>

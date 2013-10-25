@@ -14,5 +14,10 @@ Raeting\RaetingBundle\Entity\Analyst:
             length: 255
             fixed: false
             nullable: false
+        slug:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
     repositoryClass: Raeting\RaetingBundle\Entity\AnalystRepository
     lifecycleCallbacks: {  }

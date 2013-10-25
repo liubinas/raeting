@@ -33,7 +33,7 @@ class AnalystController extends Controller
         ));
     }
     
-    public function showAction($id)
+    public function showAction($slug)
     {
         $request = $this->get('request');
         $page = $request->query->get('page');
@@ -41,7 +41,8 @@ class AnalystController extends Controller
             $page = 1;
         }
         
-        $analyst = $this->get('raetingraeting.service.analyst')->get($id);
+        $analyst = $this->get('raetingraeting.service.analyst')->getBySlug($slug);
+        $id = $analyst->getId();
         $analysisService = $this->get('raetingraeting.service.analysis');
         
         $query = $request->query->get('analysis-search');
@@ -63,7 +64,7 @@ class AnalystController extends Controller
         ));
     }
     
-    public function showtickerAction($id, $ticker)
+    public function showtickerAction($slug, $ticker)
     {
         $request = $this->get('request');
         $page = $request->query->get('page');
@@ -73,7 +74,8 @@ class AnalystController extends Controller
         
         $ticker = strtoupper($ticker);
         
-        $analyst = $this->get('raetingraeting.service.analyst')->get($id);
+        $analyst = $this->get('raetingraeting.service.analyst')->getBySlug($slug);
+        $id = $analyst->getId();
         
         $analysisService = $this->get('raetingraeting.service.analysis');
         $symbolService = $this->get('raetingraeting.service.symbol');

@@ -15,7 +15,7 @@ Analysts
                         <a href="<?= $view['router']->generate('analyst'); ?>">Analysts</a>
                 </li>
                 <li class="current">
-                        <a href="<?= $view['router']->generate('analyst_show', array('id' => $analyst->getId())); ?>"><?= $analyst->getName() ?></a>
+                        <a href="<?= $view['router']->generate('analyst_show', array('slug' => $analyst->getSlug())); ?>"><?= $analyst->getName() ?></a>
                 </li>
         </ul>
 </div>
@@ -42,5 +42,5 @@ Analysts
     </div>
 </div>
 <?= $view->render('RaetingRaetingBundle::Analyst/analysis_list.html.php', array(
-    'analysis' => $analysis, 'query' => $query, 'searchLink' => 'analyst_show', 'analystId' => $analyst->getId(), 'totalAnalysis' => $totalAnalysis, 'page' => $page, 'perPage' => $perPage, 'showSearch' => true)); ?>
+    'analysis' => $analysis, 'query' => $query, 'searchLink' => 'analyst_show', 'analystSlug' => $analyst->getSlug(), 'totalAnalysis' => $totalAnalysis, 'page' => $page, 'perPage' => $perPage, 'showSearch' => true)); ?>
 <? $view['slots']->stop('content') ?>

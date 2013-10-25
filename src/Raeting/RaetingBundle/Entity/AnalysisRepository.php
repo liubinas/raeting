@@ -23,7 +23,7 @@ class AnalysisRepository extends EntityRepository
     public function getAllByAnalystAndQuery($analyst, $query, $perPage, $page)
     {
         $query = $this->createQueryBuilder('s')
-                ->select('t')
+                ->select('s, t')
                 ->leftJoin('s.ticker', 't')
                 ->where('t.title LIKE :query')
                 ->setParameter('query', '%'.$query.'%')

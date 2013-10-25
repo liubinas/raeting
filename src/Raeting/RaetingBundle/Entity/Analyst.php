@@ -27,6 +27,13 @@ class Analyst
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false)
+     */
+    private $slug;
 
     /**
      * Get id
@@ -59,6 +66,29 @@ class Analyst
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Analyst
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     public function __toString()
