@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class AnalystController extends Controller
 {
     
-    public $resultsPerPage = 10;
+    public $resultsPerPage = 25;
     
     public function indexAction()
     {

@@ -1,7 +1,7 @@
 <? $view->extend('RaetingRaetingBundle::Analyst/menu.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
-Analysts
+<h3>Analysts</h3>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('crumbs') ?>

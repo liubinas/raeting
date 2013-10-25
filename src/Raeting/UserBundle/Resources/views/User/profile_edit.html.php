@@ -15,7 +15,7 @@
 <? $view['slots']->stop('crumbs') ?>
 
 <? $view['slots']->start('header_row') ?>
-Profile edit
+<h3>Profile edit</h3>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('content') ?>

@@ -32,12 +32,10 @@ class RegistrationController extends BaseController
         $dispatcher = $this->get('event_dispatcher');
 
         $form->setData($userService->createUser());
-
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                
                 $user = $form->getData();
                 $user->setSlug($userService->createSlug($user->getFirstname(), $user->getLastname()));
                 

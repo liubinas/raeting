@@ -3,7 +3,7 @@ analyst:
     defaults: { _controller: "RaetingRaetingBundle:Analyst:index" }
 
 analyst_show:
-    pattern:  /{slug}/show
+    pattern:  /{slug}
     defaults: { _controller: "RaetingRaetingBundle:Analyst:show" }
 
 analyst_analysis:

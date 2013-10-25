@@ -18,7 +18,7 @@
 <? $view['slots']->stop('crumbs') ?>
 
 <? $view['slots']->start('header_row') ?>
-Trader Profile
+<h3>Trader Profile</h3>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('content') ?>
@@ -31,7 +31,7 @@ Trader Profile
                 <div class="tab-pane active" id="tab_overview">
                     
                     <div class="fl padd-15">
-                        <div class="list-group">
+                        <div class="list-group profile-photo">
                             <li class="list-group-item no-padding">
                                 <img src="https://graph.facebook.com/<?= $entity->getFbname() ?>/picture?type=large">
                             </li>
@@ -53,50 +53,51 @@ Trader Profile
                                 </dl>
                             </div>
                         </div> <!-- /.row -->
-                        <div class="row">
-                                <div class="col-md-12">
-                                        <div class="widget box blue-box">
-                                            <div class='flot-y'>
-                                                <div class='flot-tick-label'>Pips</div>
-                                            </div>
-                                                <div class="widget-chart"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
-                                                        <div id="chart_widget" class="chart chart-medium"></div>
+                        <? if (count($chartSignals) > 0): ?>
+                            <div class="row">
+                                    <div class="col-md-12">
+                                            <div class="widget box blue-box">
+                                                <div class='flot-y'>
+                                                    <div class='flot-tick-label'>Pips</div>
                                                 </div>
-                                            <div class='flot-x'>
-                                                <div class='flot-tick-label'>Signals</div>
+                                                    <div class="widget-chart"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
+                                                            <div id="chart_widget" class="chart chart-medium"></div>
+                                                    </div>
+                                                <div class='flot-x'>
+                                                    <div class='flot-tick-label'>Signals</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                </div>
-                        </div>
-                        <script type="text/javascript" src="<?= $view['assets']->getUrl('js/flot/jquery.flot.min.js') ?>"></script>
-                        <script src="<?= $view['assets']->getUrl('js/libs/plugins.js') ?>" type="text/javascript"></script>
-                        <script>
-                            $(document).ready(function(){
+                                    </div>
+                            </div>
+                            <script type="text/javascript" src="<?= $view['assets']->getUrl('js/flot/jquery.flot.min.js') ?>"></script>
+                            <script src="<?= $view['assets']->getUrl('js/libs/plugins.js') ?>" type="text/javascript"></script>
+                            <script>
+                                $(document).ready(function(){
 
-                                    // Sample Data
-                                    var d1 = [<? $total = count($chartSignals); $counter = 0; for($i=1; $i<$total;$i++): $counter += $chartSignals[$i]['pips']; echo '['.$i.','.$counter.']'; if($i != $total-1) echo ', '; endfor; ?>];
+                                        // Sample Data
+                                        var d1 = [<? $total = count($chartSignals); $counter = 0; for($i=1; $i<$total;$i++): $counter += $chartSignals[$i]['pips']; echo '['.$i.','.$counter.']'; if($i != $total-1) echo ', '; endfor; ?>];
 
-                                    var data1 = [
-                                            { label: "Signals", data: d1}
-                                    ];
+                                        var data1 = [
+                                                { label: "Signals", data: d1}
+                                        ];
 
-                                    $.plot("#chart_widget", data1, $.extend(true, {}, Plugins.getFlotWidgetDefaults(), {
-                                            xaxis: {
-                                                    min: 1,
-                                                    max: <?= $total ?>,
-                                                    label: 'labas'
-                                            },
-                                            series: {
-                                                    lines: {
-                                                            fill: false,
-                                                            lineWidth: 1.5
-                                                    },
-                                                    grow: { active: true, growings:[ { stepMode: "maximum" } ] }
-                                            }
-                                    }));
+                                        $.plot("#chart_widget", data1, $.extend(true, {}, Plugins.getFlotWidgetDefaults(), {
+                                                xaxis: {
+                                                        min: 1,
+                                                        max: <?= $total ?>
+                                                },
+                                                series: {
+                                                        lines: {
+                                                                fill: false,
+                                                                lineWidth: 1.5
+                                                        },
+                                                        grow: { active: true, growings:[ { stepMode: "maximum" } ] }
+                                                }
+                                        }));
 
-                            });
-                        </script>
+                                });
+                            </script>
+                        <? endif; ?>
                         <? if (!empty($signals)): ?>
                             <div class="row">
                                 <div class="col-md-12">
@@ -131,15 +132,14 @@ Trader Profile
                                                     <? foreach ($signals as $signal): ?>
                                                         <tr>
                                                             <td>
-                                                                <a href="#">
-                                                                    <? switch($signal->getstatus()){
-                                                                    case 'new': $label =  'label-success';break;
-                                                                    case 'opened': $label =  'label-warning';break;
-                                                                    case 'closed': $label =  'label-info';break;
-                                                                    case 'error': $label =  'label-danger';break;
-                                                                        } 
-                                                                    ?>
-                                                                    <span class="label <?= $label ?>"><?= $signal->getstatus() ?></span></a>
+                                                                <? switch($signal->getstatus()){
+                                                                case 'new': $label =  'label-success';break;
+                                                                case 'opened': $label =  'label-warning';break;
+                                                                case 'closed': $label =  'label-info';break;
+                                                                case 'error': $label =  'label-danger';break;
+                                                                    } 
+                                                                ?>
+                                                                <span class="label <?= $label ?>"><?= $signal->getstatus() ?></span>
                                                             </td>
                                                             <td><?= $signal->getSymbol()->getTitle() ?></td>
                                                             <td><?= $signal->getBuyValue() ?></td>

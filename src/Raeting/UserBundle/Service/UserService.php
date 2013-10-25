@@ -85,15 +85,29 @@ class UserService extends BaseService
         return $this->getRepository()->findOneBy(array('slug'=>$slug));
     }
     
+    public function toAscii($str, $replace=array()) {
+	if( !empty($replace) ) {
+		$str = str_replace((array)$replace, ' ', $str);
+	}
+
+	$clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+	$clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+	$clean = strtolower(trim($clean, '-'));
+	$clean = preg_replace("/[\/_|+ -]+/", '-', $clean);
+
+	return $clean;
+}
+    
     public function createSlug($name, $surname)
     {
         $i = 0;
         $found = false;
         while($found == false){
+            $asciiSlug = $this->toAscii($name.'-'.$surname);
             if($i == 0){
-                $slug = strtolower($name.'_'.$surname);
+                $slug = $asciiSlug;
             }else{
-                $slug = strtolower($name.'_'.$surname.$i);
+                $slug = $asciiSlug.$i;
             }
             $user = $this->getBySlug($slug);
             if(empty($user)){

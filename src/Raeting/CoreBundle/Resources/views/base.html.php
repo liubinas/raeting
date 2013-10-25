@@ -95,7 +95,7 @@
                             <? $view['slots']->output('crumbs') ?>
                             <div class="page-header">
                                     <div class="page-title">
-                                            <h3><? $view['slots']->output('header_row') ?></h3>
+                                            <? $view['slots']->output('header_row') ?>
                                     </div>
                             </div>
                             <? $view['slots']->output('content') ?>

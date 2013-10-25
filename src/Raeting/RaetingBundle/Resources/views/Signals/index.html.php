@@ -1,7 +1,7 @@
 <? $view->extend('RaetingRaetingBundle::Signals/menu.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
-Signals
+<h3>Signals</h3>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('crumbs') ?>

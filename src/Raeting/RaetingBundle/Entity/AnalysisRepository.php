@@ -64,6 +64,7 @@ class AnalysisRepository extends EntityRepository
                 ->leftJoin('s.ticker', 't')
                 ->where('t.symbol = :ticker')
                 ->andWhere('s.analyst = :analyst')
+                ->orderBy('s.date', 'asc')
                 ->setParameter('ticker', $ticker)
                 ->setParameter('analyst', $analyst)
                 ->getQuery();

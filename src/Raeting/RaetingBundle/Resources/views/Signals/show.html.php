@@ -1,7 +1,7 @@
 <? $view->extend('RaetingRaetingBundle::Signals/menu.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
-Signal
+<h3>Signal</h3>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('content') ?>
@@ -51,15 +51,14 @@ Signal
                                                         <tbody>
                                                                 <tr>
                                                                     <td>
-                                                                        <a href="#">
-                                                                            <? switch($entity->getstatus()){
-                                                                                    case 'new': $label =  'label-success';break;
-                                                                                    case 'opened': $label =  'label-warning';break;
-                                                                                    case 'closed': $label =  'label-info';break;
-                                                                                    case 'error': $label =  'label-danger';break;
-                                                                                } 
-                                                                            ?>
-                                                                            <span class="label <?= $label ?>"><?= $entity->getstatus() ?></span></a>
+                                                                        <? switch($entity->getstatus()){
+                                                                                case 'new': $label =  'label-success';break;
+                                                                                case 'opened': $label =  'label-warning';break;
+                                                                                case 'closed': $label =  'label-info';break;
+                                                                                case 'error': $label =  'label-danger';break;
+                                                                            } 
+                                                                        ?>
+                                                                        <span class="label <?= $label ?>"><?= $entity->getstatus() ?></span>
                                                                     </td>
                                                                     <td><?= $entity->getSymbol()->getTitle() ?></td>
                                                                     <td><?= $entity->getBuyValue() ?></td>

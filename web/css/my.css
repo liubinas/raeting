@@ -54,3 +54,26 @@
     float: left;
     width: 98%;
 }
+.profile-photo{
+    width: 200px;
+}
+.profile-photo .list-group-item{
+    border: none;
+}
+.profile-photo img{
+    border: 1px solid #ddd;
+}
+.page-title{
+    width: 100%;
+}
+.widget .chart.chart-medium{
+    height: 300px;
+}
+.widget .chart{
+    overflow: visible;
+}
+.legend > table{
+    left: -30px !important;
+    bottom: -32px !important;
+    top: auto !important;
+}

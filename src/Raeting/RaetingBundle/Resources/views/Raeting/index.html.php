@@ -2,7 +2,7 @@
 
 <? $view['slots']->start('header_row') ?>
 
-    Welcome to RAETING
+    <h3>Welcome to RAETING</h3>
     
 <? $view['slots']->stop('header_row') ?>
 
