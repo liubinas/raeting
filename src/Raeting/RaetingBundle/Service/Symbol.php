@@ -60,4 +60,9 @@ class Symbol
     {
         return $this->getRepository()->getSymbolsForStockImport($this->em);
     }
+    
+    public function findSymbolsByKeyword($query, $maxRows)
+    {
+        return $this->getRepository()->findSymbolsByKeyword($query, $maxRows);
+    }
 }

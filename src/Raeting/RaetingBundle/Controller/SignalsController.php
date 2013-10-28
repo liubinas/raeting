@@ -114,10 +114,16 @@ class SignalsController extends Controller
             return $this->redirect($this->generateUrl($createLink, array('id' => $entity->getId())));
         }else{
             $query = $request->query->get('signal-search');
+            $page = $request->query->get('page');
+            if(empty($page)){
+                $page = 1;
+            }
             if ($request->getMethod() == 'GET' && !empty($query)) {
-                $entities = $this->get('raetingraeting.service.signals')->getAllByQuery($query);
+                $entities = $this->get('raetingraeting.service.signals')->getAllByQuery($query, $this->resultsPerPage, $page);
+                $totalSignals = $this->get('raetingraeting.service.signals')->countByQuery($query);
             }else{
-                $entities = $this->get('raetingraeting.service.signals')->getAll();
+                $entities = $this->get('raetingraeting.service.signals')->getAllWithPaging($this->resultsPerPage, $page);
+                $totalSignals = $this->get('raetingraeting.service.signals')->countAll();
             }
             if($createLink == 'my_signals'){
                 $template = 'RaetingRaetingBundle:Signals:my_signals.html.php';
@@ -129,7 +135,10 @@ class SignalsController extends Controller
                 'query' => $query,
                 'showForm' => true,
                 'form' => $form,
-                'entity' => $entity
+                'entity' => $entity,
+                'totalSignals' => $totalSignals,
+                'perPage' => $this->resultsPerPage,
+                'page' => $page
             ));
         }
         

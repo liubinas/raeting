@@ -18,7 +18,7 @@ class SymbolRepository extends EntityRepository
             ->setParameter('keyword', '%'.$keyword.'%')
             ->setMaxResults($limit)
             ->getQuery();
-
+        
         return $query->getResult();
     }
     

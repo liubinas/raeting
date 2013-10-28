@@ -51,13 +51,17 @@ App.Util = {
         var container = field.parents('.form-group');
 
         field.parents('.input-prepend:first').removeClass('error');
-        field.removeClass('error');
-        container.removeClass('error');
+        field.removeClass('has-error');
+        container.removeClass('has-error');
 
         if ((field.val() === '' || field.val() == field.attr('placeholder')) && field.attr('required') == 'required' && !field.hasClass('placeholder')){
             errors++;
         }else{
             if (field.attr('required') == 'required' && field.attr('type') == 'checkbox' &&  field.attr('checked') != 'checked'){
+                errors++;
+                field.parent().children('.checkbox').addClass('error');
+            }
+            if (field.attr('required') == 'required' && field.attr('type') == 'radio' &&  $('[name="'+field.attr('name')+'"]:checked').size() == 0){
                 errors++;
                 field.parent().children('.checkbox').addClass('error');
             }
