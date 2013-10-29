@@ -23,7 +23,7 @@ class HistoryTickerImportCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Importing rates...</info>');
 
-        $tickerRateService = $container->get('raetingraeting.service.ticker_rate');
+        $rateService = $container->get('raetingraeting.service.rate');
         $symbolService = $container->get('raetingraeting.service.symbol');
         
         $symbols = $symbolService->getSymbolsForStockImport();
@@ -60,14 +60,14 @@ class HistoryTickerImportCommand extends ContainerAwareCommand
                         foreach($sheetData as $key => $row){
                             if($key > 1 && $row['A'] >= '2003-01-01'){
                                 
-                                $data = array('ticker'=>$fileName);
+                                $data = array('symbol'=>$fileName);
                                 $rate = ($row['B']+$row['C']+$row['D']+$row['E'])/4;
                                 $data['bid'] = $rate;
                                 $data['ask'] = $rate;
                                 $data['high'] = $row['C'];
                                 $data['low'] = $row['D'];
                                 $data['date'] = $row['A'];
-                                $query .= $tickerRateService->getInsertDataQuery($data);
+                                $query .= $rateService->getInsertDataQuery($data);
                                 if($query != null && strpos($query, 'INSERT INTO') !== false){
                                     $insertsFromFile++;
                                 }elseif($query != null && strpos($query, 'UPDATE') !== false){
@@ -77,7 +77,7 @@ class HistoryTickerImportCommand extends ContainerAwareCommand
                         }
                     }
                     if(!empty($query)){
-                        $tickerRateService->executeQuery($query);
+                        $rateService->executeQuery($query);
                     }
                     $totalInsertsDone += $insertsFromFile;
                     $totalUpdatesDone += $updatesFromFile;

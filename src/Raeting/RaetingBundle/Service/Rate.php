@@ -5,7 +5,7 @@ namespace Raeting\RaetingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
 
-class TickerRate
+class Rate
 {
 
     public function __construct(EntityManager $em, Symbol $symbolService)
@@ -16,7 +16,7 @@ class TickerRate
 
     public function getNew()
     {
-        return new Entity\TickerRate();
+        return new Entity\Rate();
     }
 
     public function get($id)
@@ -29,10 +29,13 @@ class TickerRate
         return $this->getRepository()->findAll();
     }
 
-    public function save(Entity\TickerRate $entity)
+    public function save(Entity\Rate $rate)
     {
-        $this->em->persist($entity);
-        $this->em->flush();
+        $query = 'INSERT INTO symbol_'.strtolower($rate->getSymbol()->getSymbol()). '(symbol_id, bid, ask, high, low, created, source_time)
+                    VALUES ("'.$rate->getSymbol()->getId().'","'.$rate->getBid().'","'.$rate->getAsk().'","'.$rate->getHigh().'","'.$rate->getLow().'","'.$rate->getCreated()->format('Y-m-d H:i:s').'","'.$rate->getSourceTime()->format('Y-m-d H:i:s').'")';
+        
+        $conn = $this->em->getConnection();
+        $conn->exec($query);
     }
 
     public function delete($param)
@@ -49,26 +52,26 @@ class TickerRate
 
     public function getRepository()
     {
-        return $this->em->getRepository('RaetingRaetingBundle:TickerRate');
+        return $this->em->getRepository('RaetingRaetingBundle:Rate');
     }
     
-    private function importxml($xml, $mappingArray = array('ticker' => 'ticker', 'ask' => 'ask', 'bid' => 'bid', 'created' => 'created'), $gmt = '')
+    private function importxml($xml, $mappingArray = array('symbol' => 'symbol', 'ask' => 'ask', 'bid' => 'bid', 'created' => 'created'), $gmt = '')
     {
         $inserts = 0;
         if(!empty($xml)){
             foreach($xml as $rate){
-                if($ticker = $this->symbolService->getBySymbol((string)$rate->$mappingArray['ticker'])){
+                if($symbol = $this->symbolService->getBySymbol((string)$rate->$mappingArray['symbol'])){
                     
                     $date = new \DateTime((string)$rate->$mappingArray['created'].' '.$gmt);
                     $date->setTimezone( new \DateTimeZone('Europe/Vilnius') );
                     
                     $rateToInsert = $this->getNew();
-                    $rateToInsert->setTicker($ticker);
+                    $rateToInsert->setSymbol($symbol);
                     $rateToInsert->setAsk((string)$rate->$mappingArray['ask']);
                     $rateToInsert->setBid((string)$rate->$mappingArray['bid']);
                     $rateToInsert->setSourceTime($date);
                     $rateToInsert->setCreated(new \DateTime());
-                    $this->save($rateToInsert);
+                    $this->save($rateToInsert, $symbol->getSymbol());
                     $inserts++;
                 }
             }
@@ -76,7 +79,7 @@ class TickerRate
         return $inserts;
     }
     
-    private function importCsv($csv, $mappingArray = array('ticker' => 0, 'ask' => 1, 'bid' => 1, 'created' => null), $gmt = '')
+    private function importCsv($csv, $mappingArray = array('symbol' => 0, 'ask' => 1, 'bid' => 1, 'created' => null), $gmt = '')
     {
         $inserts = 0;
         $rows = explode("\n", $csv);
@@ -86,7 +89,7 @@ class TickerRate
                 if(!empty($row[0])){
                     $intValue = (int)($row[$mappingArray['ask']]);
                     if(!empty($intValue)){
-                        if($ticker = $this->symbolService->getBySymbol(str_replace('"', '', $row[$mappingArray['ticker']]))){
+                        if($symbol = $this->symbolService->getBySymbol(str_replace('"', '', $row[$mappingArray['symbol']]))){
 
                             if($mappingArray['created'] !== null){
                                 $date = new \DateTime($row[$mappingArray['created']].' '.$gmt);
@@ -96,7 +99,7 @@ class TickerRate
                             }
 
                             $rateToInsert = $this->getNew();
-                            $rateToInsert->setTicker($ticker);
+                            $rateToInsert->setSymbol($symbol);
                             $rateToInsert->setAsk($row[$mappingArray['ask']]);
                             $rateToInsert->setBid($row[$mappingArray['bid']]);
                             $rateToInsert->setSourceTime($date);
@@ -113,16 +116,16 @@ class TickerRate
     
     public function getInsertDataQuery($data)
     {
-        $symbol = $this->symbolService->getBySymbol($data['ticker']);
+        $symbol = $this->symbolService->getBySymbol($data['symbol']);
         if(!empty($symbol)){
-            $tickerRate = $this->getRepository()->findOneByTickerAndDate($symbol, date('Y-m-d', strtotime($data['date'])));
-            if(empty($tickerRate)){
-                $query = 'INSERT INTO ticker_rate (bid, ask, high, low, created, source_time, ticker_id) 
-                    VALUES ('.$data['bid'].','.$data['ask'].','.$data['high'].','.$data['low'].',"'.date('Y-m-d').'","'.$data['date'].'",'.$symbol->getId().');'."\n";
+            $rate = $this->findOneBySymbolAndDate($symbol, date('Y-m-d', strtotime($data['date'])));
+            if(empty($rate)){
+                $query = 'INSERT INTO symbol_'.$data['symbol'].' (bid, ask, high, low, created, source_time, symbol_id) 
+                    VALUES ("'.$data['bid'].'","'.$data['ask'].'","'.$data['high'].'","'.$data['low'].'","'.date('Y-m-d').'","'.$data['date'].'",'.$symbol->getId().');'."\n";
             }else{
-                $query = 'UPDATE ticker_rate 
-                    SET bid='.$data['bid'].',ask='.$data['ask'].',high='.$data['high'].',low='.$data['low'].',created="'.date('Y-m-d').'",source_time="'.$data['date'].'",ticker_id='.$symbol->getId().' 
-                    WHERE id = '.$tickerRate->getId().";\n";
+                $query = 'UPDATE symbol_'.$data['symbol'].' 
+                    SET bid="'.$data['bid'].'",ask="'.$data['ask'].'",high="'.$data['high'].'",low="'.$data['low'].'",created="'.date('Y-m-d').'",source_time="'.$data['date'].'",symbol_id='.$symbol->getId().' 
+                    WHERE id = '.$rate->getId().";\n";
             }
             return $query;
         }
@@ -137,17 +140,12 @@ class TickerRate
     
     public function getLastBySymbol($symbol)
     {
-        return $this->getRepository()->findOneBy(array('ticker' => $symbol));
+        return $this->getRepository()->findOneBy(array('symbol' => $symbol));
     }
     
     public function findAllBySymbolInRange($symbol, $rangeFrom, $rangeTo)
     {
-        return $this->getRepository()->findAllBySymbolInRange($symbol, $rangeFrom, $rangeTo);
-    }
-    
-    public function findAllBySymbol($symbol)
-    {
-        return $this->getRepository()->findAllBySymbol($symbol);
+        return $this->findAllBySymbol($symbol, $rangeFrom, $rangeTo);
     }
     
     public function importCsvFromYahoo($url)
@@ -164,5 +162,49 @@ class TickerRate
     public function getRatesBySymbolAndDate($symbolId, $date)
     {
         return $this->getRepository()->getRatesBySymbolAndDate($symbolId, $date);
+    }
+    
+    public function importXmlFromFXCM($url)
+    {
+        $xml = simplexml_load_file(rawurlencode($url));
+        return $this->importxml($xml->Rate, array('symbol' => 'Symbol', 'ask' => 'Ask', 'bid' => 'Bid', 'high' => 'High', 'low' => 'Low', 'created' => 'Time'), '-4GMT');
+    }
+    
+    public function findAllBySymbol($symbol, $rangeFrom = null, $rangeTo = null)
+    {
+        $query = 'SELECT * 
+                    FROM symbol_'.$symbol->getSymbol().'
+                    WHERE 1=1';
+        
+        if($rangeFrom != null){
+            $query .= ' AND source_time >= "'.$rangeFrom.'"';
+        }
+        
+        if($rangeTo != null){
+            $query .= ' AND source_time <= "'.$rangeTo.'"';
+        }
+        
+        $conn = $this->em->getConnection();
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $symbols = $stmt->fetchAll();
+        
+        return $symbols;
+        
+    }
+    
+    public function findOneBySymbolAndDate($symbol, $date)
+    {
+        $query = 'SELECT * 
+                    FROM symbol_'.$symbol->getSymbol(). ' 
+                    WHERE source_time LIKE "%'.$date.'%" 
+                    AND high IS NOT NULL';
+        
+        $conn = $this->em->getConnection();
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $symbol = $stmt->fetch(\PDO::FETCH_COLUMN);
+        
+        return $symbol;
     }
 }

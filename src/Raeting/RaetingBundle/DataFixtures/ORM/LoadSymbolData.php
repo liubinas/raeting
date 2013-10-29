@@ -68,6 +68,7 @@ class LoadSymbolData extends AbstractFixture implements OrderedFixtureInterface,
         $entity = $symbolService->getNew(); 
         $entity->setSymbol('AAPL'); $entity->setTitle('Apple'); $entity->setPipsPosition(0); $entity->setMarket($manager->merge($this->getReference('market.forex')));
         $entity->setType($entity::TYPE_TICKER);
+        $entity->setCurrency('USD');
         $this->addReference('ticker.apple', $entity);
         $manager->persist($entity);$manager->flush();
     }

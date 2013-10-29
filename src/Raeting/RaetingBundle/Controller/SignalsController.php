@@ -174,8 +174,8 @@ class SignalsController extends Controller
     public function showAction($id)
     {
         $entity = $this->get('raetingraeting.service.signals')->get($id);
-        $tickerRateService = $this->get('raetingraeting.service.ticker_rate');
-        $rates = $tickerRateService->findAllBySymbol($entity->getSymbol()->getSymbol());
+        $rateService = $this->get('raetingraeting.service.rate');
+        $rates = $rateService->findAllBySymbol($entity->getSymbol());
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Signal entity.');

@@ -48,7 +48,7 @@ class SignalController extends Controller
         $response = array(
             'signal' => $signalService->signalToArray($signal),
             'meta' => array(
-                'link' => $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals_show', array('uid' => $signal->getUuid())).$query
+                'link' => $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals_show', array('id' => $signal->getId())).$query
             )
         );
 

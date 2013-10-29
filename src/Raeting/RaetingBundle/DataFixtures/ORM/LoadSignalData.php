@@ -255,7 +255,23 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
         $signal->setSymbol($manager->merge($this->getReference('ticker.apple')));
 
+        $manager->persist($signal);
+        //---------------------------------
+        $signal = $signalService->getNew();
+        $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.321); $signal->setTakeprofit(1.313);
+        $signal->setStoploss(1.326); $signal->setStatus('closed');
+
+        $signal->setCreated(new \DateTime('2013-09-05')); $signal->setOpened($date); $signal->setOpenExpire($date);
+
+        $signal->setClosed(new \DateTime('2013-09-05')); $signal->setCloseExpire($dateClose);
+
+
+        $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
+        $signal->setSymbol($manager->merge($this->getReference('quote.eurnzd')));
+
         $manager->persist($signal); $manager->flush();
+        
+        $manager->flush();
     }
 
     public function getOrder()

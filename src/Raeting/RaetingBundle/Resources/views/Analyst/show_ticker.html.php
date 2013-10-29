@@ -59,7 +59,7 @@
                 $i = 1;
             ?>
             var d1 = [<? while($date <= $lastDate): if($i > 1){echo '["'.(strtotime($date.'- 1 DAY')*1000).'","'.$currentAnalysis->getEstimation().'"], ';} echo '["'.(strtotime($date)*1000).'","'.$currentAnalysis->getEstimation().'"]'; if($date < $lastDate) echo ', '; $date = date('Y-m-d', strtotime($date . '+ 1 DAY')); $i++; if($nextAnalysis != null && $nextAnalysis->getDate()->format('Y-m-d') == $date){ $currentAnalysis = $nextAnalysis; $nextAnalysis = next($analysisForGraph); }endwhile; ?>];
-            var d2 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime($rates[$i]->getSourceTime()->format('Y-m-d'))*1000).'","'.$rates[$i]->getBid().'"]'; if($i != $total-1) echo ', '; endfor; ?>];
+            var d2 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime(date('Y-m-d', strtotime($rates[$i]['source_time'])))*1000).'","'.$rates[$i]['bid'].'"]'; if($i != $total-1) echo ', '; endfor; ?>];
 
             var data1 = [
                     { label: "Analysis", data: d1},

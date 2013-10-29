@@ -23,7 +23,7 @@ class YahooImportCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Importing rates...</info>');
 
-        $currencyRateService = $container->get('raetingraeting.service.ticker_rate');
+        $rateService = $container->get('raetingraeting.service.rate');
         $symbolService = $container->get('raetingraeting.service.symbol');
         
         $symbols = $symbolService->getSymbolsForStockImport();
@@ -37,7 +37,7 @@ class YahooImportCommand extends ContainerAwareCommand
         $result = 0;
         if(!empty($chunkedSymbols)){
             foreach($chunkedSymbols as $symbols){
-                $result += $currencyRateService->importCsvFromYahoo('http://finance.yahoo.com/d/quotes.csv?s='.implode('+', $symbolIds).'&f=sl1&e=.csv');
+                $result += $rateService->importCsvFromYahoo('http://finance.yahoo.com/d/quotes.csv?s='.implode('+', $symbolIds).'&f=sl1&e=.csv');
             }
         }
 

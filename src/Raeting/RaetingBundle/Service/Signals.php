@@ -6,30 +6,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
 use Raeting\UserBundle\Service\UserService;
-use Raeting\RaetingBundle\Service\CurrencyRate;
-use Raeting\RaetingBundle\Service\TickerRate;
+use Raeting\RaetingBundle\Service\Rate;
 
 class Signals
 {
     private $rateService;
     
     
-    public function __construct(EntityManager $em, UserService $userService, $defaultLimit, CurrencyRate $currencyRateService, TickerRate $tickerRateService)
+    public function __construct(EntityManager $em, UserService $userService, $defaultLimit, Rate $rateService)
     {
         $this->em = $em;
         $this->userService = $userService;
         $this->defaultLimit = $defaultLimit;
-        $this->currencyRateService = $currencyRateService;
-        $this->tickerRateService = $tickerRateService;
-    }
-    
-    public function setRateService($signal)
-    {
-        if($signal->getSymbol()->getType() == Entity\Symbol::TYPE_QUOTE){
-            $this->rateService = $this->currencyRateService;
-        }elseif($signal->getSymbol()->getType() == Entity\Symbol::TYPE_TICKER){
-            $this->rateService = $this->tickerRateService;
-        }
+        $this->rateService = $rateService;
     }
         
     public function getNew()
@@ -195,7 +184,6 @@ class Signals
     
     public function updateNewStatusesAndPrices($signal)
     {
-        $this->setRateService($signal);
         $rate = $this->rateService->getLastBySymbol($signal->getSymbol()->getId());
         if(!$rate){
             return;

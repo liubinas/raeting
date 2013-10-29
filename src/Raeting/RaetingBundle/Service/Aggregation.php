@@ -5,18 +5,16 @@ namespace Raeting\RaetingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
 
-use Raeting\RaetingBundle\Service\CurrencyRate;
-use Raeting\RaetingBundle\Service\TickerRate;
+use Raeting\RaetingBundle\Service\Rate;
 use Raeting\RaetingBundle\Service\Symbol;
 
 class Aggregation
 {
 
-    public function __construct(EntityManager $em, CurrencyRate $currencyRateService, TickerRate $tickerRateService)
+    public function __construct(EntityManager $em, Rate $rateService)
     {
         $this->em = $em;
-        $this->currencyRateService = $currencyRateService;
-        $this->tickerRateService = $tickerRateService;
+        $this->rateService = $rateService;
     }
     
     private function calculateRateValues($rates, $type)
@@ -77,11 +75,11 @@ class Aggregation
     
     public function aggregateTickerRates()
     {
-        return $this->aggregate('ticker', $this->tickerRateService);
+        return $this->aggregate('ticker', $this->rateService);
     }
     
     public function aggregateCurrencyRates()
     {
-        return $this->aggregate('currency', $this->currencyRateService);
+        return $this->aggregate('currency', $this->rateService);
     }
 }

@@ -74,7 +74,7 @@
 <script src="<?= $view['assets']->getUrl('js/libs/plugins.js') ?>" type="text/javascript"></script>
 <script>
     $(document).ready(function(){
-            var d1 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime($rates[$i]->getSourceTime()->format('Y-m-d'))*1000).'","'.$rates[$i]->getBid().'"]'; if($i != $total-1) echo ', '; endfor; ?>];
+            var d1 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime(date('Y-m-d', strtotime($rates[$i]['source_time'])))*1000).'","'.$rates[$i]['bid'].'"]'; if($i != $total-1) echo ', '; endfor; ?>];
 
             var data1 = [
                     { label: "<?= $entity->getSymbol()->getTitle() ?>", data: d1}

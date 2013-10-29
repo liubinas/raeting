@@ -5,9 +5,9 @@ namespace Raeting\RaetingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CurrencyRate
+ * Rate
  */
-class CurrencyRate
+class Rate
 {
     /**
      * @var integer
@@ -48,7 +48,7 @@ class CurrencyRate
     /**
      * @var \Raeting\RaetingBundle\Entity\Symbol
      */
-    private $currency;
+    private $symbol;
 
 
     /**
@@ -65,7 +65,7 @@ class CurrencyRate
      * Set bid
      *
      * @param string $bid
-     * @return CurrencyRate
+     * @return Rate
      */
     public function setBid($bid)
     {
@@ -88,7 +88,7 @@ class CurrencyRate
      * Set ask
      *
      * @param string $ask
-     * @return CurrencyRate
+     * @return Rate
      */
     public function setAsk($ask)
     {
@@ -111,7 +111,7 @@ class CurrencyRate
      * Set high
      *
      * @param string $high
-     * @return CurrencyRate
+     * @return Rate
      */
     public function setHigh($high)
     {
@@ -134,7 +134,7 @@ class CurrencyRate
      * Set low
      *
      * @param string $low
-     * @return CurrencyRate
+     * @return Rate
      */
     public function setLow($low)
     {
@@ -157,7 +157,7 @@ class CurrencyRate
      * Set created
      *
      * @param \DateTime $created
-     * @return CurrencyRate
+     * @return Rate
      */
     public function setCreated($created)
     {
@@ -180,7 +180,7 @@ class CurrencyRate
      * Set sourceTime
      *
      * @param \DateTime $sourceTime
-     * @return CurrencyRate
+     * @return Rate
      */
     public function setSourceTime($sourceTime)
     {
@@ -200,25 +200,25 @@ class CurrencyRate
     }
 
     /**
-     * Set currency
+     * Set symbol
      *
-     * @param \Raeting\RaetingBundle\Entity\Symbol $currency
-     * @return CurrencyRate
+     * @param \Raeting\RaetingBundle\Entity\Symbol $symbol
+     * @return Rate
      */
-    public function setCurrency(\Raeting\RaetingBundle\Entity\Symbol $currency = null)
+    public function setSymbol(\Raeting\RaetingBundle\Entity\Symbol $symbol = null)
     {
-        $this->currency = $currency;
+        $this->symbol = $symbol;
     
         return $this;
     }
 
     /**
-     * Get currency
+     * Get symbol
      *
      * @return \Raeting\RaetingBundle\Entity\Symbol 
      */
-    public function getCurrency()
+    public function getSymbol()
     {
-        return $this->currency;
+        return $this->symbol;
     }
 }

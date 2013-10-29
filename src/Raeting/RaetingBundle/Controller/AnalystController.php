@@ -79,7 +79,7 @@ class AnalystController extends Controller
         
         $analysisService = $this->get('raetingraeting.service.analysis');
         $symbolService = $this->get('raetingraeting.service.symbol');
-        $tickerRateService = $this->get('raetingraeting.service.ticker_rate');
+        $rateService = $this->get('raetingraeting.service.rate');
         
         
         $analysisRange = $analysisService->getAnalystEstimationRangeByTicker($id, $ticker);
@@ -87,10 +87,10 @@ class AnalystController extends Controller
         $analysis = $analysisService->getAllByAnalystAndTicker($id, $ticker, $this->resultsPerPage, $page);
         $totalAnalysis = $analysisService->countAllByAnalyst($id, $ticker);
         
-        $rates = $tickerRateService->findAllBySymbolInRange($ticker, $analysisRange['min_date'], $analysisRange['max_date']);
-
         $symbol = $symbolService->getBySymbol($ticker);
         
+        $rates = $rateService->findAllBySymbolInRange($symbol, $analysisRange['min_date'], $analysisRange['max_date']);
+
         return $this->render('RaetingRaetingBundle:Analyst:show_ticker.html.php', array(
             'analyst' => $analyst,
             'analysis' => $analysis,

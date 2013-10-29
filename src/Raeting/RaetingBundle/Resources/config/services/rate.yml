@@ -1,0 +1,7 @@
+parameters:
+    raetingraeting.service.rate.class: Raeting\RaetingBundle\Service\Rate
+
+services:
+    raetingraeting.service.rate:
+        class: %raetingraeting.service.rate.class%
+        arguments: [@doctrine.orm.entity_manager, @raetingraeting.service.symbol]

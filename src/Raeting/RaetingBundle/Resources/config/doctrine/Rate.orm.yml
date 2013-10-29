@@ -1,6 +1,6 @@
-Raeting\RaetingBundle\Entity\TickerRate:
+Raeting\RaetingBundle\Entity\Rate:
     type: entity
-    table: ticker_rate
+    table: rate
     fields:
         id:
             id: true
@@ -29,14 +29,14 @@ Raeting\RaetingBundle\Entity\TickerRate:
             nullable: false
             column: source_time
     manyToOne:
-        ticker:
+        symbol:
             targetEntity: Symbol
             cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
-                ticker_id:
+                symbol_id:
                     referencedColumnName: id
             orphanRemoval: false
-    repositoryClass: Raeting\RaetingBundle\Entity\TickerRateRepository
+    repositoryClass: Raeting\RaetingBundle\Entity\RateRepository
     lifecycleCallbacks: {  }

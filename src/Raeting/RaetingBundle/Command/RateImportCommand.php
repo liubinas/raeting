@@ -23,8 +23,8 @@ class RateImportCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Importing rates...</info>');
 
-        $currencyRateService = $container->get('raetingraeting.service.currency_rate');
-        $result = $currencyRateService->importXmlFromFXCM('http://rates.fxcm.com/RatesXML3');
+        $rateService = $container->get('raetingraeting.service.rate');
+        $result = $rateService->importXmlFromFXCM('http://rates.fxcm.com/RatesXML3');
 
         $output->writeln('<info>Inserts done: '.$result.'</info>');
     }

@@ -1,7 +1,0 @@
-parameters:
-    raetingraeting.service.ticker_rate.class: Raeting\RaetingBundle\Service\TickerRate
-
-services:
-    raetingraeting.service.ticker_rate:
-        class: %raetingraeting.service.ticker_rate.class%
-        arguments: [@doctrine.orm.entity_manager, @raetingraeting.service.symbol]
