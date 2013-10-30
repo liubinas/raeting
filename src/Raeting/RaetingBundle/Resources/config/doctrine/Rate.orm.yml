@@ -28,6 +28,10 @@ Raeting\RaetingBundle\Entity\Rate:
             type: datetime
             nullable: false
             column: source_time
+        sourceDate:
+            type: date
+            nullable: false
+            column: source_date
     manyToOne:
         symbol:
             targetEntity: Symbol

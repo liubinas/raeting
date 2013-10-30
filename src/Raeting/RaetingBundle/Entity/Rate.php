@@ -41,9 +41,15 @@ class Rate
     
     /**
      * @var \DateTime
-     * @ORM\Column(name="source_time", type="timestamp", nullable=false)
+     * @ORM\Column(name="source_time", type="datetime", nullable=false)
      */
     private $sourceTime;
+    
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="source_time", type="date", nullable=false)
+     */
+    private $sourceDate;
 
     /**
      * @var \Raeting\RaetingBundle\Entity\Symbol
@@ -197,6 +203,29 @@ class Rate
     public function getSourceTime()
     {
         return $this->sourceTime;
+    }
+    
+    /**
+     * Set sourceDate
+     *
+     * @param \DateTime $sourceDate
+     * @return Rate
+     */
+    public function setSourceDate($sourceDate)
+    {
+        $this->sourceDate = $sourceDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get sourceDate
+     *
+     * @return \DateTime 
+     */
+    public function getSourceDate()
+    {
+        return $this->sourceDate;
     }
 
     /**

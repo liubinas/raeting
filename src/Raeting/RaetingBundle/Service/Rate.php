@@ -7,6 +7,8 @@ use Raeting\RaetingBundle\Entity;
 
 class Rate
 {
+    
+    private $pointsInGraph = 500;
 
     public function __construct(EntityManager $em, Symbol $symbolService)
     {
@@ -31,8 +33,8 @@ class Rate
 
     public function save(Entity\Rate $rate)
     {
-        $query = 'INSERT INTO symbol_'.strtolower($rate->getSymbol()->getSymbol()). '(symbol_id, bid, ask, high, low, created, source_time)
-                    VALUES ("'.$rate->getSymbol()->getId().'","'.$rate->getBid().'","'.$rate->getAsk().'","'.$rate->getHigh().'","'.$rate->getLow().'","'.$rate->getCreated()->format('Y-m-d H:i:s').'","'.$rate->getSourceTime()->format('Y-m-d H:i:s').'")';
+        $query = 'INSERT INTO symbol_'.strtolower($rate->getSymbol()->getSymbol()). '(symbol_id, bid, ask, high, low, created, source_time, source_date)
+                    VALUES ("'.$rate->getSymbol()->getId().'","'.$rate->getBid().'","'.$rate->getAsk().'","'.$rate->getHigh().'","'.$rate->getLow().'","'.$rate->getCreated()->format('Y-m-d H:i:s').'","'.$rate->getSourceTime()->format('Y-m-d H:i:s').'","'.$rate->getSourceDate()->format('Y-m-d').'")';
         
         $conn = $this->em->getConnection();
         $conn->exec($query);
@@ -70,6 +72,7 @@ class Rate
                     $rateToInsert->setAsk((string)$rate->$mappingArray['ask']);
                     $rateToInsert->setBid((string)$rate->$mappingArray['bid']);
                     $rateToInsert->setSourceTime($date);
+                    $rateToInsert->setSourceDate($date);
                     $rateToInsert->setCreated(new \DateTime());
                     $this->save($rateToInsert, $symbol->getSymbol());
                     $inserts++;
@@ -103,6 +106,7 @@ class Rate
                             $rateToInsert->setAsk($row[$mappingArray['ask']]);
                             $rateToInsert->setBid($row[$mappingArray['bid']]);
                             $rateToInsert->setSourceTime($date);
+                            $rateToInsert->setSourceDate($date);
                             $rateToInsert->setCreated(new \DateTime());
                             $this->save($rateToInsert);
                             $inserts++;
@@ -119,12 +123,16 @@ class Rate
         $symbol = $this->symbolService->getBySymbol($data['symbol']);
         if(!empty($symbol)){
             $rate = $this->findOneBySymbolAndDate($symbol, date('Y-m-d', strtotime($data['date'])));
+            
+            $data['time'] = $data['date'];
+            $data['date'] = date('Y-m-d', strtotime($data['date']));
+            
             if(empty($rate)){
-                $query = 'INSERT INTO symbol_'.$data['symbol'].' (bid, ask, high, low, created, source_time, symbol_id) 
-                    VALUES ("'.$data['bid'].'","'.$data['ask'].'","'.$data['high'].'","'.$data['low'].'","'.date('Y-m-d').'","'.$data['date'].'",'.$symbol->getId().');'."\n";
+                $query = 'INSERT INTO symbol_'.$data['symbol'].' (bid, ask, high, low, created, source_time, source_date, symbol_id) 
+                    VALUES ("'.$data['bid'].'","'.$data['ask'].'","'.$data['high'].'","'.$data['low'].'","'.date('Y-m-d').'","'.$data['time'].'","'.$data['date'].'",'.$symbol->getId().');'."\n";
             }else{
                 $query = 'UPDATE symbol_'.$data['symbol'].' 
-                    SET bid="'.$data['bid'].'",ask="'.$data['ask'].'",high="'.$data['high'].'",low="'.$data['low'].'",created="'.date('Y-m-d').'",source_time="'.$data['date'].'",symbol_id='.$symbol->getId().' 
+                    SET bid="'.$data['bid'].'",ask="'.$data['ask'].'",high="'.$data['high'].'",low="'.$data['low'].'",created="'.date('Y-m-d').'",source_time="'.$data['time'].'",source_date="'.$data['date'].'",symbol_id='.$symbol->getId().' 
                     WHERE id = '.$rate->getId().";\n";
             }
             return $query;
@@ -141,6 +149,11 @@ class Rate
     public function getLastBySymbol($symbol)
     {
         return $this->getRepository()->findOneBy(array('symbol' => $symbol));
+    }
+    
+    public function findAllBySymbolInRangeByDay($symbol, $rangeFrom, $rangeTo)
+    {
+        return $this->findAllBySymbol($symbol, $rangeFrom, $rangeTo, true);
     }
     
     public function findAllBySymbolInRange($symbol, $rangeFrom, $rangeTo)
@@ -170,10 +183,58 @@ class Rate
         return $this->importxml($xml->Rate, array('symbol' => 'Symbol', 'ask' => 'Ask', 'bid' => 'Bid', 'high' => 'High', 'low' => 'Low', 'created' => 'Time'), '-4GMT');
     }
     
-    public function findAllBySymbol($symbol, $rangeFrom = null, $rangeTo = null)
+    private function getStmt($query)
+    {
+        $conn = $this->em->getConnection();
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+    
+    private function fetchAll($query)
+    {
+        return $this->getStmt($query)->fetchAll();
+    }
+    
+    private function fetch($query)
+    {
+        return $this->getStmt($query)->fetch();
+    }
+    
+    
+    public function findAllBySymbolForGraph($symbol, $rangeFrom = null, $rangeTo = null)
+    {
+        $countQuery = 'SELECT count(id) as counter
+                    FROM symbol_'.strtolower($symbol->getSymbol()).'
+                    WHERE source_time >= "'.$rangeFrom.'" 
+                    AND source_time <= "'.$rangeTo.'"';
+        $totalRows = $this->fetch($countQuery);
+        $totalRows = $totalRows['counter'];
+        if($totalRows > $this->pointsInGraph*2){
+            $nth = ' AND rownum % '.(int)floor($totalRows / $this->pointsInGraph).' = 1';
+        }else{
+            $nth = '';
+        }
+        $query = 'SELECT * 
+                    FROM ( 
+                        SELECT 
+                            @row := @row +1 AS rownum, symbol_'.strtolower($symbol->getSymbol()).'.*
+                        FROM ( 
+                            SELECT @row :=0) r, symbol_'.strtolower($symbol->getSymbol()).'
+                        ) ranked 
+                        WHERE source_time >= "'.$rangeFrom.'" 
+                        AND source_time <= "'.$rangeTo.'"
+                        '.$nth;
+        $symbols = $this->fetchAll($query);
+        
+        return $symbols;
+        
+    }
+    
+    public function findAllBySymbol($symbol, $rangeFrom = null, $rangeTo = null, $groupByDay = false)
     {
         $query = 'SELECT * 
-                    FROM symbol_'.$symbol->getSymbol().'
+                    FROM symbol_'.strtolower($symbol->getSymbol()).'
                     WHERE 1=1';
         
         if($rangeFrom != null){
@@ -184,10 +245,11 @@ class Rate
             $query .= ' AND source_time <= "'.$rangeTo.'"';
         }
         
-        $conn = $this->em->getConnection();
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $symbols = $stmt->fetchAll();
+        if($groupByDay != false){
+            $query .= ' GROUP BY source_date';
+        }
+        
+        $symbols = $this->fetchAll($query);
         
         return $symbols;
         
@@ -206,5 +268,67 @@ class Rate
         $symbol = $stmt->fetch(\PDO::FETCH_COLUMN);
         
         return $symbol;
+    }
+    
+    private function divideInterval($interval, $number = 2)
+    {
+        $seconds =  $interval->y     * 31556926 
+                + $interval->m  * 2629743
+                + $interval->d  * 86400
+                + $interval->h  * 3600
+                + $interval->i  * 60
+                + $interval->s;
+        
+        $seconds = floor($seconds/$number);
+        
+        return $this->formatDateIntervalFromSeconds($seconds);
+    }
+    
+    private function formatDateIntervalFromSeconds($seconds) 
+      { 
+        $interval = new \DateInterval('PT3600S');
+        $interval->y = floor($seconds/31556926); 
+        $seconds -= $interval->y * 31556926; 
+        $interval->m = floor($seconds/2629743); 
+        $seconds -= $interval->m * 2629743; 
+        $interval->d = floor($seconds/86400); 
+        $seconds -= $interval->d * 86400; 
+        $interval->h = floor($seconds/3600); 
+        $seconds -= $interval->h * 3600; 
+        $interval->i = floor($seconds/60); 
+        $seconds -= $interval->i * 60; 
+        $interval->s = $seconds; 
+        return $interval;
+      } 
+      
+      private function diffDate($date, $interval, $sign)
+      {
+          return date('Y-m-d H:i:s', strtotime($date->format('Y-m-d H:i:s').$interval->format($sign.'%y YEARS '.$sign.'%m MONTHS '.$sign.'%d DAYS '.$sign.'%h HOURS '.$sign.'%i MINUTES '.$sign.'%s SECONDS')));
+      }
+    
+    public function calculateGraphRanges($entity)
+    {
+        if($entity->getOpenPrice() && $entity->getClosePrice()){
+            $diff = $entity->getClosed()->diff($entity->getOpened());
+            $diff = $this->divideInterval($diff);
+            
+            $dateFrom = $this->diffDate($entity->getOpened(), $diff, '-');
+            $dateTo = $this->diffDate($entity->getClosed(), $diff, '+');
+        }elseif($entity->getOpenPrice()){
+            $dateTo = new \DateTime();
+            $diff = $dateTo->diff($entity->getOpened());
+            $diff = $this->divideInterval($diff);
+            
+            $dateFrom = $this->diffDate($entity->getOpened(), $diff, '-');
+            $dateTo = $dateTo->format('Y-m-d H:i:s');
+        }else{
+            $dateTo = new \DateTime();
+            $diff = $dateTo->diff($entity->getCreated());
+            $diff = $this->divideInterval($diff);
+            
+            $dateFrom = $this->diffDate($entity->getCreated(), $diff, '-');
+            $dateTo = $dateTo->format('Y-m-d H:i:s');
+        }
+        return array('from' => $dateFrom, 'to' => $dateTo);
     }
 }

@@ -98,9 +98,10 @@ class Symbol
                     `high` decimal(10,6) DEFAULT NULL,
                     `low` decimal(10,6) DEFAULT NULL,
                     `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                    `source_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+                    `source_time` datetime NOT NULL,
+                    `source_date` date NOT NULL,
                     PRIMARY KEY (`id`)
-                  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
+                  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ; ";
         return $conn->exec($query);
     }
     

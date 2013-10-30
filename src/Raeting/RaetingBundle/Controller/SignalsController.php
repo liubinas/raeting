@@ -175,7 +175,8 @@ class SignalsController extends Controller
     {
         $entity = $this->get('raetingraeting.service.signals')->get($id);
         $rateService = $this->get('raetingraeting.service.rate');
-        $rates = $rateService->findAllBySymbol($entity->getSymbol());
+        $range = $rateService->calculateGraphRanges($entity);
+        $rates = $rateService->findAllBySymbolForGraph($entity->getSymbol(), $range['from'], $range['to']);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Signal entity.');

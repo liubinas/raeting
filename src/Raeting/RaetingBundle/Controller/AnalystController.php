@@ -89,7 +89,7 @@ class AnalystController extends Controller
         
         $symbol = $symbolService->getBySymbol($ticker);
         
-        $rates = $rateService->findAllBySymbolInRange($symbol, $analysisRange['min_date'], $analysisRange['max_date']);
+        $rates = $rateService->findAllBySymbolInRangeByDay($symbol, $analysisRange['min_date'], $analysisRange['max_date']);
 
         return $this->render('RaetingRaetingBundle:Analyst:show_ticker.html.php', array(
             'analyst' => $analyst,

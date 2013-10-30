@@ -25,9 +25,7 @@
     text-align: right;
     color: #fff;
     padding: 10px;
-    border-bottom: 1px solid #4c7399;
-    border-left: 1px solid #4c7399;
-    border-right: 1px solid #4c7399;
+    float: right;
 }
 .flot-y{
     text-align: right;
@@ -47,12 +45,13 @@
 }
 .blue-box{
     background-color: #658db3;
+    float:left;
+    width: 100%;
 }
 .widget .widget-chart{
-    border-bottom: none;
-    border-left: none;
+    border: none;
     float: left;
-    width: 98%;
+    width: 97%;
 }
 .profile-photo{
     width: 200px;
@@ -72,10 +71,11 @@
 .widget .chart{
     overflow: visible;
 }
-.legend > table{
-    left: -30px !important;
-    bottom: -32px !important;
-    top: auto !important;
+.widget .chart .legend > table{
+    bottom: -40px !important;
+}
+.legend > table .legendColorBox{
+    padding-left: 5px;
 }
 .signal-info .col-md-8{
     padding: 7px 7px 2px 20px;
