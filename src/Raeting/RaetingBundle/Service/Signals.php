@@ -224,13 +224,8 @@ class Signals
     
     public function countPipsAndSave($signal)
     {
-        $this->setRateService($signal);
         $pips = null;
-        $rate = $this->rateService->getLastBySymbol($signal->getSymbol()->getId());
-        if(!$rate){
-            return;
-        }
-        if($signal->getBuy() == 0){
+        if($signal->getBuy() == 1){
             $pips = $this->countPips($signal->getOpenPrice(), $signal->getClosePrice(), $signal->getSymbol()->getPipsPosition());
         }else{
             $pips = $this->countPips($signal->getClosePrice(), $signal->getOpenPrice(), $signal->getSymbol()->getPipsPosition());
