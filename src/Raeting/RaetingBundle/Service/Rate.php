@@ -122,7 +122,7 @@ class Rate
     {
         $symbol = $this->symbolService->getBySymbol($data['symbol']);
         if(!empty($symbol)){
-            $rate = $this->findOneBySymbolAndDate($symbol, date('Y-m-d', strtotime($data['date'])));
+            $rate = $this->findOneBySymbolAndDate($symbol, date('Y-m-d H:i:s', strtotime($data['date'])));
             
             $data['time'] = $data['date'];
             $data['date'] = date('Y-m-d', strtotime($data['date']));
@@ -133,7 +133,7 @@ class Rate
             }else{
                 $query = 'UPDATE symbol_'.$data['symbol'].' 
                     SET bid="'.$data['bid'].'",ask="'.$data['ask'].'",high="'.$data['high'].'",low="'.$data['low'].'",created="'.date('Y-m-d').'",source_time="'.$data['time'].'",source_date="'.$data['date'].'",symbol_id='.$symbol->getId().' 
-                    WHERE id = '.$rate->getId().";\n";
+                    WHERE id = '.$rate['id'].";\n";
             }
             return $query;
         }
@@ -255,17 +255,17 @@ class Rate
         
     }
     
-    public function findOneBySymbolAndDate($symbol, $date)
+    public function findOneBySymbolAndDate($symbol, $datetime)
     {
         $query = 'SELECT * 
                     FROM symbol_'.$symbol->getSymbol(). ' 
-                    WHERE source_time LIKE "%'.$date.'%" 
+                    WHERE source_time LIKE "%'.$datetime.'%" 
                     AND high IS NOT NULL';
         
         $conn = $this->em->getConnection();
         $stmt = $conn->prepare($query);
         $stmt->execute();
-        $symbol = $stmt->fetch(\PDO::FETCH_COLUMN);
+        $symbol = $stmt->fetch(\PDO::FETCH_ASSOC);
         
         return $symbol;
     }

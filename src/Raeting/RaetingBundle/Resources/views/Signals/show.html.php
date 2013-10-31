@@ -75,14 +75,15 @@
 <script src="<?= $view['assets']->getUrl('js/libs/plugins.js') ?>" type="text/javascript"></script>
 <script>
     $(document).ready(function(){
-            var d1 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime(date('Y-m-d', strtotime($rates[$i]['source_time'])))*1000).'","'.$rates[$i]['bid'].'"]'; if($i != $total-1) echo ', '; endfor; ?>];
-            var d2 = [["<?= strtotime(date('Y-m-d', strtotime($rates[0]['source_time'])))*1000 ?>", "<?= $entity->getStopLoss() ?>"],["<?= strtotime(date('Y-m-d', strtotime($rates[$total-1]['source_time'])))*1000 ?>", "<?= $entity->getStopLoss() ?>"]];
-            var d3 = [["<?= strtotime(date('Y-m-d', strtotime($rates[0]['source_time'])))*1000 ?>", "<?= $entity->getTakeProfit() ?>"],["<?= strtotime(date('Y-m-d', strtotime($rates[$total-1]['source_time'])))*1000 ?>", "<?= $entity->getTakeProfit() ?>"]];
+        
+            var d1 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime(date('Y-m-d H:i:s', strtotime($rates[$i]['source_time'])))*1000).'","'.$rates[$i]['bid'].'"]'; if($i != $total-1) echo ', '; endfor; ?>];
+            var d2 = [<? if(!empty($rates)):?>["<?= strtotime(date('Y-m-d H:i:s', strtotime($rates[0]['source_time'])))*1000 ?>", "<?= $entity->getStopLoss() ?>"],["<?= strtotime(date('Y-m-d H:i:s', strtotime($rates[$total-1]['source_time'])))*1000 ?>", "<?= $entity->getStopLoss() ?>"]<? endif;?>];
+            var d3 = [<? if(!empty($rates)):?>["<?= strtotime(date('Y-m-d H:i:s', strtotime($rates[0]['source_time'])))*1000 ?>", "<?= $entity->getTakeProfit() ?>"],["<?= strtotime(date('Y-m-d H:i:s', strtotime($rates[$total-1]['source_time'])))*1000 ?>", "<?= $entity->getTakeProfit() ?>"]<? endif;?>];
             <? if($entity->getOpenPrice()): ?>
-                var d4 = [["<?= strtotime(date('Y-m-d', strtotime($entity->getOpened()->format('Y-m-d H:i:s'))))*1000 ?>", "<?= $entity->getOpenPrice() ?>"]];
+                var d4 = [["<?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getOpened()->format('Y-m-d H:i:s'))))*1000 ?>", "<?= $entity->getOpenPrice() ?>"]];
             <? endif;?>
-            <? if($entity->getOpenPrice()): ?>
-                var d5 = [["<?= strtotime(date('Y-m-d', strtotime($entity->getClosed()->format('Y-m-d H:i:s'))))*1000 ?>", "<?= $entity->getClosePrice() ?>"]];
+            <? if($entity->getClosePrice()): ?>
+                var d5 = [["<?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getClosed()->format('Y-m-d H:i:s'))))*1000 ?>", "<?= $entity->getClosePrice() ?>"]];
             <? endif;?>
             var data1 = [
                     { label: "<?= $entity->getSymbol()->getTitle() ?>", data: d1}
@@ -140,7 +141,7 @@
 
                                     $("#tooltip").remove();
                                     var x = item.datapoint[0].toFixed(2),
-                                    y = item.datapoint[1].toFixed(2);
+                                    y = item.datapoint[1];
                                     var date = new Date(parseInt(x));
                                     var day = date.getDate().toString();
                                     if(day.length < 2){

@@ -35,7 +35,7 @@ class SymbolRepository extends EntityRepository
         return $query->getResult();
     }
     
-    public function getSymbolsForStockImport($em)
+    public function getSymbolsForImport($em, $type)
     {
         $query = $em->createQuery('SELECT sy FROM RaetingRaetingBundle:Symbol sy 
                                    WHERE EXISTS 
@@ -43,9 +43,19 @@ class SymbolRepository extends EntityRepository
                                         AND sy.type = :type');
         
         try {
-            return $query->setParameter('type', 'ticker')->getResult();
+            return $query->setParameter('type', $type)->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
+    }
+    
+    public function getSymbolsForStockImport($em)
+    {
+        return $this->getSymbolsForImport($em, Symbol::TYPE_TICKER);
+    }
+    
+    public function getSymbolsForCurrencyImport($em)
+    {
+        return $this->getSymbolsForImport($em, Symbol::TYPE_QUOTE);
     }
 }
