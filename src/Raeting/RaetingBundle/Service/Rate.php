@@ -124,6 +124,7 @@ class Rate
     
     public function getInsertDataQuery($data)
     {
+        $data['symbol'] = strtolower($data['symbol']);
         $symbol = $this->symbolService->getBySymbol($data['symbol']);
         if(!empty($symbol)){
             $rate = $this->findOneBySymbolAndDate($symbol, date('Y-m-d H:i', strtotime($data['date'])));
@@ -268,7 +269,7 @@ class Rate
     public function findOneBySymbolAndDate($symbol, $datetime)
     {
         $query = 'SELECT * 
-                    FROM symbol_'.$symbol->getSymbol(). ' 
+                    FROM symbol_'.strtolower($symbol->getSymbol()). ' 
                     WHERE source_time LIKE "%'.$datetime.'%" 
                     AND high IS NOT NULL';
         
