@@ -33,4 +33,3 @@ Migrations:
 migrate: app/console doctrine:migrations:migrate
 
 load fixtures: app/console estina:fixtures:load
-
