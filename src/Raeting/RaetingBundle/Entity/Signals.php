@@ -19,8 +19,8 @@ class Signals
     const STATUS_ERROR = 'error';
     
     protected $buyEnum = array(
-        '0'    => 'Buy',
-        '1'    => 'Sell',
+        '0'    => 'Sell',
+        '1'    => 'Buy',
     );
     
     /**

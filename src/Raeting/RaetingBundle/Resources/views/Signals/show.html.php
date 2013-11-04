@@ -76,7 +76,7 @@
 <script>
     $(document).ready(function(){
         
-            var d1 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime(date('Y-m-d H:i:s', strtotime($rates[$i]['source_time'])))*1000).'","'.$rates[$i]['bid'].'"]'; if($i != $total-1) echo ', '; endfor; ?>];
+            var d1 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime(date('Y-m-d H:i:s', strtotime($rates[$i]['source_time'])))*1000).'","'.$rates[$i]['rate'].'"]'; if($i != $total-1) echo ', '; endfor; ?>];
             var d2 = [<? if(!empty($rates)):?>["<?= strtotime(date('Y-m-d H:i:s', strtotime($rates[0]['source_time'])))*1000 ?>", "<?= $entity->getStopLoss() ?>"],["<?= strtotime(date('Y-m-d H:i:s', strtotime($rates[$total-1]['source_time'])))*1000 ?>", "<?= $entity->getStopLoss() ?>"]<? endif;?>];
             var d3 = [<? if(!empty($rates)):?>["<?= strtotime(date('Y-m-d H:i:s', strtotime($rates[0]['source_time'])))*1000 ?>", "<?= $entity->getTakeProfit() ?>"],["<?= strtotime(date('Y-m-d H:i:s', strtotime($rates[$total-1]['source_time'])))*1000 ?>", "<?= $entity->getTakeProfit() ?>"]<? endif;?>];
             <? if($entity->getOpenPrice()): ?>
@@ -100,7 +100,7 @@
             var plot = $.plot("#chart_widget", data1, $.extend(true, {}, Plugins.getFlotWidgetDefaults(), {
                     xaxis: {
                             mode: "time",
-                            timeformat: "%Y-%m-%d"
+                            timeformat: "%Y-%m-%d %H:%M"
                     },
                     series: {
                             lines: {
@@ -151,9 +151,21 @@
                                     if(month.length < 2){
                                         month = '0'+month;
                                     }
+                                    var hours = (date.getHours()).toString();
+                                    if(hours.length < 2){
+                                        hours = '0'+hours;
+                                    }
+                                    var minutes = (date.getMinutes()).toString();
+                                    if(minutes.length < 2){
+                                        minutes = '0'+minutes;
+                                    }
+                                    var seconds = (date.getSeconds()).toString();
+                                    if(seconds.length < 2){
+                                        seconds = '0'+seconds;
+                                    }
                                     var year = date.getFullYear();
                                     showTooltip(item.pageX, item.pageY,
-                                       year+'-'+ month +'-'+ day + "<br/>" + y + " <?= $entity->getSymbol()->getCurrency() ?>");
+                                       year+'-'+ month +'-'+ day + ' '+ hours + ':'+ minutes + ':'+ seconds + "<br/>" + y + " <?= $entity->getSymbol()->getCurrency() ?>");
                             }
                     } else {
                             $("#tooltip").remove();

@@ -71,6 +71,8 @@ class Rate
                     $rateToInsert->setSymbol($symbol);
                     $rateToInsert->setAsk((string)$rate->$mappingArray['ask']);
                     $rateToInsert->setBid((string)$rate->$mappingArray['bid']);
+                    $rateToInsert->setHigh((string)$rate->$mappingArray['high']);
+                    $rateToInsert->setLow((string)$rate->$mappingArray['low']);
                     $rateToInsert->setSourceTime($date);
                     $rateToInsert->setSourceDate($date);
                     $rateToInsert->setCreated(new \DateTime());
@@ -105,6 +107,8 @@ class Rate
                             $rateToInsert->setSymbol($symbol);
                             $rateToInsert->setAsk($row[$mappingArray['ask']]);
                             $rateToInsert->setBid($row[$mappingArray['bid']]);
+                            $rateToInsert->setHigh($row[$mappingArray['high']]);
+                            $rateToInsert->setLow($row[$mappingArray['low']]);
                             $rateToInsert->setSourceTime($date);
                             $rateToInsert->setSourceDate($date);
                             $rateToInsert->setCreated(new \DateTime());
@@ -122,7 +126,7 @@ class Rate
     {
         $symbol = $this->symbolService->getBySymbol($data['symbol']);
         if(!empty($symbol)){
-            $rate = $this->findOneBySymbolAndDate($symbol, date('Y-m-d H:i:s', strtotime($data['date'])));
+            $rate = $this->findOneBySymbolAndDate($symbol, date('Y-m-d H:i', strtotime($data['date'])));
             
             $data['time'] = $data['date'];
             $data['date'] = date('Y-m-d', strtotime($data['date']));
@@ -202,7 +206,7 @@ class Rate
     }
     
     
-    public function findAllBySymbolForGraph($symbol, $rangeFrom = null, $rangeTo = null)
+    public function findAllBySymbolForGraph($symbol, $rangeFrom = null, $rangeTo = null, $buy = 1)
     {
         $countQuery = 'SELECT count(id) as counter
                     FROM symbol_'.strtolower($symbol->getSymbol()).'
@@ -215,7 +219,12 @@ class Rate
         }else{
             $nth = '';
         }
-        $query = 'SELECT * 
+        if($buy == 0){
+            $rateSelect = 'ask as rate';
+        }else{
+            $rateSelect = 'bid as rate';
+        }
+        $query = 'SELECT '.$rateSelect.', source_time
                     FROM ( 
                         SELECT 
                             @row := @row +1 AS rownum, symbol_'.strtolower($symbol->getSymbol()).'.*
@@ -224,7 +233,8 @@ class Rate
                         ) ranked 
                         WHERE source_time >= "'.$rangeFrom.'" 
                         AND source_time <= "'.$rangeTo.'"
-                        '.$nth;
+                        '.$nth.'
+                        ORDER BY source_time ASC';
         $symbols = $this->fetchAll($query);
         
         return $symbols;

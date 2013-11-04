@@ -265,9 +265,9 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
         $signal->setCreated(new \DateTime('2013-09-05')); $signal->setOpened(new \DateTime('2013-09-05 12:32')); $signal->setOpenExpire($date);
 
-        $signal->setClosed(new \DateTime('2013-09-05 14:56')); $signal->setCloseExpire($date);
+        $signal->setClosed(new \DateTime('2013-09-05 15:07')); $signal->setCloseExpire($date);
         $signal->setOpenPrice(1.321);
-        $signal->setClosePrice(1.313);
+        $signal->setClosePrice(1.3127);
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
         $signal->setSymbol($manager->merge($this->getReference('quote.eurusd')));
@@ -280,9 +280,9 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
         $signal->setCreated(new \DateTime('2013-09-06')); $signal->setOpened(new \DateTime('2013-09-06 02:41')); $signal->setOpenExpire($date);
 
-        $signal->setClosed(new \DateTime('2013-09-06 14:35')); $signal->setCloseExpire($date);
+        $signal->setClosed(new \DateTime('2013-09-06 14:32')); $signal->setCloseExpire($date);
         $signal->setOpenPrice(1.312);
-        $signal->setClosePrice(1.315);
+        $signal->setClosePrice(1.3156);
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
@@ -312,7 +312,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
         $signal->setCreated(new \DateTime('2013-09-12')); $signal->setOpened(new \DateTime('2013-09-12 09:13')); $signal->setOpenExpire($date);
 
-        $signal->setClosed(new \DateTime('2013-09-12 16:30')); $signal->setCloseExpire($date);
+        $signal->setClosed(new \DateTime('2013-09-12 16:26')); $signal->setCloseExpire($date);
         $signal->setOpenPrice(1.58);
         $signal->setClosePrice(1.5826);
 
@@ -358,10 +358,10 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(1.347); $signal->setTakeprofit(1.356);
         $signal->setStoploss(1.3435); $signal->setStatus('closed');
 
-        $signal->setCreated(new \DateTime('2013-09-24')); $signal->setOpened(new \DateTime('2013-09-24 12:32')); $signal->setOpenExpire($date);
+        $signal->setCreated(new \DateTime('2013-09-24')); $signal->setOpened(new \DateTime('2013-09-24 14:17')); $signal->setOpenExpire($date);
 
-        $signal->setClosed(new \DateTime('2013-09-27 16:09')); $signal->setCloseExpire($date);
-        $signal->setOpenPrice(1.347);
+        $signal->setClosed(new \DateTime('2013-09-27 16:11')); $signal->setCloseExpire($date);
+        $signal->setOpenPrice(1.3466);
         $signal->setClosePrice(1.356);
 
 
@@ -406,9 +406,9 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
 
         $signal->setCreated(new \DateTime('2013-10-04')); $signal->setOpened(new \DateTime('2013-10-04 13:30')); $signal->setOpenExpire($date);
 
-        $signal->setClosed(new \DateTime('2013-10-04 21:31')); $signal->setCloseExpire($date);
+        $signal->setClosed(new \DateTime('2013-10-04 20:37')); $signal->setCloseExpire($date);
         $signal->setOpenPrice(1.604);
-        $signal->setClosePrice(1.6023);
+        $signal->setClosePrice(1.6022);
 
 
         $signal->setUser($manager->merge($this->getReference('user.default.raeting')));
@@ -466,10 +466,10 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(134); $signal->setTakeprofit(134.74);
         $signal->setStoploss(133.55); $signal->setStatus('closed');
 
-        $signal->setCreated(new \DateTime('2013-10-23')); $signal->setOpened(new \DateTime('2013-10-23 06:33')); $signal->setOpenExpire($date);
+        $signal->setCreated(new \DateTime('2013-10-23')); $signal->setOpened(new \DateTime('2013-10-23 09:53')); $signal->setOpenExpire($date);
 
         $signal->setClosed(new \DateTime('2013-10-24 08:02')); $signal->setCloseExpire($date);
-        $signal->setOpenPrice(134);
+        $signal->setOpenPrice(133.98);
         $signal->setClosePrice(134.74);
 
 
