@@ -34,7 +34,7 @@ class SignalController extends Controller
     {
         $signalService = $this->get('raetingraeting.service.signals');
 
-        $signal = $signalService->getByUuid($id);
+        $signal = $signalService->get($id);
         
         if(!$signal){
             throw $this->createNotFoundException('Unable to find Signal.');

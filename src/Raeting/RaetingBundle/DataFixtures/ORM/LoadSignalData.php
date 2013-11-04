@@ -261,7 +261,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.321); $signal->setTakeprofit(1.313);
-        $signal->setStoploss(1.326); $signal->setStatus('closed');
+        $signal->setStoploss(1.326); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-09-05')); $signal->setOpened(new \DateTime('2013-09-05 12:32')); $signal->setOpenExpire($date);
 
@@ -276,7 +276,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.312); $signal->setTakeprofit(1.304);
-        $signal->setStoploss(1.315); $signal->setStatus('closed');
+        $signal->setStoploss(1.315); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-09-06')); $signal->setOpened(new \DateTime('2013-09-06 02:41')); $signal->setOpenExpire($date);
 
@@ -292,7 +292,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(1.582); $signal->setTakeprofit(1.6);
-        $signal->setStoploss(1.575); $signal->setStatus('closed');
+        $signal->setStoploss(1.575); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-09-11')); $signal->setOpened(new \DateTime('2013-09-11 19:29')); $signal->setOpenExpire($date);
 
@@ -308,7 +308,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.58); $signal->setTakeprofit(1.575);
-        $signal->setStoploss(1.5826); $signal->setStatus('closed');
+        $signal->setStoploss(1.5826); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-09-12')); $signal->setOpened(new \DateTime('2013-09-12 09:13')); $signal->setOpenExpire($date);
 
@@ -324,7 +324,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(1.355); $signal->setTakeprofit(1.37);
-        $signal->setStoploss(1.345); $signal->setStatus('closed');
+        $signal->setStoploss(1.345); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-09-19')); $signal->setOpened(new \DateTime('2013-09-19 10:01')); $signal->setOpenExpire($date);
 
@@ -340,7 +340,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(134.3); $signal->setTakeprofit(136);
-        $signal->setStoploss(133.7); $signal->setStatus('closed');
+        $signal->setStoploss(133.7); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-09-20')); $signal->setOpened(new \DateTime('2013-09-20 12:01')); $signal->setOpenExpire($date);
 
@@ -356,7 +356,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(1.347); $signal->setTakeprofit(1.356);
-        $signal->setStoploss(1.3435); $signal->setStatus('closed');
+        $signal->setStoploss(1.3435); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-09-24')); $signal->setOpened(new \DateTime('2013-09-24 14:17')); $signal->setOpenExpire($date);
 
@@ -372,7 +372,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(1.3503); $signal->setTakeprofit(1.3536);
-        $signal->setStoploss(1.3458); $signal->setStatus('closed');
+        $signal->setStoploss(1.3458); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-09-27')); $signal->setOpened(new \DateTime('2013-09-27 10:55')); $signal->setOpenExpire($date);
 
@@ -388,7 +388,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(1.356); $signal->setTakeprofit(1.362);
-        $signal->setStoploss(1.3535); $signal->setStatus('new');
+        $signal->setStoploss(1.3535); $signal->setStatus('new'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-10-02')); $signal->setOpenExpire($date);
 
@@ -402,7 +402,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.604); $signal->setTakeprofit(1.6023);
-        $signal->setStoploss(1.6077); $signal->setStatus('closed');
+        $signal->setStoploss(1.6077); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-10-04')); $signal->setOpened(new \DateTime('2013-10-04 13:30')); $signal->setOpenExpire($date);
 
@@ -418,7 +418,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(1.352); $signal->setTakeprofit(1.3544);
-        $signal->setStoploss(1.3507); $signal->setStatus('closed');
+        $signal->setStoploss(1.3507); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-10-09')); $signal->setOpened(new \DateTime('2013-10-09 09:38')); $signal->setOpenExpire($date);
 
@@ -434,7 +434,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.3585); $signal->setTakeprofit(1.3546);
-        $signal->setStoploss(1.3593); $signal->setStatus('closed');
+        $signal->setStoploss(1.3593); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-10-11')); $signal->setOpened(new \DateTime('2013-10-14 14:40')); $signal->setOpenExpire($date);
 
@@ -450,7 +450,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(0); $signal->setOpen(1.3585); $signal->setTakeprofit(1.348);
-        $signal->setStoploss(1.362); $signal->setStatus('new');
+        $signal->setStoploss(1.362); $signal->setStatus('new'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-09-05')); $signal->setOpenExpire($date);
 
@@ -464,7 +464,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         //---------------------------------
         $signal = $signalService->getNew();
         $signal->setUuid(rand(0,1000)); $signal->setBuy(1); $signal->setOpen(134); $signal->setTakeprofit(134.74);
-        $signal->setStoploss(133.55); $signal->setStatus('closed');
+        $signal->setStoploss(133.55); $signal->setStatus('closed'); $signal->setDescription('fixture');
 
         $signal->setCreated(new \DateTime('2013-10-23')); $signal->setOpened(new \DateTime('2013-10-23 09:53')); $signal->setOpenExpire($date);
 

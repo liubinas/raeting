@@ -26,12 +26,11 @@ class EntityCheck extends WebTestCase
     
     public function checkSignalJson($content)
     {
-        $this->assertContains('"uuid":"1"', $content);
-        $this->assertContains('"type":"Buy"', $content);
-        $this->assertContains('"symbol":"EUR\/USD"', $content);
-        $this->assertContains('"open":"1.328800"', $content);
-        $this->assertContains('"takeProfit":"1.327900"', $content);
-        $this->assertContains('"stopLoss":"1.378800"', $content);
+        $this->assertContains('"type"', $content);
+        $this->assertContains('"symbol":"EURUSD"', $content);
+        $this->assertContains('"open"', $content);
+        $this->assertContains('"takeProfit"', $content);
+        $this->assertContains('"stopLoss"', $content);
         $this->assertContains('"description":"fixture"', $content);
         $this->assertContains('"status":', $content);
         $this->assertContains('"dateCreated":', $content);
@@ -47,12 +46,11 @@ class EntityCheck extends WebTestCase
     
     public function checkSignalXml($content)
     {
-        $this->assertContains('<uuid>1</uuid>', $content);
-        $this->assertContains('<type>Buy</type>', $content);
-        $this->assertContains('<symbol>EUR/USD</symbol>', $content);
-        $this->assertContains('<open>1.328800</open>', $content);
-        $this->assertContains('<takeProfit>1.327900</takeProfit>', $content);
-        $this->assertContains('<stopLoss>1.378800</stopLoss>', $content);
+        $this->assertContains('<type>', $content);
+        $this->assertContains('<symbol>EURUSD</symbol>', $content);
+        $this->assertContains('<open>', $content);
+        $this->assertContains('<takeProfit>', $content);
+        $this->assertContains('<stopLoss>', $content);
         $this->assertContains('<description>fixture</description>', $content);
         $this->assertContains('<status>', $content);
         $this->assertContains('<dateCreated>', $content);

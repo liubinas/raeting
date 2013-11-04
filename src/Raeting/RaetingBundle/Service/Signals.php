@@ -241,7 +241,7 @@ class Signals
         $signalArr = array(
             'uuid'=>$signal->getUuid(),
             'type'=>$signal->getBuyValue(),
-            'symbol'=>$signal->getSymbol()->getTitle(),
+            'symbol'=>$signal->getSymbol()->getSymbol(),
             'open'=>$signal->getOpen(),
             'takeProfit'=>$signal->getTakeprofit(),
             'stopLoss'=>$signal->getStoploss(),
