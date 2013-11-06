@@ -58,7 +58,7 @@
                     </div>
             </div>
         </div>
-    <div class="col-md-3">
+    <div class="col-md-3 signing-card">
         <div class="widget box">
                 <div class="widget-header">
                         <h4><i class="icon-reorder"></i> Signal info</h4>

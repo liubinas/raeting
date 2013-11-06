@@ -79,6 +79,9 @@
 .signal-info .col-md-8{
     padding: 7px 7px 2px 20px;
 }
+.col-md-10{
+    width: 83.3333333333%;
+}
 .signal-info.row-border .form-group{
     padding: 7px 7px 7px 20px;
     margin: 0;
@@ -96,4 +99,7 @@
 }
 .center{
     text-align: center;
+}
+.signing-card{
+    width: 265px;
 }
