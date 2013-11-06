@@ -14,8 +14,8 @@ class Version20131029142744 extends AbstractMigration
     {
         $this->addSql("DROP TABLE currency_rate");
         $this->addSql("RENAME TABLE `ticker_rate` TO `rate` ;");
-        $this->addSql("`ALTER TABLE rate DROP INDEX ticker_id`");
-        $this->addSql("`ALTER TABLE rate DROP INDEX ticker_id_2`");
+        $this->addSql("ALTER TABLE rate DROP INDEX ticker_id");
+        $this->addSql("ALTER TABLE rate DROP INDEX ticker_id_2");
         $this->addSql("TRUNCATE TABLE rate");
         $this->addSql("ALTER TABLE  `rate` DROP FOREIGN KEY  `rate_ibfk_1` ;");
         $this->addSql("ALTER TABLE  `rate` CHANGE  `ticker_id`  `symbol_id` INT( 11 ) NOT NULL");

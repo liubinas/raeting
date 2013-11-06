@@ -319,19 +319,12 @@ class Rate
     
     public function calculateGraphRanges($entity)
     {
-        if($entity->getOpenPrice() && $entity->getClosePrice()){
-            $diff = $entity->getClosed()->diff($entity->getOpened());
+        if($entity->getClosePrice()){
+            $diff = $entity->getClosed()->diff($entity->getCreated());
             $diff = $this->divideInterval($diff);
             
-            $dateFrom = $this->diffDate($entity->getOpened(), $diff, '-');
+            $dateFrom = $this->diffDate($entity->getCreated(), $diff, '-');
             $dateTo = $this->diffDate($entity->getClosed(), $diff, '+');
-        }elseif($entity->getOpenPrice()){
-            $dateTo = new \DateTime();
-            $diff = $dateTo->diff($entity->getOpened());
-            $diff = $this->divideInterval($diff);
-            
-            $dateFrom = $this->diffDate($entity->getOpened(), $diff, '-');
-            $dateTo = $dateTo->format('Y-m-d H:i:s');
         }else{
             $dateTo = new \DateTime();
             $diff = $dateTo->diff($entity->getCreated());

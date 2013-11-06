@@ -50,8 +50,7 @@
 }
 .widget .widget-chart{
     border: none;
-    float: left;
-    width: 97%;
+    height: 335px;
 }
 .profile-photo{
     width: 200px;
@@ -66,7 +65,7 @@
     width: 100%;
 }
 .widget .chart.chart-medium{
-    height: 300px;
+    height: 250px;
 }
 .widget .chart{
     overflow: visible;
@@ -83,4 +82,18 @@
 .signal-info.row-border .form-group{
     padding: 7px 7px 7px 20px;
     margin: 0;
+}
+.widget-content.no-padding .row .table-footer{
+    padding: 0;
+}
+.widget-chart .title{
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+}
+.flot-x .flot-tick-label{
+    width: 200px;
+}
+.center{
+    text-align: center;
 }

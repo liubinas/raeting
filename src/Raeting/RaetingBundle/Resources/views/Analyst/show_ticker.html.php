@@ -35,10 +35,11 @@
                         <div class='flot-tick-label'><?= $ticker->getCurrency() ?></div>
                     </div>
                         <div class="widget-chart"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
-                                <div id="chart_widget" class="chart chart-medium"></div>
+                            <div class="title"><?= $ticker->getTitle() ?></div>    
+                            <div id="chart_widget" class="chart chart-medium"></div>
                         </div>
                     <div class='flot-x'>
-                        <div class='flot-tick-label'>Date</div>
+                        <div class='flot-tick-label'>&nbsp;</div>
                     </div>
                 </div>
                 </div>
@@ -78,7 +79,9 @@
                             }
                     },
                     legend: {
-                        show: true
+                        show: true,
+                        position: "sw",
+                        noColumns: 2
                     },
                     grid: {
                             hoverable: true,

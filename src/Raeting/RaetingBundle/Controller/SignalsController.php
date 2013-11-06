@@ -183,6 +183,7 @@ class SignalsController extends Controller
         }
 
         return $this->render('RaetingRaetingBundle:Signals:show.html.php', array(
+            'range'       => $range,
             'entity'      => $entity,
             'rates'       => $rates,
         ));
