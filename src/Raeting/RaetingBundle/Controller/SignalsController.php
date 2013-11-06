@@ -111,7 +111,7 @@ class SignalsController extends Controller
 
             $this->get('session')->getFlashBag()->add('success', 'Your changes were saved!');
 
-            return $this->redirect($this->generateUrl($createLink, array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl($createLink, array('uuid' => $entity->getUuid())));
         }else{
             $query = $request->query->get('signal-search');
             $page = $request->query->get('page');
@@ -171,9 +171,9 @@ class SignalsController extends Controller
      * Finds and displays a Signals entity.
      *
      */
-    public function showAction($id)
+    public function showAction($uuid)
     {
-        $entity = $this->get('raetingraeting.service.signals')->get($id);
+        $entity = $this->get('raetingraeting.service.signals')->getByUuid($uuid);
         $rateService = $this->get('raetingraeting.service.rate');
         $range = $rateService->calculateGraphRanges($entity);
         $rates = $rateService->findAllBySymbolForGraph($entity->getSymbol(), $range['from'], $range['to'], $entity->getBuy());
@@ -193,9 +193,9 @@ class SignalsController extends Controller
      * Displays a form to edit an existing Signals entity.
      *
      */
-    public function editAction($id)
+    public function editAction($uuid)
     {
-        $entity = $this->get('raetingraeting.service.signals')->get($id);
+        $entity = $this->get('raetingraeting.service.signals')->getByUuid($uuid);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Signals entity.');
@@ -214,9 +214,9 @@ class SignalsController extends Controller
      * Edits an existing Signals entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, $uuid)
     {
-        $entity = $this->get('raetingraeting.service.signals')->get($id);
+        $entity = $this->get('raetingraeting.service.signals')->getByUuid($uuid);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Signals entity.');

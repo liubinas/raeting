@@ -27,14 +27,14 @@ class SignalController extends Controller
 
     /**
      * Show single Signal info
-     * @param $id
+     * @param $uuid
      * @return Response
      */
-    public function showAction($id)
+    public function showAction($uuid)
     {
         $signalService = $this->get('raetingraeting.service.signals');
 
-        $signal = $signalService->get($id);
+        $signal = $signalService->getByUuid($uuid);
         
         if(!$signal){
             throw $this->createNotFoundException('Unable to find Signal.');
@@ -48,7 +48,7 @@ class SignalController extends Controller
         $response = array(
             'signal' => $signalService->signalToArray($signal),
             'meta' => array(
-                'link' => $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals_show', array('id' => $signal->getId())).$query
+                'link' => $this->container->parameters['api.route_domain'].$this->get('router')->generate('signals_show', array('uuid' => $signal->getUuid())).$query
             )
         );
 

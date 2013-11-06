@@ -5,7 +5,7 @@ api_signals:
       _format: json|xml
       
 api_signals_show:
-    pattern:  /signals/{id}.{_format}
+    pattern:  /signals/{uuid}.{_format}
     defaults: { _controller: "RaetingApiBundle:Signal:show" }
     requirements:
       _format: json|xml

@@ -8,7 +8,7 @@ signals:
     defaults: { _controller: "RaetingRaetingBundle:Signals:index" }
 
 signals_show:
-    pattern:  /{id}
+    pattern:  /{uuid}
     defaults: { _controller: "RaetingRaetingBundle:Signals:show" }
 
 signals_new:
@@ -16,10 +16,10 @@ signals_new:
     defaults: { _controller: "RaetingRaetingBundle:Signals:new" }
 
 signals_edit:
-    pattern:  /{id}/edit
+    pattern:  /{uuid}/edit
     defaults: { _controller: "RaetingRaetingBundle:Signals:edit" }
 
 signals_update:
-    pattern:  /{id}/update
+    pattern:  /{uuid}/update
     defaults: { _controller: "RaetingRaetingBundle:Signals:update" }
     requirements: { _method: post }

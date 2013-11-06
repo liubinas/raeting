@@ -1,7 +1,7 @@
 <? $view->extend('RaetingRaetingBundle::Signals/menu.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
-<h3>Signal #<?= $entity->getUuid() ?>, Status: <?= $entity->getstatus() ?></h3>
+<h3>Signal #<?= $entity->getUuid() ?>, status: <?= $entity->getstatus() ?></h3>
 <? $view['slots']->stop('header_row') ?>
 <? $view['slots']->start('crumbs') ?>
 <div class="crumbs">
@@ -17,7 +17,7 @@
                         <a href="<?= $view['router']->generate('signals'); ?>">Signals</a>
                 </li>
                 <li class="current">
-                        <a href="<?= $view['router']->generate('signals_show', array('id' => $entity->getId())); ?>">#<?= $entity->getUuid() ?></a>
+                        <a href="<?= $view['router']->generate('signals_show', array('uuid' => $entity->getUuid())); ?>">#<?= $entity->getUuid() ?></a>
                 </li>
         </ul>
 </div>
@@ -30,7 +30,6 @@
                         <div class='flot-tick-label'>&nbsp;</div>
                     </div>
                     <div class="widget-chart"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
-                        <div class='title'><?= $entity->getSymbol()->getTitle() ?></div>    
                         <div id="chart_widget" class="chart chart-medium"></div>
                     </div>
                     <div class="widget-content">
@@ -264,7 +263,7 @@
                               js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=133579296820463";
                               fjs.parentNode.insertBefore(js, fjs);
                             }(document, 'script', 'facebook-jssdk'));</script>
-                            <div class="fb-comments" data-href="<?= $view['router']->generate('signals_show', array('id' => $entity->getId()), true) ?>" data-width="600"></div>
+                            <div class="fb-comments" data-href="<?= $view['router']->generate('signals_show', array('uuid' => $entity->getUuid()), true) ?>" data-width="600"></div>
                         </div>
                     </div> <!-- /.col-md-9 -->
                 </div>

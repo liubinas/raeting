@@ -59,7 +59,7 @@ class Signals
     public function createEntity($entity, $user, $id)
     {
         $entity->setUser($user);
-        $entity->setUuid(md5($id.$id));
+        $entity->setUuid(uniqid());
         $now = new \DateTime('now');
         $entity->setCreated($now);
         $entity->setOpened($now);

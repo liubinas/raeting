@@ -49,7 +49,7 @@ class ApiSignalControllerTest extends EntityCheck
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', 'api/signals/1.json');
+        $crawler = $client->request('GET', 'api/signals/527a49841050a.json');
 
         $response = $client->getResponse();
         $content = $response->getContent();
@@ -66,7 +66,7 @@ class ApiSignalControllerTest extends EntityCheck
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', 'api/signals/1.xml');
+        $crawler = $client->request('GET', 'api/signals/527a49841050a.xml');
 
         $response = $client->getResponse();
         $content = $response->getContent();
