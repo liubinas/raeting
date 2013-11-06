@@ -24,7 +24,7 @@ Change $ENV to your enviroment name.
             RewriteRule ^(.*) app_dev.php [QSA,L]
     </Directory>
 </VirtualHost>
-3) Add your $ENV to app/AppKernel.php 
+3) Add your $ENV to app/AppKernel.php
   if (in_array($this->getEnvironment(), array($ENV));
 
 
