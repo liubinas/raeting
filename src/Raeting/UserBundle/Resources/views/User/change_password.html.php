@@ -1,4 +1,4 @@
-<? $view->extend('RaetingUserBundle::User/menu.html.php'); ?>
+<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
 <? $view['slots']->start('body_attr') ?>class="login"<? $view['slots']->stop('body_attr') ?>
 <? $view['slots']->start('content') ?>

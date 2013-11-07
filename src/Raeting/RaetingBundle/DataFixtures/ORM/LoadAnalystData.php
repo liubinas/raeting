@@ -30,20 +30,26 @@ class LoadAnalystData extends AbstractFixture implements OrderedFixtureInterface
         $analystService = $this->container->get('raetingraeting.service.analyst');
 
         $entity = $analystService->getNew();
-        $entity->setName('Jeferies (Misek)');
+        $entity->setName('Misek');
         $entity->setSlug('misek');
+        $entity->setCompany('Jeferies');
+        $entity->setImportSlug('Jeferies (Misek)');
 
         $manager->persist($entity);
         //----------------------------------
         $entity = $analystService->getNew();
-        $entity->setName('Barclays (Reitzes)');
+        $entity->setName('Reitzes');
         $entity->setSlug('reitzes');
+        $entity->setCompany('Barclays');
+        $entity->setImportSlug('Barclays (Reitzes)');
 
         $manager->persist($entity);
         //----------------------------------
         $entity = $analystService->getNew();
-        $entity->setName('Piper Jaffray (Munster)');
+        $entity->setName('Munster');
         $entity->setSlug('munster');
+        $entity->setCompany('Piper Jaffray');
+        $entity->setImportSlug('Piper Jaffray (Munster)');
 
         $manager->persist($entity);
         //----------------------------------

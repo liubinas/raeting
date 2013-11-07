@@ -47,6 +47,13 @@ class User extends UserBase
     /**
      * @var string
      *
+     * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
+     */
+    private $twitter;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="slug", type="string", length=255, nullable=true, unique = true)
      */
     private $slug;
@@ -86,6 +93,24 @@ class User extends UserBase
     public function getFacebookId()
     {
         return $this->facebookId;
+    }
+    
+    
+    /**
+     * @param string $twitter
+     * @return void
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
     }
     
     /**

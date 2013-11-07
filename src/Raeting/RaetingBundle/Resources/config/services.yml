@@ -1,3 +1,6 @@
+parameters:
+    raeting.helper.raeting.class: Raeting\RaetingBundle\Templating\Helper\RaetingHelper
+
 services:
     raeting_raeting.form.type.extentity:
         class: Raeting\RaetingBundle\Form\Type\ExtEntityType
@@ -6,6 +9,9 @@ services:
         tags:
             - { name: form.type, alias: extentity }
             
+    raeting.raeting_helper:
+        class: %raeting.helper.raeting.class%
+        tags: [{ name: templating.helper, alias: 'raeting' }]
 imports:
 - { resource: services/signals.yml }
 - { resource: services/market.yml }

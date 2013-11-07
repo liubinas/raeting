@@ -1,7 +1,7 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
-<h3>Signals</h3>
+<h3>Analysis</h3>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('crumbs') ?>
@@ -12,19 +12,20 @@
                         <a href="<?= $view['router']->generate('home'); ?>">Home</a>
                 </li>
                 <li class="current">
-                        <a href="<?= $view['router']->generate('signals'); ?>">Signals</a>
+                        <a href="<?= $view['router']->generate('analysis'); ?>">Analysis</a>
                 </li>
         </ul>
 </div>
 <? $view['slots']->stop('crumbs') ?>
+<? $view['slots']->start('content') ?>
 
-<? $view->render('RaetingRaetingBundle::Signals/signal_list.html.php', array(
-    'entities' => $entities, 
+<?= $view->render('RaetingRaetingBundle::Analyst/analysis_list.html.php', array(
+    'analysis' => $analysis, 
     'query' => $query, 
-    'showForm' => $showForm, 
-    'form' => $form, 
-    'entity' => $entity, 
-    'searchLink' => 'signals', 
-    'totalSignals' => $totalSignals, 
+    'searchLink' => 'analysis', 
+    'params' => array(),
+    'totalAnalysis' => $totalAnalysis, 
     'page' => $page, 
-    'perPage' => $perPage)); ?>
+    'perPage' => $perPage, 
+    'showSearch' => true)); ?>
+<? $view['slots']->stop('content') ?>

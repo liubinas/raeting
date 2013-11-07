@@ -50,7 +50,11 @@
 }
 .widget .widget-chart{
     border: none;
-    height: 335px;
+    height: 315px;
+}
+.widget .widget-chart.labeled{
+    width: 98%;
+    float: left;
 }
 .profile-photo{
     width: 200px;
@@ -102,4 +106,12 @@
 }
 .signing-card{
     width: 265px;
+}
+.beta{
+    font-size: 14px;
+    float: right;
+    margin: 15px 30px 0px 0px;
+    line-height: 14px;
+    text-transform: uppercase;
+    color: #EEE;
 }

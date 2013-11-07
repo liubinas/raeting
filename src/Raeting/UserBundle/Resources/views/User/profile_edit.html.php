@@ -1,4 +1,6 @@
-<? $view->extend('RaetingRaetingBundle::Trader/menu.html.php'); ?>
+<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
+
+<? $view['slots']->start('menuProfileEditActive') ?> class="current"<? $view['slots']->stop('menuProfileEditActive') ?>
 
 <? $view['slots']->start('crumbs') ?>
 <div class="crumbs">
@@ -30,26 +32,35 @@
     <div class="col-md-12">
         <div class="widget box">
             <div class="widget-content">
-                <form method="post" class="form-" action="<?= $view['router']->generate('user.profile.edit'); ?>">
-                    <?= $view['form']->errors($form) ?>
-                    <?= $view['form']->row($form['firstname'], array('label' => 'Firstname', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
-                    <?= $view['form']->row($form['lastname'], array('label' => 'Lastname', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
-                    <?= $view['form']->row($form['company'], array('label' => 'Company', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
-                    <?= $view['form']->row($form['about'], array('label' => 'About', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
-                    <?= $view['form']->rest($form) ?>
-
-                    <div class="clear"></div>
-                    <div class="col-md-12">
-                        <button type="submit" class="submit btn btn-success pull-right">
-                            Update <i class="icon-angle-right"></i>
-                        </button>
-                        <a href="<?=$view['router']->generate('trader_show', array('slug' => $entity->getSlug() )) ?>" class="btn pull-right">
-                            Cancel
-                        </a>
+                <div class="col-md-4">
+                    <div class="list-group profile-photo">
+                        <li class="list-group-item no-padding">
+                            <img src="https://graph.facebook.com/<?= $entity->getFbname() ?>/picture?type=large">
+                        </li>
                     </div>
-                    <div class="clear"></div>
-                </form>
+                </div>
+                <form method="post" class="form-" action="<?= $view['router']->generate('user.profile.edit'); ?>">
+                    <div class="col-md-4">
+                            <?= $view['form']->errors($form) ?>
+                            <?= $view['form']->row($form['firstname'], array('label' => 'Firstname', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
+                            <?= $view['form']->row($form['lastname'], array('label' => 'Lastname', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
+                            <?= $view['form']->row($form['company'], array('label' => 'Company', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
+                            <?= $view['form']->row($form['twitter'], array('label' => 'Twitter name', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
+                            <?= $view['form']->row($form['about'], array('label' => 'About', 'attr' => array('class' => 'input-width-xlarge form-control'))) ?>
+                            <?= $view['form']->rest($form) ?>
 
+                            <div class="clear"></div>
+                            <div class="fl">
+                                <button type="submit" class="submit btn btn-success pull-right">
+                                    Update <i class="icon-angle-right"></i>
+                                </button>
+                                <a href="<?=$view['router']->generate('trader_show', array('slug' => $entity->getSlug() )) ?>" class="btn pull-right">
+                                    Cancel
+                                </a>
+                            </div>
+                    </div>
+                </form>
+                <div class="clear"></div>
             </div>
         </div>
     </div>

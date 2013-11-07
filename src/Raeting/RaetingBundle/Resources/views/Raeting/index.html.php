@@ -1,4 +1,4 @@
-<? $view->extend('RaetingRaetingBundle::Raeting/menu.html.php'); ?>
+<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
 
@@ -6,6 +6,17 @@
     
 <? $view['slots']->stop('header_row') ?>
 
+<? $view['slots']->start('crumbs') ?>
+<div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+                <li class="current">
+                        <i class="icon-home"></i>
+                        <a href="<?= $view['router']->generate('home'); ?>">Home</a>
+                </li>
+        </ul>
+</div>
+<? $view['slots']->stop('crumbs') ?>
+    
 <? $view['slots']->start('content') ?>
 
                 <hr>

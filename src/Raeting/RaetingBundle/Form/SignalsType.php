@@ -21,19 +21,15 @@ class SignalsType extends AbstractType
                 'class' => 'RaetingRaetingBundle:Symbol',
                 'property' => 'id',
                 'label' => 'Symbol',
-                'attr' => array('class' => 'input-small', 'placeholder' => 'ex. Apple')
             ))
             ->add('open', 'text', array(
                 'label' => 'Open price',
-                'attr' => array('class' => 'input-small', 'placeholder' => '0.0000')
             ))
             ->add('take_profit', 'text', array(
                 'label' => 'Take profit',
-                'attr' => array('class' => 'input-small', 'placeholder' => '0.0000')
             ))
             ->add('stop_loss', 'text', array(
                 'label' => 'Stop loss',
-                'attr' => array('class' => 'input-small', 'placeholder' => '0.0000')
             ))
             ->add('description', 'textarea')
         ;

@@ -139,7 +139,7 @@ class UserService extends BaseService
     public function getAllWithPaging($perPage, $page)
     {
         $query = $this->em->createQuery(
-            'SELECT u.id, u.firstname, u.lastname, u.fbname, u.slug, u.createDate, sum(s.pips) pips, sum(s.totalSignals) signals
+            'SELECT u.id, u.firstname, u.lastname, u.fbname, u.company, u.slug, u.createDate, sum(s.pips) pips, sum(s.totalSignals) signals
             FROM RaetingUserBundle:User u
             LEFT JOIN RaetingUserBundle:UserStats s
             WITH u.id = s.userid

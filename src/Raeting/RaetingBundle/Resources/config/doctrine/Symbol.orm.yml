@@ -31,6 +31,12 @@ Raeting\RaetingBundle\Entity\Symbol:
         currency:
             type: string
             length: 255
+        viewPrecision:
+            type: integer
+            fixed: false
+            nullable: false
+            column: view_precision
+            default: 3
     manyToOne:
         market:
             targetEntity: Raeting\RaetingBundle\Entity\Market

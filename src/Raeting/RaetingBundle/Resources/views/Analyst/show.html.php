@@ -1,4 +1,4 @@
-<? $view->extend('RaetingRaetingBundle::Analyst/menu.html.php'); ?>
+<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
 <h3>Analysts</h3>
@@ -42,5 +42,12 @@
     </div>
 </div>
 <?= $view->render('RaetingRaetingBundle::Analyst/analysis_list.html.php', array(
-    'analysis' => $analysis, 'query' => $query, 'searchLink' => 'analyst_show', 'analystSlug' => $analyst->getSlug(), 'totalAnalysis' => $totalAnalysis, 'page' => $page, 'perPage' => $perPage, 'showSearch' => true)); ?>
+    'analysis' => $analysis, 
+    'query' => $query, 
+    'searchLink' => 'analyst_show', 
+    'params' => array('slug' => $analyst->getSlug()),
+    'totalAnalysis' => $totalAnalysis, 
+    'page' => $page, 
+    'perPage' => $perPage, 
+    'showSearch' => true)); ?>
 <? $view['slots']->stop('content') ?>

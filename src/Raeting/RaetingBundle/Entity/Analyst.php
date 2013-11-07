@@ -34,6 +34,20 @@ class Analyst
      * @ORM\Column(name="slug", type="string", length=255, nullable=false)
      */
     private $slug;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="company", type="string", length=255, nullable=false)
+     */
+    private $company;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="import_slug", type="string", length=255, nullable=false)
+     */
+    private $importSlug;
 
     /**
      * Get id
@@ -66,6 +80,52 @@ class Analyst
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Set company
+     *
+     * @param string $company
+     * @return Analyst
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+    
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return string 
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+    
+    /**
+     * Set importSlug
+     *
+     * @param string $importSlug
+     * @return Analyst
+     */
+    public function setImportSlug($importSlug)
+    {
+        $this->importSlug = $importSlug;
+    
+        return $this;
+    }
+
+    /**
+     * Get importSlug
+     *
+     * @return string 
+     */
+    public function getImportSlug()
+    {
+        return $this->importSlug;
     }
     
     /**

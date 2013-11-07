@@ -5,26 +5,3 @@ trader:
 trader_show:
     pattern:  /{slug}
     defaults: { _controller: "RaetingRaetingBundle:Trader:show" }
-
-trader_new:
-    pattern:  /new
-    defaults: { _controller: "RaetingRaetingBundle:Trader:new" }
-
-trader_create:
-    pattern:  /create
-    defaults: { _controller: "RaetingRaetingBundle:Trader:create" }
-    requirements: { _method: post }
-
-trader_edit:
-    pattern:  /{id}/edit
-    defaults: { _controller: "RaetingRaetingBundle:Trader:edit" }
-
-trader_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "RaetingRaetingBundle:Trader:update" }
-    requirements: { _method: post }
-
-trader_delete:
-    pattern:  /{id}/delete
-    defaults: { _controller: "RaetingRaetingBundle:Trader:delete" }
-    requirements: { _method: get }

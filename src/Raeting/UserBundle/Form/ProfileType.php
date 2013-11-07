@@ -17,6 +17,8 @@ class ProfileType extends AbstractType
             ))
             ->add('company', 'text', array(
             ))
+            ->add('twitter', 'text', array(
+            ))
             ->add('about', 'textarea', array(
             ))
         ;

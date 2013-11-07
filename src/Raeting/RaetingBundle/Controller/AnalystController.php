@@ -22,11 +22,13 @@ class AnalystController extends Controller
         if(empty($page)){
             $page = 1;
         }
-        $entities = $this->get('raetingraeting.service.analyst')->getAllWithPaging($this->resultsPerPage, $page);
-        $totalEntities = $this->get('raetingraeting.service.analyst')->countAll();
+        $analystService = $this->get('raetingraeting.service.analyst');
+        $entities = $analystService->getAllWithPaging($this->resultsPerPage, $page);
+        $analysts = $analystService->prepareListingData($entities);
+        $totalEntities = $analystService->countAll();
         
         return $this->render('RaetingRaetingBundle:Analyst:index.html.php', array(
-            'entities' => $entities,
+            'analysts' => $analysts,
             'totalEntities' => $totalEntities,
             'perPage' => $this->resultsPerPage,
             'page' => $page
@@ -56,6 +58,34 @@ class AnalystController extends Controller
             
         return $this->render('RaetingRaetingBundle:Analyst:show.html.php', array(
             'analyst' => $analyst,
+            'analysis' => $analysis,
+            'totalAnalysis' => $totalAnalysis,
+            'perPage' => $this->resultsPerPage,
+            'page' => $page,
+            'query' => $query,
+        ));
+    }
+    
+    public function analysisAction()
+    {
+        $request = $this->get('request');
+        $page = $request->query->get('page');
+        if(empty($page)){
+            $page = 1;
+        }
+        
+        $analysisService = $this->get('raetingraeting.service.analysis');
+        
+        $query = $request->query->get('analysis-search');
+        if ($request->getMethod() == 'GET' && !empty($query)) {
+            $analysis = $analysisService->getAllByQuery($query, $this->resultsPerPage, $page);
+            $totalAnalysis = $analysisService->countAllByQuery($query);
+        }else{
+            $analysis = $analysisService->getAllWithPaging($this->resultsPerPage, $page);
+            $totalAnalysis = $analysisService->countAll();
+        }
+            
+        return $this->render('RaetingRaetingBundle:Analyst:analysis.html.php', array(
             'analysis' => $analysis,
             'totalAnalysis' => $totalAnalysis,
             'perPage' => $this->resultsPerPage,

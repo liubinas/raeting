@@ -1,5 +1,7 @@
 <? $view->extend('RaetingUserBundle::layout.html.php'); ?>
 
+<? $view['slots']->start('menuProfileActive') ?> class="current"<? $view['slots']->stop('menuProfileActive') ?>
+
 <h2>Profile<a href="<?= $view['router']->generate('estinacmf_user.profile_edit'); ?>" class="btn btn-primary pull-right"><i class="icon-pencil icon-white"></i> Edit</a></h2>
 <div class="row-fluid">
     <div class="span6">

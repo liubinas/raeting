@@ -1,4 +1,4 @@
-<? $view->extend('RaetingRaetingBundle::Analyst/menu.html.php'); ?>
+<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
 <h3>Analysts</h3>
@@ -23,17 +23,23 @@
     <div class="col-md-12">
             <div class="widget box">
                     <div class="widget-content">
-                            <? if (!empty($entities)): ?>
+                            <? if (!empty($analysts)): ?>
                                     <table class="table table-striped table-hover">
                                         <thead>
                                         <th>Name</th>
+                                        <th>Company</th>
+                                        <th>Total analysis</th>
+                                        <th>Last analysis</th>
                                         <th></th>
                                         </thead>
                                         <tbody>
-                                            <? foreach ($entities as $entity): ?>
+                                            <? foreach ($analysts as $analyst): ?>
                                                 <tr>
-                                                    <td><?= $entity->getName() ?></td>
-                                                    <td><a href="<?= $view['router']->generate('analyst_show', array('slug' => $entity->getSlug())) ?>">View</a></td>
+                                                    <td><?= $analyst['name'] ?></td>
+                                                    <td><?= $analyst['company'] ?></td>
+                                                    <td><?= $analyst['totalAnalysis'] ?></td>
+                                                    <td><?= !empty($analyst['lastAnalysis']) ? $analyst['lastAnalysis']->getDate()->format('Y-m-d') : '' ?></td>
+                                                    <td><a href="<?= $view['router']->generate('analyst_show', array('slug' => $analyst['slug'])) ?>">View</a></td>
                                                 </tr>
                                             <? endforeach; ?>
                                         </tbody>

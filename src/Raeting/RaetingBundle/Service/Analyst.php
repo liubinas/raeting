@@ -5,12 +5,14 @@ namespace Raeting\RaetingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
 
+use Raeting\RaetingBundle\Service\AnalysisService;
 class Analyst
 {
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Analysis $analysisService)
     {
         $this->em = $em;
+        $this->analysisService = $analysisService;
     }
 
     public function getNew()
@@ -66,8 +68,30 @@ class Analyst
         return $this->getRepository()->findOneByName($name);
     }
     
+    public function getByImportSlug($slug)
+    {
+        return $this->getRepository()->findOneByImportSlug($slug);
+    }
+    
     public function getBySlug($slug)
     {
         return $this->getRepository()->findOneBySlug($slug);
+    }
+    
+    public function prepareListingData($analysts)
+    {
+        $data = array();
+        if(!empty($analysts)){
+            foreach($analysts as $analyst){
+                $analystData = array();
+                $analystData['name'] = $analyst->getName();
+                $analystData['company'] = $analyst->getCompany();
+                $analystData['slug'] = $analyst->getSlug();
+                $analystData['totalAnalysis'] = $this->analysisService->countAllByAnalyst($analyst);
+                $analystData['lastAnalysis'] = $this->analysisService->getLastDateByAnalyst($analyst);
+                $data[] = $analystData;
+            }
+        }
+        return $data;
     }
 }

@@ -6,10 +6,6 @@ analyst_show:
     pattern:  /{slug}
     defaults: { _controller: "RaetingRaetingBundle:Analyst:show" }
 
-analyst_analysis:
-    pattern:  /{slug}/analysis
-    defaults: { _controller: "RaetingRaetingBundle:Analyst:analysis" }
-    
 analyst_graph:
     pattern:  /{slug}/ticker/{ticker}
     defaults: { _controller: "RaetingRaetingBundle:Analyst:showticker" }

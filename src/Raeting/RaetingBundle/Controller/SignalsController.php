@@ -14,7 +14,7 @@ use Raeting\RaetingBundle\Form\SignalsType;
  */
 class SignalsController extends Controller
 {
-    public $resultsPerPage = 10;
+    public $resultsPerPage = 25;
     /**
      * Lists all Signals entities.
      *

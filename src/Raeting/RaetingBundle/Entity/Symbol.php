@@ -70,6 +70,12 @@ class Symbol
      */
     private $currency;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="view_precision", type="integer", nullable=false)
+     */
+    private $viewPrecision = 3;
 
     /**
      * Get id
@@ -194,6 +200,29 @@ class Symbol
     public function getCurrency()
     {
         return $this->currency;
+    }
+    
+    /**
+     * Set viewPrecision
+     *
+     * @param string $viewPrecision
+     * @return Symbol
+     */
+    public function setViewPrecision($viewPrecision)
+    {
+        $this->viewPrecision = $viewPrecision;
+    
+        return $this;
+    }
+
+    /**
+     * Get viewPrecision
+     *
+     * @return integer 
+     */
+    public function getViewPrecision()
+    {
+        return $this->viewPrecision;
     }
     
     /**

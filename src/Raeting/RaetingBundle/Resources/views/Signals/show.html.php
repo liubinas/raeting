@@ -1,4 +1,4 @@
-<? $view->extend('RaetingRaetingBundle::Signals/menu.html.php'); ?>
+<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
 <h3>Signal #<?= $entity->getUuid() ?>, status: <?= $entity->getstatus() ?></h3>
@@ -39,15 +39,15 @@
                                             <small><?= $entity->getBuyValue() ?></small>
                                     </li>
                                     <li class="light">
-                                            <strong><?= $entity->getOpen() ?></strong>
+                                            <strong><?= $view['raeting']->renderPrice($entity->getOpen(), $entity->getSymbol()) ?></strong>
                                             <small>Open</small>
                                     </li>
                                     <li class="light">
-                                            <strong><?= $entity->getTakeprofit() ?></strong>
+                                            <strong><?= $view['raeting']->renderPrice($entity->getTakeprofit(), $entity->getSymbol()) ?></strong>
                                             <small>Take profit</small>
                                     </li>
                                     <li class="light">
-                                            <strong><?= $entity->getStoploss() ?></strong>
+                                            <strong><?= $view['raeting']->renderPrice($entity->getStoploss(), $entity->getSymbol()) ?></strong>
                                             <small>Stop loss</small>
                                     </li>
                                     <li>
@@ -83,13 +83,13 @@
                         <? if($entity->getOpenPrice()): ?>
                         <div class="form-group">
                                 <label class="col-md-4 control-label">Open Price:</label>
-                                <div class="col-md-8"><?= $entity->getOpenPrice() ?></div>
+                                <div class="col-md-8"><?= $view['raeting']->renderPrice($entity->getOpenPrice(), $entity->getSymbol()) ?></div>
                         </div>
                         <? endif; ?>
                         <? if($entity->getClosePrice()): ?>
                         <div class="form-group">
                                 <label class="col-md-4 control-label">Close Price:</label>
-                                <div class="col-md-8"><?= $entity->getClosePrice() ?></div>
+                                <div class="col-md-8"><?= $view['raeting']->renderPrice($entity->getClosePrice(), $entity->getSymbol()) ?></div>
                         </div>
                         <? endif; ?>
                         <? if($entity->getPips()): ?> 
@@ -114,14 +114,14 @@
 <script>
     $(document).ready(function(){
         
-            var d1 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime(date('Y-m-d H:i:s', strtotime($rates[$i]['source_time'])))*1000).'","'.$rates[$i]['rate'].'"]'; if($i != $total-1) echo ', '; endfor; ?>];
-            var d2 = [<? if(!empty($rates)):?>["<?= strtotime($range['from'])*1000 ?>", "<?= $entity->getStopLoss() ?>"],["<?= strtotime(date('Y-m-d H:i:s', strtotime($range['to'])))*1000 ?>", "<?= $entity->getStopLoss() ?>"]<? endif;?>];
-            var d3 = [<? if(!empty($rates)):?>["<?= strtotime($range['from'])*1000 ?>", "<?= $entity->getTakeProfit() ?>"],["<?= strtotime(date('Y-m-d H:i:s', strtotime($range['to'])))*1000 ?>", "<?= $entity->getTakeProfit() ?>"]<? endif;?>];
+            var d1 = [<? $total = count($rates); for($i=1; $i<$total;$i++): echo '["'.(strtotime(date('Y-m-d H:i:s', strtotime($rates[$i]['source_time'])).' UTC')*1000).'","'.$rates[$i]['rate'].'"]'; if($i != $total-1) echo ', '; endfor; ?>];
+            var d2 = [<? if(!empty($rates)):?>["<?= strtotime($range['from'].' UTC')*1000 ?>", "<?= $entity->getStopLoss() ?>"],["<?= strtotime(date('Y-m-d H:i:s', strtotime($range['to'])).' UTC')*1000 ?>", "<?= $entity->getStopLoss() ?>"]<? endif;?>];
+            var d3 = [<? if(!empty($rates)):?>["<?= strtotime($range['from'].' UTC')*1000 ?>", "<?= $entity->getTakeProfit() ?>"],["<?= strtotime(date('Y-m-d H:i:s', strtotime($range['to'])).' UTC')*1000 ?>", "<?= $entity->getTakeProfit() ?>"]<? endif;?>];
             <? if($entity->getOpenPrice()): ?>
-                var d5 = [["<?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getOpened()->format('Y-m-d H:i:s'))))*1000 ?>", "<?= $entity->getOpenPrice() ?>"]];
+                var d5 = [["<?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getOpened()->format('Y-m-d H:i:s'))).' UTC')*1000 ?>", "<?= $entity->getOpenPrice() ?>"]];
             <? endif;?>
             <? if($entity->getClosePrice()): ?>
-                var d6 = [["<?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getClosed()->format('Y-m-d H:i:s'))))*1000 ?>", "<?= $entity->getClosePrice() ?>"]];
+                var d6 = [["<?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getClosed()->format('Y-m-d H:i:s'))).' UTC')*1000 ?>", "<?= $entity->getClosePrice() ?>"]];
             <? endif;?>
             var data1 = [
                     { data: d1, color: "#fff"}
@@ -140,8 +140,8 @@
                     xaxis: {
                             mode: "time",
                             timeformat: "%Y-%m-%d<br/> %H:%M",
-                            min: <?= strtotime(date('Y-m-d H:i:s', strtotime($range['from'])))*1000 ?>,
-                            max: <?= strtotime(date('Y-m-d H:i:s', strtotime($range['to'])))*1000 ?>
+                            min: <?= strtotime(date('Y-m-d H:i:s', strtotime($range['from'])).' UTC')*1000 ?>,
+                            max: <?= strtotime(date('Y-m-d H:i:s', strtotime($range['to'])).' UTC')*1000 ?>
                     },
                     series: {
                             lines: {
@@ -154,12 +154,12 @@
                             hoverable: true,
                             clickable: true,
                             markings:  [ 
-                                { xaxis: { from: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getCreated()->format('Y-m-d H:i:s'))))*1000 ?>, to: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getCreated()->format('Y-m-d H:i:s'))))*1000 ?> }, color: "#555555"}
+                                { xaxis: { from: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getCreated()->format('Y-m-d H:i:s'))).' UTC')*1000 ?>, to: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getCreated()->format('Y-m-d H:i:s'))).' UTC')*1000 ?> }, color: "#555555"}
                              <? if($entity->getClosed()): ?>
-                             ,{ xaxis: { from: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getClosed()->format('Y-m-d H:i:s'))))*1000 ?>, to: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getClosed()->format('Y-m-d H:i:s'))))*1000 ?> }, color: "#555555"}
+                             ,{ xaxis: { from: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getClosed()->format('Y-m-d H:i:s'))).' UTC')*1000 ?>, to: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getClosed()->format('Y-m-d H:i:s'))).' UTC')*1000 ?> }, color: "#555555"}
                              <? endif; ?>
                              <? if($entity->getOpened()): ?>
-                             ,{ xaxis: { from: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getOpened()->format('Y-m-d H:i:s'))))*1000 ?>, to: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getOpened()->format('Y-m-d H:i:s'))))*1000 ?> }, color: "#f0ad4e"}
+                             ,{ xaxis: { from: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getOpened()->format('Y-m-d H:i:s'))).' UTC')*1000 ?>, to: <?= strtotime(date('Y-m-d H:i:s', strtotime($entity->getOpened()->format('Y-m-d H:i:s'))).' UTC')*1000 ?> }, color: "#f0ad4e"}
                              <? endif; ?>
                             ]
                     },
@@ -202,23 +202,23 @@
                                     if(day.length < 2){
                                         day = '0'+day;
                                     }
-                                    var month = (date.getMonth()+1).toString();
+                                    var month = (date.getUTCMonth()+1).toString();
                                     if(month.length < 2){
                                         month = '0'+month;
                                     }
-                                    var hours = (date.getHours()).toString();
+                                    var hours = (date.getUTCHours()).toString();
                                     if(hours.length < 2){
                                         hours = '0'+hours;
                                     }
-                                    var minutes = (date.getMinutes()).toString();
+                                    var minutes = (date.getUTCMinutes()).toString();
                                     if(minutes.length < 2){
                                         minutes = '0'+minutes;
                                     }
-                                    var seconds = (date.getSeconds()).toString();
+                                    var seconds = (date.getUTCSeconds()).toString();
                                     if(seconds.length < 2){
                                         seconds = '0'+seconds;
                                     }
-                                    var year = date.getFullYear();
+                                    var year = date.getUTCFullYear();
                                     showTooltip(item.pageX, item.pageY,
                                        year+'-'+ month +'-'+ day + ' '+ hours + ':'+ minutes + ':'+ seconds + "<br/>" + y + " <?= $entity->getSymbol()->getCurrency() ?>");
                             }

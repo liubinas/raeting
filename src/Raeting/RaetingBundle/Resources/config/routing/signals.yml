@@ -15,11 +15,3 @@ signals_new:
     pattern:  /new
     defaults: { _controller: "RaetingRaetingBundle:Signals:new" }
 
-signals_edit:
-    pattern:  /{uuid}/edit
-    defaults: { _controller: "RaetingRaetingBundle:Signals:edit" }
-
-signals_update:
-    pattern:  /{uuid}/update
-    defaults: { _controller: "RaetingRaetingBundle:Signals:update" }
-    requirements: { _method: post }

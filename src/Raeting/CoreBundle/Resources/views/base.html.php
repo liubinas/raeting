@@ -51,12 +51,35 @@
 			<!-- Logo -->
 			<a class="navbar-brand" href="<?=$view['router']->generate('home')?>">
 				<img src="<?= $view['assets']->getUrl('img/logo.png'); ?>" alt="logo" />
+                                <span class="beta">beta</span>
 			</a>
 			<!-- /logo -->
-                        <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
+                        <ul class="nav navbar-nav navbar-left hidden-xs hidden-sm">
+				<li class="dropdown">
+					<a href="<?= $view['router']->generate('trader'); ?>" class="dropdown-toggle" data-toggle="dropdown">
+						Traders
+						<i class="icon-caret-down small"></i>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="<?= $view['router']->generate('trader'); ?>">List of traders</a></li>
+						<li><a href="<?= $view['router']->generate('signals'); ?>">Signals</a></li>
+					</ul>
+				</li>
+                                <li class="dropdown">
+					<a href="<?= $view['router']->generate('analyst'); ?>" class="dropdown-toggle" data-toggle="dropdown">
+						Analysts
+						<i class="icon-caret-down small"></i>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="<?= $view['router']->generate('analyst'); ?>">List of analysts</a></li>
+						<li><a href="<?= $view['router']->generate('analysis'); ?>">Analysis</a></li>
+					</ul>
+				</li>
+			</ul>
+                        <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+                            <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
                                 $user = $app->getUser();
                             ?>
-                        <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
                             <li class="dropdown user">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                             <i class="icon-male"></i>
@@ -65,23 +88,54 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                             <li><a href="<?=$view['router']->generate('trader_show', array('slug' => $user->getSlug() )) ?>"><i class="icon-user"></i> My Profile</a></li>
-                                            <li><a href="<?=$view['router']->generate('user.profile.edit') ?>"><i class="icon-user"></i> Edit Profile</a></li>
-                                            <li><a href="<?=$view['router']->generate('my_signals') ?>"><i class="icon-user"></i> My signals</a></li>
+                                            <li><a href="<?=$view['router']->generate('user.profile.edit') ?>"><i class="icon-pencil"></i> Edit Profile</a></li>
+                                            <li><a href="<?=$view['router']->generate('my_signals') ?>"><i class="icon-list"></i> My signals</a></li>
                                             <li class="divider"></li>
                                             <li><a href="<?=$view['router']->generate('estinacmf_user.logout') ?>"><i class="icon-key"></i> Log Out</a></li>
                                     </ul>
                             </li>
-                        </ul>
+                        <? else: ?>
+                            <li><a href="<?= $view['router']->generate('estinacmf_user.security.login'); ?>">Login</a></li>
                         <? endif; ?>
+                        </ul>
 		</div>
 		<!-- /top navigation bar -->
 	</header> <!-- /.header -->
         <div id="container" class="fixed-header">
 		<div id="sidebar" class="sidebar-fixed">
 			<div id="sidebar-content">
-                            <ul id="nav">
-                                <? $view['slots']->output('menu') ?>
-                            </ul>
+                            <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
+                                $user = $app->getUser();
+                            ?>
+                                <ul id="nav">
+                                        <li class="open">
+                                                <a href="javascript:void(0);">
+                                                        <i class="icon-edit"></i>
+                                                        My raeting
+                                                <i class="arrow icon-angle-left"></i></a>
+                                                <ul class="sub-menu" style="display: block;">
+                                                        <li<? $view['slots']->output('menuProfileActive') ?>>
+                                                                <a href="<?=$view['router']->generate('trader_show', array('slug' => $user->getSlug() )) ?>">
+                                                                <i class="icon-user"></i>
+                                                                Profile
+                                                                </a>
+                                                        </li>
+                                                        <li<? $view['slots']->output('menuProfileEditActive') ?>>
+                                                                <a href="<?=$view['router']->generate('user.profile.edit') ?>">
+                                                                <i class="icon-pencil"></i>
+                                                                Edit profile
+                                                                </a>
+                                                        </li>
+                                                        <li<? $view['slots']->output('menuSignalsActive') ?>>
+                                                                <a href="<?=$view['router']->generate('my_signals') ?>">
+                                                                <i class="icon-list"></i>
+                                                                Signals
+                                                                </a>
+                                                        </li>
+                                                </ul>
+                                        </li>
+                                </ul>
+                            <? endif; ?>
                             <div class="sidebar-title">
                                     <span>Copyright &copy; RAETING.com 2013.<br/> All rights reserved.</span>
                             </div>

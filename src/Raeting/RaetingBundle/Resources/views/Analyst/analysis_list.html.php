@@ -8,7 +8,7 @@
                         <? if(isset($showSearch) && $showSearch == true): ?>
                         <div class="col-md-12">
                             <div class="dataTables_filter" id="DataTables_Table_0_filter">
-                                <form class="form-inline" method="get" action="<?= $view['router']->generate($searchLink, array('slug' => $analystSlug)) ?>">
+                                <form class="form-inline" method="get" action="<?= $view['router']->generate($searchLink, $params) ?>">
                                     <label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="icon-search"></i></span>
@@ -22,19 +22,26 @@
                             <? if (!empty($analysis)): ?>
                                     <table class="table table-striped table-hover">
                                         <thead>
-                                        <th>Symbol</th>
-                                        <th>Estimation</th>
                                         <th>Date</th>
+                                        <? if(!isset($params['slug'])): ?>
+                                        <th>Analyst</th>
+                                        <? endif; ?>
+                                        <th>Symbol</th>
                                         <th>Recommendation</th>
+                                        <th>Target price</th>
+                                        <th></th>
                                         </thead>
                                         <tbody>
                                             <? foreach ($analysis as $entity): ?>
                                                 <tr>
-                                                    <td><a href="<?= $view['router']->generate('analyst_graph', array('slug' => $analystSlug, 'ticker' => strtolower($entity->getTicker()->getSymbol()))) ?>"><?= $entity->getTicker()->getTitle() ?></a></td>
-                                                    <td><?= $entity->getEstimation() ?></td>
                                                     <td><?= $entity->getDate()->format('Y-m-d') ?></td>
-                                                    <td><?= $entity->getRecommendation() ?></td>
-                                                    <td><a href="<?= $view['router']->generate('analyst_graph', array('slug' => $analystSlug, 'ticker' => strtolower($entity->getTicker()->getSymbol()))) ?>">View</a></td>
+                                                    <? if(!isset($params['slug'])): ?>
+                                                    <td><?= $entity->getAnalyst()->getName()?></td>
+                                                    <? endif; ?>
+                                                    <td><a href="<?= $view['router']->generate('analyst_graph', array('slug' => $entity->getAnalyst()->getSlug(), 'ticker' => strtolower($entity->getTicker()->getSymbol()))) ?>"><?= $entity->getTicker()->getTitle() ?></a></td>
+                                                    <td><?= $view['raeting']->renderAnalysisStatus($entity->getRecommendation(), true) ?></td>
+                                                    <td><?= $view['raeting']->renderPrice($entity->getEstimation(), $entity->getTicker()) ?></td>
+                                                    <td><a href="<?= $view['router']->generate('analyst_graph', array('slug' => $entity->getAnalyst()->getSlug(), 'ticker' => strtolower($entity->getTicker()->getSymbol()))) ?>">View</a></td>
                                                 </tr>
                                             <? endforeach; ?>
                                         </tbody>
@@ -46,10 +53,13 @@
             </div>
     </div>
 </div>
-<? if(isset($showSearch) && $showSearch == true){
-        $params = array('analysis-search' => $query, 'slug' => $analystSlug);
-    }else{
-        $params = array('slug' => $analystSlug, 'ticker' => strtolower($ticker->getSymbol()));
-    }
+<?  if(isset($showSearch) && $showSearch == true):
+        $get = array('analysis-search' => $query);
+        if(isset($params['slug'])):
+            $get['slug'] = $params['slug'];
+        endif;
+    else:
+        $get = array('slug' => $analystSlug, 'ticker' => strtolower($ticker->getSymbol()));
+    endif;
 ?>
-<?= $view['pagination']->render($page, $totalAnalysis, $perPage, $searchLink, $params);?>
+<?= $view['pagination']->render($page, $totalAnalysis, $perPage, $searchLink, $get);?>

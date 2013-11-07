@@ -1,4 +1,13 @@
-<? $view->extend('RaetingRaetingBundle::Trader/menu.html.php'); ?>
+<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
+
+<? 
+if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
+    $user = $app->getUser();
+    if($user->getId() == $entity->getId()):
+        $view['slots']->start('menuProfileActive') ?> class="current"<? $view['slots']->stop('menuProfileActive');
+    endif;
+endif; 
+?>
 
 <? $view['slots']->start('crumbs') ?>
 <div class="crumbs">
@@ -18,7 +27,7 @@
 <? $view['slots']->stop('crumbs') ?>
 
 <? $view['slots']->start('header_row') ?>
-<h3>Trader Profile</h3>
+<h3>Trader Profile</h3><? if($user->getId() == $entity->getId()):?><a href="<?=$view['router']->generate('user.profile.edit') ?>">Edit</a><? endif; ?>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('content') ?>
@@ -60,12 +69,12 @@
                                                 <div class='flot-y'>
                                                     <div class='flot-tick-label'>Pips</div>
                                                 </div>
-                                                    <div class="widget-chart"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
+                                                    <div class="widget-chart labeled"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
                                                             <div id="chart_widget" class="chart chart-medium"></div>
+                                                            <div class='flot-x'>
+                                                                <div class='flot-tick-label'>Signals</div>
+                                                            </div>
                                                     </div>
-                                                <div class='flot-x'>
-                                                    <div class='flot-tick-label'>Signals</div>
-                                                </div>
                                             </div>
                                     </div>
                             </div>
@@ -132,20 +141,20 @@
                                                     <? foreach ($signals as $signal): ?>
                                                         <tr>
                                                             <td>
-                                                                <? switch($signal->getstatus()){
+                                                                <? switch($signal->getstatus()):
                                                                 case 'new': $label =  'label-success';break;
                                                                 case 'opened': $label =  'label-warning';break;
                                                                 case 'closed': $label =  'label-info';break;
                                                                 case 'error': $label =  'label-danger';break;
-                                                                    } 
+                                                                   endswitch;
                                                                 ?>
                                                                 <span class="label <?= $label ?>"><?= $signal->getstatus() ?></span>
                                                             </td>
                                                             <td><?= $signal->getSymbol()->getTitle() ?></td>
                                                             <td><?= $signal->getBuyValue() ?></td>
-                                                            <td><?= $signal->getOpen() ?></td>
-                                                            <td><?= $signal->getTakeprofit() ?></td>
-                                                            <td><?= $signal->getStoploss() ?></td>
+                                                            <td><?= $view['raeting']->renderPrice($signal->getOpen(), $signal->getSymbol()) ?></td>
+                                                            <td><?= $view['raeting']->renderPrice($signal->getTakeprofit(), $signal->getSymbol()) ?></td>
+                                                            <td><?= $view['raeting']->renderPrice($signal->getStoploss(), $signal->getSymbol()) ?></td>
                                                             <td><?= $signal->getCreated()->format('Y-m-d H:i:s') ?></td>
                                                         <td><a href="<?= $view['router']->generate('signals_show', array('uuid' => $signal->getUuid())) ?>">View</a></td>
                                                         </tr>

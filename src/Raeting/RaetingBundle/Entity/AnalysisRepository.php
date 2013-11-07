@@ -20,16 +20,32 @@ class AnalysisRepository extends EntityRepository
         return $query;
     }
     
-    public function getAllByAnalystAndQuery($analyst, $query, $perPage, $page)
+    public function getAll($analyst = null, $search = null, $ticker = null, $perPage = null, $page = null)
     {
         $query = $this->createQueryBuilder('s')
                 ->select('s, t')
-                ->leftJoin('s.ticker', 't')
-                ->where('t.title LIKE :query')
-                ->setParameter('query', '%'.$query.'%')
-                ->getQuery();
+                ->leftJoin('s.ticker', 't');
         
-        $query = $this->addLimits($query, $perPage, $page);
+        if($analyst != null){
+            $query->andWhere('s.analyst = :analyst')
+                ->setParameter('analyst', $analyst);
+        }
+        
+        if($search != null){
+            $query->andWhere('t.title LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+        }
+        
+        if($ticker != null){
+            $query->andWhere('t.symbol = :ticker')
+                ->setParameter('ticker', $ticker);
+        }
+        
+        if($perPage != null && $page != null){
+            $query = $this->addLimits($query, $perPage, $page);
+        }
+        
+        $query = $query->getQuery();
         
         try {
             return $query->getResult();
@@ -37,6 +53,32 @@ class AnalysisRepository extends EntityRepository
             return null;
         }
         
+    }
+    
+    public function getAllByAnalystAndQuery($analyst, $query, $perPage, $page)
+    {
+        return $this->getAll($analyst, $query, null, $perPage, $page);
+        
+    }
+    
+    public function getAllByQuery($query, $perPage, $page)
+    {
+        return $this->getAll(null, $query, null, $perPage, $page);
+    }
+    
+    public function getAllWithPaging($perPage, $page)
+    {
+        return $this->getAll(null, null, null, $perPage, $page);
+    }
+    
+    public function getAllByAnalyst($analyst, $perPage, $page)
+    {
+        return $this->getAll($analyst, null, null, $perPage, $page);
+    }
+    
+    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page)
+    {
+        return $this->getAll($analyst, null, $ticker, $perPage, $page);
     }
     
     public function getAnalystEstimationRangeByTicker($analyst, $ticker)
@@ -97,77 +139,61 @@ class AnalysisRepository extends EntityRepository
         }
     }
     
-    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page)
-    {
-        $query = $this->createQueryBuilder('s')
-                ->select('s, t')
-                ->leftJoin('s.ticker', 't')
-                ->where('t.symbol = :ticker')
-                ->andWhere('s.analyst = :analyst')
-                ->setParameter('ticker', $ticker)
-                ->setParameter('analyst', $analyst)
-                ->getQuery();
-        
-        $query = $this->addLimits($query, $perPage, $page);
-        
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-        
-    }
-    
-    public function getAllByAnalyst($analyst, $perPage, $page)
+    public function getLastDateByAnalyst($analyst)
     {
         $query = $this->createQueryBuilder('s')
                 ->select('s')
-                ->where('s.analyst = :analyst')
+                ->andWhere('s.analyst = :analyst')
+                ->orderBy('s.date', 'desc')
                 ->setParameter('analyst', $analyst)
+                ->setMaxResults(1)
                 ->getQuery();
         
-        $query = $this->addLimits($query, $perPage, $page);
         
         try {
-            return $query->getResult();
+            return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
+    }
+    
+    public function countAll($analyst = null, $search = null)
+    {
+        $query = $this->createQueryBuilder('a')
+                ->select('count(a.id) counter')
+                ->leftJoin('a.ticker', 't');
         
+        if($analyst != null){
+            $query->andWhere('a.analyst = :analyst')
+                ->setParameter('analyst', $analyst);
+        }
+        if($search != null){
+            $query->andWhere('t.title LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+        }
+        
+        $query = $query->getQuery();
+        
+        try {
+            $result =  $query->getSingleResult();
+            return $result['counter'];
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
     
     public function countAllByAnalystAndQuery($analyst, $query)
     {
-        $query = $this->createQueryBuilder('a')
-                ->select('count(a.id) counter')
-                ->leftJoin('a.ticker', 't')
-                ->where('t.title LIKE :query')
-                ->andWhere('a.analyst = :analyst')
-                ->setParameter('query', '%'.$query.'%')
-                ->setParameter('analyst', $analyst)
-                ->getQuery();
-        
-        try {
-            $result =  $query->getSingleResult();
-            return $result['counter'];
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        return $this->countAll($analyst, $query);
     }
 
     public function countAllByAnalyst($analyst)
     {
-        $query = $this->createQueryBuilder('a')
-                ->select('count(a.id) counter')
-                ->where('a.analyst = :analyst')
-                ->setParameter('analyst', $analyst)
-                ->getQuery();
-        
-        try {
-            $result =  $query->getSingleResult();
-            return $result['counter'];
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        return $this->countAll($analyst);
+    }
+    
+    public function countAllByQuery($query)
+    {
+        return $this->countAll(null, $query);
     }
 }

@@ -14,6 +14,15 @@ Raeting\RaetingBundle\Entity\Analyst:
             length: 255
             fixed: false
             nullable: false
+        company:
+            type: string
+            length: 255
+            fixed: false
+        importSlug:
+            type: string
+            length: 255
+            fixed: false
+            column: import_slug
         slug:
             type: string
             length: 255

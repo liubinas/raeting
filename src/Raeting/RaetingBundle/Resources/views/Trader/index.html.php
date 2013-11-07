@@ -1,4 +1,4 @@
-<? $view->extend('RaetingRaetingBundle::Trader/menu.html.php'); ?>
+<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
 <? $view['slots']->start('crumbs') ?>
     <div class="crumbs">
@@ -27,6 +27,7 @@
                 <thead>
                 <th></th>
                 <th>Name</th>
+                <th>Company</th>
                 <th>Pips</th>
                 <th>Total signals</th>
                 <th>Since</th>
@@ -43,7 +44,8 @@
                                 array('slug' => $entity['slug'])
                             ) ?>"><?= $entity['firstname'] . ' ' . $entity['lastname'] ?></a>
                         </td>
-                        <td><?= $entity['pips'] ?></td>
+                        <td><?= $entity['company'] ?></td>
+                        <td><?= $entity['pips'] ? $entity['pips'] : '0' ?></td>
                         <td><?= $entity['signals'] ?></td>
                         <td><?= $entity['createDate']->format('Y-m-d') ?></td>
                     </tr>

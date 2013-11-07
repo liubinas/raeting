@@ -5,16 +5,14 @@ namespace Raeting\RaetingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
 
-use Raeting\RaetingBundle\Service\AnalystService;
 use Raeting\RaetingBundle\Service\SymbolService;
 
 class Analysis
 {
 
-    public function __construct(EntityManager $em, Analyst $analystService, Symbol $symbolService)
+    public function __construct(EntityManager $em, Symbol $symbolService)
     {
         $this->em = $em;
-        $this->analystService = $analystService;
         $this->symbolService = $symbolService;
     }
 
@@ -61,6 +59,16 @@ class Analysis
         return $this->getRepository()->getAllByAnalyst($analyst, $perPage, $page);
     }
     
+    public function getAllByQuery($query, $perPage, $page)
+    {
+        return $this->getRepository()->getAllByQuery($query, $perPage, $page);
+    }
+    
+    public function getAllWithPaging($perPage, $page)
+    {
+        return $this->getRepository()->getAllWithPaging($perPage, $page);
+    }
+    
     public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page)
     {
         return $this->getRepository()->getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page);
@@ -86,9 +94,19 @@ class Analysis
         return $this->getRepository()->countAllByAnalyst($analyst);
     }
     
+    public function countAll()
+    {
+        return $this->getRepository()->countAll();
+    }
+    
     public function countAllByAnalystAndQuery($analyst, $query)
     {
         return $this->getRepository()->countAllByAnalystAndQuery($analyst, $query);
+    }
+    
+    public function countAllByQuery($query)
+    {
+        return $this->getRepository()->countAllByQuery($query);
     }
     
     private function formatRecommendation($recommendation)
@@ -106,9 +124,8 @@ class Analysis
         return null;
     }
     
-    public function insertData($data)
+    public function insertData($data, $analyst)
     {
-        $analyst = $this->analystService->getByName($data['analyst']);
         $symbol = $this->symbolService->getBySymbol($data['ticker']);
         if(!empty($analyst) && !empty($symbol)){
             $analysis = $this->getRepository()->findOneBySymbolAndAnalystAndDate($symbol, $analyst, date('Y-m-d', strtotime($data['date'])));
@@ -128,5 +145,10 @@ class Analysis
             return $return;
         }
         return 0;
+    }
+    
+    public function getLastDateByAnalyst($analyst)
+    {
+        return $this->getRepository()->getLastDateByAnalyst($analyst);
     }
 }

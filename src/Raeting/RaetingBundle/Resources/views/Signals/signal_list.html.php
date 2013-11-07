@@ -50,20 +50,20 @@
                                             <? foreach ($entities as $entity): ?>
                                                 <tr>
                                                     <td>
-                                                        <? switch($entity->getstatus()){
+                                                        <? switch($entity->getstatus()):
                                                                 case 'new': $label =  'label-success';break;
                                                                 case 'opened': $label =  'label-warning';break;
                                                                 case 'closed': $label =  'label-info';break;
                                                                 case 'error': $label =  'label-danger';break;
-                                                            } 
+                                                            endswitch;
                                                         ?>
                                                         <span class="label <?= $label ?>"><?= $entity->getstatus() ?></span>
                                                     </td>
                                                     <td><?= $entity->getSymbol()->getTitle() ?></td>
                                                     <td><?= $entity->getBuyValue() ?></td>
-                                                    <td><?= $entity->getOpen() ?></td>
-                                                    <td><?= $entity->getTakeprofit() ?></td>
-                                                    <td><?= $entity->getStoploss() ?></td>
+                                                    <td><?= $view['raeting']->renderPrice($entity->getOpen(), $entity->getSymbol()) ?></td>
+                                                    <td><?= $view['raeting']->renderPrice($entity->getTakeprofit(), $entity->getSymbol()) ?></td>
+                                                    <td><?= $view['raeting']->renderPrice($entity->getStoploss(), $entity->getSymbol()) ?></td>
                                                     <td>
                                                         <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getUser()->getSlug())) ?>"><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></a></td>
                                                     <td><?= $entity->getCreated()->format('Y-m-d H:i:s') ?></td>

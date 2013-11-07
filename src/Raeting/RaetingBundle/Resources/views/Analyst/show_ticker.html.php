@@ -1,4 +1,4 @@
-<? $view->extend('RaetingRaetingBundle::Analyst/menu.html.php'); ?>
+<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
 <h3 class="fl"><?= $ticker->getTitle() ?> (<?= $ticker->getSymbol() ?>)</h3>
@@ -34,7 +34,7 @@
                     <div class='flot-y'>
                         <div class='flot-tick-label'><?= $ticker->getCurrency() ?></div>
                     </div>
-                        <div class="widget-chart"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
+                        <div class="widget-chart labeled"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
                             <div class="title"><?= $ticker->getTitle() ?></div>    
                             <div id="chart_widget" class="chart chart-medium"></div>
                         </div>

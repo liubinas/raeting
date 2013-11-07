@@ -6,6 +6,10 @@ raeting_analyst:
     resource: "@RaetingRaetingBundle/Resources/config/routing/analyst.yml"
     prefix:   /analysts
 
+raeting_analysis:
+    resource: "@RaetingRaetingBundle/Resources/config/routing/analysis.yml"
+    prefix:   /analysis
+    
 trader:
     resource: "@RaetingRaetingBundle/Resources/config/routing/trader.yml"
     prefix:   /traders
@@ -16,13 +20,11 @@ home:
 api:
     pattern:  /api
     defaults: { _controller: "RaetingRaetingBundle:Raeting:api" }
+    
 ajax_symbols:
     pattern:  /ajaxsymbols
     defaults: { _controller: "RaetingRaetingBundle:Signals:ajaxGetAllSymbolsJson" }
     
-pips:
-    pattern:  /pips_calculator
-    defaults: { _controller: "RaetingRaetingBundle:Profit:pips" }
 my_signals:
     pattern:  /my_signals
     defaults: { _controller: "RaetingRaetingBundle:Signals:mysignals" }

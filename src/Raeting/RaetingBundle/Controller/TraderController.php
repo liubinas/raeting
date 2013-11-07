@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class TraderController extends Controller
 {
-    public $resultsPerPage = 10;
+    public $resultsPerPage = 25;
     
     /**
      * @Template()
