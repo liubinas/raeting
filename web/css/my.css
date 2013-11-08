@@ -115,3 +115,6 @@
     text-transform: uppercase;
     color: #EEE;
 }
+#container .no-sidebar{
+    margin-left: 0px;
+}

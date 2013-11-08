@@ -101,7 +101,7 @@
 		</div>
 		<!-- /top navigation bar -->
 	</header> <!-- /.header -->
-        <div id="container" class="fixed-header">\
+        <div id="container" class="fixed-header">
                 <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
                     $user = $app->getUser();
                 ?>
@@ -144,7 +144,7 @@
 		<!-- /Sidebar -->
                 <? endif; ?>
 
-		<div id="content">
+		<div id="content"<?= (!$view['security']->isGranted('IS_AUTHENTICATED_FULLY')) ? ' class="no-sidebar"' : ''?>>
 			<div class="container">
                             <? $view['slots']->output('crumbs') ?>
                             <div class="page-header">
