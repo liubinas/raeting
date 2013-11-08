@@ -141,7 +141,33 @@
                             mode: "time",
                             timeformat: "%Y-%m-%d<br/> %H:%M",
                             min: <?= strtotime(date('Y-m-d H:i:s', strtotime($range['from'])).' UTC')*1000 ?>,
-                            max: <?= strtotime(date('Y-m-d H:i:s', strtotime($range['to'])).' UTC')*1000 ?>
+                            max: <?= strtotime(date('Y-m-d H:i:s', strtotime($range['to'])).' UTC')*1000 ?>,
+                            tickFormatter: function (val, axis) {
+                                var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+                                var dateFrom = new Date(axis.min);
+                                var dateTo = new Date(axis.max);
+                                var dayDiff = daysBetween(dateFrom, dateTo);
+                                var d = new Date(val);
+                                if(dayDiff > 5){
+                                    return monthNames[d.getUTCMonth()-1]+' '+d.getUTCDate();
+                                }else{
+                                    var hours = d.getUTCHours();
+                                    var hours = (hours+24-2)%24; 
+                                    var mid='am';
+                                    if(hours==0){
+                                        hours = '12';
+                                    }else if(hours>12){
+                                        hours = hours%12;
+                                        hours = hours.toString();
+                                        mid='pm';
+                                    }
+                                    var minutes = d.getUTCMinutes().toString();
+                                    if(minutes.length < 2){
+                                        minutes = '0'+minutes;
+                                    }
+                                    return hours+':'+minutes+' '+mid;
+                                }
+                            }
                     },
                     series: {
                             lines: {

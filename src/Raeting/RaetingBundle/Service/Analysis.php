@@ -151,4 +151,9 @@ class Analysis
     {
         return $this->getRepository()->getLastDateByAnalyst($analyst);
     }
+    
+    public function getLastSymbolsByAnalyst($analyst, $amount)
+    {
+        return $this->getRepository()->getLastSymbolsByAnalyst($analyst, $amount);
+    }
 }

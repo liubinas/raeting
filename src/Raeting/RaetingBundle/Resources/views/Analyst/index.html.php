@@ -30,6 +30,7 @@
                                         <th>Company</th>
                                         <th>Total analysis</th>
                                         <th>Last analysis</th>
+                                        <th>Last estimations</th>
                                         <th></th>
                                         </thead>
                                         <tbody>
@@ -39,6 +40,7 @@
                                                     <td><?= $analyst['company'] ?></td>
                                                     <td><?= $analyst['totalAnalysis'] ?></td>
                                                     <td><?= !empty($analyst['lastAnalysis']) ? $analyst['lastAnalysis']->getDate()->format('Y-m-d') : '' ?></td>
+                                                    <td><?= $analyst['lastSymbols'] ?></td>
                                                     <td><a href="<?= $view['router']->generate('analyst_show', array('slug' => $analyst['slug'])) ?>">View</a></td>
                                                 </tr>
                                             <? endforeach; ?>

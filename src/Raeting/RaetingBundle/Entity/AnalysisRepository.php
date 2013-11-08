@@ -139,6 +139,25 @@ class AnalysisRepository extends EntityRepository
         }
     }
     
+    public function getLastSymbolsByAnalyst($analyst, $amount)
+    {
+        $query = $this->createQueryBuilder('s')
+                ->select('s')
+                ->andWhere('s.analyst = :analyst')
+                ->orderBy('s.date', 'desc')
+                ->setParameter('analyst', $analyst)
+                ->groupBy('s.ticker')
+                ->setMaxResults($amount)
+                ->getQuery();
+        
+        
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
     public function getLastDateByAnalyst($analyst)
     {
         $query = $this->createQueryBuilder('s')

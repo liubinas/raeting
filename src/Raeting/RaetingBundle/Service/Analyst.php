@@ -89,6 +89,15 @@ class Analyst
                 $analystData['slug'] = $analyst->getSlug();
                 $analystData['totalAnalysis'] = $this->analysisService->countAllByAnalyst($analyst);
                 $analystData['lastAnalysis'] = $this->analysisService->getLastDateByAnalyst($analyst);
+                $lastSymbols = $this->analysisService->getLastSymbolsByAnalyst($analyst, 3);
+                $lastSymbolsString = '';
+                if(!empty($lastSymbols)){
+                    foreach($lastSymbols as $analysis){
+                        $lastSymbolsString .= $analysis->getTicker()->getTitle().', ';
+                    }
+                    $lastSymbolsString = substr($lastSymbolsString, 0, -2);
+                }
+                $analystData['lastSymbols'] = $lastSymbolsString;
                 $data[] = $analystData;
             }
         }
