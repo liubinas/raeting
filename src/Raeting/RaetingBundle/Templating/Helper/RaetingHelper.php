@@ -18,7 +18,7 @@ class RaetingHelper extends Helper
     
     public function renderDate($date)
     {
-        return $date;
+        return date('D, M j, Y, g:iA', strtotime($date)).' UTC';
     }
     
     public function renderAnalysisStatus($status, $color = false)

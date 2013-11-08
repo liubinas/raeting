@@ -41,7 +41,7 @@
                                                     <td><?= $analyst['name'] ?></td>
                                                     <td><?= $analyst['company'] ?></td>
                                                     <td><?= $analyst['totalAnalysis'] ?></td>
-                                                    <td><?= !empty($analyst['lastAnalysis']) ? $analyst['lastAnalysis']->getDate()->format('Y-m-d') : '' ?></td>
+                                                    <td><?= !empty($analyst['lastAnalysis']) ? $view['raeting']->renderDate($analyst['lastAnalysis']->getDate()->format('Y-m-d')) : '' ?></td>
                                                     <td><?= $analyst['lastSymbols'] ?></td>
                                                     <td><a href="<?= $view['router']->generate('analyst_show', array('slug' => $analyst['slug'])) ?>">View</a></td>
                                                 </tr>

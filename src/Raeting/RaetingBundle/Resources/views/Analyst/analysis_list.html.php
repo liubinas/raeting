@@ -34,7 +34,7 @@
                                         <tbody>
                                             <? foreach ($analysis as $entity): ?>
                                                 <tr>
-                                                    <td><?= $entity->getDate()->format('Y-m-d') ?></td>
+                                                    <td><?= $view['raeting']->renderDate($entity->getDate()->format('Y-m-d')) ?></td>
                                                     <? if(!isset($params['slug'])): ?>
                                                     <td><?= $entity->getAnalyst()->getName()?></td>
                                                     <? endif; ?>

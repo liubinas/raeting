@@ -62,3 +62,19 @@ function daysBetween(date1, date2) {
     return Math.round(difference_ms/ONE_DAY)
 
 }
+
+function formatHours(hours, minutes) {
+    var hours = (hours+24-2)%24; 
+    var mid='AM';
+    if(hours==0){
+        hours = '12';
+    }else if(hours>12){
+        hours = hours%12;
+        hours = hours.toString();
+        mid='PM';
+    }
+    if(minutes.length < 2){
+        minutes = '0'+minutes;
+    }
+    return hours+':'+minutes+''+mid;
+}

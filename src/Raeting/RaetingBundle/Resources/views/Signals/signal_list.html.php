@@ -66,7 +66,7 @@
                                                     <td><?= $view['raeting']->renderPrice($entity->getStoploss(), $entity->getSymbol()) ?></td>
                                                     <td>
                                                         <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getUser()->getSlug())) ?>"><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></a></td>
-                                                    <td><?= $entity->getCreated()->format('Y-m-d H:i:s') ?></td>
+                                                    <td><?= $view['raeting']->renderDate($entity->getCreated()->format('Y-m-d H:i:s')) ?></td>
                                                     <td><a href="<?= $view['router']->generate('signals_show', array('uuid' => $entity->getUuid())) ?>">View</a></td>
                                                 </tr>
                                             <? endforeach; ?>

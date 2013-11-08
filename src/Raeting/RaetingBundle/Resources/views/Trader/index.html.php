@@ -49,7 +49,7 @@
                         <td><?= $entity['company'] ?></td>
                         <td><?= $entity['pips'] ? $entity['pips'] : '0' ?></td>
                         <td><?= $entity['signals'] ? $entity['signals'] : '0' ?></td>
-                        <td><?= $entity['createDate']->format('Y-m-d') ?></td>
+                        <td><?= $view['raeting']->renderDate($entity['createDate']->format('Y-m-d')) ?></td>
                     </tr>
                 <? endforeach; ?>
                 </tbody>

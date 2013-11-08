@@ -156,7 +156,7 @@ endif;
                                                             <td><?= $view['raeting']->renderPrice($signal->getOpen(), $signal->getSymbol()) ?></td>
                                                             <td><?= $view['raeting']->renderPrice($signal->getTakeprofit(), $signal->getSymbol()) ?></td>
                                                             <td><?= $view['raeting']->renderPrice($signal->getStoploss(), $signal->getSymbol()) ?></td>
-                                                            <td><?= $signal->getCreated()->format('Y-m-d H:i:s') ?></td>
+                                                            <td><?= $view['raeting']->renderDate($signal->getCreated()->format('Y-m-d H:i:s')) ?></td>
                                                         <td><a href="<?= $view['router']->generate('signals_show', array('uuid' => $signal->getUuid())) ?>">View</a></td>
                                                         </tr>
                                                     <? endforeach; ?>
