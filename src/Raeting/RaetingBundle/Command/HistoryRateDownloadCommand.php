@@ -15,9 +15,14 @@ class HistoryRateDownloadCommand extends ContainerAwareCommand
             ->setName('raeting:downloadrates:forexite')
             ->setDescription('Imports currency rates from fxcm.com')
             ->addArgument(
-                'date',
+                'dateFrom',
                 InputArgument::REQUIRED,
                 'Date from ex. 2013-10-30'
+            )
+            ->addArgument(
+                'dateTo',
+                InputArgument::REQUIRED,
+                'Date from ex. 2013-10-31'
             )
         ;
     }
@@ -29,9 +34,10 @@ class HistoryRateDownloadCommand extends ContainerAwareCommand
         $container = $this->getContainer();
         $dir = $container->get('kernel')->getRootDir().'/../uploads/history_currency_rates/';
         
-        $date = date('Y-m-d', strtotime($input->getArgument('date')));
+        $dateFrom = date('Y-m-d', strtotime($input->getArgument('dateFrom')));
+        $dateTo = date('Y-m-d', strtotime($input->getArgument('dateTo')));
         $filesDownloaded = 0;
-        while($date != date('Y-m-d')){
+        while($dateFrom != $dateTo){
             $filename = date('d', strtotime($date)).date('m', strtotime($date)).date('y', strtotime($date));
             $data = file_get_contents('http://www.forexite.com/free_forex_quotes/'.date('Y', strtotime($date)).'/'.date('m', strtotime($date)).'/'.$filename.'.zip');
             $file = $dir.$filename.'.zip';
@@ -46,7 +52,7 @@ class HistoryRateDownloadCommand extends ContainerAwareCommand
                 }
             }
             unlink($file);
-            $date = date('Y-m-d', strtotime($date.' + 1 DAY'));
+            $dateFrom = date('Y-m-d', strtotime($dateFrom.' + 1 DAY'));
         }
         
         $output->writeln('<info>Files downloaded: '.$filesDownloaded.'</info>');

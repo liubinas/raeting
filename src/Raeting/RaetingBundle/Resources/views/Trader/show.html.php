@@ -135,6 +135,7 @@ endif;
                                                         <th>Take profit</th>
                                                         <th>Stop loss</th>
                                                         <th>Created</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
