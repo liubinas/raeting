@@ -207,12 +207,10 @@ var AppTemplate = function() {
 
 			// Toggle on small devices instead of accordion
 			if ($(window).width() > 767) {
-				var parent = $(this).parent().parent();
-
-				parent.children('li.open').children('a').children('i.arrow').removeClass(arrow_class_open).addClass(arrow_class_closed);
-				parent.children('li.open').children('.sub-menu').slideUp(200);
-				parent.children('li.open-default').children('.sub-menu').slideUp(200);
-				parent.children('li.open').removeClass('open').removeClass('open-default');
+				$(this).parents('li.open').children('a').children('i.arrow').removeClass(arrow_class_open).addClass(arrow_class_closed);
+				$(this).parents('li.open').children('.sub-menu').slideUp(200);
+				$(this).parents('li.open-default').children('.sub-menu').slideUp(200);
+				$(this).parents('li.open').removeClass('open').removeClass('open-default');
 			}
 
 			var sub = $(this).next();

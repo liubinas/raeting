@@ -1,5 +1,7 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
+<? $view['slots']->start('menuAnalystsActive') ?> class="current"<? $view['slots']->stop('menuAnalystsActive') ?>
+
 <? $view['slots']->start('header_row') ?>
 <h3>Analysts</h3>
 <? $view['slots']->stop('header_row') ?>
@@ -28,7 +30,7 @@
                                         <thead>
                                         <th>Name</th>
                                         <th>Company</th>
-                                        <th>Total analysis</th>
+                                        <th>Total analyses</th>
                                         <th>Last analysis</th>
                                         <th>Last estimations</th>
                                         <th></th>

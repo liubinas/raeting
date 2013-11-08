@@ -1,5 +1,7 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
+<? $view['slots']->start('menuTradersActive') ?> class="current"<? $view['slots']->stop('menuTradersActive') ?>
+
 <? $view['slots']->start('crumbs') ?>
     <div class="crumbs">
         <ul id="breadcrumbs" class="breadcrumb">

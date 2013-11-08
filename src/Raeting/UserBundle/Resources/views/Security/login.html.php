@@ -1,4 +1,4 @@
-<? $view->extend('RaetingUserBundle::User/menu.html.php'); ?>
+<? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 <? if (!$view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
 <? $view['slots']->start('body_attr') ?>class="login"<? $view['slots']->stop('body_attr') ?>
     <? $view['slots']->start('content') ?>

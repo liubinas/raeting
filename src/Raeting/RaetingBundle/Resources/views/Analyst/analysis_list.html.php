@@ -2,7 +2,7 @@
     <div class="col-md-12">
             <div class="widget box">
                     <div class="widget-header">
-                            <h4>Analysis</h4>
+                            <h4>Analyses</h4>
                     </div>
                     <div class="widget-content">
                         <? if(isset($showSearch) && $showSearch == true): ?>

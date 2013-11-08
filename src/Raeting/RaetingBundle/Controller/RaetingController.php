@@ -13,6 +13,7 @@ class RaetingController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('RaetingRaetingBundle:Raeting:index.html.php');
+        return $this->render('RaetingRaetingBundle:Raeting:index.html.php', array('hideSidebar' => true,
+            'showTopMenu' => true));
     }
 }

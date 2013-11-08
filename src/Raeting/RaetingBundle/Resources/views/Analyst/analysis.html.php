@@ -1,7 +1,9 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
+<? $view['slots']->start('menuAnalysisActive') ?> class="current"<? $view['slots']->stop('menuAnalysisActive') ?>
+
 <? $view['slots']->start('header_row') ?>
-<h3>Analysis</h3>
+<h3>Analyses</h3>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('crumbs') ?>
@@ -12,7 +14,7 @@
                         <a href="<?= $view['router']->generate('home'); ?>">Home</a>
                 </li>
                 <li class="current">
-                        <a href="<?= $view['router']->generate('analysis'); ?>">Analysis</a>
+                        <a href="<?= $view['router']->generate('analysis'); ?>">Analyses</a>
                 </li>
         </ul>
 </div>

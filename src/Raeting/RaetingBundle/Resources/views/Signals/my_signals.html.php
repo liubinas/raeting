@@ -1,6 +1,6 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
-<? $view['slots']->start('menuSignalsActive') ?> class="current"<? $view['slots']->stop('menuSignalsActive') ?>
+<? $view['slots']->start('menuMySignalsActive') ?> class="current"<? $view['slots']->stop('menuMySignalsActive') ?>
 
 <? $view['slots']->start('header_row') ?>
 <h3>My signals</h3>

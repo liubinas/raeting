@@ -54,28 +54,12 @@
                                 <span class="beta">beta</span>
 			</a>
 			<!-- /logo -->
+                        <? if(isset($showTopMenu)): ?>
                         <ul class="nav navbar-nav navbar-left hidden-xs hidden-sm">
-				<li class="dropdown">
-					<a href="<?= $view['router']->generate('trader'); ?>" class="dropdown-toggle" data-toggle="dropdown">
-						Traders
-						<i class="icon-caret-down small"></i>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="<?= $view['router']->generate('trader'); ?>">List of traders</a></li>
-						<li><a href="<?= $view['router']->generate('signals'); ?>">Signals</a></li>
-					</ul>
-				</li>
-                                <li class="dropdown">
-					<a href="<?= $view['router']->generate('analyst'); ?>" class="dropdown-toggle" data-toggle="dropdown">
-						Analysts
-						<i class="icon-caret-down small"></i>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="<?= $view['router']->generate('analyst'); ?>">List of analysts</a></li>
-						<li><a href="<?= $view['router']->generate('analysis'); ?>">Analysis</a></li>
-					</ul>
-				</li>
+                            <li><a href="<?= $view['router']->generate('trader'); ?>">Traders</a></li>
+                            <li><a href="<?= $view['router']->generate('analyst'); ?>">Analysts</a></li>
 			</ul>
+                        <? endif; ?>
                         <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
                             <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
                                 $user = $app->getUser();
@@ -102,12 +86,53 @@
 		<!-- /top navigation bar -->
 	</header> <!-- /.header -->
         <div id="container" class="fixed-header">
-                <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
-                    $user = $app->getUser();
-                ?>
-		<div id="sidebar" class="sidebar-fixed">
+            <? if(!isset($hideSidebar)): ?>
+                <div id="sidebar" class="sidebar-fixed">
 			<div id="sidebar-content">
                                 <ul id="nav">
+                                    <li class="open">
+                                            <a href="javascript:void(0);" onclick="return false;">
+                                                    <i class="icon-edit"></i>
+                                                    Traders
+                                            <i class="arrow icon-angle-left"></i></a>
+                                            <ul class="sub-menu" style="display: block;">
+                                                    <li<? $view['slots']->output('menuTradersActive') ?>>
+                                                            <a href="<?= $view['router']->generate('trader'); ?>">
+                                                            <i class="icon-list"></i>
+                                                            List of traders
+                                                            </a>
+                                                    </li>
+                                                    <li<? $view['slots']->output('menuSignalsActive') ?>>
+                                                            <a href="<?= $view['router']->generate('signals'); ?>">
+                                                            <i class="icon-list"></i>
+                                                            Signals
+                                                            </a>
+                                                    </li>
+                                            </ul>
+                                    </li>
+                                    <li class="open">
+                                            <a href="javascript:void(0);">
+                                                    <i class="icon-edit"></i>
+                                                    Analysts
+                                            <i class="arrow icon-angle-left"></i></a>
+                                            <ul class="sub-menu" style="display: block;">
+                                                    <li<? $view['slots']->output('menuAnalystsActive') ?>>
+                                                            <a href="<?= $view['router']->generate('analyst'); ?>">
+                                                            <i class="icon-list"></i>
+                                                            List of analysts
+                                                            </a>
+                                                    </li>
+                                                    <li<? $view['slots']->output('menuAnalysisActive') ?>>
+                                                            <a href="<?= $view['router']->generate('analysis'); ?>">
+                                                            <i class="icon-list"></i>
+                                                            Analyses
+                                                            </a>
+                                                    </li>
+                                            </ul>
+                                    </li>
+                                    <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
+                                        $user = $app->getUser();
+                                    ?>
                                         <li class="open">
                                                 <a href="javascript:void(0);">
                                                         <i class="icon-edit"></i>
@@ -126,7 +151,7 @@
                                                                 Edit profile
                                                                 </a>
                                                         </li>
-                                                        <li<? $view['slots']->output('menuSignalsActive') ?>>
+                                                        <li<? $view['slots']->output('menuMySignalsActive') ?>>
                                                                 <a href="<?=$view['router']->generate('my_signals') ?>">
                                                                 <i class="icon-list"></i>
                                                                 Signals
@@ -134,6 +159,7 @@
                                                         </li>
                                                 </ul>
                                         </li>
+                                    <? endif; ?>
                                 </ul>
                             <div class="sidebar-title">
                                     <span>Copyright &copy; RAETING.com 2013.<br/> All rights reserved.</span>
@@ -144,7 +170,7 @@
 		<!-- /Sidebar -->
                 <? endif; ?>
 
-		<div id="content"<?= (!$view['security']->isGranted('IS_AUTHENTICATED_FULLY')) ? ' class="no-sidebar"' : ''?>>
+		<div id="content"<?= isset($hideSidebar) ? ' class="no-sidebar"' : '' ?>>
 			<div class="container">
                             <? $view['slots']->output('crumbs') ?>
                             <div class="page-header">
