@@ -38,15 +38,15 @@
                 <? foreach ($entities as $entity): ?>
                     <tr>
                         <td>
-                                <img src="https://graph.facebook.com/<?= $entity['fbname'] ?>/picture?type=square">
+                                <img src="https://graph.facebook.com/<?= $view->escape($entity['fbname']) ?>/picture?type=square">
                         </td>
                         <td>
                             <a href="<?= $view['router']->generate(
                                 'trader_show',
                                 array('slug' => $entity['slug'])
-                            ) ?>"><?= $entity['firstname'] . ' ' . $entity['lastname'] ?></a>
+                            ) ?>"><?= $view->escape($entity['firstname']) . ' ' . $view->escape($entity['lastname']) ?></a>
                         </td>
-                        <td><?= $entity['company'] ?></td>
+                        <td><?= $view->escape($entity['company']) ?></td>
                         <td><?= $entity['pips'] ? $entity['pips'] : '0' ?></td>
                         <td><?= $entity['signals'] ? $entity['signals'] : '0' ?></td>
                         <td><?= $view['raeting']->renderDate($entity['createDate']->format('Y-m-d')) ?></td>

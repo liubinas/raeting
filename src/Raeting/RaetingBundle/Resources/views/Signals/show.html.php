@@ -11,7 +11,7 @@
                         <a href="<?= $view['router']->generate('home'); ?>">Home</a>
                 </li>
                 <li>
-                        <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getUser()->getSlug())); ?>"><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></a>
+                        <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getUser()->getSlug())); ?>"><?= $view->escape($entity->getUser()->getFirstname()) ?> <?= $view->escape($entity->getUser()->getLastname()) ?></a>
                 </li>
                 <li>
                         <a href="<?= $view['router']->generate('signals'); ?>">Signals</a>
@@ -36,22 +36,22 @@
                             <ul class="stats"> <!-- .no-dividers -->
                                     <li>
                                             <strong><?= $entity->getSymbol()->getTitle() ?></strong>
-                                            <small><?= $entity->getBuyValue() ?></small>
+                                            <small><?= $view->escape($entity->getBuyValue()) ?></small>
                                     </li>
                                     <li class="light">
-                                            <strong><?= $view['raeting']->renderPrice($entity->getOpen(), $entity->getSymbol()) ?></strong>
+                                            <strong><?= $view->escape($view['raeting']->renderPrice($entity->getOpen(), $entity->getSymbol())) ?></strong>
                                             <small>Open</small>
                                     </li>
                                     <li class="light">
-                                            <strong><?= $view['raeting']->renderPrice($entity->getTakeprofit(), $entity->getSymbol()) ?></strong>
+                                            <strong><?= $view->escape($view['raeting']->renderPrice($entity->getTakeprofit(), $entity->getSymbol())) ?></strong>
                                             <small>Take profit</small>
                                     </li>
                                     <li class="light">
-                                            <strong><?= $view['raeting']->renderPrice($entity->getStoploss(), $entity->getSymbol()) ?></strong>
+                                            <strong><?= $view->escape($view['raeting']->renderPrice($entity->getStoploss(), $entity->getSymbol())) ?></strong>
                                             <small>Stop loss</small>
                                     </li>
                                     <li>
-                                            <strong><?= $entity->getStatus() ?></strong>
+                                            <strong><?= $view->escape($entity->getStatus()) ?></strong>
                                             <small>Status</small>
                                     </li>
                             </ul>
@@ -66,30 +66,30 @@
                 <div class="widget-content form-horizontal row-border signal-info no-padding">
                         <div class="form-group">
                                 <label class="col-md-4 control-label">Created:</label>
-                                <div class="col-md-8"><?= $view['raeting']->renderDate($entity->getCreated()->format('Y-m-d H:i')) ?></div>
+                                <div class="col-md-8"><?= $view->escape($view['raeting']->renderDate($entity->getCreated()->format('Y-m-d H:i'))) ?></div>
                         </div>
                         <? if($entity->getOpened()): ?>
                         <div class="form-group">
                                 <label class="col-md-4 control-label">Opened:</label>
-                                <div class="col-md-8"><?= $view['raeting']->renderDate($entity->getOpened()->format('Y-m-d H:i')) ?></div>
+                                <div class="col-md-8"><?= $view->escape($view['raeting']->renderDate($entity->getOpened()->format('Y-m-d H:i'))) ?></div>
                         </div>
                         <? endif; ?>
                         <? if($entity->getClosed()): ?>
                         <div class="form-group">
                                 <label class="col-md-4 control-label">Closed:</label>
-                                <div class="col-md-8"><?= $view['raeting']->renderDate($entity->getClosed()->format('Y-m-d H:i')) ?></div>
+                                <div class="col-md-8"><?= $view->escape($view['raeting']->renderDate($entity->getClosed()->format('Y-m-d H:i'))) ?></div>
                         </div>
                         <? endif; ?>
                         <? if($entity->getOpenPrice()): ?>
                         <div class="form-group">
                                 <label class="col-md-4 control-label">Open Price:</label>
-                                <div class="col-md-8"><?= $view['raeting']->renderPrice($entity->getOpenPrice(), $entity->getSymbol()) ?></div>
+                                <div class="col-md-8"><?= $view->escape($view['raeting']->renderPrice($entity->getOpenPrice(), $entity->getSymbol())) ?></div>
                         </div>
                         <? endif; ?>
                         <? if($entity->getClosePrice()): ?>
                         <div class="form-group">
                                 <label class="col-md-4 control-label">Close Price:</label>
-                                <div class="col-md-8"><?= $view['raeting']->renderPrice($entity->getClosePrice(), $entity->getSymbol()) ?></div>
+                                <div class="col-md-8"><?= $view->escape($view['raeting']->renderPrice($entity->getClosePrice(), $entity->getSymbol())) ?></div>
                         </div>
                         <? endif; ?>
                         <? if($entity->getPips()): ?> 
@@ -250,14 +250,14 @@
                         <div class="fl padd-15">
                             <div class="list-group">
                                 <li class="list-group-item no-padding">
-                                    <img src="https://graph.facebook.com/<?= $entity->getUser()->getFbname() ?>/picture?type=large">
+                                    <img src="https://graph.facebook.com/<?= $view->escape($entity->getUser()->getFbname()) ?>/picture?type=large">
                                 </li>
                             </div> 
                         </div>
                         <div class="row profile-info">
                             <div class="col-md-12">
-                                <h1><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></h1>
-                                <p><?= $entity->getUser()->getAbout() ?></p>
+                                <h1><?= $view->escape($entity->getUser()->getFirstname()) ?> <?= $view->escape($entity->getUser()->getLastname()) ?></h1>
+                                <p><?= $view->escape($entity->getUser()->getAbout()) ?></p>
                                  <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getUser()->getSlug())) ?>">View profile</a>
                             </div>
                         </div>

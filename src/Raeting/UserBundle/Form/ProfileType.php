@@ -18,8 +18,10 @@ class ProfileType extends AbstractType
             ->add('company', 'text', array(
             ))
             ->add('twitter', 'text', array(
+                'required' => false
             ))
             ->add('about', 'textarea', array(
+                'required' => false
             ))
         ;
     }

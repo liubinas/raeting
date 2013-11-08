@@ -24,7 +24,6 @@ class User extends UserBase
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="about", type="text", nullable=true)
      */
     private $about;

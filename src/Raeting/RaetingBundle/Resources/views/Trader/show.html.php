@@ -20,7 +20,7 @@ endif;
                         <a href="<?= $view['router']->generate('trader'); ?>">Traders</a>
                 </li>
                 <li class="current">
-                        <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getSlug())); ?>"><?= $entity->getFirstname() ?> <?= $entity->getLastname() ?></a>
+                        <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getSlug())); ?>"><?= $view->escape($entity->getFirstname()) ?> <?= $view->escape($entity->getLastname()) ?></a>
                 </li>
         </ul>
 </div>
@@ -42,21 +42,30 @@ endif;
                     <div class="fl padd-15">
                         <div class="list-group profile-photo">
                             <li class="list-group-item no-padding">
-                                <img src="https://graph.facebook.com/<?= $entity->getFbname() ?>/picture?type=large">
+                                <img src="https://graph.facebook.com/<?= $view->escape($entity->getFbname()) ?>/picture?type=large">
                             </li>
                         </div>
+                        <? if($entity->getTwitter()): ?>
+                        
+                        <div class="list-group profile-photo">
+                            <li class="list-group-item no-padding">
+                        <a class="twitter-timeline" href="https://twitter.com/<?= $view->escape($entity->getTwitter())?>" data-widget-id="393726368988397568">Tweets by @<?= $view->escape($entity->getTwitter()) ?></a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                        </li>
+                        </div>
+                            <? endif; ?>
                     </div>
 
                     <div class="col-md-9">
                         <div class="row profile-info">
                             <div class="col-md-7">
-                                <h1><?= $entity->getFirstname() ?> <?= $entity->getLastname() ?></h1>
+                                <h1><?= $view->escape($entity->getFirstname()) ?> <?= $view->escape($entity->getLastname()) ?></h1>
 
                                 <dl class="dl-horizontal">
                                     <dt>Company</dt>
-                                    <dd><?= $entity->getCompany()?></dd>
+                                    <dd><?= $view->escape($entity->getCompany())?></dd>
                                     <dt>About</dt>
-                                    <dd><?= $entity->getAbout()?></dd>
+                                    <dd><?= $view->escape($entity->getAbout())?></dd>
                                     <dt>Member since</dt>
                                     <dd><?= ($entity->getcreateDate()) ? (string) $entity->getcreateDate()->format("Y-m-d") : ""; ?></dd>
                                 </dl>
@@ -152,10 +161,10 @@ endif;
                                                                 <span class="label <?= $label ?>"><?= $signal->getstatus() ?></span>
                                                             </td>
                                                             <td><?= $signal->getSymbol()->getTitle() ?></td>
-                                                            <td><?= $signal->getBuyValue() ?></td>
-                                                            <td><?= $view['raeting']->renderPrice($signal->getOpen(), $signal->getSymbol()) ?></td>
-                                                            <td><?= $view['raeting']->renderPrice($signal->getTakeprofit(), $signal->getSymbol()) ?></td>
-                                                            <td><?= $view['raeting']->renderPrice($signal->getStoploss(), $signal->getSymbol()) ?></td>
+                                                            <td><?= $view->escape($signal->getBuyValue()) ?></td>
+                                                            <td><?= $view->escape($view['raeting']->renderPrice($signal->getOpen(), $signal->getSymbol())) ?></td>
+                                                            <td><?= $view->escape($view['raeting']->renderPrice($signal->getTakeprofit(), $signal->getSymbol())) ?></td>
+                                                            <td><?= $view->escape($view['raeting']->renderPrice($signal->getStoploss(), $signal->getSymbol())) ?></td>
                                                             <td><?= $view['raeting']->renderDate($signal->getCreated()->format('Y-m-d H:i:s')) ?></td>
                                                         <td><a href="<?= $view['router']->generate('signals_show', array('uuid' => $signal->getUuid())) ?>">View</a></td>
                                                         </tr>
