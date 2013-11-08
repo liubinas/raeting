@@ -27,7 +27,7 @@ endif;
 <? $view['slots']->stop('crumbs') ?>
 
 <? $view['slots']->start('header_row') ?>
-<h3>Trader Profile</h3><? if($user->getId() == $entity->getId()):?><a href="<?=$view['router']->generate('user.profile.edit') ?>">Edit</a><? endif; ?>
+<h3>Trader Profile</h3><? if($view['security']->isGranted('IS_AUTHENTICATED_FULLY') && $user->getId() == $entity->getId()):?><a href="<?=$view['router']->generate('user.profile.edit') ?>">Edit</a><? endif; ?>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('content') ?>
