@@ -101,12 +101,12 @@
 		</div>
 		<!-- /top navigation bar -->
 	</header> <!-- /.header -->
-        <div id="container" class="fixed-header">
+        <div id="container" class="fixed-header">\
+                <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
+                    $user = $app->getUser();
+                ?>
 		<div id="sidebar" class="sidebar-fixed">
 			<div id="sidebar-content">
-                            <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
-                                $user = $app->getUser();
-                            ?>
                                 <ul id="nav">
                                         <li class="open">
                                                 <a href="javascript:void(0);">
@@ -135,7 +135,6 @@
                                                 </ul>
                                         </li>
                                 </ul>
-                            <? endif; ?>
                             <div class="sidebar-title">
                                     <span>Copyright &copy; RAETING.com 2013.<br/> All rights reserved.</span>
                             </div>
@@ -143,6 +142,7 @@
 			<div id="divider" class="resizeable"></div>
 		</div>
 		<!-- /Sidebar -->
+                <? endif; ?>
 
 		<div id="content">
 			<div class="container">
