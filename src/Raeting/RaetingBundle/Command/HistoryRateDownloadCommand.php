@@ -38,8 +38,8 @@ class HistoryRateDownloadCommand extends ContainerAwareCommand
         $dateTo = date('Y-m-d', strtotime($input->getArgument('dateTo')));
         $filesDownloaded = 0;
         while($dateFrom != $dateTo){
-            $filename = date('d', strtotime($date)).date('m', strtotime($date)).date('y', strtotime($date));
-            $data = file_get_contents('http://www.forexite.com/free_forex_quotes/'.date('Y', strtotime($date)).'/'.date('m', strtotime($date)).'/'.$filename.'.zip');
+            $filename = date('d', strtotime($dateFrom)).date('m', strtotime($date)).date('y', strtotime($dateFrom));
+            $data = file_get_contents('http://www.forexite.com/free_forex_quotes/'.date('Y', strtotime($dateFrom)).'/'.date('m', strtotime($dateFrom)).'/'.$filename.'.zip');
             $file = $dir.$filename.'.zip';
             $zip = file_put_contents($file, $data);
             if(!empty($data)){
