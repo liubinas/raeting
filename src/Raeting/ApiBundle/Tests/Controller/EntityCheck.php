@@ -62,8 +62,8 @@ class EntityCheck extends WebTestCase
     {
         $this->assertContains('<firstName>Jonas</firstName>', $content);
         $this->assertContains('<lastName>Jonaitis</lastName>', $content);
-        $this->assertContains('<company/>', $content);
-        $this->assertContains('<about/>', $content);
+        $this->assertContains('<company', $content);
+        $this->assertContains('<about', $content);
         $this->assertContains('<slug>fixture</slug>', $content);
     }
     

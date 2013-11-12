@@ -62,7 +62,7 @@
                     <p>
                         Make informed investment decisions by following recommendations by professional analysts.
                     </p>
-                    <a class="more" href="javascript:void(0);">View More <i class="pull-right icon-angle-right"></i></a>
+                    <a class="more" href="<?= $view['router']->generate('analysis'); ?>">View More <i class="pull-right icon-angle-right"></i></a>
                 </div>
             </div> <!-- /.smallstat -->
         </div> 
