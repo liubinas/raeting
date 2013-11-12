@@ -5,6 +5,9 @@
         <title>Raeting.com</title>
         <link href="<?= $view['assets']->getUrl('css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" media="all" />
         <link href="<?= $view['assets']->getUrl('css/main.css') ?>" rel="stylesheet" type="text/css" media="all" />
+        <? if(isset($hideSidebar)): ?>
+            <link href="<?= $view['assets']->getUrl('css/title.css') ?>" rel="stylesheet" type="text/css" media="all" />
+        <? endif; ?>
         <link href="<?= $view['assets']->getUrl('css/plugins.css') ?>" rel="stylesheet" type="text/css" media="all" />
         <link href="<?= $view['assets']->getUrl('css/responsive.css') ?>" rel="stylesheet" type="text/css" media="all" />
         <link href="<?= $view['assets']->getUrl('css/icons.css') ?>" rel="stylesheet" type="text/css" media="all" />
@@ -38,7 +41,7 @@
                 <script src="<?= $view['assets']->getUrl('js/libs/html5shiv.js') ?>" type="text/javascript"></script>
 	<![endif]-->
     </head>
-    <body data-controller="<?= $view['request']->getParameter('controllerName')?>" data-action="<?= $view['request']->getParameter('actionName')?>" <? $view['slots']->output('body_attr') ?>>
+    <body<? if(isset($hideSidebar)): ?> class="page-aqua visible-body titlepage breakpoint-1200"<? endif;?> data-controller="<?= $view['request']->getParameter('controllerName')?>" data-action="<?= $view['request']->getParameter('actionName')?>" <? $view['slots']->output('body_attr') ?>>
         <header class="header navbar navbar-fixed-top" role="banner">
 		<!-- Top Navigation Bar -->
 		<div class="container">
@@ -85,7 +88,6 @@
 		</div>
 		<!-- /top navigation bar -->
 	</header> <!-- /.header -->
-        <div id="container" class="fixed-header">
             <? if(!isset($hideSidebar)): ?>
                 <div id="sidebar" class="sidebar-fixed">
 			<div id="sidebar-content">
@@ -169,19 +171,21 @@
 		</div>
 		<!-- /Sidebar -->
                 <? endif; ?>
-
-		<div id="content"<?= isset($hideSidebar) ? ' class="no-sidebar"' : '' ?>>
-			<div class="container">
-                            <? $view['slots']->output('crumbs') ?>
-                            <div class="page-header">
-                                    <div class="page-title">
-                                            <? $view['slots']->output('header_row') ?>
-                                    </div>
+                <? if(!isset($hideSidebar)): ?>
+                    <div id="content">
+                            <div class="container">
+                                <? $view['slots']->output('crumbs') ?>
+                                <div class="page-header">
+                                        <div class="page-title">
+                                                <? $view['slots']->output('header_row') ?>
+                                        </div>
+                                </div>
+                                <? $view['slots']->output('content') ?>
                             </div>
-                            <? $view['slots']->output('content') ?>
-                        </div>
-			<!-- /.container -->
-		</div>
-	</div>
+                            <!-- /.container -->
+                    </div>
+                <? else: ?>
+                    <? $view['slots']->output('content') ?>
+                <? endif; ?>
     </body>
 </html>

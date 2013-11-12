@@ -1,78 +1,71 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
-<? $view['slots']->start('header_row') ?>
-
-    <h3>Welcome to RAETING</h3>
-    
-<? $view['slots']->stop('header_row') ?>
-
-<? $view['slots']->start('crumbs') ?>
-<div class="crumbs">
-        <ul id="breadcrumbs" class="breadcrumb">
-                <li class="current">
-                        <i class="icon-home"></i>
-                        <a href="<?= $view['router']->generate('home'); ?>">Home</a>
-                </li>
-        </ul>
-</div>
-<? $view['slots']->stop('crumbs') ?>
-    
 <? $view['slots']->start('content') ?>
-
-                <hr>
-                <p class="lead">
-                    Follow and compare trading signals from different markets and traders. 
-                    Share your ideas easily.
-                </p>
-                <div class="row row-bg"> <!-- .row-bg -->
-                    <div class="col-sm-8 col-md-4">
-                        <div class="statbox widget box box-shadow">
-                            <div class="widget-content">
-                                <div class="visual cyan">
-                                    <i class="icon-dollar"></i>
-                                </div>
-                                <h4>Signals</h4>
-                                <p>
-                                    Find best investing ideas and turn them into successful trading decisions.
-                                    Share your ideas with the community and compete in the independent global rating.
-                                </p>
-                                <a class="more" href="<?= $view['router']->generate('signals'); ?>">View More <i class="pull-right icon-angle-right"></i></a>
-                            </div>
-                        </div> <!-- /.smallstat -->
-                    </div> <!-- /.col-md-3 -->
-
-                    <div class="col-sm-8 col-md-4">
-                        <div class="statbox widget box box-shadow">
-                            <div class="widget-content">
-                                <div class="visual green">
-                                    <i class="icon-dollar"></i>
-                                </div>
-                                <h4>Traders</h4>
-                                <p>
-                                    Find the best performing and the most interesting signal providers. 
-                                    Share your strategies and compete with others globally.
-                                </p>
-                                <a class="more" href="<?= $view['router']->generate('trader'); ?>">View More <i class="pull-right icon-angle-right"></i></a>
-                            </div>
-                        </div> <!-- /.smallstat -->
-                    </div> <!-- /.col-md-3 -->
-
-                    <div class="col-sm-8 col-md-4 hidden-xs">
-                        <div class="statbox widget box box-shadow">
-                            <div class="widget-content">
-                                <div class="visual yellow">
-                                    <i class="icon-dollar"></i>
-                                </div>
-                                <h4>API</h4>
-                                <p>
-                                    Our system is secure, free and open for integration with your favorite trading 
-                                    platform or tool.
-                                </p>
-                                <!--<a class="more" href="<?= $view['router']->generate('api'); ?>">View More <i class="pull-right icon-angle-right"></i></a>-->
-                            </div>
-                        </div> <!-- /.smallstat -->
-                    </div> <!-- /.col-md-3 -->
-
+<section id="first" class="home text-center bg1 fullheight" style="background-position: 50% 30px;">
+    <div class="row"> <!-- .row-bg -->
+        <div class="col-sm-12 col-md-6">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content">
+                    <div class="visual cyan">
+                        <i class="icon-signal icon-large"></i>
+                    </div>
+                    <h4>Signals</h4>
+                    <p>
+                        Find best investing ideas and turn them into successful trading decisions.
+                        Share your ideas with the community and compete in the independent global rating.
+                    </p>
+                    <a class="more" href="<?= $view['router']->generate('signals'); ?>">View More <i class="pull-right icon-angle-right"></i></a>
                 </div>
-            </div>
+            </div> <!-- /.smallstat -->
+        </div> 
+
+        <div class="col-sm-12 col-md-6">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content">
+                    <div class="visual green">
+                        <i class="icon-money icon-large"></i>
+                    </div>
+                    <h4>Traders</h4>
+                    <p>
+                        Find the best performing and the most interesting signal providers. 
+                        Share your strategies and compete with others globally.
+                    </p>
+                    <a class="more" href="<?= $view['router']->generate('trader'); ?>">View More <i class="pull-right icon-angle-right"></i></a>
+                </div>
+            </div> <!-- /.smallstat -->
+        </div> 
+    </div>	
+    <div class="row"> <!-- .row-bg -->
+        <div class="col-sm-12 col-md-6">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content">
+                    <div class="visual red">
+                        <i class="icon-group icon-large"></i>
+                    </div>
+                    <h4>Analysts</h4>
+                    <p>
+                        Find the analyst you can trust! 
+                        We've put some effort to rate analysts so you can find and follow best-performing ones in the different markets and industries.
+                    </p>
+                    <a class="more" href="<?= $view['router']->generate('analyst'); ?>">View More <i class="pull-right icon-angle-right"></i></a>
+                </div>
+            </div> <!-- /.smallstat -->
+        </div> 
+
+        <div class="col-sm-12 col-md-6">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content">
+                    <div class="visual yellow">
+                        <i class="icon-thumbs-up-alt icon-large"></i>
+                    </div>
+                    <h4>Recommendations</h4>
+                    <p>
+                        Make informed investment decisions by following recommendations by professional analysts.
+                    </p>
+                    <a class="more" href="javascript:void(0);">View More <i class="pull-right icon-angle-right"></i></a>
+                </div>
+            </div> <!-- /.smallstat -->
+        </div> 
+    </div>	
+</section>
 <? $view['slots']->stop('content') ?>
