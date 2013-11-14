@@ -127,7 +127,7 @@
                                                     <li<? $view['slots']->output('menuAnalysisActive') ?>>
                                                             <a href="<?= $view['router']->generate('analysis'); ?>">
                                                             <i class="icon-list"></i>
-                                                            Analyses
+                                                            Recommmendations
                                                             </a>
                                                     </li>
                                             </ul>

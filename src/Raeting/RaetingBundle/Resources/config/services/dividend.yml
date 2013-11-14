@@ -1,0 +1,7 @@
+parameters:
+    raetingraeting.service.dividend.class: Raeting\RaetingBundle\Service\Dividend
+
+services:
+    raetingraeting.service.dividend:
+        class: %raetingraeting.service.dividend.class%
+        arguments: [@doctrine.orm.entity_manager]

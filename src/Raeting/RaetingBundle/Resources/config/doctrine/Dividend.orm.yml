@@ -1,0 +1,30 @@
+Raeting\RaetingBundle\Entity\Dividend:
+    type: entity
+    table: rate
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        date:
+            type: date
+            nullable: false
+        amount:
+            type: decimal
+            scale: 6
+            nullable: false
+    manyToOne:
+        ticker:
+            targetEntity: Symbol
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ticker_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    repositoryClass: Raeting\RaetingBundle\Entity\DividendRepository
+    lifecycleCallbacks: {  }

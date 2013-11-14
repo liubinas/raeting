@@ -2,7 +2,7 @@
     <div class="col-md-12">
             <div class="widget box">
                     <div class="widget-header">
-                            <h4>Analyses</h4>
+                            <h4>Recommmendations</h4>
                     </div>
                     <div class="widget-content">
                         <? if(isset($showSearch) && $showSearch == true): ?>
@@ -27,7 +27,7 @@
                                         <th>Analyst</th>
                                         <? endif; ?>
                                         <th>Symbol</th>
-                                        <th>Recommendation</th>
+                                        <th>Rating</th>
                                         <th>Target price</th>
                                         <th></th>
                                         </thead>

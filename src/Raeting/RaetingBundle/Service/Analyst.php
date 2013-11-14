@@ -5,14 +5,18 @@ namespace Raeting\RaetingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use Raeting\RaetingBundle\Entity;
 
-use Raeting\RaetingBundle\Service\AnalysisService;
+use Raeting\RaetingBundle\Service\Analysis;
+use Raeting\RaetingBundle\Service\Rate;
+
 class Analyst
 {
 
-    public function __construct(EntityManager $em, Analysis $analysisService)
+    public function __construct(EntityManager $em, Analysis $analysisService, Rate $rateService, Dividend $dividendService)
     {
         $this->em = $em;
         $this->analysisService = $analysisService;
+        $this->rateService = $rateService;
+        $this->dividendService = $dividendService;
     }
 
     public function getNew()
@@ -53,32 +57,68 @@ class Analyst
         return $this->em->getRepository('RaetingRaetingBundle:Analyst');
     }
     
+    /**
+     * Get all analysts with paging
+     * 
+     * @param type $perPage
+     * @param type $page
+     * @return type
+     */
     public function getAllWithPaging($perPage, $page)
     {
         return $this->getRepository()->getAllWithPaging($perPage, $page);
     }
     
+    /**
+     * get number of total analysts
+     * 
+     * @return type
+     */
     public function countAll()
     {
         return $this->getRepository()->countAll();
     }
     
+    /**
+     * get analyst by name
+     * 
+     * @param type $name
+     * @return type
+     */
     public function getByName($name)
     {
         return $this->getRepository()->findOneByName($name);
     }
     
+    /**
+     * get analyst by import slug
+     * 
+     * @param type $slug
+     * @return type
+     */
     public function getByImportSlug($slug)
     {
         return $this->getRepository()->findOneByImportSlug($slug);
     }
     
+    /**
+     * get analyst by slug
+     * 
+     * @param type $slug
+     * @return type
+     */
     public function getBySlug($slug)
     {
         return $this->getRepository()->findOneBySlug($slug);
     }
     
-    public function prepareListingData($analysts)
+    /**
+     * get data for analysts table listing
+     * 
+     * @param array $analysts
+     * @return type
+     */
+    public function prepareListingData(array $analysts)
     {
         $data = array();
         if(!empty($analysts)){
@@ -102,5 +142,58 @@ class Analyst
             }
         }
         return $data;
+    }
+    
+    private function calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo)
+    {
+        $priceFrom = $this->rateService->getRateByTickerAndDate($ticker, $dateFrom->format('Y-m-d'));
+        $priceto = $this->rateService->getRateByTickerAndDate($ticker, $dateto->format('Y-m-d'));
+        $dividends = $this->dividendService->getByInterval($dateFrom, $dateTo);
+        if(!empty($priceFrom) && !empty($priceTo)){
+            $totalReturn = $priceFrom['bid']/($priceTo['bid']);
+        }
+    }
+    
+    private function calculateTotalReturnForSell($ticker, $dateFrom, $dateTo)
+    {
+        
+    }
+    
+    private function calculateTotalReturnByAnalystAndTicker(Entity\Analyst $analyst, $ticker){
+        $analyses = $this->analysisService->getAllByAnalystAndTickerAscending($analyst, $ticker);
+        if(!empty($analyses)){
+            $prevRecommendation = $analyses[0]->getRecommendation();
+            $dateFrom = $analyses[0]->getDate();
+            foreach($analyses as $analysis){
+                $recommendation = $analysis->getRecommendation();
+                $dateTo = $analysis->getDate();
+                if($recommendation != $prevRecommendation){
+                    if($prevRecommendation == Entity\Analysis::RECOMMENDATION_BUY && $recommendation == Entity\Analysis::RECOMMENDATION_HOLD){
+                        $this->calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo);
+                    }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_BUY && $recommendation == Entity\Analysis::RECOMMENDATION_SELL){
+                        $this->calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo);
+                        $dateFrom = $analysis->getDate();
+                    }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_SELL && $recommendation == Entity\Analysis::RECOMMENDATION_HOLD){
+                        $this->calculateTotalReturnForSell($ticker, $dateFrom, $dateTo);
+                    }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_SELL && $recommendation == Entity\Analysis::RECOMMENDATION_BUY){
+                        $this->calculateTotalReturnForSell($ticker, $dateFrom, $dateTo);
+                        $dateFrom = $analysis->getDate();
+                    }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_HOLD){
+                        $dateFrom = $analysis->getDate();
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    public function calculateTotalReturnByAnalyst(Entity\Analyst $analyst)
+    {
+        $tickers = $this->analysisService->getAnalystTickers($analyst);
+        if(!empty($tickers)){
+            foreach($tickers as $ticker){
+                $this->calculateTotalReturnByAnalystAndTicker($analyst, $ticker['symbol']);
+            }
+        }
     }
 }

@@ -21,3 +21,4 @@ imports:
 - { resource: services/analysis.yml }
 - { resource: services/fileManagement.yml }
 - { resource: services/aggregation.yml }
+- { resource: services/dividend.yml }

@@ -335,4 +335,19 @@ class Rate
         }
         return array('from' => $dateFrom, 'to' => $dateTo);
     }
+    
+    public function getRateByTickerAndDate($ticker, $date)
+    {
+        $query = 'SELECT bid, ask
+                    FROM symbol_'.strtolower($ticker). ' 
+                    WHERE source_date = "'.$date.'" 
+                    LIMIT 1';
+        
+        $conn = $this->em->getConnection();
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $rate = $stmt->fetch(\PDO::FETCH_ASSOC);
+        
+        return $rate;
+    }
 }

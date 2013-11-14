@@ -20,7 +20,7 @@ class AnalysisRepository extends EntityRepository
         return $query;
     }
     
-    public function getAll($analyst = null, $search = null, $ticker = null, $perPage = null, $page = null)
+    public function getAll($analyst = null, $search = null, $ticker = null, $perPage = null, $page = null, $order = 'desc')
     {
         $query = $this->createQueryBuilder('s')
                 ->select('s, t')
@@ -45,7 +45,8 @@ class AnalysisRepository extends EntityRepository
             $query = $this->addLimits($query, $perPage, $page);
         }
         
-        $query = $query->getQuery();
+        $query = $query->orderBy('s.date', $order)
+                ->getQuery();
         
         try {
             return $query->getResult();
@@ -76,9 +77,9 @@ class AnalysisRepository extends EntityRepository
         return $this->getAll($analyst, null, null, $perPage, $page);
     }
     
-    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page)
+    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page, $order)
     {
-        return $this->getAll($analyst, null, $ticker, $perPage, $page);
+        return $this->getAll($analyst, null, $ticker, $perPage, $page, $order);
     }
     
     public function getAnalystEstimationRangeByTicker($analyst, $ticker)
@@ -214,5 +215,23 @@ class AnalysisRepository extends EntityRepository
     public function countAllByQuery($query)
     {
         return $this->countAll(null, $query);
+    }
+    
+    public function getAnalystTickers($analyst)
+    {
+        $query = $this->createQueryBuilder('s')
+                ->select('t.symbol')
+                ->leftJoin('s.ticker', 't')
+                ->andWhere('s.analyst = :analyst')
+                ->groupBy('t.id')
+                ->setParameter('analyst', $analyst)
+                ->getQuery();
+        
+        
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
 }

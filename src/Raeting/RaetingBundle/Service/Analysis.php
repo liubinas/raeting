@@ -69,9 +69,14 @@ class Analysis
         return $this->getRepository()->getAllWithPaging($perPage, $page);
     }
     
-    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page)
+    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage = null, $page = null)
     {
         return $this->getRepository()->getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page);
+    }
+    
+    public function getAllByAnalystAndTickerAscending($analyst, $ticker, $perPage = null, $page = null)
+    {
+        return $this->getRepository()->getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page, 'asc');
     }
     
     public function getAllByAnalystAndTickerForGraph($analyst, $ticker)
@@ -155,5 +160,10 @@ class Analysis
     public function getLastSymbolsByAnalyst($analyst, $amount)
     {
         return $this->getRepository()->getLastSymbolsByAnalyst($analyst, $amount);
+    }
+    
+    public function getAnalystTickers($analyst)
+    {
+        return $this->getRepository()->getAnalystTickers($analyst);
     }
 }

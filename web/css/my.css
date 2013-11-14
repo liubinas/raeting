@@ -118,3 +118,9 @@
 #container .no-sidebar{
     margin-left: 0px;
 }
+#content{
+    margin-top: 53px;
+}
+#sidebar #sidebar-content #nav{
+    margin: 0;
+}

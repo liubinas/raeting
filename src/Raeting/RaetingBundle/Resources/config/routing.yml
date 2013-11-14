@@ -8,7 +8,7 @@ raeting_analyst:
 
 raeting_analysis:
     resource: "@RaetingRaetingBundle/Resources/config/routing/analysis.yml"
-    prefix:   /analysis
+    prefix:   /recommendations
     
 trader:
     resource: "@RaetingRaetingBundle/Resources/config/routing/trader.yml"
