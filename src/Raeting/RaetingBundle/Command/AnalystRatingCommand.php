@@ -34,7 +34,7 @@ class AnalystRatingCommand extends ContainerAwareCommand
                 $totalReturnArr[$analyst->getId()] = $analystTotalReturn;
             }
         }
-        $analystService->calculateAndSaveBenchmark($totalReturnArr);
+        $analystService->saveRatings($totalReturnArr);
         
         $output->writeln('<info>Done</info>');
     }

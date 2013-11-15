@@ -1,0 +1,19 @@
+Raeting\RaetingBundle\Entity\AnalystTotalReturn:
+    type: entity
+    table: analyst_total_return
+    fields:
+        value:
+            type: decimal
+            scale: 6
+            nullable: false
+    manyToOne:
+        analyst:
+            targetEntity: Analyst
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                analyst_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

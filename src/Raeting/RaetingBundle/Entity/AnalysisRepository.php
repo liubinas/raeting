@@ -220,7 +220,7 @@ class AnalysisRepository extends EntityRepository
     public function getAnalystTickers($analyst)
     {
         $query = $this->createQueryBuilder('s')
-                ->select('t.symbol')
+                ->select('t.id, t.symbol')
                 ->leftJoin('s.ticker', 't')
                 ->andWhere('s.analyst = :analyst')
                 ->groupBy('t.id')

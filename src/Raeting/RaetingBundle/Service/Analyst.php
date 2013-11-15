@@ -206,31 +206,31 @@ class Analyst
         $return = array();
         if(!empty($tickers)){
             foreach($tickers as $ticker){
-                $return[$ticker['symbol']] = $this->calculateTotalReturnByAnalystAndTicker($analyst, $ticker['symbol']);
+                $return[$ticker['id']] = $this->calculateTotalReturnByAnalystAndTicker($analyst, $ticker['symbol']);
             }
         }
         return $return;
     }
     
-    private function arrayAverage($arr)
+    private function saveRating($analystId, $tickerId, $value)
     {
-        $count = count($arr);
-        if($count > 0){
-            return array_sum($arr)/$count;
-        }
-        return 0;
+        $query = 'INSERT INTO total_return (analyst_id, ticker_id, value) values('.$analystId.', '.$tickerId.', '.$value.') 
+            ON DUPLICATE KEY UPDATE value = values(value)';
+        
+        $conn = $this->em->getConnection();
+        $conn->exec($query);
     }
     
-    public function calculateAndSaveBenchmark($totalReturnArr)
+    public function saveRatings($ratingArr)
     {
-        if(!empty($totalReturnArr)){
-            $tickerArr = array();
-            foreach($totalReturnArr as $analyst){
-                foreach($analyst as $ticker => $value){
-                    $tickerArr[$ticker][] = $value;
+        if(!empty($ratingArr)){
+            foreach($ratingArr as $analystId => $analystRatings){
+                if(!empty($analystRatings)){
+                    foreach($analystRatings as $tickerId => $value){
+                        $this->saveRating($analystId, $tickerId, $value);
+                    }
                 }
             }
         }
-        $benchmark = $this->calculateBenchmark($totalReturnForBenchmark);
     }
 }
