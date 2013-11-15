@@ -27,11 +27,14 @@ class AnalystRatingCommand extends ContainerAwareCommand
         
         $analysts = $analystService->getAll();
         
+        $totalReturnArr = array();
         if(!empty($analysts)){
             foreach($analysts as $analyst){
-                $analystService->calculateTotalReturnByAnalyst($analyst);
+                $analystTotalReturn = $analystService->calculateTotalReturnByAnalyst($analyst);
+                $totalReturnArr[$analyst->getId()] = $analystTotalReturn;
             }
         }
+        $analystService->calculateAndSaveBenchmark($totalReturnArr);
         
         $output->writeln('<info>Done</info>');
     }

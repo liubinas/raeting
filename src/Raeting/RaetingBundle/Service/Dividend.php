@@ -50,4 +50,9 @@ class Dividend
     {
         return $this->em->getRepository('RaetingRaetingBundle:Dividend');
     }
+    
+    public function getSumByInterval($ticker, $dateFrom, $dateTo)
+    {
+        return $this->getRepository()->getSumByInterval($ticker, $dateFrom, $dateTo);
+    }
 }

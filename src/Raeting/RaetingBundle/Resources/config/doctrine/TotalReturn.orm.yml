@@ -1,6 +1,6 @@
-Raeting\RaetingBundle\Entity\Dividend:
+Raeting\RaetingBundle\Entity\TotalReturn:
     type: entity
-    table: dividend
+    table: total_return
     fields:
         id:
             id: true
@@ -9,12 +9,11 @@ Raeting\RaetingBundle\Entity\Dividend:
             nullable: false
             generator:
                 strategy: IDENTITY
-        date:
-            type: date
-            nullable: false
-        amount:
+        value:
             type: decimal
-            scale: 6
+            nullable: false
+        updated:
+            type: datetime
             nullable: false
     manyToOne:
         ticker:
@@ -26,5 +25,13 @@ Raeting\RaetingBundle\Entity\Dividend:
                 ticker_id:
                     referencedColumnName: id
             orphanRemoval: false
-    repositoryClass: Raeting\RaetingBundle\Entity\DividendRepository
+        analyst:
+            targetEntity: Analyst
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                analyst_id:
+                    referencedColumnName: id
+            orphanRemoval: false
     lifecycleCallbacks: {  }

@@ -144,23 +144,35 @@ class Analyst
         return $data;
     }
     
+    private function calculateTotalReturn($ticker, $dateFrom, $dateTo, $type)
+    {
+        $totalReturn = 0;
+        $priceFrom = $this->rateService->getRateByTickerAndDate($ticker, $dateFrom->format('Y-m-d'));
+        $priceto = $this->rateService->getRateByTickerAndDate($ticker, $dateTo->format('Y-m-d'));
+        $dividends = $this->dividendService->getSumByInterval($ticker, $dateFrom, $dateTo);
+        if(!empty($priceFrom) && !empty($priceTo)){
+            if($type == 'buy'){
+                $totalReturn = ($priceFrom['bid']+$dividends)/($priceTo['bid'])-1;
+            }else{
+                $totalReturn = ($priceFrom['bid']+$dividends)/($priceTo['bid'])-1;
+            }
+        }
+        return $totalReturn;
+    }
+    
     private function calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo)
     {
-        $priceFrom = $this->rateService->getRateByTickerAndDate($ticker, $dateFrom->format('Y-m-d'));
-        $priceto = $this->rateService->getRateByTickerAndDate($ticker, $dateto->format('Y-m-d'));
-        $dividends = $this->dividendService->getByInterval($dateFrom, $dateTo);
-        if(!empty($priceFrom) && !empty($priceTo)){
-            $totalReturn = $priceFrom['bid']/($priceTo['bid']);
-        }
+        return $this->calculateTotalReturn($ticker, $dateFrom, $dateTo, 'buy');
     }
     
     private function calculateTotalReturnForSell($ticker, $dateFrom, $dateTo)
     {
-        
+        return $this->calculateTotalReturn($ticker, $dateFrom, $dateTo, 'sell');
     }
     
     private function calculateTotalReturnByAnalystAndTicker(Entity\Analyst $analyst, $ticker){
         $analyses = $this->analysisService->getAllByAnalystAndTickerAscending($analyst, $ticker);
+        $totalReturn = 0;
         if(!empty($analyses)){
             $prevRecommendation = $analyses[0]->getRecommendation();
             $dateFrom = $analyses[0]->getDate();
@@ -169,14 +181,14 @@ class Analyst
                 $dateTo = $analysis->getDate();
                 if($recommendation != $prevRecommendation){
                     if($prevRecommendation == Entity\Analysis::RECOMMENDATION_BUY && $recommendation == Entity\Analysis::RECOMMENDATION_HOLD){
-                        $this->calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo);
+                        $totalReturn += $this->calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo);
                     }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_BUY && $recommendation == Entity\Analysis::RECOMMENDATION_SELL){
-                        $this->calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo);
+                        $totalReturn += $this->calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo);
                         $dateFrom = $analysis->getDate();
                     }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_SELL && $recommendation == Entity\Analysis::RECOMMENDATION_HOLD){
-                        $this->calculateTotalReturnForSell($ticker, $dateFrom, $dateTo);
+                        $totalReturn += $this->calculateTotalReturnForSell($ticker, $dateFrom, $dateTo);
                     }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_SELL && $recommendation == Entity\Analysis::RECOMMENDATION_BUY){
-                        $this->calculateTotalReturnForSell($ticker, $dateFrom, $dateTo);
+                        $totalReturn += $this->calculateTotalReturnForSell($ticker, $dateFrom, $dateTo);
                         $dateFrom = $analysis->getDate();
                     }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_HOLD){
                         $dateFrom = $analysis->getDate();
@@ -184,16 +196,41 @@ class Analyst
                 }
             }
         }
+        return $totalReturn;
     }
     
     
     public function calculateTotalReturnByAnalyst(Entity\Analyst $analyst)
     {
         $tickers = $this->analysisService->getAnalystTickers($analyst);
+        $return = array();
         if(!empty($tickers)){
             foreach($tickers as $ticker){
-                $this->calculateTotalReturnByAnalystAndTicker($analyst, $ticker['symbol']);
+                $return[$ticker['symbol']] = $this->calculateTotalReturnByAnalystAndTicker($analyst, $ticker['symbol']);
             }
         }
+        return $return;
+    }
+    
+    private function arrayAverage($arr)
+    {
+        $count = count($arr);
+        if($count > 0){
+            return array_sum($arr)/$count;
+        }
+        return 0;
+    }
+    
+    public function calculateAndSaveBenchmark($totalReturnArr)
+    {
+        if(!empty($totalReturnArr)){
+            $tickerArr = array();
+            foreach($totalReturnArr as $analyst){
+                foreach($analyst as $ticker => $value){
+                    $tickerArr[$ticker][] = $value;
+                }
+            }
+        }
+        $benchmark = $this->calculateBenchmark($totalReturnForBenchmark);
     }
 }
