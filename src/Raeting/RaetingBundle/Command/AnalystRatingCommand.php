@@ -36,6 +36,8 @@ class AnalystRatingCommand extends ContainerAwareCommand
         }
         $analystService->saveRatings($totalReturnArr);
         
-        $output->writeln('<info>Done</info>');
+        $analystService->updateRanks();
+        
+        $output->writeln('<info>Updates done: '.count($totalReturnArr).'</info>');
     }
 }

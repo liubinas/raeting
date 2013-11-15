@@ -1,11 +1,11 @@
 analyst:
     pattern:  /
     defaults: { _controller: "RaetingRaetingBundle:Analyst:index" }
-
+    
 analyst_show:
     pattern:  /{slug}
     defaults: { _controller: "RaetingRaetingBundle:Analyst:show" }
 
 analyst_graph:
     pattern:  /{slug}/ticker/{ticker}
-    defaults: { _controller: "RaetingRaetingBundle:Analyst:showticker" }
+    defaults: { _controller: "RaetingRaetingBundle:Analyst:showanalystticker" }

@@ -14,7 +14,7 @@
                         <a href="<?= $view['router']->generate('home'); ?>">Home</a>
                 </li>
                 <li class="current">
-                        <a href="<?= $view['router']->generate('analysis'); ?>">Recommmendations</a>
+                        <a href="<?= $view['router']->generate('analysis'); ?>">Recommendations</a>
                 </li>
         </ul>
 </div>
@@ -29,5 +29,6 @@
     'totalAnalysis' => $totalAnalysis, 
     'page' => $page, 
     'perPage' => $perPage, 
-    'showSearch' => true)); ?>
+    'showSearch' => true,
+    'parent' => 'recommendationsView')); ?>
 <? $view['slots']->stop('content') ?>

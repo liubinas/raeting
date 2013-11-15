@@ -33,6 +33,8 @@
                                         <th>Total analyses</th>
                                         <th>Last analysis</th>
                                         <th>Last estimations</th>
+                                        <th>Total return</th>
+                                        <th>Rank</th>
                                         <th></th>
                                         </thead>
                                         <tbody>
@@ -43,6 +45,8 @@
                                                     <td><?= $analyst['totalAnalysis'] ?></td>
                                                     <td><?= !empty($analyst['lastAnalysis']) ? $view['raeting']->renderDate($analyst['lastAnalysis']->getDate()->format('Y-m-d')) : '' ?></td>
                                                     <td><?= $analyst['lastSymbols'] ?></td>
+                                                    <td><?= $analyst['totalReturn'] ?></td>
+                                                    <td><?= $analyst['rank'] ?></td>
                                                     <td><a href="<?= $view['router']->generate('analyst_show', array('slug' => $analyst['slug'])) ?>">View</a></td>
                                                 </tr>
                                             <? endforeach; ?>
@@ -55,6 +59,6 @@
             </div>
     </div>
 </div>
-<?= $view['pagination']->render($page, $totalEntities, $perPage, 'analyst');?>
+<?= $view['pagination']->render($page, $totalAnalysts, $perPage, 'analyst');?>
 
 <? $view['slots']->stop('content') ?>

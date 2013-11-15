@@ -80,6 +80,50 @@ class Analyst
     }
     
     /**
+     * Get all analysts with paging for rating listing
+     * 
+     * @param type $perPage
+     * @param type $page
+     * @return type
+     */
+    public function getAllForRatingWithPaging($perPage, $page)
+    {
+        return $this->getRepository()->getAllForRatingWithPaging($perPage, $page);
+    }
+    
+    /**
+     * get number of total analysts for rating listing
+     * 
+     * @return type
+     */
+    public function countAllForRating()
+    {
+        return $this->getRepository()->countAllForRating();
+    }
+    
+    /**
+     * Get all analysts with paging for rating listing
+     * 
+     * @param type $perPage
+     * @param type $page
+     * @return type
+     */
+    public function getAllForRatingWithPagingByQuery($perPage, $page, $query)
+    {
+        return $this->getRepository()->getAllForRatingWithPagingByQuery($perPage, $page, $query);
+    }
+    
+    /**
+     * get number of total analysts for rating listing
+     * 
+     * @return type
+     */
+    public function countAllForRatingByQuery($query)
+    {
+        return $this->getRepository()->countAllForRatingByQuery($query);
+    }
+    
+    /**
      * get analyst by name
      * 
      * @param type $name
@@ -129,6 +173,8 @@ class Analyst
                 $analystData['slug'] = $analyst->getSlug();
                 $analystData['totalAnalysis'] = $this->analysisService->countAllByAnalyst($analyst);
                 $analystData['lastAnalysis'] = $this->analysisService->getLastDateByAnalyst($analyst);
+                $analystData['totalReturn'] = $analyst->getTotalReturn()->getValue();
+                $analystData['rank'] = $analyst->getRank();
                 $lastSymbols = $this->analysisService->getLastSymbolsByAnalyst($analyst, 3);
                 $lastSymbolsString = '';
                 if(!empty($lastSymbols)){
@@ -230,6 +276,24 @@ class Analyst
                         $this->saveRating($analystId, $tickerId, $value);
                     }
                 }
+            }
+        }
+    }
+    
+    private function getAllSortedByTotalReturn($sort)
+    {
+        return $this->getRepository()->getAllSortedByTotalReturn($sort);
+    }
+    
+    public function updateRanks()
+    {
+        $analysts = $this->getAllSortedByTotalReturn('desc');
+        $i = 1;
+        if(!empty($analysts)){
+            foreach($analysts as $analyst){
+                $analyst->setRank($i);
+                $this->save($analyst);
+                $i++;
             }
         }
     }

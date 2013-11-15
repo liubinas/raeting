@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Benchmark
 {
     /**
+     * @var integer
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $value;
@@ -19,6 +24,16 @@ class Benchmark
      */
     private $ticker;
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set value

@@ -11,20 +11,6 @@ use Doctrine\ORM\NoResultException;
 
 class AnalystRepository extends EntityRepository
 {
-    public function getAllWithPaging($perPage, $page)
-    {
-        $query = $this->createQueryBuilder('a')
-                ->select('a')
-                ->getQuery();
-        
-        $query = $this->addLimits($query, $perPage, $page);
-        
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
     
     private function addLimits($query, $perPage, $page)
     {
@@ -33,12 +19,52 @@ class AnalystRepository extends EntityRepository
         
         return $query;
     }
-
-    public function countAll()
+    
+    public function getAllWithPaging($perPage, $page, $search = null, $sort = null)
+    {
+        return $this->getAllAnalysts($perPage, $page, $search, $sort);
+    }
+    
+    public function getAllAnalysts($perPage = null, $page = null, $search = null, $sort = null)
+    {
+        $query = $this->createQueryBuilder('a')
+                ->select('a')
+                ->join('a.totalReturn', 't');
+        
+        if(!$search != null){
+            $query->andWhere('a.name LIKE :search OR a.company LIKE :search')
+                    ->setParameter('search', '%'.$search.'%');
+        }
+        
+        if($perPage != null && $page != null){
+            $query = $this->addLimits($query, $perPage, $page);
+        }
+        
+        if($sort != null){
+            $query->orderBy('t.value', $sort);
+        }
+        
+        $query = $query->getQuery();
+        
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function countAll($search = null, $search = null)
     {
         $query = $this->createQueryBuilder('a')
                 ->select('count(a.id) counter')
-                ->getQuery();
+                ->join('a.totalReturn', 't');
+        
+        if(!$search != null){
+            $query->andWhere('a.name LIKE :search OR a.company LIKE :search')
+                    ->setParameter('search', '%'.$search.'%');
+        }
+        
+        $query= $query->getQuery();
         
         try {
             $result =  $query->getSingleResult();
@@ -46,5 +72,20 @@ class AnalystRepository extends EntityRepository
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
+    }
+    
+    public function getAllSortedByTotalReturn($sort)
+    {
+        return $this->getAllAnalysts(null, null, null, $sort);
+    }
+    
+    public function getAllWithPagingByQuery($perPage, $page, $query)
+    {
+        return $this->getAllWithPaging($perPage, $page, $query);
+    }
+    
+    public function countAllByQuery($query)
+    {
+        return $this->countAll($query);
     }
 }

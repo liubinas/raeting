@@ -28,5 +28,11 @@ Raeting\RaetingBundle\Entity\Analyst:
             length: 255
             fixed: false
             nullable: false
+        rank:
+            type: integer
+    oneToOne:
+        totalReturn:
+            targetEntity: AnalystTotalReturn
+            mappedBy: analyst
     repositoryClass: Raeting\RaetingBundle\Entity\AnalystRepository
     lifecycleCallbacks: {  }

@@ -1,3 +1,7 @@
 analysis:
     pattern:  /
     defaults: { _controller: "RaetingRaetingBundle:Analyst:analysis" }
+    
+analysis_show:
+    pattern:  /{ticker}
+    defaults: { _controller: "RaetingRaetingBundle:Analyst:showticker" }

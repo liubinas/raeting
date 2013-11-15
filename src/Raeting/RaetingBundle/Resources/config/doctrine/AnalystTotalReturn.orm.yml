@@ -2,18 +2,22 @@ Raeting\RaetingBundle\Entity\AnalystTotalReturn:
     type: entity
     table: analyst_total_return
     fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
         value:
             type: decimal
             scale: 6
             nullable: false
-    manyToOne:
+    oneToOne:
         analyst:
             targetEntity: Analyst
-            cascade: {  }
-            mappedBy: null
-            inversedBy: null
+            inversedBy: totalReturn
             joinColumns:
                 analyst_id:
                     referencedColumnName: id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

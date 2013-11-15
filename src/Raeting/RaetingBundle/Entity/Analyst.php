@@ -48,6 +48,13 @@ class Analyst
      * @ORM\Column(name="import_slug", type="string", length=255, nullable=false)
      */
     private $importSlug;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rank", type="integer")
+     */
+    private $rank;
 
     /**
      * Get id
@@ -150,9 +157,60 @@ class Analyst
     {
         return $this->slug;
     }
+    
+    /**
+     * Set rank
+     *
+     * @param integer $rank
+     * @return Analyst
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+    
+        return $this;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return integer 
+     */
+    public function getRank()
+    {
+        return $this->rank;
+    }
 
     public function __toString()
     {
         return $this->getName();
+    }
+    /**
+     * @var \Raeting\RaetingBundle\Entity\AnalystTotalReturn
+     */
+    private $totalReturn;
+
+
+    /**
+     * Set totalReturn
+     *
+     * @param \Raeting\RaetingBundle\Entity\AnalystTotalReturn $totalReturn
+     * @return Analyst
+     */
+    public function setTotalReturn(\Raeting\RaetingBundle\Entity\AnalystTotalReturn $totalReturn = null)
+    {
+        $this->totalReturn = $totalReturn;
+    
+        return $this;
+    }
+
+    /**
+     * Get totalReturn
+     *
+     * @return \Raeting\RaetingBundle\Entity\AnalystTotalReturn 
+     */
+    public function getTotalReturn()
+    {
+        return $this->totalReturn;
     }
 }

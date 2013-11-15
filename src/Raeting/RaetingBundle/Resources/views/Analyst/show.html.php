@@ -49,5 +49,6 @@
     'totalAnalysis' => $totalAnalysis, 
     'page' => $page, 
     'perPage' => $perPage, 
-    'showSearch' => true)); ?>
+    'showSearch' => true,
+    'parent' => 'analystView')); ?>
 <? $view['slots']->stop('content') ?>

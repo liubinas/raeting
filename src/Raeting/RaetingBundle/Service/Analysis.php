@@ -59,6 +59,16 @@ class Analysis
         return $this->getRepository()->getAllByAnalyst($analyst, $perPage, $page);
     }
     
+    public function getAllByTickerWithPaging($ticker, $perPage, $page)
+    {
+        return $this->getRepository()->getAllByTickerWithPaging($ticker, $perPage, $page);
+    }
+    
+    public function getAllByTickerWithPagingByQuery($ticker, $perPage, $page, $query)
+    {
+        return $this->getRepository()->getAllByTickerWithPagingByQuery($ticker, $perPage, $page, $query);
+    }
+    
     public function getAllByQuery($query, $perPage, $page)
     {
         return $this->getRepository()->getAllByQuery($query, $perPage, $page);
@@ -112,6 +122,16 @@ class Analysis
     public function countAllByQuery($query)
     {
         return $this->getRepository()->countAllByQuery($query);
+    }
+    
+    public function countAllByTicker($ticker)
+    {
+        return $this->getRepository()->countAllByTicker($ticker);
+    }
+    
+    public function countAllByTickerAndQuery($ticker, $query)
+    {
+        return $this->getRepository()->countAllByTickerAndQuery($ticker, $query);
     }
     
     private function formatRecommendation($recommendation)

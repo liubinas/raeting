@@ -2,6 +2,13 @@ Raeting\RaetingBundle\Entity\Benchmark:
     type: entity
     table: benchmark
     fields:
+        id:
+            id: true
+            type: integer
+            unsigned: true
+            nullable: false
+            generator:
+                strategy: IDENTITY
         value:
             type: decimal
             scale: 6

@@ -23,25 +23,27 @@
                                     <table class="table table-striped table-hover">
                                         <thead>
                                         <th>Date</th>
-                                        <? if(!isset($params['slug'])): ?>
+                                        <? if(!isset($params['slug']) && $parent != 'analystTickerView'): ?>
                                         <th>Analyst</th>
                                         <? endif; ?>
+                                        <? if($parent != 'tickerView' && $parent != 'analystTickerView'): ?>
                                         <th>Symbol</th>
+                                        <? endif; ?>
                                         <th>Rating</th>
                                         <th>Target price</th>
-                                        <th></th>
                                         </thead>
                                         <tbody>
                                             <? foreach ($analysis as $entity): ?>
                                                 <tr>
                                                     <td><?= $view['raeting']->renderDate($entity->getDate()->format('Y-m-d')) ?></td>
-                                                    <? if(!isset($params['slug'])): ?>
-                                                    <td><?= $entity->getAnalyst()->getName()?></td>
+                                                    <? if(!isset($params['slug']) && $parent != 'analystTickerView'): ?>
+                                                    <td><a href="<?= $parent == 'tickerView' ? $view['router']->generate('analyst_graph', array('slug' => $entity->getAnalyst()->getSlug(), 'ticker' => strtolower($entity->getTicker()->getSymbol()))) : $view['router']->generate('analyst_show', array('slug' => $entity->getAnalyst()->getSlug())) ?>"><?= $entity->getAnalyst()->getName()?></td>
                                                     <? endif; ?>
-                                                    <td><a href="<?= $view['router']->generate('analyst_graph', array('slug' => $entity->getAnalyst()->getSlug(), 'ticker' => strtolower($entity->getTicker()->getSymbol()))) ?>"><?= $entity->getTicker()->getTitle() ?></a></td>
+                                                    <? if($parent != 'tickerView' && $parent != 'analystTickerView'): ?>
+                                                    <td><a href="<?= $parent == 'analystView' ? $view['router']->generate('analyst_graph', array('slug' => $entity->getAnalyst()->getSlug(), 'ticker' => strtolower($entity->getTicker()->getSymbol()))) : $view['router']->generate('analysis_show', array('ticker' => strtolower($entity->getTicker()->getSymbol()))) ?>"><?= $entity->getTicker()->getTitle() ?></a></td>
+                                                    <? endif; ?>
                                                     <td><?= $view['raeting']->renderAnalysisStatus($entity->getRecommendation(), true) ?></td>
                                                     <td><?= $view['raeting']->renderPrice($entity->getEstimation(), $entity->getTicker()) ?></td>
-                                                    <td><a href="<?= $view['router']->generate('analyst_graph', array('slug' => $entity->getAnalyst()->getSlug(), 'ticker' => strtolower($entity->getTicker()->getSymbol()))) ?>">View</a></td>
                                                 </tr>
                                             <? endforeach; ?>
                                         </tbody>
@@ -58,8 +60,15 @@
         if(isset($params['slug'])):
             $get['slug'] = $params['slug'];
         endif;
+        if(isset($params['ticker'])):
+            $get['ticker'] = $params['ticker'];
+        endif;
     else:
-        $get = array('slug' => $analystSlug, 'ticker' => strtolower($ticker->getSymbol()));
+        if(isset($analystSlug)){
+            $get = array('slug' => $analystSlug, 'ticker' => strtolower($ticker->getSymbol()));
+        }else{
+            $get = array('ticker' => strtolower($ticker->getSymbol()));
+        }
     endif;
 ?>
 <?= $view['pagination']->render($page, $totalAnalysis, $perPage, $searchLink, $get);?>

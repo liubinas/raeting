@@ -16,7 +16,7 @@ class Version20131115095019 extends AbstractMigration
                         `analyst_id` ,
                         `ticker_id`
                         )");
-        $this->addSql("CREATE VIEW analyst_total_return as SELECT analyst_id, sum(value) as value FROM `total_return` GROUP BY analyst_id");
+        $this->addSql("CREATE VIEW analyst_total_return as SELECT id, analyst_id, sum(value) as value FROM `total_return` GROUP BY analyst_id");
     }
 
     public function down(Schema $schema)

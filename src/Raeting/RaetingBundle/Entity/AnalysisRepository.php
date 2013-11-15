@@ -24,7 +24,8 @@ class AnalysisRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('s')
                 ->select('s, t')
-                ->leftJoin('s.ticker', 't');
+                ->leftJoin('s.ticker', 't')
+                ->leftJoin('s.analyst', 'a');
         
         if($analyst != null){
             $query->andWhere('s.analyst = :analyst')
@@ -32,7 +33,7 @@ class AnalysisRepository extends EntityRepository
         }
         
         if($search != null){
-            $query->andWhere('t.title LIKE :search')
+            $query->andWhere('t.title LIKE :search OR a.name LIKE :search')
                 ->setParameter('search', '%'.$search.'%');
         }
         
@@ -67,6 +68,16 @@ class AnalysisRepository extends EntityRepository
         return $this->getAll(null, $query, null, $perPage, $page);
     }
     
+    public function getAllByTickerWithPaging($ticker, $perPage, $page)
+    {
+        return $this->getAll(null, null, $ticker, $perPage, $page);
+    }
+    
+    public function getAllByTickerWithPagingByQuery($ticker, $perPage, $page, $query)
+    {
+        return $this->getAll(null, $query, $ticker, $perPage, $page);
+    }
+    
     public function getAllWithPaging($perPage, $page)
     {
         return $this->getAll(null, null, null, $perPage, $page);
@@ -77,9 +88,9 @@ class AnalysisRepository extends EntityRepository
         return $this->getAll($analyst, null, null, $perPage, $page);
     }
     
-    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page, $order)
+    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page)
     {
-        return $this->getAll($analyst, null, $ticker, $perPage, $page, $order);
+        return $this->getAll($analyst, null, $ticker, $perPage, $page);
     }
     
     public function getAnalystEstimationRangeByTicker($analyst, $ticker)
@@ -177,7 +188,7 @@ class AnalysisRepository extends EntityRepository
         }
     }
     
-    public function countAll($analyst = null, $search = null)
+    public function countAll($analyst = null, $search = null, $ticker = null)
     {
         $query = $this->createQueryBuilder('a')
                 ->select('count(a.id) counter')
@@ -190,6 +201,11 @@ class AnalysisRepository extends EntityRepository
         if($search != null){
             $query->andWhere('t.title LIKE :search')
                 ->setParameter('search', '%'.$search.'%');
+        }
+        
+        if($ticker != null){
+            $query->andWhere('t.symbol = :ticker')
+                ->setParameter('ticker', $ticker);
         }
         
         $query = $query->getQuery();
@@ -215,6 +231,16 @@ class AnalysisRepository extends EntityRepository
     public function countAllByQuery($query)
     {
         return $this->countAll(null, $query);
+    }
+    
+    public function countAllByTicker($ticker)
+    {
+        return $this->countAll(null, null, $ticker);
+    }
+    
+    public function countAllByTickerAndQuery($ticker, $query)
+    {
+        return $this->countAll(null, $query, $ticker);
     }
     
     public function getAnalystTickers($analyst)
