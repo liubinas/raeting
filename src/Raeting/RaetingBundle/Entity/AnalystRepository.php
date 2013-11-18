@@ -42,6 +42,8 @@ class AnalystRepository extends EntityRepository
         
         if($sort != null){
             $query->orderBy('t.value', $sort);
+        }else{
+            $query->orderBy('a.rank', 'asc');
         }
         
         $query = $query->getQuery();
