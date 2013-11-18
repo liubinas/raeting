@@ -28,8 +28,12 @@ Change $ENV to your enviroment name.
   if (in_array($this->getEnvironment(), array($ENV));
 
 
-Migrations:
 
-migrate: app/console doctrine:migrations:migrate
+app/console doctrine:database:create
 
-load fixtures: app/console estina:fixtures:load
+app/console doctrine:migrations:migrate
+
+app/console estina:fixtures:load
+
+app/console raeting:symboltables:update
+

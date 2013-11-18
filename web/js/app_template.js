@@ -520,7 +520,7 @@ var AppTemplate = function() {
 			handleLayout(); // Calls calculateHeight()
 			handleResizeEvents(); // Calls _resizeEvents() every 30ms on resizing
 			handleSwipeEvents(); // Enables feature to swipe to the left or right on mobile phones to open the sidebar
-			handleSidebarMenu(); // Handles navigation
+			//handleSidebarMenu(); // Handles navigation
 			handleScrollbars(); // Adds styled scrollbars for sidebar on desktops
 			handleWidgets(); // Handle collapse and expand from widgets
 			handleCheckableTables(); // Checks all checkboxes in a table if master checkbox was toggled
