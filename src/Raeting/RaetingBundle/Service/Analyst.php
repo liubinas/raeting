@@ -194,7 +194,7 @@ class Analyst
     {
         $totalReturn = 0;
         $priceFrom = $this->rateService->getRateByTickerAndDate($ticker, $dateFrom->format('Y-m-d'));
-        $priceto = $this->rateService->getRateByTickerAndDate($ticker, $dateTo->format('Y-m-d'));
+        $priceTo = $this->rateService->getRateByTickerAndDate($ticker, $dateTo->format('Y-m-d'));
         $dividends = $this->dividendService->getSumByInterval($ticker, $dateFrom, $dateTo);
         if(!empty($priceFrom) && !empty($priceTo)){
             if($type == 'buy'){
@@ -240,6 +240,7 @@ class Analyst
                         $dateFrom = $analysis->getDate();
                     }
                 }
+                $prevRecommendation = $recommendation;
             }
         }
         return $totalReturn;
