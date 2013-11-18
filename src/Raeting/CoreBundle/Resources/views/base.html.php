@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8"/>
         <title>Raeting.com</title>
+        <link rel="shortcut icon" href="<?= $view['assets']->getUrl('favicon.ico') ?>">
+        <link rel="apple-touch-icon" href="<?= $view['assets']->getUrl('apple-touch-icon.png') ?>" />
         <link href="<?= $view['assets']->getUrl('css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" media="all" />
         <link href="<?= $view['assets']->getUrl('css/main.css') ?>" rel="stylesheet" type="text/css" media="all" />
         <? if(isset($hideSidebar)): ?>
