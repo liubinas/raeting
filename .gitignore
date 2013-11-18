@@ -13,3 +13,7 @@ logs
 /composer.phar
 /composer.lock
 *~
+log/
+tmp/
+web/.htaccess
+web/stats/
