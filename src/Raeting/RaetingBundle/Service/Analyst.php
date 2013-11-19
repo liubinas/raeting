@@ -222,10 +222,10 @@ class Analyst
         $analyses = $this->analysisService->getAllByAnalystAndTickerAscending($analyst, $ticker);
         $totalReturn = 0;
         if(!empty($analyses)){
-            $prevRecommendation = $this->raetingHelper->renderAnalysisStatus($analyses[0]->getRecommendation());
+            $prevRecommendation = $this->raetingHelper->getAnalysisStatus($analyses[0]->getRecommendation());
             $dateFrom = $analyses[0]->getDate();
             foreach($analyses as $analysis){
-                $recommendation = $this->raetingHelper->renderAnalysisStatus($analysis->getRecommendation());
+                $recommendation = $this->raetingHelper->getAnalysisStatus($analysis->getRecommendation());
                 $dateTo = $analysis->getDate();
                 if($recommendation != $prevRecommendation){
                     if($prevRecommendation == Entity\Analysis::RECOMMENDATION_BUY && $recommendation == Entity\Analysis::RECOMMENDATION_HOLD){

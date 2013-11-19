@@ -21,7 +21,7 @@ class RaetingHelper extends Helper
         return date('D, M j, Y, g:iA', strtotime($date)).' UTC';
     }
     
-    public function renderAnalysisStatus($status, $color = false)
+    public function getAnalysisStatus($status)
     {
         switch($status){
             case 'above average':
@@ -326,6 +326,12 @@ class RaetingHelper extends Helper
                 $status = 'hold';
                 break;
         }
+        return $status;
+    }
+    
+    public function renderAnalysisStatus($status, $color = false)
+    {
+        $status = $this->getAnalysisStatus($status);
         if($color){
             $label = null;
             switch($status){
