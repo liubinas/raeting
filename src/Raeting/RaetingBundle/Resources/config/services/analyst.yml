@@ -4,4 +4,4 @@ parameters:
 services:
     raetingraeting.service.analyst:
         class: %raetingraeting.service.analyst.class%
-        arguments: [@doctrine.orm.entity_manager, @raetingraeting.service.analysis, @raetingraeting.service.rate, @raetingraeting.service.dividend]
+        arguments: [@doctrine.orm.entity_manager, @raetingraeting.service.analysis, @raetingraeting.service.rate, @raetingraeting.service.dividend, @raeting.raeting_helper]

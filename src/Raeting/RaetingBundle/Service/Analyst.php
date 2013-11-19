@@ -7,16 +7,18 @@ use Raeting\RaetingBundle\Entity;
 
 use Raeting\RaetingBundle\Service\Analysis;
 use Raeting\RaetingBundle\Service\Rate;
+use Raeting\RaetingBundle\Templating\Helper\RaetingHelper;
 
 class Analyst
 {
 
-    public function __construct(EntityManager $em, Analysis $analysisService, Rate $rateService, Dividend $dividendService)
+    public function __construct(EntityManager $em, Analysis $analysisService, Rate $rateService, Dividend $dividendService, RaetingHelper $raetingHelper)
     {
         $this->em = $em;
         $this->analysisService = $analysisService;
         $this->rateService = $rateService;
         $this->dividendService = $dividendService;
+        $this->raetingHelper = $raetingHelper;
     }
 
     public function getNew()
@@ -220,10 +222,10 @@ class Analyst
         $analyses = $this->analysisService->getAllByAnalystAndTickerAscending($analyst, $ticker);
         $totalReturn = 0;
         if(!empty($analyses)){
-            $prevRecommendation = $analyses[0]->getRecommendation();
+            $prevRecommendation = $this->raetingHelper->renderAnalysisStatus($analyses[0]->getRecommendation());
             $dateFrom = $analyses[0]->getDate();
             foreach($analyses as $analysis){
-                $recommendation = $analysis->getRecommendation();
+                $recommendation = $this->raetingHelper->renderAnalysisStatus($analysis->getRecommendation());
                 $dateTo = $analysis->getDate();
                 if($recommendation != $prevRecommendation){
                     if($prevRecommendation == Entity\Analysis::RECOMMENDATION_BUY && $recommendation == Entity\Analysis::RECOMMENDATION_HOLD){
