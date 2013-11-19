@@ -28,8 +28,6 @@ class HistoryTickerImportCommand extends ContainerAwareCommand
         
         $symbols = $symbolService->getSymbolsForStockImport();
         
-        $objPHPExcel = new \PHPExcel();
-        
         $totalInsertsDone = 0;
         $totalUpdatesDone = 0;
         $filesInserted = 0;
