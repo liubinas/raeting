@@ -38,7 +38,7 @@ class SymbolRepository extends EntityRepository
     public function getSymbolsForImport($em, $type)
     {
         $query = $em->createQuery('SELECT sy FROM RaetingRaetingBundle:Symbol sy 
-                                        AND sy.type = :type');
+                                   WHERE sy.type = :type');
         
         try {
             return $query->setParameter('type', $type)->getResult();
