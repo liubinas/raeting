@@ -29,7 +29,7 @@ class AnalystRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('a')
                 ->select('a')
-                ->join('a.totalReturn', 't');
+                ->leftJoin('a.totalReturn', 't');
         
         if(!$search != null){
             $query->andWhere('a.name LIKE :search OR a.company LIKE :search')

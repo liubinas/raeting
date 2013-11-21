@@ -48,7 +48,6 @@ class AnalysisRepository extends EntityRepository
         
         $query = $query->orderBy('s.date', $order)
                 ->getQuery();
-        
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

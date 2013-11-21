@@ -175,7 +175,11 @@ class Analyst
                 $analystData['slug'] = $analyst->getSlug();
                 $analystData['totalAnalysis'] = $this->analysisService->countAllByAnalyst($analyst);
                 $analystData['lastAnalysis'] = $this->analysisService->getLastDateByAnalyst($analyst);
-                $analystData['totalReturn'] = $analyst->getTotalReturn()->getValue();
+                if($analyst->getTotalReturn()){
+                    $analystData['totalReturn'] = $analyst->getTotalReturn()->getValue();
+                }else{
+                    $analystData['totalReturn'] = 0;
+                }
                 $analystData['rank'] = $analyst->getRank();
                 $lastSymbols = $this->analysisService->getLastSymbolsByAnalyst($analyst, 3);
                 $lastSymbolsString = '';
