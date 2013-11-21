@@ -113,7 +113,7 @@ class ORMPurger extends Purger
         
         $this->em->getConnection()->executeUpdate("SET FOREIGN_KEY_CHECKS = 0");
         foreach($orderedTables as $tbl) {
-            if($tbl != 'user_stats'){
+            if($tbl != 'user_stats' && $tbl != 'analyst_total_return' && $tbl != 'benchmark'){
                 if ($this->purgeMode === self::PURGE_MODE_DELETE) {
                     $this->em->getConnection()->executeUpdate("DELETE FROM " . $tbl);
                 } else {
