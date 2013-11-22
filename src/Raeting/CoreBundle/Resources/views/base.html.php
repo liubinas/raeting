@@ -55,16 +55,10 @@
 
 			<!-- Logo -->
 			<a class="navbar-brand" href="<?=$view['router']->generate('home')?>">
-				<img src="<?= $view['assets']->getUrl('img/logo.png'); ?>" alt="logo" />
+				<img class="logo-img" src="<?= $view['assets']->getUrl('img/logo.png'); ?>" alt="logo" />
                                 <span class="beta">beta</span>
 			</a>
 			<!-- /logo -->
-                        <? if(isset($showTopMenu)): ?>
-                        <ul class="nav navbar-nav navbar-left hidden-xs hidden-sm">
-                            <li><a href="<?= $view['router']->generate('trader'); ?>">Traders</a></li>
-                            <li><a href="<?= $view['router']->generate('analyst'); ?>">Analysts</a></li>
-			</ul>
-                        <? endif; ?>
                         <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
                             <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
                                 $user = $app->getUser();
@@ -165,9 +159,6 @@
                                         </li>
                                     <? endif; ?>
                                 </ul>
-                            <div class="sidebar-title">
-                                    <span>Copyright &copy; RAETING.com 2013.<br/> All rights reserved.</span>
-                            </div>
 			</div>
 			<div id="divider" class="resizeable"></div>
 		</div>
@@ -189,5 +180,8 @@
                 <? else: ?>
                     <? $view['slots']->output('content') ?>
                 <? endif; ?>
+        <footer>
+                <span>Copyright &copy; RAETING.com 2013. All rights reserved.</span>
+        </footer>
     </body>
 </html>

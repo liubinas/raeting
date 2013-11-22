@@ -258,4 +258,19 @@ class SignalsRepository extends EntityRepository
             return null;
         }
     }
+    
+    public function getLatest()
+    {
+        $query = $this->createQueryBuilder('s')
+                ->select('s')
+                ->orderBy('s.created', 'desc')
+                ->setMaxResults(1)
+                ->getQuery();
+        
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

@@ -18,13 +18,6 @@ a:hover {
 .home {
   padding-top: 100px!important;
 }
-.navbar .nav > li > a {
-  padding-top: 25px;
-  padding-bottom: 25px;
-}
-.navbar .navbar-brand {
-  line-height: 70px;
-}
 .light {
   font: 300 'Lato';
 }

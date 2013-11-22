@@ -259,4 +259,19 @@ class AnalysisRepository extends EntityRepository
             return null;
         }
     }
+    
+    public function getLatest()
+    {
+        $query = $this->createQueryBuilder('a')
+                ->select('a')
+                ->orderBy('a.date', 'desc')
+                ->setMaxResults(1)
+                ->getQuery();
+        
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

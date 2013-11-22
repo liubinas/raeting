@@ -186,4 +186,9 @@ class Analysis
     {
         return $this->getRepository()->getAnalystTickers($analyst);
     }
+    
+    public function getLatest()
+    {
+        return $this->getRepository()->getLatest();
+    }
 }

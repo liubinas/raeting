@@ -163,4 +163,14 @@ class UserService extends BaseService
         );
         return $traderArr;
     }
+    
+    public function getLatest()
+    {
+        $query = $this->getRepository()->createQueryBuilder('u')
+                ->select('u')
+                ->orderBy('u.createDate', 'desc')
+                ->setMaxResults(1);
+        
+        return $query->getQuery()->getSingleResult();;
+    }
 }

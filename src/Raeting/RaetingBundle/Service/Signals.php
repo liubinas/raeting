@@ -254,4 +254,9 @@ class Signals
         );
         return $signalArr;
     }
+    
+    public function getLatest()
+    {
+        return $this->getRepository()->getLatest();
+    }
 }

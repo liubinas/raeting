@@ -13,7 +13,17 @@ class RaetingController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('RaetingRaetingBundle:Raeting:index.html.php', array('hideSidebar' => true,
-            'showTopMenu' => true));
+        $latestSignal = $this->get('raetingraeting.service.signals')->getLatest();
+        $latestTrader = $this->get('user.service.user')->getLatest();
+        $topAnalyst = $this->get('raetingraeting.service.analyst')->getTopAnalyst();
+        $latestRecommendation = $this->get('raetingraeting.service.analysis')->getLatest();
+        return $this->render('RaetingRaetingBundle:Raeting:index.html.php', array(
+            'hideSidebar' => true,
+            'showTopMenu' => true,
+            'latestSignal' => $latestSignal,
+            'latestTrader' => $latestTrader,
+            'topAnalyst' => $topAnalyst,
+            'latestRecommendation' => $latestRecommendation,
+            ));
     }
 }

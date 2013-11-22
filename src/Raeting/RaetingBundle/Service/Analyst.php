@@ -304,4 +304,9 @@ class Analyst
             }
         }
     }
+    
+    public function getTopAnalyst()
+    {
+        return $this->getRepository()->getTopAnalyst();
+    }
 }

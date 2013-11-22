@@ -90,4 +90,21 @@ class AnalystRepository extends EntityRepository
     {
         return $this->countAll($query);
     }
+    
+    public function getTopAnalyst()
+    {
+        $query = $this->createQueryBuilder('a')
+                ->select('a.name, a.company, sum(t.value) as amount')
+                ->leftJoin('a.totalReturn', 't')
+                ->orderBy('amount', 'desc')
+                ->groupBy('t.analyst')
+                ->setMaxResults(1)
+                ->getQuery();
+        
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }
