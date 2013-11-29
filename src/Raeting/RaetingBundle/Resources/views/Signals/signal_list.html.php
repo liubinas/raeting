@@ -42,6 +42,7 @@
                                         <th>Open</th>
                                         <th>Take profit</th>
                                         <th>Stop loss</th>
+                                        <th>Profit (pips)</th>
                                         <th>Trader</th>
                                         <th>Created</th>
                                         <th></th>
@@ -64,10 +65,11 @@
                                                     <td><?= $view['raeting']->renderPrice($entity->getOpen(), $entity->getSymbol()) ?></td>
                                                     <td><?= $view['raeting']->renderPrice($entity->getTakeprofit(), $entity->getSymbol()) ?></td>
                                                     <td><?= $view['raeting']->renderPrice($entity->getStoploss(), $entity->getSymbol()) ?></td>
+                                                    <td><?= $entity->getPips() ?></td>
                                                     <td>
                                                         <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getUser()->getSlug())) ?>"><?= $entity->getUser()->getFirstname() ?> <?= $entity->getUser()->getLastname() ?></a></td>
                                                     <td><?= $view['raeting']->renderDate($entity->getCreated()->format('Y-m-d H:i:s')) ?></td>
-                                                    <td><a href="<?= $view['router']->generate('signals_show', array('uuid' => $entity->getUuid())) ?>">View</a></td>
+                                                    <td><a href="<?= $view['router']->generate('signals_show', array('uuid' => $entity->getUuid())) ?>"><i class="icon-search"></i></a></td>
                                                 </tr>
                                             <? endforeach; ?>
                                         </tbody>

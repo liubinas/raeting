@@ -16,9 +16,19 @@ class RaetingHelper extends Helper
         return number_format($price, $symbol->getViewPrecision());
     }
     
-    public function renderDate($date)
+    public function renderDate($date ,$type = 'full')
     {
-        return date('D, M j, Y, g:iA', strtotime($date)).' UTC';
+        switch($type){
+            case 'full':
+                    return date('Y-m-d H:i:s', strtotime($date));
+                break;
+            case 'date':
+                    return date('Y-m-d', strtotime($date));
+                break;
+            case 'hours':
+                    return date('H:i:s', strtotime($date));
+                break;
+        }
     }
     
     public function getAnalysisStatus($status)

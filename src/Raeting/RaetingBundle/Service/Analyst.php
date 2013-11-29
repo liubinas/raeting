@@ -185,7 +185,7 @@ class Analyst
                 $lastSymbolsString = '';
                 if(!empty($lastSymbols)){
                     foreach($lastSymbols as $analysis){
-                        $lastSymbolsString .= $analysis->getTicker()->getTitle().', ';
+                        $lastSymbolsString .= $analysis->getTicker()->getSymbol().', ';
                     }
                     $lastSymbolsString = substr($lastSymbolsString, 0, -2);
                 }

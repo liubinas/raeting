@@ -76,7 +76,7 @@ endif;
                                     <div class="col-md-12">
                                             <div class="widget box blue-box">
                                                 <div class='flot-y'>
-                                                    <div class='flot-tick-label'>Pips</div>
+                                                    <div class='flot-tick-label'>Profit(pips)</div>
                                                 </div>
                                                     <div class="widget-chart labeled"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
                                                             <div id="chart_widget" class="chart chart-medium"></div>
