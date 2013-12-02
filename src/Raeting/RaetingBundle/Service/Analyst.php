@@ -248,6 +248,11 @@ class Analyst
                 }
                 $prevRecommendation = $recommendation;
             }
+            if($recommendation == Entity\Analysis::RECOMMENDATION_SELL && $dateFrom != $dateTo){
+                $totalReturn += $this->calculateTotalReturnForSell($ticker, $dateFrom, $dateTo);
+            }elseif($recommendation == Entity\Analysis::RECOMMENDATION_BUY && $dateFrom != $dateTo){
+                $totalReturn += $this->calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo);
+            }
         }
         return $totalReturn;
     }
