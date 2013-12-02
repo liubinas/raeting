@@ -340,7 +340,8 @@ class Rate
     {
         $query = 'SELECT bid, ask
                     FROM symbol_'.strtolower($ticker). ' 
-                    WHERE source_date = "'.$date.'" 
+                    WHERE source_date >= "'.$date.'" 
+                    ORDER BY source_date ASC
                     LIMIT 1';
         
         $conn = $this->em->getConnection();
