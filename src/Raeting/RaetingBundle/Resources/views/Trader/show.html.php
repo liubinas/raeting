@@ -49,7 +49,7 @@ endif;
                         
                         <div class="list-group profile-photo">
                             <li class="list-group-item no-padding">
-                        <a class="twitter-timeline" href="https://twitter.com/<?= $view->escape($entity->getTwitter())?>" data-widget-id="393726368988397568">Tweets by @<?= $view->escape($entity->getTwitter()) ?></a>
+                        <a class="twitter-timeline" data-screen-name="<?= $view->escape($entity->getTwitter())?>" href="https://twitter.com/<?= $view->escape($entity->getTwitter())?>" data-widget-id="393726368988397568">Tweets by @<?= $view->escape($entity->getTwitter()) ?></a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                         </li>
                         </div>
