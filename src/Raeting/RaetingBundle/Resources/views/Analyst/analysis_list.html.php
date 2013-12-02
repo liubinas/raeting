@@ -1,24 +1,21 @@
+<? if(isset($showSearch) && $showSearch == true): ?>
+<div class="col-md-2 fr search-box">
+    <div class="dataTables_filter" id="DataTables_Table_0_filter">
+        <form class="form-inline" method="get" action="<?= $view['router']->generate($searchLink, $params) ?>">
+            <label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon-search"></i></span>
+                    <input id="signal-search" name="analysis-search" type="text" placeholder="search" class="form-control" value="<?= $query ?>" />
+                </div>
+            </label>
+        </form>
+    </div>
+</div>
+<? endif; ?>
 <div class="row">
     <div class="col-md-12">
-            <div class="widget box">
-                    <div class="widget-header">
-                            <h4>Recommmendations</h4>
-                    </div>
+            <div class="widget">
                     <div class="widget-content">
-                        <? if(isset($showSearch) && $showSearch == true): ?>
-                        <div class="col-md-12">
-                            <div class="dataTables_filter" id="DataTables_Table_0_filter">
-                                <form class="form-inline" method="get" action="<?= $view['router']->generate($searchLink, $params) ?>">
-                                    <label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-search"></i></span>
-                                            <input id="signal-search" name="analysis-search" type="text" placeholder="search" class="form-control" value="<?= $query ?>" />
-                                        </div>
-                                    </label>
-                                </form>
-                            </div>
-                        </div>
-                        <? endif; ?>
                             <? if (!empty($analysis)): ?>
                                     <table class="table table-striped table-hover">
                                         <thead>

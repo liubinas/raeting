@@ -1,18 +1,27 @@
 <? $view['slots']->start('content') ?>
-
+<? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
+<div class="add-signal">
+    <div class="btn-group">
+        <button class="btn" onclick="document.getElementsByClassName('signal-form')[0].style.display='block'; return false;"><i class="icon-plus"></i> Add signal</button>
+    </div>
+</div>
+<? endif; ?>
+<div class="col-md-2 fr search-box">
+    <div class="dataTables_filter" id="DataTables_Table_0_filter">
+        <form class="form-inline" method="get" action="<?= $view['router']->generate($searchLink) ?>">
+            <label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon-search"></i></span>
+                    <input id="signal-search" name="signal-search" type="text" placeholder="search" class="form-control" value="<?= $query ?>" />
+                </div>
+            </label>
+        </form>
+    </div>
+</div>
+<div class="clear"></div>
 <div class="row">
     <div class="col-md-12">
-            <div class="widget box">
-                    <div class="widget-header">
-                            <h4>Signals list</h4>
-                            <div class="toolbar no-padding">
-                                    <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
-                                        <div class="btn-group">
-                                                <span onclick="document.getElementsByClassName('signal-form')[0].style.display='block'; return false;" class="btn btn-xs circular-charts-reload"><i class="icon-plus"></i> Add signal</span>
-                                        </div>
-                                    <? endif; ?>
-                            </div>
-                    </div>
+            <div class="widget">
                     <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : ?>
                         <div class="widget-content signal-form"<? if(!$showForm) echo 'style="display: none;"' ?>>
                             <div class="span6 offset3">
@@ -21,18 +30,6 @@
                         </div>
                     <? endif; ?>
                     <div class="widget-content">
-                        <div class="col-md-12">
-                            <div class="dataTables_filter" id="DataTables_Table_0_filter">
-                                <form class="form-inline" method="get" action="<?= $view['router']->generate($searchLink) ?>">
-                                    <label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-search"></i></span>
-                                            <input id="signal-search" name="signal-search" type="text" placeholder="search" class="form-control" value="<?= $query ?>" />
-                                        </div>
-                                    </label>
-                                </form>
-                            </div>
-                        </div>
                             <? if (!empty($entities)): ?>
                                     <table class="table table-striped table-hover">
                                         <thead>

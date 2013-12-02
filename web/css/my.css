@@ -65,9 +65,6 @@
 .profile-photo img{
     border: 1px solid #ddd;
 }
-.page-title{
-    width: 100%;
-}
 .widget .chart.chart-medium{
     height: 250px;
 }
@@ -139,4 +136,14 @@ footer{
     border-top: 1px solid #d9d9d9;
     color: #4d7496;
     font-size: 11px;
+}
+.page-header{
+    float: left;
+}
+.search-box{
+    margin-top: 25px;
+}
+.add-signal{
+    float: right;
+    margin-top: 25px;
 }

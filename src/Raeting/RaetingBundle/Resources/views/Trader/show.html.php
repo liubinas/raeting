@@ -42,7 +42,7 @@ endif;
                     <div class="fl padd-15">
                         <div class="list-group profile-photo">
                             <li class="list-group-item no-padding">
-                                <img src="https://graph.facebook.com/<?= $view->escape($entity->getFbname()) ?>/picture?type=large">
+                                <img src="<?= $entity->getFbname() ? 'https://graph.facebook.com/'.$view->escape($entity->getFbname()).'/picture?type=large' : $view['assets']->getUrl('img/blank_profile.png') ?>">
                             </li>
                         </div>
                         <? if($entity->getTwitter()): ?>

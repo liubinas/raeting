@@ -1,7 +1,7 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
-<h3>Analysts</h3>
+<h3><?= $analyst->getName() ?></h3>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('crumbs') ?>
@@ -22,25 +22,6 @@
 <? $view['slots']->stop('crumbs') ?>
 <? $view['slots']->start('content') ?>
 
-<div class="row">
-    <div class="col-md-12">
-        <!-- Tabs-->
-        <div class="tabbable tabbable-custom tabbable-full-width">
-            <div class="tab-content row">
-                <!--=== Overview ===-->
-                <div class="tab-pane active" id="tab_overview">
-                    <div class="col-md-9">
-                        <div class="row profile-info">
-                            <div class="col-md-7">
-                                <h1><?= $analyst->getName() ?></h1>
-                            </div>
-                        </div> <!-- /.row -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <?= $view->render('RaetingRaetingBundle::Analyst/analysis_list.html.php', array(
     'analysis' => $analysis, 
     'query' => $query, 

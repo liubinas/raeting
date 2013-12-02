@@ -23,6 +23,7 @@
 </div>
 <? $view['slots']->stop('crumbs') ?>
 <? $view['slots']->start('content') ?>
+<div class="clear"></div>
 <div class="row">
         <div class="col-md-9">
             <div class="widget box">
@@ -145,23 +146,21 @@
                             min: <?= strtotime(date('Y-m-d H:i:s', strtotime($range['from'])).' UTC')*1000 ?>,
                             max: <?= strtotime(date('Y-m-d H:i:s', strtotime($range['to'])).' UTC')*1000 ?>,
                             tickFormatter: function (val, axis) {
+                                var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
                                 var dateFrom = new Date(axis.min);
                                 var dateTo = new Date(axis.max);
                                 var dayDiff = daysBetween(dateFrom, dateTo);
                                 var d = new Date(val);
-                                var hours = d.getUTCHours();
-                                var minutes = d.getUTCMinutes().toString();
-                                var formatedTime = formatHours(hours, minutes);
-                                if(dayDiff > 2){
-                                    var label = monthNames[d.getUTCMonth()-1]+' '+d.getUTCDate();
-                                    if(renderedDates.indexOf(label) == -1){
-                                        renderedDates.push(label);
-                                        return label;
-                                    }else{
-                                        return formatedTime.replace(':00', '');
-                                    }
+                                if(dayDiff > 5){
+                                    return monthNames[d.getUTCMonth()-1]+' '+d.getUTCDate();
                                 }else{
-                                    return formatedTime.replace(':00', '');
+                                    var hours = d.getUTCHours();
+                                    hours = hours.toString();
+                                    var minutes = d.getUTCMinutes().toString();
+                                    if(minutes.length < 2){
+                                        minutes = '0'+minutes;
+                                    }
+                                    return hours+':'+minutes;
                                 }
                             }
                     },
@@ -220,16 +219,29 @@
                                     var x = item.datapoint[0].toFixed(2),
                                     y = item.datapoint[1];
                                     var date = new Date(parseInt(x));
-                                    var weekDay = weekNames[date.getUTCDay()];
-                                    var day = date.getUTCDate().toString();
-                                    var month = monthNames[date.getUTCMonth()];
+                                    var day = date.getDate().toString();
+                                    if(day.length < 2){
+                                        day = '0'+day;
+                                    }
+                                    var month = (date.getUTCMonth()+1).toString();
+                                    if(month.length < 2){
+                                        month = '0'+month;
+                                    }
                                     var hours = (date.getUTCHours()).toString();
+                                    if(hours.length < 2){
+                                        hours = '0'+hours;
+                                    }
                                     var minutes = (date.getUTCMinutes()).toString();
+                                    if(minutes.length < 2){
+                                        minutes = '0'+minutes;
+                                    }
+                                    var seconds = (date.getUTCSeconds()).toString();
+                                    if(seconds.length < 2){
+                                        seconds = '0'+seconds;
+                                    }
                                     var year = date.getUTCFullYear();
-                                    
-                                    var formatedTime = formatHours(hours, minutes);
                                     showTooltip(item.pageX, item.pageY,
-                                       weekDay+', '+ month +' '+ day + ', '+ year + ', '+ formatedTime + " UTC<br/>" + y + " <?= $entity->getSymbol()->getCurrency() ?>");
+                                       year+'-'+ month +'-'+ day + ' '+ hours + ':'+ minutes + ':'+ seconds + "<br/>" + y + " <?= $entity->getSymbol()->getCurrency() ?>");
                             }
                     } else {
                             $("#tooltip").remove();

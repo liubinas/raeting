@@ -87,7 +87,7 @@ class AnalysisRepository extends EntityRepository
         return $this->getAll($analyst, null, null, $perPage, $page);
     }
     
-    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page, $order)
+    public function getAllByAnalystAndTicker($analyst, $ticker, $perPage, $page, $order = 'desc')
     {
         return $this->getAll($analyst, null, $ticker, $perPage, $page, $order);
     }

@@ -20,10 +20,10 @@
 </div>
 <? $view['slots']->stop('crumbs') ?>
 <? $view['slots']->start('content') ?>
-
+<div class="clear"></div>
 <div class="row">
     <div class="col-md-12">
-            <div class="widget box">
+            <div class="widget">
                     <div class="widget-content">
                             <? if (!empty($analysts)): ?>
                                     <table class="table table-striped table-hover">

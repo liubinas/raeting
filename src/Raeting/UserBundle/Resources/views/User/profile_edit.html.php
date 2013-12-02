@@ -28,6 +28,7 @@
         <?= $message ?>
     </div>
 <? endforeach; ?>
+<div class="clear"></div>
 <div class="row">
     <div class="col-md-12">
         <div class="widget box">
@@ -35,7 +36,7 @@
                 <div class="col-md-4">
                     <div class="list-group profile-photo">
                         <li class="list-group-item no-padding">
-                            <img src="https://graph.facebook.com/<?= $entity->getFbname() ?>/picture?type=large">
+                            <img src="<?= $entity->getFbname() ? 'https://graph.facebook.com/'.$view->escape($entity->getFbname()).'/picture?type=large' : $view['assets']->getUrl('img/blank_profile.png') ?>">
                         </li>
                     </div>
                 </div>

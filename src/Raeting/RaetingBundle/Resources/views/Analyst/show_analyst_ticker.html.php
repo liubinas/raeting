@@ -1,8 +1,7 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
 <? $view['slots']->start('header_row') ?>
-<h3 class="fl"><?= $ticker->getTitle() ?> (<?= $ticker->getSymbol() ?>)</h3>
-<h3 class="fr"><?= $analyst->getName() ?></h3>
+<h3><?= $ticker->getTitle() ?> (<?= $ticker->getSymbol() ?>) recommendations by <?= $analyst->getName() ?></h3>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('crumbs') ?>

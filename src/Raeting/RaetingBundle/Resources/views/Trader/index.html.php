@@ -37,8 +37,8 @@
                 <tbody>
                 <? foreach ($entities as $entity): ?>
                     <tr>
-                        <td>
-                                <img src="https://graph.facebook.com/<?= $view->escape($entity['fbname']) ?>/picture?type=square">
+                        <td>        
+                            <img src="<?= $entity['fbname'] ? 'https://graph.facebook.com/'.$view->escape($entity['fbname']).'/picture?type=square' : $view['assets']->getUrl('img/blank_profile_small.png') ?>">
                         </td>
                         <td>
                             <a href="<?= $view['router']->generate(
