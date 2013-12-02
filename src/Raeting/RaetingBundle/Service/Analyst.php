@@ -204,9 +204,9 @@ class Analyst
         $dividends = $this->dividendService->getSumByInterval($ticker, $dateFrom, $dateTo);
         if(!empty($priceFrom) && !empty($priceTo)){
             if($type == 'buy'){
-                $totalReturn = ($priceFrom['bid']+$dividends)/($priceTo['bid'])-1;
+                $totalReturn = (($priceTo['bid']+$dividends)/($priceFrom['bid'])-1)*100;
             }else{
-                $totalReturn = ($priceFrom['bid']+$dividends)/($priceTo['bid'])-1;
+                $totalReturn = (($priceFrom['bid'])/($priceTo['bid']+$dividends)-1)*100;
             }
         }
         return $totalReturn;
