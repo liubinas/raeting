@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class Analyst
-{   
+{
     /**
      * @var integer
      *
@@ -27,39 +27,39 @@ class Analyst
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="slug", type="string", length=255, nullable=false)
      */
     private $slug;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="company", type="string", length=255, nullable=false)
      */
     private $company;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="import_slug", type="string", length=255, nullable=false)
      */
     private $importSlug;
-    
+
     /**
      * @var integer
      *
-     * @ORM\Column(name="rank", type="integer")
+     * @ORM\Column(name="rank", type="integer", nullable=true)
      */
     private $rank;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -75,20 +75,20 @@ class Analyst
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    
+
     /**
      * Set company
      *
@@ -98,20 +98,20 @@ class Analyst
     public function setCompany($company)
     {
         $this->company = $company;
-    
+
         return $this;
     }
 
     /**
      * Get company
      *
-     * @return string 
+     * @return string
      */
     public function getCompany()
     {
         return $this->company;
     }
-    
+
     /**
      * Set importSlug
      *
@@ -121,20 +121,20 @@ class Analyst
     public function setImportSlug($importSlug)
     {
         $this->importSlug = $importSlug;
-    
+
         return $this;
     }
 
     /**
      * Get importSlug
      *
-     * @return string 
+     * @return string
      */
     public function getImportSlug()
     {
         return $this->importSlug;
     }
-    
+
     /**
      * Set slug
      *
@@ -144,20 +144,20 @@ class Analyst
     public function setSlug($slug)
     {
         $this->slug = $slug;
-    
+
         return $this;
     }
 
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
         return $this->slug;
     }
-    
+
     /**
      * Set rank
      *
@@ -167,14 +167,14 @@ class Analyst
     public function setRank($rank)
     {
         $this->rank = $rank;
-    
+
         return $this;
     }
 
     /**
      * Get rank
      *
-     * @return integer 
+     * @return integer
      */
     public function getRank()
     {
@@ -200,14 +200,14 @@ class Analyst
     public function setTotalReturn(\Raeting\RaetingBundle\Entity\AnalystTotalReturn $totalReturn = null)
     {
         $this->totalReturn = $totalReturn;
-    
+
         return $this;
     }
 
     /**
      * Get totalReturn
      *
-     * @return \Raeting\RaetingBundle\Entity\AnalystTotalReturn 
+     * @return \Raeting\RaetingBundle\Entity\AnalystTotalReturn
      */
     public function getTotalReturn()
     {

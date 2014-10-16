@@ -28,10 +28,10 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
     public function load(ObjectManager $manager)
     {
         $signalService = $this->container->get('raetingraeting.service.signals');
-        
+
         $date = new \DateTime('NOW');
-        $dateClose = new \DateTime('NOW + 1hour'); 
-        
+        $dateClose = new \DateTime('NOW + 1hour');
+
         //---------------------------------
         /*
         $signal = $signalService->getNew();
@@ -259,6 +259,7 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         $manager->persist($signal);
          */
         //---------------------------------
+        /*
         $signal = $signalService->getNew();
         $signal->setUuid('527a49841050a'); $signal->setBuy(0); $signal->setOpen(1.321); $signal->setTakeprofit(1.313);
         $signal->setStoploss(1.326); $signal->setStatus('closed'); $signal->setDescription('fixture');
@@ -477,8 +478,9 @@ class LoadSignalData extends AbstractFixture implements OrderedFixtureInterface,
         $signal->setSymbol($manager->merge($this->getReference('quote.eurjpy')));
 
         $manager->persist($signal);
-        
+
         $manager->flush();
+        */
     }
 
     public function getOrder()

@@ -30,8 +30,14 @@ class LoadMarketData extends AbstractFixture implements OrderedFixtureInterface,
         $marketService = $this->container->get('raetingraeting.service.market');
 
         $entity = $marketService->getNew();
-        $entity->setTitle('forex');
-        $this->addReference('market.forex', $entity);
+        $entity->setTitle('NYSE');
+        $this->addReference('market.nyse', $entity);
+
+        $manager->persist($entity);
+
+        $entity = $marketService->getNew();
+        $entity->setTitle('NASDAQ');
+        $this->addReference('market.nasdaq', $entity);
 
         $manager->persist($entity);
         $manager->flush();

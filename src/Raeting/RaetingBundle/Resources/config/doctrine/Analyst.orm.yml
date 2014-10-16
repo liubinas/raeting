@@ -30,6 +30,7 @@ Raeting\RaetingBundle\Entity\Analyst:
             nullable: false
         rank:
             type: integer
+            nullable: true
     oneToOne:
         totalReturn:
             targetEntity: AnalystTotalReturn
