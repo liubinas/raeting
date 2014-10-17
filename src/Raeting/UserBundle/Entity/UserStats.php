@@ -13,42 +13,42 @@ use Doctrine\ORM\Mapping as ORM;
 class UserStats
 {
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="id", type="string", length=255, nullable=false)
+     * @ORM\Column(name="id", type="integer", length=255, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-    
+
     /**
      * @var integer
      *
      * @ORM\Column(name="user_id", type="integer", nullable=false)
      */
     private $userid;
-    
+
     /**
      * @var float
      *
      * @ORM\Column(name="pips", type="decimal", nullable=false, scale=6)
      */
     private $pips;
-    
+
     /**
      * @var integer
      *
      * @ORM\Column(name="total_signals", type="integer", nullable=false, scale=6)
      */
     private $totalSignals;
-    
+
     /**
      * @var date
      *
      * @ORM\Column(name="date_created", type="date", nullable=false)
      */
     private $dateCreated;
-    
+
 
     public function getId() {
         return $this->id;
@@ -57,7 +57,7 @@ class UserStats
     public function setId($id) {
         $this->id = $id;
     }
-    
+
     public function getUserid() {
         return $this->userid;
     }
@@ -73,7 +73,7 @@ class UserStats
     public function setPips($pips) {
         $this->pips = $pips;
     }
-    
+
     public function getTotalSignals() {
         return $this->totalSignals;
     }

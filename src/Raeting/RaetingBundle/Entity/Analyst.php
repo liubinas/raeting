@@ -43,16 +43,9 @@ class Analyst
     private $company;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="import_slug", type="string", length=255, nullable=false)
-     */
-    private $importSlug;
-
-    /**
      * @var integer
      *
-     * @ORM\Column(name="rank", type="integer", nullable=false)
+     * @ORM\Column(name="rank", type="integer", nullable=true)
      */
     private $rank;
 
@@ -110,29 +103,6 @@ class Analyst
     public function getCompany()
     {
         return $this->company;
-    }
-
-    /**
-     * Set importSlug
-     *
-     * @param string $importSlug
-     * @return Analyst
-     */
-    public function setImportSlug($importSlug)
-    {
-        $this->importSlug = $importSlug;
-
-        return $this;
-    }
-
-    /**
-     * Get importSlug
-     *
-     * @return string
-     */
-    public function getImportSlug()
-    {
-        return $this->importSlug;
     }
 
     /**

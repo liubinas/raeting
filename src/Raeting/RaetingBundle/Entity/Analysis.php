@@ -5,10 +5,10 @@ namespace Raeting\RaetingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Symbol
+ * Analysis
  *
  * @ORM\Table(name="analysis")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Raeting\RaetingBundle\Entity\AnalysisRepository")
  */
 class Analysis
 {
@@ -61,7 +61,7 @@ class Analysis
     /**
      * @var string
      *
-     * @ORM\Column(name="period", type="string")
+     * @ORM\Column(name="period", type="integer", nullable=true)
      */
     private $period;
 
@@ -176,7 +176,7 @@ class Analysis
     /**
      * Set period
      *
-     * @param string $period
+     * @param int $period
      * @return Analysis
      */
     public function setPeriod($period)
@@ -189,7 +189,7 @@ class Analysis
     /**
      * Get period
      *
-     * @return string
+     * @return int
      */
     public function getPeriod()
     {

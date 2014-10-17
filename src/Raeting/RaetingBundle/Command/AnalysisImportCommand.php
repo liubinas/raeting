@@ -50,7 +50,8 @@ class AnalysisImportCommand extends ContainerAwareCommand
 
         foreach ($files as $file) {
 
-            if (!$this->filenameMatchesSymbol($file)) {
+            $symbol = $this->getSymbolByFilename($file);
+            if (!$symbol) {
                 $output->writeln(sprintf('<error>File %s does not match any symbol in DB</error>', basename($file)));
                 continue;
             }
@@ -58,7 +59,9 @@ class AnalysisImportCommand extends ContainerAwareCommand
             try {
                 $objPHPExcel = $this->loadFile($file);
             } catch (\Exception $e) {
-                $output->writeln(sprintf('<error>Error loading file %s, message: %s</error>', $sourceDir, $e->getMessage()));
+                $output->writeln(
+                    sprintf('<error>Error loading file %s, message: %s</error>', $sourceDir, $e->getMessage())
+                );
                 continue;
             }
 
@@ -71,7 +74,9 @@ class AnalysisImportCommand extends ContainerAwareCommand
                 try {
                     $analyst = $this->extractAnalyst($sheetData);
                 } catch (\InvalidArgumentException $e) {
-                    $output->writeln(sprintf('<comment>No analyst data found in the sheet: %s</comment>', $loadedSheetName));
+                    $output->writeln(
+                        sprintf('<comment>No analyst data found in the sheet: %s</comment>', $loadedSheetName)
+                    );
                     continue;
                 }
 
@@ -79,26 +84,20 @@ class AnalysisImportCommand extends ContainerAwareCommand
                     if ($rowNum < 5) {
                         continue;
                     }
-                    /** TODO create analysis */
-                    /**
+
                     $data = array(
-                        'analyst'=>$loadedSheetName,
-                        'ticker'=>$fileName
+                        'recommendation' => $row['A'],
+                        'date'           => $row['B'],
+                        'estimation'     => $row['C'],
+                        'period'         => $row['D'],
                     );
-                    $data['recommendation'] = $row['A'];
-                    $data['date']           = $row['B'];
-                    $data['estimation']     = $row['C'];
-                    $data['period']         = $row['D'];
-
-
 
                     if (!empty($data['estimation']) && !empty($data['date'])) {
-                        $analyst = $analystService->getByImportSlug($data['analyst']);
-                        $insertsFromFile += $analysisService->insertData($data, $analyst);
+                        $insertsFromFile += (int) $analysisService->insertData($symbol, $analyst, $data);
                     }
-                    */
                 }
             }
+
             $totalInsertsDone += $insertsFromFile;
             if ($insertsFromFile > 0){
                 $fileManagementService->moveFile($file, $archiveDir . '/' . basename($file));
@@ -129,7 +128,7 @@ class AnalysisImportCommand extends ContainerAwareCommand
      *
      * @return bool
      */
-    private function filenameMatchesSymbol($file)
+    private function getSymbolByFilename($file)
     {
         /** @var Symbol */
         $symbolService = $this->getContainer()->get('raetingraeting.service.symbol');
@@ -137,7 +136,7 @@ class AnalysisImportCommand extends ContainerAwareCommand
         $baseName = basename($file);
         $name = substr($baseName, 0, strpos($baseName, '.'));
 
-        return (bool) $symbolService->getBySymbol($name);
+        return $symbolService->getBySymbol($name);
     }
 
     /**
@@ -145,6 +144,9 @@ class AnalysisImportCommand extends ContainerAwareCommand
      */
     private function extractAnalyst($sheetData)
     {
+        /** @var Analyst */
+        $analystService = $this->getContainer()->get('raetingraeting.service.analyst');
+
         if (empty($sheetData[1]['B'])) {
             throw new \InvalidArgumentException('Analyst name not found');
         }
@@ -153,11 +155,43 @@ class AnalysisImportCommand extends ContainerAwareCommand
             throw new \InvalidArgumentException('Analyst company not found');
         }
 
-        $name = $sheetData[1]['B'];
-        $company = $sheetData[2]['B'];
+        $name = mb_convert_case($sheetData[1]['B'], MB_CASE_TITLE);
+        $company = mb_convert_case($sheetData[2]['B'], MB_CASE_TITLE);
 
-        /** TODO Extract/create analyst */
-        die($name . $company);
+        $analyst = $analystService->getByName($name);
+        if (!$analyst) {
+            $analyst = $analystService->getNew();
+            $analyst->setName($name);
+            $analyst->setSlug($this->slugify($name));
+            $analyst->setCompany($company);
+            $analystService->save($analyst);
+        }
+
+        return $analyst;
+    }
+
+    private function slugify($text)
+    {
+        // replace non letter or digits by -
+        $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+
+        // trim
+        $text = trim($text, '-');
+
+        // transliterate
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+        // lowercase
+        $text = strtolower($text);
+
+        // remove unwanted characters
+        $text = preg_replace('~[^-\w]+~', '', $text);
+
+        if (empty($text)) {
+            $text = 'n-a';
+        }
+
+        return $text;
     }
 
 }

@@ -58,10 +58,10 @@ class Analyst
     {
         return $this->em->getRepository('RaetingRaetingBundle:Analyst');
     }
-    
+
     /**
      * Get all analysts with paging
-     * 
+     *
      * @param type $perPage
      * @param type $page
      * @return type
@@ -70,20 +70,20 @@ class Analyst
     {
         return $this->getRepository()->getAllWithPaging($perPage, $page);
     }
-    
+
     /**
      * get number of total analysts
-     * 
+     *
      * @return type
      */
     public function countAll()
     {
         return $this->getRepository()->countAll();
     }
-    
+
     /**
      * Get all analysts with paging for rating listing
-     * 
+     *
      * @param type $perPage
      * @param type $page
      * @return type
@@ -92,20 +92,20 @@ class Analyst
     {
         return $this->getRepository()->getAllForRatingWithPaging($perPage, $page);
     }
-    
+
     /**
      * get number of total analysts for rating listing
-     * 
+     *
      * @return type
      */
     public function countAllForRating()
     {
         return $this->getRepository()->countAllForRating();
     }
-    
+
     /**
      * Get all analysts with paging for rating listing
-     * 
+     *
      * @param type $perPage
      * @param type $page
      * @return type
@@ -114,20 +114,20 @@ class Analyst
     {
         return $this->getRepository()->getAllForRatingWithPagingByQuery($perPage, $page, $query);
     }
-    
+
     /**
      * get number of total analysts for rating listing
-     * 
+     *
      * @return type
      */
     public function countAllForRatingByQuery($query)
     {
         return $this->getRepository()->countAllForRatingByQuery($query);
     }
-    
+
     /**
      * get analyst by name
-     * 
+     *
      * @param type $name
      * @return type
      */
@@ -135,21 +135,10 @@ class Analyst
     {
         return $this->getRepository()->findOneByName($name);
     }
-    
-    /**
-     * get analyst by import slug
-     * 
-     * @param type $slug
-     * @return type
-     */
-    public function getByImportSlug($slug)
-    {
-        return $this->getRepository()->findOneByImportSlug($slug);
-    }
-    
+
     /**
      * get analyst by slug
-     * 
+     *
      * @param type $slug
      * @return type
      */
@@ -157,10 +146,10 @@ class Analyst
     {
         return $this->getRepository()->findOneBySlug($slug);
     }
-    
+
     /**
      * get data for analysts table listing
-     * 
+     *
      * @param array $analysts
      * @return type
      */
@@ -195,7 +184,7 @@ class Analyst
         }
         return $data;
     }
-    
+
     private function calculateTotalReturn($ticker, $dateFrom, $dateTo, $type)
     {
         $totalReturn = 0;
@@ -211,17 +200,17 @@ class Analyst
         }
         return $totalReturn;
     }
-    
+
     private function calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo)
     {
         return $this->calculateTotalReturn($ticker, $dateFrom, $dateTo, 'buy');
     }
-    
+
     private function calculateTotalReturnForSell($ticker, $dateFrom, $dateTo)
     {
         return $this->calculateTotalReturn($ticker, $dateFrom, $dateTo, 'sell');
     }
-    
+
     private function calculateTotalReturnByAnalystAndTicker(Entity\Analyst $analyst, $ticker){
         $analyses = $this->analysisService->getAllByAnalystAndTickerAscending($analyst, $ticker);
         $totalReturn = 0;
@@ -256,8 +245,8 @@ class Analyst
         }
         return $totalReturn;
     }
-    
-    
+
+
     public function calculateTotalReturnByAnalyst(Entity\Analyst $analyst)
     {
         $tickers = $this->analysisService->getAnalystTickers($analyst);
@@ -269,16 +258,16 @@ class Analyst
         }
         return $return;
     }
-    
+
     private function saveRating($analystId, $tickerId, $value)
     {
-        $query = 'INSERT INTO total_return (analyst_id, ticker_id, value) values('.$analystId.', '.$tickerId.', '.$value.') 
+        $query = 'INSERT INTO total_return (analyst_id, ticker_id, value) values('.$analystId.', '.$tickerId.', '.$value.')
             ON DUPLICATE KEY UPDATE value = values(value)';
-        
+
         $conn = $this->em->getConnection();
         $conn->exec($query);
     }
-    
+
     public function saveRatings($ratingArr)
     {
         if(!empty($ratingArr)){
@@ -291,12 +280,12 @@ class Analyst
             }
         }
     }
-    
+
     private function getAllSortedByTotalReturn($sort)
     {
         return $this->getRepository()->getAllSortedByTotalReturn($sort);
     }
-    
+
     public function updateRanks()
     {
         $analysts = $this->getAllSortedByTotalReturn('desc');
@@ -309,7 +298,7 @@ class Analyst
             }
         }
     }
-    
+
     public function getTopAnalyst()
     {
         return $this->getRepository()->getTopAnalyst();
