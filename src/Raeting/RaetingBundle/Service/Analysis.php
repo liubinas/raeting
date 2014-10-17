@@ -138,15 +138,22 @@ class Analysis
     {
         if ($recommendation == 'overweight') {
             $recommendation = Entity\Analysis::RECOMMENDATION_BUY;
-        } elseif($recommendation == 'overwt/neutral') {
+        } elseif ($recommendation == 'overwt/neutral') {
             $recommendation = Entity\Analysis::RECOMMENDATION_BUY;
-        } elseif($recommendation == 'overwt/positive') {
+        } elseif ($recommendation == 'overwt/positive') {
             $recommendation = Entity\Analysis::RECOMMENDATION_BUY;
         }
 
-        if (in_array($recommendation, array(Entity\Analysis::RECOMMENDATION_BUY, Entity\Analysis::RECOMMENDATION_HOLD, Entity\Analysis::RECOMMENDATION_SELL))){
+        $valid = array(
+            Entity\Analysis::RECOMMENDATION_BUY,
+            Entity\Analysis::RECOMMENDATION_HOLD,
+            Entity\Analysis::RECOMMENDATION_SELL
+        );
+
+        if (in_array($recommendation, $valid)) {
             return $recommendation;
         }
+
         return null;
     }
 

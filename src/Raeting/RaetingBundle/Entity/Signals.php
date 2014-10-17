@@ -8,21 +8,21 @@ use Doctrine\ORM\Mapping as ORM;
  * Signals
  *
  * @ORM\Table(name="`signal`")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Raeting\RaetingBundle\Entity\SignalsRepository")
  */
 class Signals
 {
-    
+
     const STATUS_NEW = 'new';
     const STATUS_OPENED = 'opened';
     const STATUS_CLOSED = 'closed';
     const STATUS_ERROR = 'error';
-    
+
     protected $buyEnum = array(
         '0'    => 'Sell',
         '1'    => 'Buy',
     );
-    
+
     /**
      * @var integer
      *
@@ -73,14 +73,14 @@ class Signals
      * @ORM\Column(name="open_price", type="decimal", nullable=false, scale=6)
      */
     private $openPrice;
-    
+
     /**
      * @var float
      *
      * @ORM\Column(name="close_price", type="decimal", nullable=false, scale=6)
      */
     private $closePrice;
-    
+
     /**
      * @var float
      *
@@ -162,7 +162,7 @@ class Signals
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -178,14 +178,14 @@ class Signals
     public function setUuid($uuid)
     {
         $this->uuid = $uuid;
-    
+
         return $this;
     }
 
     /**
      * Get uuid
      *
-     * @return string 
+     * @return string
      */
     public function getUuid()
     {
@@ -201,14 +201,14 @@ class Signals
     public function setBuy($buy)
     {
         $this->buy = $buy;
-    
+
         return $this;
     }
 
     /**
      * Get buy
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getBuy()
     {
@@ -224,14 +224,14 @@ class Signals
     public function setOpen($open)
     {
         $this->open = $open;
-    
+
         return $this;
     }
 
     /**
      * Get open
      *
-     * @return float 
+     * @return float
      */
     public function getOpen()
     {
@@ -247,14 +247,14 @@ class Signals
     public function setTakeProfit($takeProfit)
     {
         $this->takeProfit = $takeProfit;
-    
+
         return $this;
     }
 
     /**
      * Get takeProfit
      *
-     * @return float 
+     * @return float
      */
     public function getTakeProfit()
     {
@@ -270,14 +270,14 @@ class Signals
     public function setStopLoss($stopLoss)
     {
         $this->stopLoss = $stopLoss;
-    
+
         return $this;
     }
 
     /**
      * Get stopLoss
      *
-     * @return float 
+     * @return float
      */
     public function getStopLoss()
     {
@@ -293,20 +293,20 @@ class Signals
     public function setOpenPrice($openPrice)
     {
         $this->openPrice = $openPrice;
-    
+
         return $this;
     }
 
     /**
      * Get openPrice
      *
-     * @return float 
+     * @return float
      */
     public function getOpenPrice()
     {
         return $this->openPrice;
     }
-    
+
     /**
      * Set closePrice
      *
@@ -316,20 +316,20 @@ class Signals
     public function setClosePrice($closePrice)
     {
         $this->closePrice = $closePrice;
-    
+
         return $this;
     }
 
     /**
      * Get closePrice
      *
-     * @return float 
+     * @return float
      */
     public function getClosePrice()
     {
         return $this->closePrice;
     }
-    
+
     /**
      * Set pips
      *
@@ -339,14 +339,14 @@ class Signals
     public function setPips($pips)
     {
         $this->pips = $pips;
-    
+
         return $this;
     }
 
     /**
      * Get pips
      *
-     * @return float 
+     * @return float
      */
     public function getPips()
     {
@@ -362,14 +362,14 @@ class Signals
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -385,14 +385,14 @@ class Signals
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getStatus()
     {
@@ -408,14 +408,14 @@ class Signals
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -431,14 +431,14 @@ class Signals
     public function setOpened($opened)
     {
         $this->opened = $opened;
-    
+
         return $this;
     }
 
     /**
      * Get opened
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getOpened()
     {
@@ -454,14 +454,14 @@ class Signals
     public function setOpenExpire($openExpire)
     {
         $this->openExpire = $openExpire;
-    
+
         return $this;
     }
 
     /**
      * Get openExpire
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getOpenExpire()
     {
@@ -477,14 +477,14 @@ class Signals
     public function setClosed($closed)
     {
         $this->closed = $closed;
-    
+
         return $this;
     }
 
     /**
      * Get closed
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getClosed()
     {
@@ -500,14 +500,14 @@ class Signals
     public function setCloseExpire($closeExpire)
     {
         $this->closeExpire = $closeExpire;
-    
+
         return $this;
     }
 
     /**
      * Get closeExpire
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCloseExpire()
     {
@@ -523,20 +523,20 @@ class Signals
     public function setSymbol(\Raeting\RaetingBundle\Entity\Symbol $symbol = null)
     {
         $this->symbol = $symbol;
-    
+
         return $this;
     }
 
     /**
      * Get symbol
      *
-     * @return \Raeting\RaetingBundle\Entity\Symbol 
+     * @return \Raeting\RaetingBundle\Entity\Symbol
      */
     public function getSymbol()
     {
         return $this->symbol;
     }
-    
+
     /**
      * Set user
      *
@@ -546,20 +546,20 @@ class Signals
     public function setUser(\Raeting\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Raeting\UserBundle\Entity\User 
+     * @return \Raeting\UserBundle\Entity\User
      */
     public function getUser()
     {
         return $this->user;
     }
-    
+
     public function getBuyValue()
     {
         return $this->buyEnum[$this->buy];

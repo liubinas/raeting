@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Symbol
  *
  * @ORM\Table(name="analyst")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Raeting\RaetingBundle\Entity\AnalystRepository")
  */
 class Analyst
 {
@@ -48,6 +48,13 @@ class Analyst
      * @ORM\Column(name="rank", type="integer", nullable=true)
      */
     private $rank;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="total_return", type="decimal", precision=12, scale=6)
+     */
+    private $totalReturn;
 
     /**
      * Get id
@@ -155,19 +162,14 @@ class Analyst
     {
         return $this->getName();
     }
-    /**
-     * @var \Raeting\RaetingBundle\Entity\AnalystTotalReturn
-     */
-    private $totalReturn;
-
 
     /**
-     * Set totalReturn
+     * Set total return
      *
-     * @param \Raeting\RaetingBundle\Entity\AnalystTotalReturn $totalReturn
+     * @param float $totalReturn
      * @return Analyst
      */
-    public function setTotalReturn(\Raeting\RaetingBundle\Entity\AnalystTotalReturn $totalReturn = null)
+    public function setTotalReturn($totalReturn)
     {
         $this->totalReturn = $totalReturn;
 
@@ -175,12 +177,14 @@ class Analyst
     }
 
     /**
-     * Get totalReturn
+     * Get total return
      *
-     * @return \Raeting\RaetingBundle\Entity\AnalystTotalReturn
+     * @return float
      */
     public function getTotalReturn()
     {
         return $this->totalReturn;
     }
+
+
 }

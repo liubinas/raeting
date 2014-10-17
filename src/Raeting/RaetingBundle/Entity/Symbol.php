@@ -8,13 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
  * Symbol
  *
  * @ORM\Table(name="symbol")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Raeting\RaetingBundle\Entity\SymbolRepository")
  */
 class Symbol
 {
     const TYPE_QUOTE = 'quote';
     const TYPE_TICKER = 'ticker';
-    
+
     /**
      * @var integer
      *
@@ -47,22 +47,22 @@ class Symbol
      * })
      */
     private $market;
-    
+
     /**
      * @var integer
      *
      * @ORM\Column(name="pips_position", type="string", length=255, nullable=false)
      */
     private $pipsPosition;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", nullable=false)
      */
     private $type = self::TYPE_QUOTE;
-    
-    
+
+
     /**
      * @var string
      *
@@ -80,7 +80,7 @@ class Symbol
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -96,20 +96,20 @@ class Symbol
     public function setSymbol($symbol)
     {
         $this->symbol = $symbol;
-    
+
         return $this;
     }
 
     /**
      * Get symbol
      *
-     * @return string 
+     * @return string
      */
     public function getSymbol()
     {
         return $this->symbol;
     }
-    
+
     /**
      * Set pipsPosition
      *
@@ -119,14 +119,14 @@ class Symbol
     public function setPipsPosition($pipsPosition)
     {
         $this->pipsPosition = $pipsPosition;
-    
+
         return $this;
     }
 
     /**
      * Get symbol
      *
-     * @return string 
+     * @return string
      */
     public function getPipsPosition()
     {
@@ -142,14 +142,14 @@ class Symbol
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -165,20 +165,20 @@ class Symbol
     public function setType($type)
     {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
         return $this->type;
     }
-    
+
     /**
      * Set currency
      *
@@ -188,20 +188,20 @@ class Symbol
     public function setCurrency($currency)
     {
         $this->currency = $currency;
-    
+
         return $this;
     }
 
     /**
      * Get currency
      *
-     * @return string 
+     * @return string
      */
     public function getCurrency()
     {
         return $this->currency;
     }
-    
+
     /**
      * Set viewPrecision
      *
@@ -211,20 +211,20 @@ class Symbol
     public function setViewPrecision($viewPrecision)
     {
         $this->viewPrecision = $viewPrecision;
-    
+
         return $this;
     }
 
     /**
      * Get viewPrecision
      *
-     * @return integer 
+     * @return integer
      */
     public function getViewPrecision()
     {
         return $this->viewPrecision;
     }
-    
+
     /**
      * Set market
      *

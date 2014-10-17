@@ -6,39 +6,62 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * TotalReturn
+ *
+ * @ORM\Table(
+ *  name="total_return",
+ *  uniqueConstraints={@ORM\UniqueConstraint(name="ticker_analyst", columns={"ticker_id", "analyst_id"})}
+ * )
  */
 class TotalReturn
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var string
+     * @var float
+     *
+     * @ORM\Column(name="value", type="decimal", precision=12, scale=6)
      */
     private $value;
 
     /**
-     * @var \DateTime
-     */
-    private $updated;
-
-    /**
      * @var \Raeting\RaetingBundle\Entity\Symbol
+     *
+     * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Symbol")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ticker_id", referencedColumnName="id")
+     * })
      */
     private $ticker;
 
     /**
      * @var \Raeting\RaetingBundle\Entity\Analyst
+     *
+     * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Analyst")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="analyst_id", referencedColumnName="id")
+     * })
      */
     private $analyst;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $updated;
 
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -54,14 +77,14 @@ class TotalReturn
     public function setValue($value)
     {
         $this->value = $value;
-    
+
         return $this;
     }
 
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {
@@ -77,14 +100,14 @@ class TotalReturn
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -100,14 +123,14 @@ class TotalReturn
     public function setTicker(\Raeting\RaetingBundle\Entity\Symbol $ticker = null)
     {
         $this->ticker = $ticker;
-    
+
         return $this;
     }
 
     /**
      * Get ticker
      *
-     * @return \Raeting\RaetingBundle\Entity\Symbol 
+     * @return \Raeting\RaetingBundle\Entity\Symbol
      */
     public function getTicker()
     {
@@ -123,14 +146,14 @@ class TotalReturn
     public function setAnalyst(\Raeting\RaetingBundle\Entity\Analyst $analyst = null)
     {
         $this->analyst = $analyst;
-    
+
         return $this;
     }
 
     /**
      * Get analyst
      *
-     * @return \Raeting\RaetingBundle\Entity\Analyst 
+     * @return \Raeting\RaetingBundle\Entity\Analyst
      */
     public function getAnalyst()
     {

@@ -24,20 +24,19 @@ class AnalystRatingCommand extends ContainerAwareCommand
         $output->writeln('<info>Updating ratings...</info>');
 
         $analystService = $container->get('raetingraeting.service.analyst');
-        
+
         $analysts = $analystService->getAll();
-        
+
         $totalReturnArr = array();
-        if(!empty($analysts)){
+        if (!empty($analysts)){
             foreach($analysts as $analyst){
                 $analystTotalReturn = $analystService->calculateTotalReturnByAnalyst($analyst);
                 $totalReturnArr[$analyst->getId()] = $analystTotalReturn;
             }
         }
         $analystService->saveRatings($totalReturnArr);
-        
         $analystService->updateRanks();
-        
+
         $output->writeln('<info>Updates done: '.count($totalReturnArr).'</info>');
     }
 }

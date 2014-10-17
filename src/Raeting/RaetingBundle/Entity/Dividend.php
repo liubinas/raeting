@@ -8,11 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
  * Symbol
  *
  * @ORM\Table(name="dividend")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Raeting\RaetingBundle\Entity\DividendRepository")
  */
 class Dividend
 {
-    
+
     /**
      * @var integer
      *
@@ -44,12 +44,12 @@ class Dividend
      * })
      */
     private $ticker;
-    
+
     /**
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -65,20 +65,20 @@ class Dividend
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime  
+     * @return \DateTime
      */
     public function getDate()
     {
         return $this->date;
     }
-    
+
     /**
      * Set amount
      *
@@ -88,14 +88,14 @@ class Dividend
     public function setAmount($amount)
     {
         $this->amount = $amount;
-    
+
         return $this;
     }
 
     /**
      * Get amount
      *
-     * @return float 
+     * @return float
      */
     public function getAmount()
     {

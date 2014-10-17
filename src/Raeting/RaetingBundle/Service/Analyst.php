@@ -164,9 +164,9 @@ class Analyst
                 $analystData['slug'] = $analyst->getSlug();
                 $analystData['totalAnalysis'] = $this->analysisService->countAllByAnalyst($analyst);
                 $analystData['lastAnalysis'] = $this->analysisService->getLastDateByAnalyst($analyst);
-                if($analyst->getTotalReturn()){
-                    $analystData['totalReturn'] = $analyst->getTotalReturn()->getValue();
-                }else{
+                if ($analyst->getTotalReturn()) {
+                    $analystData['totalReturn'] = $analyst->getTotalReturn();
+                } else {
                     $analystData['totalReturn'] = 0;
                 }
                 $analystData['rank'] = $analyst->getRank();
@@ -211,38 +211,56 @@ class Analyst
         return $this->calculateTotalReturn($ticker, $dateFrom, $dateTo, 'sell');
     }
 
-    private function calculateTotalReturnByAnalystAndTicker(Entity\Analyst $analyst, $ticker){
+    private function calculateTotalReturnByAnalystAndTicker(Entity\Analyst $analyst, $ticker)
+    {
         $analyses = $this->analysisService->getAllByAnalystAndTickerAscending($analyst, $ticker);
         $totalReturn = 0;
-        if(!empty($analyses)){
+        if (!empty($analyses)) {
             $prevRecommendation = $this->raetingHelper->getAnalysisStatus($analyses[0]->getRecommendation());
             $dateFrom = $analyses[0]->getDate();
-            foreach($analyses as $analysis){
+            foreach ($analyses as $analysis) {
                 $recommendation = $this->raetingHelper->getAnalysisStatus($analysis->getRecommendation());
                 $dateTo = $analysis->getDate();
-                if($recommendation != $prevRecommendation){
-                    if($prevRecommendation == Entity\Analysis::RECOMMENDATION_BUY && $recommendation == Entity\Analysis::RECOMMENDATION_HOLD){
+                if ($recommendation != $prevRecommendation){
+                    if ($prevRecommendation == Entity\Analysis::RECOMMENDATION_BUY &&
+                        $recommendation == Entity\Analysis::RECOMMENDATION_HOLD
+                    ) {
                         $totalReturn += $this->calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo);
-                    }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_BUY && $recommendation == Entity\Analysis::RECOMMENDATION_SELL){
+
+                    } elseif (
+                        $prevRecommendation == Entity\Analysis::RECOMMENDATION_BUY &&
+                        $recommendation == Entity\Analysis::RECOMMENDATION_SELL
+                    ) {
                         $totalReturn += $this->calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo);
                         $dateFrom = $analysis->getDate();
-                    }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_SELL && $recommendation == Entity\Analysis::RECOMMENDATION_HOLD){
+
+                    } elseif (
+                        $prevRecommendation == Entity\Analysis::RECOMMENDATION_SELL &&
+                        $recommendation == Entity\Analysis::RECOMMENDATION_HOLD
+                    ) {
                         $totalReturn += $this->calculateTotalReturnForSell($ticker, $dateFrom, $dateTo);
-                    }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_SELL && $recommendation == Entity\Analysis::RECOMMENDATION_BUY){
+                    } elseif (
+                        $prevRecommendation == Entity\Analysis::RECOMMENDATION_SELL &&
+                        $recommendation == Entity\Analysis::RECOMMENDATION_BUY
+                    ) {
                         $totalReturn += $this->calculateTotalReturnForSell($ticker, $dateFrom, $dateTo);
                         $dateFrom = $analysis->getDate();
-                    }elseif($prevRecommendation == Entity\Analysis::RECOMMENDATION_HOLD){
+                    } elseif (
+                        $prevRecommendation == Entity\Analysis::RECOMMENDATION_HOLD
+                    ) {
                         $dateFrom = $analysis->getDate();
                     }
                 }
                 $prevRecommendation = $recommendation;
             }
-            if($recommendation == Entity\Analysis::RECOMMENDATION_SELL && $dateFrom != $dateTo){
+
+            if ($recommendation == Entity\Analysis::RECOMMENDATION_SELL && $dateFrom != $dateTo) {
                 $totalReturn += $this->calculateTotalReturnForSell($ticker, $dateFrom, $dateTo);
-            }elseif($recommendation == Entity\Analysis::RECOMMENDATION_BUY && $dateFrom != $dateTo){
+            } elseif ($recommendation == Entity\Analysis::RECOMMENDATION_BUY && $dateFrom != $dateTo) {
                 $totalReturn += $this->calculateTotalReturnForBuy($ticker, $dateFrom, $dateTo);
             }
         }
+
         return $totalReturn;
     }
 
@@ -251,18 +269,21 @@ class Analyst
     {
         $tickers = $this->analysisService->getAnalystTickers($analyst);
         $return = array();
-        if(!empty($tickers)){
+        if (!empty($tickers)) {
             foreach($tickers as $ticker){
                 $return[$ticker['id']] = $this->calculateTotalReturnByAnalystAndTicker($analyst, $ticker['symbol']);
             }
         }
+
         return $return;
     }
 
     private function saveRating($analystId, $tickerId, $value)
     {
-        $query = 'INSERT INTO total_return (analyst_id, ticker_id, value) values('.$analystId.', '.$tickerId.', '.$value.')
-            ON DUPLICATE KEY UPDATE value = values(value)';
+        $query =
+            'INSERT INTO total_return (analyst_id, ticker_id, `value`)
+             VALUES('.$analystId.', '.$tickerId.', '.$value.')
+             ON DUPLICATE KEY UPDATE `value` = values(`value`)';
 
         $conn = $this->em->getConnection();
         $conn->exec($query);
@@ -270,33 +291,50 @@ class Analyst
 
     public function saveRatings($ratingArr)
     {
-        if(!empty($ratingArr)){
-            foreach($ratingArr as $analystId => $analystRatings){
-                if(!empty($analystRatings)){
-                    foreach($analystRatings as $tickerId => $value){
-                        $this->saveRating($analystId, $tickerId, $value);
-                    }
+        foreach ($ratingArr as $analystId => $analystRatings){
+            if (!empty($analystRatings)) {
+                foreach ($analystRatings as $tickerId => $value){
+                    $this->saveRating($analystId, $tickerId, $value);
                 }
             }
         }
     }
 
-    private function getAllSortedByTotalReturn($sort)
-    {
-        return $this->getRepository()->getAllSortedByTotalReturn($sort);
-    }
-
     public function updateRanks()
     {
-        $analysts = $this->getAllSortedByTotalReturn('desc');
-        $i = 1;
-        if(!empty($analysts)){
-            foreach($analysts as $analyst){
-                $analyst->setRank($i);
-                $this->save($analyst);
-                $i++;
-            }
+        $conn = $this->em->getConnection();
+
+        $query =
+            "SELECT a.id, SUM(tr.value) as total_return
+             FROM analyst a
+             LEFT JOIN total_return tr ON tr.analyst_id = a.id
+             GROUP BY a.id
+             ORDER BY SUM(tr.value) DESC";
+
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $analysts = $stmt->fetchAll();
+        $rank = 1;
+        foreach ($analysts as $analyst){
+            $this->setRank($analyst['id'], $rank++, $analyst['total_return']);
         }
+    }
+
+    private function setRank($analystId, $rank, $totalReturn)
+    {
+        $conn = $this->em->getConnection();
+        $query =
+            "UPDATE analyst
+            SET rank = :rank,
+                total_return = :totalReturn
+            WHERE id = :analystId";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(":rank", $rank, \PDO::PARAM_INT);
+        $stmt->bindValue(":totalReturn", $totalReturn);
+        $stmt->bindValue(":analystId", $analystId, \PDO::PARAM_INT);
+
+        return $stmt->execute();
     }
 
     public function getTopAnalyst()
