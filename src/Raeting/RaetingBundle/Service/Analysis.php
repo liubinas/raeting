@@ -158,23 +158,26 @@ class Analysis
         $result = false;
         if (!empty($analyst) && !empty($symbol)) {
 
-            $analysis = $this->getRepository()->findOneBySymbolAndAnalystAndDate(
-                $symbol, $analyst, date('Y-m-d', strtotime($data['date']))
-            );
+            $conn = $this->em->getConnection();
 
-            if (empty($analysis)) {
-                $analysis = $this->getNew();
-                $analysis->setTicker($symbol);
-                $analysis->setAnalyst($analyst);
-            }
+            $query =
+                "INSERT INTO `analysis` (
+                    `ticker_id`, `analyst_id`, `estimation`, `date`, `period`, `recommendation`)
+                 VALUES (
+                    :tickerId, :analystId, :estimation, :date, :period, :recommendation)
+                 ON DUPLICATE KEY UPDATE
+                   `estimation` = :estimation,
+                   `period` = :period,
+                   `recommendation` = :recommendation";
 
-            $analysis->setRecommendation($data['recommendation']);
-            $analysis->setEstimation($data['estimation']);
-            $analysis->setDate(new \DateTime($data['date']));
-            $analysis->setPeriod($data['period']);
-            $this->save($analysis);
-
-            $result = true;
+            $stmt = $conn->prepare($query);
+            $stmt->bindValue(":tickerId", $symbol->getId(), \PDO::PARAM_INT);
+            $stmt->bindValue(":analystId", $analyst->getId(), \PDO::PARAM_INT);
+            $stmt->bindValue(":estimation", $data['estimation']);
+            $stmt->bindValue(":date", $data['date']);
+            $stmt->bindValue(":period", $data['period'], \PDO::PARAM_INT);
+            $stmt->bindValue(":recommendation", $data['recommendation']);
+            $result = $stmt->execute();
         }
 
         return $result;

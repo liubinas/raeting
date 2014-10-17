@@ -18,4 +18,5 @@ tmp/
 web/.htaccess
 web/stats/
 .project
+/uploads/archive/
 

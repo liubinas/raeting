@@ -7,7 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Analysis
  *
- * @ORM\Table(name="analysis")
+ * @ORM\Table(
+ *  name="analysis",
+ *  uniqueConstraints={@ORM\UniqueConstraint(name="ticker_analyst_date", columns={"ticker_id", "analyst_id", "date"})}
+ * )
  * @ORM\Entity(repositoryClass="Raeting\RaetingBundle\Entity\AnalysisRepository")
  */
 class Analysis

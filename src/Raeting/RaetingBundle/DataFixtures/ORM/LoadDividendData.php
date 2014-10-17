@@ -27,6 +27,7 @@ class LoadDividendData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function load(ObjectManager $manager)
     {
+        /*
         $dividendService = $this->container->get('raetingraeting.service.dividend');
 
         $entity = $dividendService->getNew();
@@ -282,6 +283,7 @@ class LoadDividendData extends AbstractFixture implements OrderedFixtureInterfac
         $manager->persist($entity);
         //----------------------------------
         $manager->flush();
+         */
     }
 
     public function getOrder()

@@ -31,12 +31,12 @@ class LoadSymbolData extends AbstractFixture implements OrderedFixtureInterface,
 
         $entity = $symbolService->getNew();
         $entity->setSymbol('AAPL');
-        $entity->setTitle('Apple');
+        $entity->setTitle('Apple Inc');
         $entity->setPipsPosition(0);
         $entity->setMarket($manager->merge($this->getReference('market.nasdaq')));
         $entity->setType($entity::TYPE_TICKER);
         $entity->setCurrency('USD');
-        $this->addReference('ticker.apple', $entity);
+        $this->addReference('ticker.aapl', $entity);
         $manager->persist($entity);
 
         $entity = $symbolService->getNew();
@@ -51,7 +51,7 @@ class LoadSymbolData extends AbstractFixture implements OrderedFixtureInterface,
 
         $entity = $symbolService->getNew();
         $entity->setSymbol('FB');
-        $entity->setTitle('Facebook, Inc.');
+        $entity->setTitle('Facebook Inc');
         $entity->setPipsPosition(0);
         $entity->setMarket($manager->merge($this->getReference('market.nasdaq')));
         $entity->setType($entity::TYPE_TICKER);
@@ -60,13 +60,53 @@ class LoadSymbolData extends AbstractFixture implements OrderedFixtureInterface,
         $manager->persist($entity);
 
         $entity = $symbolService->getNew();
-        $entity->setSymbol('MCD');
-        $entity->setTitle('McDonalds Corp.');
+        $entity->setSymbol('GOOG');
+        $entity->setTitle('Google Inc');
+        $entity->setPipsPosition(0);
+        $entity->setMarket($manager->merge($this->getReference('market.nasdaq')));
+        $entity->setType($entity::TYPE_TICKER);
+        $entity->setCurrency('USD');
+        $this->addReference('ticker.goog', $entity);
+        $manager->persist($entity);
+
+        $entity = $symbolService->getNew();
+        $entity->setSymbol('JNJ');
+        $entity->setTitle('Johnson & Johnson');
         $entity->setPipsPosition(0);
         $entity->setMarket($manager->merge($this->getReference('market.nyse')));
         $entity->setType($entity::TYPE_TICKER);
         $entity->setCurrency('USD');
-        $this->addReference('ticker.mcd', $entity);
+        $this->addReference('ticker.jnj', $entity);
+        $manager->persist($entity);
+
+        $entity = $symbolService->getNew();
+        $entity->setSymbol('MSFT');
+        $entity->setTitle('Microsoft Corporation');
+        $entity->setPipsPosition(0);
+        $entity->setMarket($manager->merge($this->getReference('market.nasdaq')));
+        $entity->setType($entity::TYPE_TICKER);
+        $entity->setCurrency('USD');
+        $this->addReference('ticker.msft', $entity);
+        $manager->persist($entity);
+
+        $entity = $symbolService->getNew();
+        $entity->setSymbol('WFC');
+        $entity->setTitle('Wells Fargo & Co');
+        $entity->setPipsPosition(0);
+        $entity->setMarket($manager->merge($this->getReference('market.nyse')));
+        $entity->setType($entity::TYPE_TICKER);
+        $entity->setCurrency('USD');
+        $this->addReference('ticker.wfc', $entity);
+        $manager->persist($entity);
+
+        $entity = $symbolService->getNew();
+        $entity->setSymbol('XOM');
+        $entity->setTitle('Exxon Mobil Corporation');
+        $entity->setPipsPosition(0);
+        $entity->setMarket($manager->merge($this->getReference('market.nyse')));
+        $entity->setType($entity::TYPE_TICKER);
+        $entity->setCurrency('USD');
+        $this->addReference('ticker.xom', $entity);
         $manager->persist($entity);
 
         $manager->flush();
