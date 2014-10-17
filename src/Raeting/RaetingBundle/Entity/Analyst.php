@@ -52,7 +52,7 @@ class Analyst
     /**
      * @var integer
      *
-     * @ORM\Column(name="rank", type="integer", nullable=true)
+     * @ORM\Column(name="rank", type="integer", nullable=false)
      */
     private $rank;
 

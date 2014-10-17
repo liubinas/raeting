@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class Analysis
-{   
+{
     const RECOMMENDATION_BUY = 'buy';
     const RECOMMENDATION_HOLD = 'hold';
     const RECOMMENDATION_SELL = 'sell';
@@ -33,7 +33,7 @@ class Analysis
      * })
      */
     private $ticker;
-    
+
     /**
      * @var \Raeting\RaetingBundle\Entity\Analyst
      *
@@ -43,7 +43,7 @@ class Analysis
      * })
      */
     private $analyst;
-    
+
     /**
      * @var string
      *
@@ -57,25 +57,25 @@ class Analysis
      * @ORM\Column(name="date", type="date")
      */
     private $date;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="period", type="string")
      */
     private $period;
-    
+
     /**
      * @var recommendation
      *
      * @ORM\Column(name="recommendation", type="string")
      */
     private $recommendation;
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -91,20 +91,20 @@ class Analysis
     public function setTicker(\Raeting\RaetingBundle\Entity\Symbol $ticker = null)
     {
         $this->ticker = $ticker;
-    
+
         return $this;
     }
 
     /**
      * Get ticker
      *
-     * @return \Raeting\RaetingBundle\Entity\Symbol 
+     * @return \Raeting\RaetingBundle\Entity\Symbol
      */
     public function getTicker()
     {
         return $this->ticker;
     }
-    
+
     /**
      * Set analyst
      *
@@ -114,20 +114,20 @@ class Analysis
     public function setAnalyst(\Raeting\RaetingBundle\Entity\Analyst $analyst = null)
     {
         $this->analyst = $analyst;
-    
+
         return $this;
     }
 
     /**
      * Get analyst
      *
-     * @return \Raeting\RaetingBundle\Entity\Analyst 
+     * @return \Raeting\RaetingBundle\Entity\Analyst
      */
     public function getAnalyst()
     {
         return $this->analyst;
     }
-    
+
     /**
      * Set estimation
      *
@@ -137,14 +137,14 @@ class Analysis
     public function setEstimation($estimation)
     {
         $this->estimation = $estimation;
-    
+
         return $this;
     }
 
     /**
      * Get estimation
      *
-     * @return string 
+     * @return string
      */
     public function getEstimation()
     {
@@ -159,20 +159,20 @@ class Analysis
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return string 
+     * @return string
      */
     public function getDate()
     {
         return $this->date;
     }
-    
+
     /**
      * Set period
      *
@@ -182,20 +182,20 @@ class Analysis
     public function setPeriod($period)
     {
         $this->period = $period;
-    
+
         return $this;
     }
 
     /**
      * Get period
      *
-     * @return string 
+     * @return string
      */
     public function getPeriod()
     {
         return $this->period;
     }
-    
+
     /**
      * Set recommendation
      *
@@ -205,14 +205,14 @@ class Analysis
     public function setRecommendation($recommendation)
     {
         $this->recommendation = $recommendation;
-    
+
         return $this;
     }
 
     /**
      * Get recommendation
      *
-     * @return string 
+     * @return string
      */
     public function getRecommendation()
     {
