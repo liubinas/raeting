@@ -52,7 +52,7 @@ class Analyst
     /**
      * @var float
      *
-     * @ORM\Column(name="total_return", type="decimal", precision=12, scale=6)
+     * @ORM\Column(name="total_return", type="decimal", precision=12, scale=6, nullable=true)
      */
     private $totalReturn;
 

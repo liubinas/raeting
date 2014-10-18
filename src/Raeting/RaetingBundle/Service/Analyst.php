@@ -191,10 +191,11 @@ class Analyst
         $priceFrom = $this->rateService->getRateByTickerAndDate($ticker, $dateFrom->format('Y-m-d'));
         $priceTo = $this->rateService->getRateByTickerAndDate($ticker, $dateTo->format('Y-m-d'));
         $dividends = $this->dividendService->getSumByInterval($ticker, $dateFrom, $dateTo);
-        if(!empty($priceFrom) && !empty($priceTo)){
-            if($type == 'buy'){
+
+        if (!empty($priceFrom) && !empty($priceTo)) {
+            if ($type == 'buy') {
                 $totalReturn = (($priceTo['bid']+$dividends)/($priceFrom['bid'])-1)*100;
-            }else{
+            } else {
                 $totalReturn = (($priceFrom['bid'])/($priceTo['bid']+$dividends)-1)*100;
             }
         }
@@ -264,7 +265,6 @@ class Analyst
         return $totalReturn;
     }
 
-
     public function calculateTotalReturnByAnalyst(Entity\Analyst $analyst)
     {
         $tickers = $this->analysisService->getAnalystTickers($analyst);
@@ -278,6 +278,17 @@ class Analyst
         return $return;
     }
 
+    public function saveRatings($ratingArr)
+    {
+        foreach ($ratingArr as $analystId => $analystRatings){
+            if (!empty($analystRatings)) {
+                foreach ($analystRatings as $tickerId => $value){
+                    $this->saveRating($analystId, $tickerId, $value);
+                }
+            }
+        }
+    }
+
     private function saveRating($analystId, $tickerId, $value)
     {
         $query =
@@ -289,16 +300,7 @@ class Analyst
         $conn->exec($query);
     }
 
-    public function saveRatings($ratingArr)
-    {
-        foreach ($ratingArr as $analystId => $analystRatings){
-            if (!empty($analystRatings)) {
-                foreach ($analystRatings as $tickerId => $value){
-                    $this->saveRating($analystId, $tickerId, $value);
-                }
-            }
-        }
-    }
+
 
     public function updateRanks()
     {

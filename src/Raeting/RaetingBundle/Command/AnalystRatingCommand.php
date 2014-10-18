@@ -1,6 +1,8 @@
 <?php
 namespace Raeting\RaetingBundle\Command;
 
+use Raeting\RaetingBundle\Service\Analyst;
+
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,20 +21,17 @@ class AnalystRatingCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $container = $this->getContainer();
+        /** @var Analyst */
+        $analystService = $this->getContainer()->get('raetingraeting.service.analyst');
 
         $output->writeln('<info>Updating ratings...</info>');
-
-        $analystService = $container->get('raetingraeting.service.analyst');
 
         $analysts = $analystService->getAll();
 
         $totalReturnArr = array();
-        if (!empty($analysts)){
-            foreach($analysts as $analyst){
-                $analystTotalReturn = $analystService->calculateTotalReturnByAnalyst($analyst);
-                $totalReturnArr[$analyst->getId()] = $analystTotalReturn;
-            }
+        foreach($analysts as $analyst){
+            $analystTotalReturn = $analystService->calculateTotalReturnByAnalyst($analyst);
+            $totalReturnArr[$analyst->getId()] = $analystTotalReturn;
         }
         $analystService->saveRatings($totalReturnArr);
         $analystService->updateRanks();

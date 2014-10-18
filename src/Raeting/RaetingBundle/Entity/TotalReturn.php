@@ -35,7 +35,7 @@ class TotalReturn
      *
      * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Symbol")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ticker_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="ticker_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $ticker;
@@ -45,7 +45,7 @@ class TotalReturn
      *
      * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Analyst")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="analyst_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="analyst_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $analyst;

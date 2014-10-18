@@ -69,13 +69,20 @@ class AnalysisImportCommand extends ContainerAwareCommand
 
             $loadedSheetNames = $objPHPExcel->getSheetNames();
             foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) {
-                $sheetData = $objPHPExcel->getSheet($sheetIndex)->toArray(null,true,true,true);
+                try {
+                    $sheetData = $objPHPExcel->getSheet($sheetIndex)->toArray(null,true,true,true);
+                } catch (\Exception $e) {
+                    $output->writeln(
+                        sprintf('<error>Error loading sheet "%s": %s</error>', $loadedSheetName, $e->getMessage())
+                    );
+                    continue;
+                }
 
                 try {
                     $analyst = $this->extractAnalyst($sheetData);
                 } catch (\InvalidArgumentException $e) {
                     $output->writeln(
-                        sprintf('<comment>No analyst data found in the sheet: %s</comment>', $loadedSheetName)
+                        sprintf('<error>No analyst data found in the sheet: %s</error>', $loadedSheetName)
                     );
                     continue;
                 }
@@ -87,7 +94,7 @@ class AnalysisImportCommand extends ContainerAwareCommand
 
                     $data = array(
                         'recommendation' => $row['A'],
-                        'date'           => $row['B'],
+                        'date'           => \DateTime::createFromFormat('m/d/y', $row['B'])->format('Y-m-d'),
                         'estimation'     => $row['C'],
                         'period'         => $row['D'],
                     );
@@ -148,11 +155,11 @@ class AnalysisImportCommand extends ContainerAwareCommand
         $analystService = $this->getContainer()->get('raetingraeting.service.analyst');
 
         if (empty($sheetData[1]['B'])) {
-            throw new \InvalidArgumentException('Analyst name not found');
+            throw new \Exception('Analyst name not found');
         }
 
         if (empty($sheetData[2]['B'])) {
-            throw new \InvalidArgumentException('Analyst company not found');
+            throw new \Exception('Analyst company not found');
         }
 
         $name = mb_convert_case($sheetData[1]['B'], MB_CASE_TITLE);

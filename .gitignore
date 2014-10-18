@@ -19,4 +19,5 @@ web/.htaccess
 web/stats/
 .project
 /uploads/archive/
+/uploads/analysis/
 

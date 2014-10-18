@@ -2,6 +2,8 @@
 
 namespace Raeting\RaetingBundle\Templating\Helper;
 
+use Raeting\RaetingBundle\Entity\Analysis;
+
 use Symfony\Component\Templating\Helper\Helper;
 
 class RaetingHelper extends Helper
@@ -15,7 +17,7 @@ class RaetingHelper extends Helper
     {
         return number_format($price, $symbol->getViewPrecision());
     }
-    
+
     public function renderDate($date ,$type = 'full')
     {
         switch($type){
@@ -30,7 +32,7 @@ class RaetingHelper extends Helper
                 break;
         }
     }
-    
+
     public function getAnalysisStatus($status)
     {
         switch($status){
@@ -175,7 +177,7 @@ class RaetingHelper extends Helper
             case 'top pick':
             case 'trading buy':
             case 'trading buy (select list)':
-                $status = 'buy';
+                $status = Analysis::RECOMMENDATION_BUY;
                 break;
             case 'avoid':
             case 'buy-short term sell':
@@ -266,7 +268,7 @@ class RaetingHelper extends Helper
             case 'unattractive':
             case 'weak hold':
             case 'weak sell':
-                $status = 'sell';
+                $status = Analysis::RECOMMENDATION_SELL;
                 break;
             case 'average':
             case 'cautious buy':
@@ -333,12 +335,16 @@ class RaetingHelper extends Helper
             case 'trading hold':
             case 'wait':
             case 'watch list':
-                $status = 'hold';
+                $status = Analysis::RECOMMENDATION_HOLD;
+                break;
+            default:
+                throw new \Exception('Unknown status: ' . $status);
                 break;
         }
+
         return $status;
     }
-    
+
     public function renderAnalysisStatus($status, $color = false)
     {
         $status = $this->getAnalysisStatus($status);
@@ -364,5 +370,5 @@ class RaetingHelper extends Helper
     public function getName()
     {
         return 'raeting';
-    }    
+    }
 }

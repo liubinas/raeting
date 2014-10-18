@@ -32,7 +32,7 @@ class Analysis
      *
      * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Symbol")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ticker_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="ticker_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $ticker;
@@ -42,7 +42,7 @@ class Analysis
      *
      * @ORM\ManyToOne(targetEntity="Raeting\RaetingBundle\Entity\Analyst")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="analyst_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="analyst_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $analyst;
