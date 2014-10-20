@@ -68,7 +68,7 @@
 
             var data1 = [
                     { label: "Analysis", data: d1},
-                    { label: "Rates", data: d2}
+                    { label: "Stock price", data: d2}
             ];
 
             var plot = $.plot("#chart_widget", data1, $.extend(true, {}, Plugins.getFlotWidgetDefaults(), {

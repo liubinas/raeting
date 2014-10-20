@@ -60,13 +60,13 @@ class LoadSymbolData extends AbstractFixture implements OrderedFixtureInterface,
         $manager->persist($entity);
 
         $entity = $symbolService->getNew();
-        $entity->setSymbol('GOOG');
+        $entity->setSymbol('GOOGL');
         $entity->setTitle('Google Inc');
         $entity->setPipsPosition(0);
         $entity->setMarket($manager->merge($this->getReference('market.nasdaq')));
         $entity->setType($entity::TYPE_TICKER);
         $entity->setCurrency('USD');
-        $this->addReference('ticker.goog', $entity);
+        $this->addReference('ticker.googl', $entity);
         $manager->persist($entity);
 
         $entity = $symbolService->getNew();
