@@ -43,7 +43,14 @@
                 <script src="<?= $view['assets']->getUrl('js/libs/html5shiv.js') ?>" type="text/javascript"></script>
 	<![endif]-->
     </head>
-    <body<? if(isset($hideSidebar)): ?> class="page-aqua visible-body titlepage breakpoint-1200"<? endif;?> data-controller="<?= $view['request']->getParameter('controllerName')?>" data-action="<?= $view['request']->getParameter('actionName')?>" <? $view['slots']->output('body_attr') ?>>
+    <body
+        <? if (isset($hideSidebar)): ?>
+            class="page-aqua visible-body titlepage breakpoint-1200"
+        <? endif;?>
+        data-controller="<?= $view['request']->getParameter('controllerName')?>"
+        data-action="<?= $view['request']->getParameter('actionName')?>"
+        <? $view['slots']->output('body_attr') ?>>
+
         <header class="header navbar navbar-fixed-top" role="banner">
 		<!-- Top Navigation Bar -->
 		<div class="container">
@@ -59,129 +66,116 @@
                                 <span class="beta">beta</span>
 			</a>
 			<!-- /logo -->
-                        <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
-                            <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
-                                $user = $app->getUser();
-                            ?>
-                            <li class="dropdown user">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                            <i class="icon-male"></i>
-                                            <span class="username"><?= $user->getFirstname().' '.$user->getLastname()?></span>
-                                            <i class="icon-caret-down small"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                            <li><a href="<?=$view['router']->generate('trader_show', array('slug' => $user->getSlug() )) ?>"><i class="icon-user"></i> My Profile</a></li>
-                                            <li><a href="<?=$view['router']->generate('user.profile.edit') ?>"><i class="icon-pencil"></i> Edit Profile</a></li>
-                                            <li><a href="<?=$view['router']->generate('my_signals') ?>"><i class="icon-list"></i> My signals</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="<?=$view['router']->generate('estinacmf_user.logout') ?>"><i class="icon-key"></i> Log Out</a></li>
-                                    </ul>
-                            </li>
-                        <? else: ?>
-                            <li><a href="<?= $view['router']->generate('estinacmf_user.security.login'); ?>">Login</a></li>
-                        <? endif; ?>
-                        </ul>
+            <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+                <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) :
+                    $user = $app->getUser();
+                ?>
+                <li class="dropdown user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-male"></i>
+                        <span class="username"><?= $user->getFirstname().' '.$user->getLastname()?></span>
+                        <i class="icon-caret-down small"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?=$view['router']->generate('trader_show', array('slug' => $user->getSlug() )) ?>"><i class="icon-user"></i> My Profile</a></li>
+                        <li><a href="<?=$view['router']->generate('user.profile.edit') ?>"><i class="icon-pencil"></i> Edit Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a href="<?=$view['router']->generate('estinacmf_user.logout') ?>"><i class="icon-key"></i> Log Out</a></li>
+                    </ul>
+                </li>
+            <? else: ?>
+                <li><a href="<?= $view['router']->generate('estinacmf_user.security.login'); ?>">Login</a></li>
+            <? endif; ?>
+            </ul>
 		</div>
 		<!-- /top navigation bar -->
 	</header> <!-- /.header -->
             <? if(!isset($hideSidebar)): ?>
                 <div id="sidebar" class="sidebar-fixed">
 			<div id="sidebar-content">
-                                <ul id="nav">
-                                    <li class="open">
-                                            <a href="javascript:void(0);" onclick="return false;">
-                                                    <i class="icon-edit"></i>
-                                                    Traders
-                                            <i class="arrow icon-angle-left"></i></a>
-                                            <ul class="sub-menu" style="display: block;">
-                                                    <li<? $view['slots']->output('menuTradersActive') ?>>
-                                                            <a href="<?= $view['router']->generate('trader'); ?>">
-                                                            <i class="icon-list"></i>
-                                                            List of traders
-                                                            </a>
-                                                    </li>
-                                                    <li<? $view['slots']->output('menuSignalsActive') ?>>
-                                                            <a href="<?= $view['router']->generate('signals'); ?>">
-                                                            <i class="icon-list"></i>
-                                                            Signals
-                                                            </a>
-                                                    </li>
-                                            </ul>
-                                    </li>
-                                    <li class="open">
-                                            <a href="javascript:void(0);">
-                                                    <i class="icon-edit"></i>
-                                                    Analysts
-                                            <i class="arrow icon-angle-left"></i></a>
-                                            <ul class="sub-menu" style="display: block;">
-                                                    <li<? $view['slots']->output('menuAnalystsActive') ?>>
-                                                            <a href="<?= $view['router']->generate('analyst'); ?>">
-                                                            <i class="icon-list"></i>
-                                                            List of analysts
-                                                            </a>
-                                                    </li>
-                                                    <li<? $view['slots']->output('menuAnalysisActive') ?>>
-                                                            <a href="<?= $view['router']->generate('analysis'); ?>">
-                                                            <i class="icon-list"></i>
-                                                            Recommmendations
-                                                            </a>
-                                                    </li>
-                                            </ul>
-                                    </li>
-                                    <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
-                                        $user = $app->getUser();
-                                    ?>
-                                        <li class="open">
-                                                <a href="javascript:void(0);">
-                                                        <i class="icon-edit"></i>
-                                                        My raeting
-                                                <i class="arrow icon-angle-left"></i></a>
-                                                <ul class="sub-menu" style="display: block;">
-                                                        <li<? $view['slots']->output('menuProfileActive') ?>>
-                                                                <a href="<?=$view['router']->generate('trader_show', array('slug' => $user->getSlug() )) ?>">
-                                                                <i class="icon-user"></i>
-                                                                Profile
-                                                                </a>
-                                                        </li>
-                                                        <li<? $view['slots']->output('menuProfileEditActive') ?>>
-                                                                <a href="<?=$view['router']->generate('user.profile.edit') ?>">
-                                                                <i class="icon-pencil"></i>
-                                                                Edit profile
-                                                                </a>
-                                                        </li>
-                                                        <li<? $view['slots']->output('menuMySignalsActive') ?>>
-                                                                <a href="<?=$view['router']->generate('my_signals') ?>">
-                                                                <i class="icon-list"></i>
-                                                                Signals
-                                                                </a>
-                                                        </li>
-                                                </ul>
-                                        </li>
-                                    <? endif; ?>
-                                </ul>
+                <ul id="nav">
+
+                    <li class="open">
+                        <a href="javascript:void(0);">
+                            <i class="icon-edit"></i>
+                            Analysts
+                            <i class="arrow icon-angle-left"></i>
+                        </a>
+                        <ul class="sub-menu" style="display: block;">
+                            <li<? $view['slots']->output('menuAnalystsActive') ?>>
+                                <a href="<?= $view['router']->generate('analyst'); ?>">
+                                <i class="icon-list"></i>
+                                Top
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="open">
+                        <a href="javascript:void(0);" onclick="return false;">
+                            <i class="icon-edit"></i>
+                            Recommendations
+                            <i class="arrow icon-angle-left"></i>
+                        </a>
+                        <ul class="sub-menu" style="display: block;">
+                            <li<? $view['slots']->output('menuAnalysisActive') ?>>
+                                <a href="<?= $view['router']->generate('analysis'); ?>">
+                                <i class="icon-list"></i>
+                                Latest
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <? if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) :
+                        $user = $app->getUser();
+                    ?>
+                        <li class="open">
+                            <a href="javascript:void(0);">
+                                <i class="icon-edit"></i>
+                                My raeting
+                                <i class="arrow icon-angle-left"></i>
+                            </a>
+                            <ul class="sub-menu" style="display: block;">
+                                <li<? $view['slots']->output('menuProfileActive') ?>>
+                                    <a href="<?=$view['router']->generate('trader_show', array('slug' => $user->getSlug() )) ?>">
+                                    <i class="icon-user"></i>
+                                    Profile
+                                    </a>
+                                </li>
+                                <li<? $view['slots']->output('menuProfileEditActive') ?>>
+                                    <a href="<?=$view['router']->generate('user.profile.edit') ?>">
+                                    <i class="icon-pencil"></i>
+                                    Edit profile
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <? endif; ?>
+                </ul>
 			</div>
 			<div id="divider" class="resizeable"></div>
 		</div>
 		<!-- /Sidebar -->
-                <? endif; ?>
-                <? if(!isset($hideSidebar)): ?>
-                    <div id="content">
-                            <div class="container">
-                                <? $view['slots']->output('crumbs') ?>
-                                <div class="page-header">
-                                        <div class="page-title">
-                                                <? $view['slots']->output('header_row') ?>
-                                        </div>
-                                </div>
-                                <? $view['slots']->output('content') ?>
-                            </div>
-                            <!-- /.container -->
+        <? endif; ?>
+        <? if (!isset($hideSidebar)): ?>
+            <div id="content">
+                <div class="container">
+                    <? $view['slots']->output('crumbs') ?>
+                    <div class="page-header">
+                        <div class="page-title">
+                            <? $view['slots']->output('header_row') ?>
+                        </div>
                     </div>
-                <? else: ?>
                     <? $view['slots']->output('content') ?>
-                <? endif; ?>
+                </div>
+                <!-- /.container -->
+            </div>
+        <? else: ?>
+            <? $view['slots']->output('content') ?>
+        <? endif; ?>
         <footer>
-                <span>Copyright &copy; RAETING.com 2013. All rights reserved.</span>
+                <span>Copyright &copy; RAETING.com 2014. All rights reserved.</span>
         </footer>
     </body>
 </html>

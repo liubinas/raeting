@@ -58,13 +58,23 @@ class ImportStockPriceCommand extends ContainerAwareCommand
                 $row = explode(",", $row);
                 if (!empty($row[0])) {
                     if ($key > 0 && $row[0] >= '2003-01-01') {
-                        $data = array('symbol' => $symbol->getSymbol());
-                        $rate = ($row[1]+$row[2]+$row[3]+$row[4])/4;
+                        $data['symbol'] = $symbol->getSymbol();
+                        $data['date'] = $row[0];
+                        // adjusted stock price after stock split
+                        if (isset($row[6])) {
+                            $rate = $row[6];
+                            $data['high'] = $rate;
+                            $data['low'] = $rate;
+                        } else {
+                            $rate = ($row[1]+$row[2]+$row[3]+$row[4])/4;
+                            $data['high'] = $row[2];
+                            $data['low'] = $row[3];
+                        }
+
                         $data['bid'] = $rate;
                         $data['ask'] = $rate;
-                        $data['high'] = $row[2];
-                        $data['low'] = $row[3];
-                        $data['date'] = $row[0];
+
+
                         $query .= $rateService->getInsertDataQuery($data);
                         if ($query != null && strpos($query, 'INSERT INTO') !== false) {
                             $insertsFromFile++;

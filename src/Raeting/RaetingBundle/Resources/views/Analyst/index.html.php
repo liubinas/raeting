@@ -35,21 +35,23 @@
                                         <th>Last recommendation</th>
                                         <th>Latest symbols</th>
                                         <th>Total return</th>
-                                        <th></th>
                                         </thead>
                                         <tbody>
-                                            <? foreach ($analysts as $analyst): ?>
-                                                <tr>
-                                                    <td><?= $analyst['rank'] ?></td>
-                                                    <td><?= $analyst['name'] ?></td>
-                                                    <td><?= $analyst['company'] ?></td>
-                                                    <td><?= $analyst['totalAnalysis'] ?></td>
-                                                    <td><?= !empty($analyst['lastAnalysis']) ? $view['raeting']->renderDate($analyst['lastAnalysis']->getDate()->format('Y-m-d')) : '' ?></td>
-                                                    <td><?= $analyst['lastSymbols'] ?></td>
-                                                    <td><?= $analyst['totalReturn'] ?></td>
-                                                    <td><a href="<?= $view['router']->generate('analyst_show', array('slug' => $analyst['slug'])) ?>"><i class="icon-search"></i></a></td>
-                                                </tr>
-                                            <? endforeach; ?>
+                                        <? foreach ($analysts as $analyst): ?>
+                                            <tr>
+                                                <td><?= $analyst['rank'] ?></td>
+                                                <td>
+                                                    <a href="<?= $view['router']->generate('analyst_show', array('slug' => $analyst['slug'])) ?>">
+                                                        <?= $analyst['name'] ?>
+                                                    </a>
+                                                </td>
+                                                <td><?= $analyst['company'] ?></td>
+                                                <td><?= $analyst['totalAnalysis'] ?></td>
+                                                <td><?= !empty($analyst['lastAnalysis']) ? $view['raeting']->renderDate($analyst['lastAnalysis']->getDate()->format('Y-m-d'), 'date') : '' ?></td>
+                                                <td><?= $analyst['lastSymbols'] ?></td>
+                                                <td><?= round($analyst['totalReturn'], 1); ?>%</td>
+                                            </tr>
+                                        <? endforeach; ?>
                                         </tbody>
                                     </table>
                         <? else: ?>
