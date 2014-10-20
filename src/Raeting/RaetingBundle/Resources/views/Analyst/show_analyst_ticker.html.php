@@ -1,8 +1,6 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
-<? $view['slots']->start('header_row') ?>
-<h3><?= $ticker->getTitle() ?> (<?= $ticker->getSymbol() ?>) recommendations by <?= $analyst->getName() ?></h3>
-<? $view['slots']->stop('header_row') ?>
+
 
 <? $view['slots']->start('crumbs') ?>
 <div class="crumbs">
@@ -26,6 +24,13 @@
 <? $view['slots']->start('content') ?>
 
 <div class="row">
+    <div class="col-md-12">
+        <h3><?= $ticker->getTitle() ?> (<?= $ticker->getSymbol() ?>) recommendations by <?= $analyst->getName() ?></h3>
+    </div>
+</div>
+
+
+<div class="row">
         <div class="col-md-12">
             <div class="tabbable tabbable-custom tabbable-full-width">
                 <div class="tab-content row">
@@ -34,7 +39,7 @@
                         <div class='flot-tick-label'><?= $ticker->getCurrency() ?></div>
                     </div>
                         <div class="widget-chart labeled"> <!-- Possible colors: widget-chart-blue, widget-chart-blueLight (standard), widget-chart-green, widget-chart-red, widget-chart-yellow, widget-chart-orange, widget-chart-purple, widget-chart-gray -->
-                            <div class="title"><?= $ticker->getTitle() ?></div>    
+                            <div class="title"><?= $ticker->getTitle() ?></div>
                             <div id="chart_widget" class="chart chart-medium"></div>
                         </div>
                     <div class='flot-x'>
@@ -51,8 +56,8 @@
 <script src="<?= $view['assets']->getUrl('js/libs/plugins.js') ?>" type="text/javascript"></script>
 <script>
     $(document).ready(function(){
-            <?  $total = count($analysisForGraph); 
-                $date = $analysisForGraph[0]->getDate()->format('Y-m-d'); 
+            <?  $total = count($analysisForGraph);
+                $date = $analysisForGraph[0]->getDate()->format('Y-m-d');
                 $lastDate = end($analysisForGraph)->getDate()->format('Y-m-d');
                 $currentAnalysis = reset($analysisForGraph);
                 $nextAnalysis = next($analysisForGraph);
@@ -130,7 +135,7 @@
                             }
                     } else {
                             $("#tooltip").remove();
-                            previousPoint = null;            
+                            previousPoint = null;
                     }
             });
 
@@ -138,11 +143,11 @@
 </script>
 <?= $view->render('RaetingRaetingBundle::Analyst/analysis_list.html.php', array(
     'analysis' => $analysis,
-    'searchLink' => 'analyst_graph', 
-    'analystSlug' => $analyst->getSlug(), 
-    'totalAnalysis' => $totalAnalysis, 
-    'page' => $page, 
-    'perPage' => $perPage, 
+    'searchLink' => 'analyst_graph',
+    'analystSlug' => $analyst->getSlug(),
+    'totalAnalysis' => $totalAnalysis,
+    'page' => $page,
+    'perPage' => $perPage,
     'ticker' => $ticker,
     'parent' => 'analystTickerView')); ?>
 <? $view['slots']->stop('content') ?>
