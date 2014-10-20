@@ -7,7 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Symbol
  *
- * @ORM\Table(name="dividend")
+ * @ORM\Table(
+ *  name="dividend",
+ *  uniqueConstraints={@ORM\UniqueConstraint(name="ticker_date", columns={"ticker_id", "date"})}
+ * )
  * @ORM\Entity(repositoryClass="Raeting\RaetingBundle\Entity\DividendRepository")
  */
 class Dividend

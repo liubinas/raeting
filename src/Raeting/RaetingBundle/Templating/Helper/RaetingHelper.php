@@ -35,6 +35,9 @@ class RaetingHelper extends Helper
 
     public function getAnalysisStatus($status)
     {
+        $status = trim($status);
+        $status = strtolower($status);
+
         switch($status){
             case 'above average':
             case 'accumulate':
@@ -97,6 +100,7 @@ class RaetingHelper extends Helper
             case 'buy on recovery':
             case 'buy on weakness':
             case 'buy-attractive':
+            case 'buy/attractive':
             case 'buy-short term buy':
             case 'buy/cautious':
             case 'buy/negative':
@@ -268,6 +272,7 @@ class RaetingHelper extends Helper
             case 'unattractive':
             case 'weak hold':
             case 'weak sell':
+            case 'dropped coverage':
                 $status = Analysis::RECOMMENDATION_SELL;
                 break;
             case 'average':
@@ -335,10 +340,12 @@ class RaetingHelper extends Helper
             case 'trading hold':
             case 'wait':
             case 'watch list':
+            case 'equalweight':
+            case 'under review':
                 $status = Analysis::RECOMMENDATION_HOLD;
                 break;
             default:
-                throw new \Exception('Unknown status: ' . $status);
+                throw new \Exception('Unknown recommendation: ' . $status);
                 break;
         }
 

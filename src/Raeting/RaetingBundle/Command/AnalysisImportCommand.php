@@ -2,6 +2,7 @@
 namespace Raeting\RaetingBundle\Command;
 
 use Raeting\RaetingBundle\Entity\Analyst as AnalystEntity;
+use Raeting\RaetingBundle\Entity\Analysis as AnalysisEntity;
 
 use Raeting\RaetingBundle\Service\FileManagement;
 use Raeting\RaetingBundle\Service\Analysis;
@@ -93,11 +94,24 @@ class AnalysisImportCommand extends ContainerAwareCommand
                     }
 
                     $data = array(
-                        'recommendation' => $row['A'],
+                        'recommendation' => trim($row['A']),
                         'date'           => \DateTime::createFromFormat('m/d/y', $row['B'])->format('Y-m-d'),
                         'estimation'     => $row['C'],
                         'period'         => $row['D'],
                     );
+
+                    // a quick fix for weird recommendations
+                    if ('no rating system' == $data['recommendation']) {
+                        // compare target with closing price
+                        if (!empty($row['E'])) {
+                            if ($row['E'] < $data['estimation']) {
+                                $data['recommendation'] = AnalysisEntity::RECOMMENDATION_BUY;
+                            } else {
+                                $data['recommendation'] = AnalysisEntity::RECOMMENDATION_SELL;
+                            }
+                        }
+
+                    }
 
                     if (!empty($data['estimation']) && !empty($data['date'])) {
                         $insertsFromFile += (int) $analysisService->insertData($symbol, $analyst, $data);
