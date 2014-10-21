@@ -21,15 +21,19 @@
         </ul>
 </div>
 <? $view['slots']->stop('crumbs') ?>
+
+<? $view['slots']->start('header_row') ?>
+    <h3>
+        <?= $ticker->getTitle() ?>
+        (<?= $ticker->getSymbol() ?>)
+        recommendations by
+        <?= $analyst->getName() ?>
+    </h3>
+<? $view['slots']->stop('header_row') ?>
+
+
 <? $view['slots']->start('content') ?>
-
-<div class="row">
-    <div class="col-md-12">
-        <h3><?= $ticker->getTitle() ?> (<?= $ticker->getSymbol() ?>) recommendations by <?= $analyst->getName() ?></h3>
-    </div>
-</div>
-
-
+<div class="clear"></div>
 <div class="row">
         <div class="col-md-12">
             <div class="tabbable tabbable-custom tabbable-full-width">

@@ -1,12 +1,12 @@
 <? $view->extend('RaetingCoreBundle::base.html.php'); ?>
 
-<? 
-if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) : 
+<?
+if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')) :
     $user = $app->getUser();
     if($user->getId() == $entity->getId()):
         $view['slots']->start('menuProfileActive') ?> class="current"<? $view['slots']->stop('menuProfileActive');
     endif;
-endif; 
+endif;
 ?>
 
 <? $view['slots']->start('crumbs') ?>
@@ -17,7 +17,7 @@ endif;
                         <a href="<?= $view['router']->generate('home'); ?>">Home</a>
                 </li>
                 <li>
-                        <a href="<?= $view['router']->generate('trader'); ?>">Traders</a>
+                        <a href="<?= $view['router']->generate('trader'); ?>">Users</a>
                 </li>
                 <li class="current">
                         <a href="<?= $view['router']->generate('trader_show', array('slug' => $entity->getSlug())); ?>"><?= $view->escape($entity->getFirstname()) ?> <?= $view->escape($entity->getLastname()) ?></a>
@@ -27,10 +27,11 @@ endif;
 <? $view['slots']->stop('crumbs') ?>
 
 <? $view['slots']->start('header_row') ?>
-<h3>Trader Profile</h3><? if($view['security']->isGranted('IS_AUTHENTICATED_FULLY') && $user->getId() == $entity->getId()):?><a href="<?=$view['router']->generate('user.profile.edit') ?>">Edit</a><? endif; ?>
+<h3>User Profile</h3><? if($view['security']->isGranted('IS_AUTHENTICATED_FULLY') && $user->getId() == $entity->getId()):?><a href="<?=$view['router']->generate('user.profile.edit') ?>">Edit</a><? endif; ?>
 <? $view['slots']->stop('header_row') ?>
 
 <? $view['slots']->start('content') ?>
+<div class="clear"></div>
 <div class="row">
     <div class="col-md-12">
         <!-- Tabs-->
@@ -38,7 +39,7 @@ endif;
             <div class="tab-content row">
                 <!--=== Overview ===-->
                 <div class="tab-pane active" id="tab_overview">
-                    
+
                     <div class="fl padd-15">
                         <div class="list-group profile-photo">
                             <li class="list-group-item no-padding">
@@ -46,7 +47,7 @@ endif;
                             </li>
                         </div>
                         <? if($entity->getTwitter()): ?>
-                        
+
                         <div class="list-group profile-photo">
                             <li class="list-group-item no-padding">
                         <a class="twitter-timeline" data-screen-name="<?= $view->escape($entity->getTwitter())?>" href="https://twitter.com/<?= $view->escape($entity->getTwitter())?>" data-widget-id="393726368988397568">Tweets by @<?= $view->escape($entity->getTwitter()) ?></a>
