@@ -287,6 +287,7 @@ class RaetingHelper extends Helper
             case 'equalwt/neutral':
             case 'equalwt/positive':
             case '3 m fairly valued':
+            case 'fairly valued':
             case 'hold':
             case 'hold on weakness':
             case 'hold/buy':
