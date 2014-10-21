@@ -17,28 +17,28 @@ class UserController extends BaseController
     public function loginFbAction() {
         return $this->redirect($this->generateUrl("home"));
     }
-    
+
     public function editAction()
     {
         $request = $this->get('request');
-        
+
         $userService = $this->get('user.service.user');
         //If not logged in
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirect($this->generateUrl("estinacmf_user.security.login"));
         }
-        
+
         $token = $this->get('security.context')->getToken();
 
         $entity = $token->getUser();
-        
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $form = $this->get('user.form.profile');
         $form->setData($entity);
-        
+
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
 
@@ -56,7 +56,7 @@ class UserController extends BaseController
             'form'   => $form->createView(),
         ));
     }
-    
+
     /**
      * Send password recovery email to user.
      *
@@ -66,16 +66,16 @@ class UserController extends BaseController
      * @return bool
      */
     protected function sendRecoveryMail($email, $hash)
-    {   
-        
+    {
+
         $url = $this->generateUrl('estinacmf_user.change_password', array(), true);
-        
+
         $this->get('core.service.mailer')->sendTemplate(
                 array($email),
                 'user.remind',
                 array('email' => $email, 'hash' => $hash, 'url' => $url)
             );
-        
+
         return true;
     }
 }

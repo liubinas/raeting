@@ -20,36 +20,36 @@ class User extends UserBase
      * @ORM\Column(name="facebookId", type="string", length=255, nullable=true)
      */
     private $facebookId;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="about", type="text", nullable=true)
      */
     private $about;
-    
+
     /**
      * @var string
-     * 
+     *
      * @Assert\NotBlank()
      * @ORM\Column(name="company", type="text", nullable=true)
      */
     private $company;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="fbname", type="string", length=255, nullable=true)
      */
     private $fbname;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
      */
     private $twitter;
-    
+
     /**
      * @var string
      *
@@ -93,8 +93,8 @@ class User extends UserBase
     {
         return $this->facebookId;
     }
-    
-    
+
+
     /**
      * @param string $twitter
      * @return void
@@ -111,7 +111,7 @@ class User extends UserBase
     {
         return $this->twitter;
     }
-    
+
     /**
      * @param string $about
      * @return void
@@ -128,7 +128,7 @@ class User extends UserBase
     {
         return $this->about;
     }
-    
+
     /**
      * @param string $fbname
      * @return void
@@ -145,7 +145,7 @@ class User extends UserBase
     {
         return $this->fbname;
     }
-    
+
     /**
      * @param string $slug
      * @return void
@@ -163,12 +163,12 @@ class User extends UserBase
         return $this->slug;
     }
 
-    public function getCompany() 
+    public function getCompany()
     {
         return $this->company;
     }
 
-    public function setCompany($company) 
+    public function setCompany($company)
     {
         $this->company = $company;
     }
@@ -192,6 +192,8 @@ class User extends UserBase
         }
         if (isset($fbdata['email'])) {
             $this->setEmail($fbdata['email']);
+        } else {
+            $this->setEmail($this->getFbname() . '@facebook.com');
         }
     }
     public function __toString()

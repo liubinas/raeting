@@ -88,10 +88,11 @@ class FacebookProvider implements UserProviderInterface
 
     }
 
+    /**
+     * @param string $username Facebook ID (numeric)
+     */
     public function loadUserByUsername($username)
     {
-        $user = $this->findUserByFbId($username);
-
         try {
             $fbdata = $this->facebook->api('/me');
         } catch (FacebookApiException $e) {
@@ -99,6 +100,7 @@ class FacebookProvider implements UserProviderInterface
         }
 
         if (!empty($fbdata)) {
+            $user = $this->findUserByFbId($username);
             if (empty($user)) {
                 $newUser = true;
                 $user = $this->userManager->createUser();
@@ -111,14 +113,15 @@ class FacebookProvider implements UserProviderInterface
             }
 
             $user->setFBData($fbdata);
-            
+
             if (count($this->validator->validate($user, 'Facebook'))) {
                 // TODO: the user was found obviously, but doesnt match our expectations, do something smart
                 throw new UsernameNotFoundException('The facebook user could not be stored');
             }
-            if(isset($newUser)){
+
+            if (isset($newUser)) {
                 $this->userManager->insertUser($user);
-            }else{
+            } else {
                 $this->userManager->updateUser();
             }
         }
