@@ -95,6 +95,7 @@ class RaetingHelper extends Helper
             case 'best ideas list':
             case 'buy':
             case 'buy (select list)':
+            case 'buy 1':
             case 'buy 2':
             case 'buy 3':
             case 'buy on recovery':
@@ -140,9 +141,11 @@ class RaetingHelper extends Helper
             case 'outperform':
             case 'outperform significantly':
             case 'outperform/attractive':
+            case 'outperf/attractive':
             case 'outperform/buy':
             case 'outperform/cautious':
             case 'outperform/neutral':
+            case 'outperf/neutral':
             case 'overweight':
             case 'overweight/attractive':
             case 'overweight/cautious':
