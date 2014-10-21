@@ -21,7 +21,6 @@
                                     <table class="table table-striped table-hover">
                                         <thead>
                                         <th>Date</th>
-                                        <th>Time</th>
                                         <? if(!isset($params['slug']) && $parent != 'analystTickerView'): ?>
                                         <th>Analyst</th>
                                         <? endif; ?>
@@ -36,7 +35,6 @@
                                             <? foreach ($analysis as $entity): ?>
                                                 <tr>
                                                     <td><?= $view['raeting']->renderDate($entity->getDate()->format('Y-m-d'), 'date') ?></td>
-                                                    <td><?= $view['raeting']->renderDate($entity->getDate()->format('Y-m-d'), 'hours') ?></td>
                                                     <? if(!isset($params['slug']) && $parent != 'analystTickerView'): ?>
                                                     <td><a href="<?= $parent == 'tickerView' ? $view['router']->generate('analyst_graph', array('slug' => $entity->getAnalyst()->getSlug(), 'ticker' => strtolower($entity->getTicker()->getSymbol()))) : $view['router']->generate('analyst_show', array('slug' => $entity->getAnalyst()->getSlug())) ?>"><?= $entity->getAnalyst()->getName()?></td>
                                                     <? endif; ?>
