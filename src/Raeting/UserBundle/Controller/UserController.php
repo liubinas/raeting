@@ -2,9 +2,7 @@
 
 namespace Raeting\UserBundle\Controller;
 
-use EstinaCMF\UserBundle\Controller\UserController as BaseController;
-
-class UserController extends BaseController
+class UserController
 {
     public function connectFacebookWithAccountAction()
     {
@@ -20,6 +18,8 @@ class UserController extends BaseController
 
     public function editAction()
     {
+        return $this->redirect($this->generateUrl("home"));
+        /*
         $request = $this->get('request');
 
         $userService = $this->get('user.service.user');
@@ -55,6 +55,7 @@ class UserController extends BaseController
             'entity'      => $entity,
             'form'   => $form->createView(),
         ));
+        */
     }
 
     /**

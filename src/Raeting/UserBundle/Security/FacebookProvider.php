@@ -107,7 +107,6 @@ class FacebookProvider implements UserProviderInterface
                 $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
                 $user->setSalt(md5(time()));
                 $user->setPassword($encoder->encodePassword(time(), $user->getSalt()));
-                $user->setRole(\EstinaCMF\UserBundle\Entity\User::ROLE_USER);
                 $user->setCreateDate(new \DateTime(date('Y-m-d H:i:s')));
                 $user->setSlug($this->userManager->createSlug($fbdata['first_name'], $fbdata['last_name']));
             }

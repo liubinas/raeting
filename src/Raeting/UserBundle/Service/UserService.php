@@ -8,13 +8,17 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Doctrine\ORM\EntityManager;
 use Raeting\UserBundle\Entity\User;
 
-use EstinaCMF\UserBundle\Service\UserService as BaseService;
-
-class UserService extends BaseService
+class UserService
 {
     public $defaultLimit = 10;
     
     public $defaultOffset = 0;
+
+    public function __construct($em, $encoder)
+    {
+        $this->em = $em;
+        $this->encoder = $encoder;
+    }
     
     protected function getRepository()
     {

@@ -1,5 +1,3 @@
-_user:
-    resource: "@EstinaCMFUserBundle/Resources/config/routing.yml"
 _raeting_user:
     resource: "@RaetingUserBundle/Resources/config/user/routing.yml"
 _raeting_fb_user:

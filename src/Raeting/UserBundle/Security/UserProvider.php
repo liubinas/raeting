@@ -7,9 +7,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Raeting\UserBundle\Entity\User;
 
-use EstinaCMF\UserBundle\Security\UserProvider as BaseProvider;
-
-class UserProvider extends BaseProvider
+class UserProvider implements UserProviderInterface
 {
 
     public function findUserBy($params)
@@ -41,5 +39,20 @@ class UserProvider extends BaseProvider
     public function createSlug($name, $surname)
     {
         return $this->userService->createSlug($name, $surname);
+    }
+
+    public function loadUserByUsername($username)
+    {
+        // todo
+    }
+
+    public function refreshUser(UserInterface $user)
+    {
+        // todo
+    }
+
+    public function supportsClass($class)
+    {
+        return User::class === $class;
     }
 }

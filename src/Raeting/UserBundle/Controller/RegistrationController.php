@@ -10,14 +10,10 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
-use EstinaCMF\UserBundle\Event\UserRegisteredEvent;
-
-use EstinaCMF\UserBundle\Controller\RegistrationController as BaseController;
-
 /**
  * Registration controller
  */
-class RegistrationController extends BaseController
+class RegistrationController extends Controller
 {
     /**
      * User registration form.
@@ -27,6 +23,7 @@ class RegistrationController extends BaseController
 
     public function registerAction(Request $request)
     {
+        /*
         $form = $this->get('user.form.registration');
         $userService = $this->get('user.service.user');
         $dispatcher = $this->get('event_dispatcher');
@@ -46,8 +43,6 @@ class RegistrationController extends BaseController
             }
         }
 
-        return $this->render('EstinaCMFUserBundle:Registration:register.html.php', array(
-            'form' => $form->createView()
-        ));
+        */
     }
 }

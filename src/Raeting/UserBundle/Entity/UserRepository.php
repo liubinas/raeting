@@ -2,9 +2,9 @@
 
 namespace Raeting\UserBundle\Entity;
 
-use EstinaCMF\UserBundle\Entity\UserRepository as BaseRepository;
+use Doctrine\ORM\EntityRepository;
 
-class UserRepository extends BaseRepository
+class UserRepository extends EntityRepository
 {
 
 }

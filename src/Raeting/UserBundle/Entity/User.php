@@ -3,7 +3,6 @@
 namespace Raeting\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use EstinaCMF\UserBundle\Entity\User as UserBase;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -12,8 +11,27 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Raeting\UserBundle\Entity\UserRepository")
  */
-class User extends UserBase
+class User
 {
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\Length(max = 255)
+     * @Assert\Email
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $password;
+
     /**
      * @var string
      *
@@ -56,6 +74,11 @@ class User extends UserBase
      * @ORM\Column(name="slug", type="string", length=255, nullable=true, unique = true)
      */
     private $slug;
+    
+    /**
+     * @ORM\Column(name="create_date", type="datetime", nullable=false) 
+     */
+    private $createDate;
 
     public function serialize()
     {
@@ -199,5 +222,15 @@ class User extends UserBase
     public function __toString()
     {
         return $this->getSlug();
+    }
+
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+    }
+
+    public function getCreateDate()
+    {
+        return $this->createDate;
     }
 }
