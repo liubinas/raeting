@@ -26,20 +26,30 @@ class AnalysisRepository extends EntityRepository
                 ->select('s, t')
                 ->leftJoin('s.ticker', 't')
                 ->leftJoin('s.analyst', 'a');
-
+        $where = false;
         if($analyst != null){
             $query->where('s.analyst = :analyst')
-                ->setParameter('analyst', $analyst);
+                  ->setParameter('analyst', $analyst);
+            $where = true;
         }
 
         if($search != null){
-            $query->where('t.title LIKE :search OR a.name LIKE :search')
-                ->setParameter('search', '%'.$search.'%');
+            if ($where) {
+                $query->andWhere('t.title LIKE :search OR a.name LIKE :search');
+            } else {
+                $query->where('t.title LIKE :search OR a.name LIKE :search');
+            }
+            $query->setParameter('search', '%'.$search.'%');
+            $where = true;
         }
 
-        if($ticker != null){
-            $query->where('t.symbol = :ticker')
-                ->setParameter('ticker', $ticker);
+        if ($ticker != null) {
+            if ($where) {
+                $query = $query->andWhere('t.symbol = :ticker');
+            } else {
+                $query = $query->where('t.symbol = :ticker');
+            }
+            $query->setParameter('ticker', $ticker);
         }
 
         if($perPage != null && $page != null){
@@ -112,6 +122,9 @@ class AnalysisRepository extends EntityRepository
 
     public function getAllByAnalystAndTickerForGraph($analyst, $ticker)
     {
+        $result = $this->getAll($analyst, null, $ticker);
+
+
         $query = $this->createQueryBuilder('s')
                 ->select('s, t')
                 ->leftJoin('s.ticker', 't')
