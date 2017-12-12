@@ -28,7 +28,7 @@
         "facebook/php-sdk"                      : "3.2.0",
         "friendsofsymfony/facebook-bundle"      : "dev-master",
         "jms/serializer-bundle"                 : "*",
-        "phpoffice/phpexcel"                     : "dev-master"
+        "phpoffice/phpexcel"                     : "^1.8"
 
     },
     "scripts": {
