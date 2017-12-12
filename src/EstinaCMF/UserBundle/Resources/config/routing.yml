@@ -1,0 +1,32 @@
+home:
+    pattern: /
+
+estinacmf_user.security.login:
+    pattern:  /login
+    defaults:  { _controller: EstinaCMFUserBundle:Security:login }
+
+estinacmf_user.security.login_check:
+    pattern:  /login_check
+
+estinacmf_user.logout:
+    pattern:  /logout
+
+estinacmf_user.recover:
+    pattern:  /recover
+    defaults:  { _controller: EstinaCMFUserBundle:User:recover }
+
+estinacmf_user.registration:
+    pattern:  /register
+    defaults:  { _controller: EstinaCMFUserBundle:Registration:register }
+
+estinacmf_user.registration.success:
+    pattern:  /register-success
+    defaults:  { _controller: EstinaCMFUserBundle:Registration:success }
+
+estinacmf_user.recover_link:
+    pattern:  /recover/{email}/{hash}
+    defaults:  { _controller: EstinaCMFUserBundle:User:recoverLink }
+
+estinacmf_user.change_password:
+    pattern:  /change-password
+    defaults:  { _controller: EstinaCMFUserBundle:User:changePassword }

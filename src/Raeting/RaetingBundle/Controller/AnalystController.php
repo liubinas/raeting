@@ -1,6 +1,7 @@
 <?php
 namespace Raeting\RaetingBundle\Controller;
 
+use Raeting\RaetingBundle\Service\Analyst;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,7 +22,7 @@ class AnalystController extends Controller
         if(empty($page)){
             $page = 1;
         }
-        
+        /** @var Analyst $analystService */
         $analystService = $this->get('raetingraeting.service.analyst');
         
         $query = $request->query->get('analysis-search');

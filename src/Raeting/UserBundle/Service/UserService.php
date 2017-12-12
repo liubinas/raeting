@@ -174,6 +174,6 @@ class UserService extends BaseService
                 ->orderBy('u.createDate', 'desc')
                 ->setMaxResults(1);
         
-        return $query->getQuery()->getSingleResult();;
+        return $query->getQuery()->getSingleResult();
     }
 }

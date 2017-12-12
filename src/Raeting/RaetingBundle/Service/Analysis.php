@@ -49,6 +49,9 @@ class Analysis
         $this->em->flush();
     }
 
+    /**
+     * @return Entity\AnalysisRepository
+     */
     public function getRepository()
     {
         return $this->em->getRepository('RaetingRaetingBundle:Analysis');

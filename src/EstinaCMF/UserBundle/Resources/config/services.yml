@@ -1,0 +1,23 @@
+parameters:
+   estinacmf_user.security.user_provider.class: EstinaCMF\UserBundle\Security\UserProvider
+   estinacmf_user.service.user.class: EstinaCMF\UserBundle\Service\UserService
+   estinacmf_user.helper.user.class: EstinaCMF\UserBundle\Templating\Helper\UserHelper
+   estinacmf_user.listener.user_registration.class: EstinaCMF\UserBundle\EventListener\UserRegistrationListener
+
+services:
+    estinacmf_user.security.user_provider:
+        class: %estinacmf_user.security.user_provider.class%
+        arguments: [ @estinacmf_user.service.user ]
+    estinacmf_user.service.user:
+        class: %estinacmf_user.service.user.class%
+        arguments: [ @doctrine.orm.entity_manager, @security.encoder_factory]
+    estinacmf_user.helper.user:
+        class: %estinacmf_user.helper.user.class%
+        arguments: [ {name: 'templating.helper', alias:'user'}, @security.context ]
+
+    estinacmf_user.listener.user_registration:
+        class: %estinacmf_user.listener.user_registration.class%
+        # arguments: [ @estinacmf_mailer.service.mailer ]
+        arguments: [  ]
+        tags:
+            - { name: kernel.event_subscriber }

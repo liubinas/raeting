@@ -16,7 +16,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\FacebookBundle\FOSFacebookBundle(),
             new EstinaCMF\UserBundle\EstinaCMFUserBundle(),
@@ -30,8 +29,6 @@ class AppKernel extends Kernel
         if (in_array($this->getEnvironment(), array('dev', 'test', 'marius', 'wsuff'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-            $bundles[] = new Estina\GeneratorBundle\EstinaGeneratorBundle();
         }
 
         return $bundles;

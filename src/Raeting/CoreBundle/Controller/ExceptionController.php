@@ -19,7 +19,7 @@ class ExceptionController extends Controller
      *
      * @throws \InvalidArgumentException When the exception template does not exist
      */
-    /*public function exceptionAction(FlattenException $exception, DebugLoggerInterface $logger = null, $format = 'html', $embedded = false)
+    public function exceptionAction(FlattenException $exception, DebugLoggerInterface $logger = null, $format = 'html', $embedded = false)
     {
         $this->container->get('request')->setRequestFormat($format);
 
@@ -47,5 +47,5 @@ class ExceptionController extends Controller
             'currentContent' => $currentContent,
             'isDebug'        => $this->container->get('kernel')->isDebug(),
         ));
-    }*/
+    }
 }

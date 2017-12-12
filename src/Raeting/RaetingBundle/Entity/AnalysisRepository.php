@@ -28,17 +28,17 @@ class AnalysisRepository extends EntityRepository
                 ->leftJoin('s.analyst', 'a');
 
         if($analyst != null){
-            $query->andWhere('s.analyst = :analyst')
+            $query->where('s.analyst = :analyst')
                 ->setParameter('analyst', $analyst);
         }
 
         if($search != null){
-            $query->andWhere('t.title LIKE :search OR a.name LIKE :search')
+            $query->where('t.title LIKE :search OR a.name LIKE :search')
                 ->setParameter('search', '%'.$search.'%');
         }
 
         if($ticker != null){
-            $query->andWhere('t.symbol = :ticker')
+            $query->where('t.symbol = :ticker')
                 ->setParameter('ticker', $ticker);
         }
 
@@ -94,20 +94,20 @@ class AnalysisRepository extends EntityRepository
 
     public function getAnalystEstimationRangeByTicker($analyst, $ticker)
     {
-        $query = $this->createQueryBuilder('s')
-                ->select('MIN(s.date) as min_date, MAX(s.date) as max_date')
-                ->leftJoin('s.ticker', 't')
-                ->where('t.symbol = :ticker')
-                ->andWhere('s.analyst = :analyst')
-                ->setParameter('ticker', $ticker)
-                ->setParameter('analyst', $analyst)
-                ->getQuery();
-        try {
-            return $query->getSingleResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        $query = "SELECT MIN(a.date) as min_date, 
+                         MAX(a.date) as max_date
+                  FROM analysis a
+                  JOIN symbol s ON s.id = a.ticker_id  
+                  WHERE a.analyst_id = :analyst
+                  AND s.symbol = :ticker";
 
+        $conn = $this->_em->getConnection();
+        $statement = $conn->prepare($query);
+        $statement->bindValue(':analyst', $analyst, \PDO::PARAM_INT);
+        $statement->bindValue(':ticker', $ticker);
+        $statement->execute();
+
+        return $statement->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function getAllByAnalystAndTickerForGraph($analyst, $ticker)
@@ -122,12 +122,7 @@ class AnalysisRepository extends EntityRepository
                 ->setParameter('analyst', $analyst)
                 ->getQuery();
 
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-
+        return $query->getResult();
     }
 
     public function findOneBySymbolAndAnalystAndDate($symbol, $analyst, $date)
@@ -153,7 +148,7 @@ class AnalysisRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('s')
                 ->select('s')
-                ->andWhere('s.analyst = :analyst')
+                ->where('s.analyst = :analyst')
                 ->orderBy('s.date', 'desc')
                 ->setParameter('analyst', $analyst)
                 ->groupBy('s.ticker')
@@ -172,7 +167,7 @@ class AnalysisRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('s')
                 ->select('s')
-                ->andWhere('s.analyst = :analyst')
+                ->where('s.analyst = :analyst')
                 ->orderBy('s.date', 'desc')
                 ->setParameter('analyst', $analyst)
                 ->setMaxResults(1)
@@ -193,16 +188,16 @@ class AnalysisRepository extends EntityRepository
                 ->leftJoin('a.ticker', 't');
 
         if($analyst != null){
-            $query->andWhere('a.analyst = :analyst')
+            $query->where('a.analyst = :analyst')
                 ->setParameter('analyst', $analyst);
         }
         if($search != null){
-            $query->andWhere('t.title LIKE :search')
+            $query->where('t.title LIKE :search')
                 ->setParameter('search', '%'.$search.'%');
         }
 
         if($ticker != null){
-            $query->andWhere('t.symbol = :ticker')
+            $query->where('t.symbol = :ticker')
                 ->setParameter('ticker', $ticker);
         }
 

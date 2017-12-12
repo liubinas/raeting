@@ -31,7 +31,7 @@ class AnalystRepository extends EntityRepository
                 ->select('a');
 
         if (!$search != null){
-            $query->andWhere('a.name LIKE :search OR a.company LIKE :search')
+            $query->where('a.name LIKE :search OR a.company LIKE :search')
                     ->setParameter('search', '%'.$search.'%');
         }
 
@@ -54,12 +54,12 @@ class AnalystRepository extends EntityRepository
         }
     }
 
-    public function countAll($search = null, $search = null)
+    public function countAll($search = null)
     {
         $query = $this->createQueryBuilder('a')->select('count(a.id) counter');
 
         if(!$search != null){
-            $query->andWhere('a.name LIKE :search OR a.company LIKE :search')
+            $query->where('a.name LIKE :search OR a.company LIKE :search')
                     ->setParameter('search', '%'.$search.'%');
         }
 
@@ -68,7 +68,7 @@ class AnalystRepository extends EntityRepository
         try {
             $result =  $query->getSingleResult();
             return $result['counter'];
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (\Exception $e) {
             return null;
         }
     }

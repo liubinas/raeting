@@ -1,0 +1,38 @@
+parameters:
+    estinacmf_user.form.type.recover.class: EstinaCMF\UserBundle\Form\RecoverType
+    estinacmf_user.form.type.change_password.class: EstinaCMF\UserBundle\Form\ChangePasswordType
+    estinacmf_user.form.type.registration.class: EstinaCMF\UserBundle\Form\RegistrationType
+
+services:
+    estinacmf_user.form.type.recover:
+        class: %estinacmf_user.form.type.recover.class%
+        tags:
+            - { name: form.type }
+            
+    estinacmf_user.form.type.change_password:
+        class: %estinacmf_user.form.type.change_password.class%
+        tags:
+            - { name: form.type }
+            
+    estinacmf_user.form.type.registration:
+        class: %estinacmf_user.form.type.registration.class%
+        tags:
+            - { name: form.type }
+            
+    estinacmf_user.form.recover:
+        class: %form.factory.class%
+        factory_method: create
+        factory_service: form.factory
+        arguments: [ @estinacmf_user.form.type.recover  ]
+        
+    estinacmf_user.form.change_password:
+        class: %form.factory.class%
+        factory_method: create
+        factory_service: form.factory
+        arguments: [ @estinacmf_user.form.type.change_password  ]
+
+    estinacmf_user.form.registration:
+        class: %form.factory.class%
+        factory_method: create
+        factory_service: form.factory
+        arguments: [ @estinacmf_user.form.type.registration  ]
